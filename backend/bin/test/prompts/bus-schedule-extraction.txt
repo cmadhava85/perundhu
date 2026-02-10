@@ -188,17 +188,33 @@ IMAGE ANALYSIS TIPS:
 - IMPORTANT: When you see "STATION_A-STATION_B" (dash format), it means FROM STATION_A TO STATION_B
 
 BOARD TYPE IDENTIFICATION & TIME INTERPRETATION (CRITICAL):
+
+🚨 MOST IMPORTANT - TWO-COLUMN BIDIRECTIONAL FORMAT (Private Bus Services):
+When you see a layout with TWO LOCATION NAMES as column headers (e.g., "சேலம் | கிருஷ்ணகிரி" or "Salem | Krishnagiri"):
+- This is a BIDIRECTIONAL DEPARTURE-ONLY SCHEDULE
+- Left column header = Location A, Right column header = Location B
+- Times under LEFT column = Departure times FROM Location A going TO Location B
+- Times under RIGHT column = Departure times FROM Location B going TO Location A
+- CRITICAL: These are NOT departure and arrival times for the same route!
+- Each time in each column represents a SEPARATE departure from that location
+- Example from image:
+  * Left: "சேலம் (Salem): 1:35AM, 12:45PM" → Bus departs Salem at 1:35AM and 12:45PM
+  * Right: "கிருஷ்ணகிரி (Krishnagiri): 5:00AM, 3:15PM" → Bus departs Krishnagiri at 5:00AM and 3:15PM
+  * Result: 4 separate routes (2 Salem→Krishnagiri, 2 Krishnagiri→Salem)
+- Set BIDIRECTIONAL:true and extract as separate routes for each direction
+
 1. DESTINATION TABLE (destination_table):
    - Layout: Origin station at top/header, list of multiple destinations below with times
    - Times meaning: Can be DEPARTURE times, ARRIVAL times, or BOTH - check carefully!
-   - TWO-COLUMN TIME FORMAT (Common on private bus posters):
+   - TWO-COLUMN TIME FORMAT (Common on traditional government boards):
      * LEFT column times = DEPARTURE times from origin
      * RIGHT column times = ARRIVAL times at destination
      * Extract BOTH times when shown in this format
+     * This is DIFFERENT from bidirectional format (which has location names as headers)
    - SINGLE COLUMN FORMAT (Traditional government boards):
      * Times are usually DEPARTURE times from origin
      * Example: "ERODE" at top, then "OOTY: 10:00, 12:00" means buses depart Erode at 10:00 and 12:00
-   - Look for visual cues: If times appear in TWO separate columns/groups, likely dep + arr format
+   - Look for visual cues: If times appear in TWO separate columns/groups with LOCATION NAMES as headers = bidirectional
    - Put departure times in dep_time field (field 3), arrival times in arr_time field (field 4)
    
    🚨 CRITICAL ORIGIN DETECTION ALGORITHM (STEP-BY-STEP):
@@ -515,8 +531,39 @@ COMMON MISTAKE TO AVOID:
 
 The origin is WHERE THE BUS DEPARTS FROM (shown at top), not where it's going to (shown below).
 
+🚨 CRITICAL - BIDIRECTIONAL ROUTE DETECTION:
+MUST check for bidirectional indicators in the image/text:
+- Visual indicators: ⇄, ↔, ←→, ⟷, ↕, or two opposite arrows
+- Text indicators (English): "bidirectional", "both ways", "two-way", "return service", "both directions"
+- Text indicators (Tamil): "இருவழி" (iruvazhi), "இரு திசை" (iru thisai), "மீண்டும்" (meendum - return)
+- Layout indicators: Two columns with opposite direction headers (e.g., "A → B" | "B → A")
+- "NON-STOP" or "சூட்" services with two columns of times typically indicate bidirectional
+
+WHEN BIDIRECTIONAL DETECTED:
+1. Add "BIDIRECTIONAL:true" line after TYPE line
+2. Extract routes for BOTH directions:
+   - Forward direction: from origin to destination
+   - Reverse direction: from destination back to origin
+3. If times shown for both directions, use the respective times
+4. If only one set of times shown, duplicate for reverse direction
+5. Create separate route entries for each direction
+
+Example with bidirectional indicator:
+Image shows: "Salem ⇄ Krishnagiri" with times "01:35, 12:45"
+Extract as:
+ORIGIN:SALEM
+TYPE:route_schedule
+BIDIRECTIONAL:true
+ROUTES:
+TN30BM1040|SALEM|KRISHNAGIRI|01:35|-|-|Dharmapuri,Kaveripattinam
+TN30BM1040|SALEM|KRISHNAGIRI|12:45|-|-|Dharmapuri,Kaveripattinam
+TN30BM1040|KRISHNAGIRI|SALEM|01:35|-|-|Kaveripattinam,Dharmapuri
+TN30BM1040|KRISHNAGIRI|SALEM|12:45|-|-|Kaveripattinam,Dharmapuri
+END
+
 ORIGIN:station_name
 TYPE:departure_board|route_schedule|destination_table|arrival_board
+BIDIRECTIONAL:true|false
 ROUTES:
 bus_num|from_location|to_location|dep_time|arr_time|bus_type|stops_data
 END
@@ -588,20 +635,24 @@ CRITICAL FOR DEPARTURE-ONLY TIMES:
 
 EXAMPLES:
 
-Example 1 - Destination board (single origin, multiple destinations, paired dep+arr times):
-CRI
-
-Example 1C - VIA/THROUGH table (routes passing through a location):
-CRITICAL: Header says "நாகப்பட்டின வழி" (VIA Nagapattinam) - Nagapattinam is NOT the origin!
-Each row has its own origin and destination. Nagapattinam is an intermediate stop.
-ORIGIN:-
+Example 1A - Two-column bidirectional format (LOCATION NAMES AS HEADERS):
+CRITICAL: When column headers are location names (Salem | Krishnagiri), times are departure-only from each location!
+ORIGIN:SALEM
 TYPE:route_schedule
+BIDIRECTIONAL:true
 ROUTES:
-1|Thanjavur|Velankanni|10:30|-|-|Nagapattinam
-2|Kumbakonam|Karaikal|14:30|-|-|Nagapattinam
-3|Trichy|Nagore|08:00|-|-|Nagapattinam
-4|Mayiladuthurai|Poompuhar|16:45|-|-|Nagapattinam
-ENDTICAL: When times appear in TWO columns, they represent departure AND arrival times!
+TN30BEM1040|SALEM|KRISHNAGIRI|01:35|-|-|Dharmapuri,Kaveripattinam
+TN30BEM1040|SALEM|KRISHNAGIRI|12:45|-|-|Dharmapuri,Kaveripattinam
+TN30BEM1040|KRISHNAGIRI|SALEM|05:00|-|-|Kaveripattinam,Dharmapuri
+TN30BEM1040|KRISHNAGIRI|SALEM|15:15|-|-|Kaveripattinam,Dharmapuri
+TN30BEM1040|SALEM|DHARMAPURI|08:40|-|-|Dharmapuri
+TN30BEM1040|SALEM|DHARMAPURI|18:40|-|-|Dharmapuri
+TN30BEM1040|DHARMAPURI|SALEM|11:00|-|-|Dharmapuri
+TN30BEM1040|DHARMAPURI|SALEM|21:00|-|-|Dharmapuri
+END
+
+Example 1B - Destination board with paired departure+arrival times (NO location headers):
+CRITICAL: When times appear in TWO columns WITHOUT location names as headers, they represent departure AND arrival times!
 ORIGIN:PALANI
 TYPE:destination_table
 ROUTES:
@@ -611,7 +662,7 @@ ROUTES:
 -|PALANI|ERODE|19:25|15:27|-|-
 END
 
-Example 1B - Destination board (single times = departures only):
+Example 1C - Destination board (single times = departures only):
 ORIGIN:TRICHY
 TYPE:destination_table
 ROUTES:
@@ -621,14 +672,45 @@ ROUTES:
 -|TRICHY|PERAMBALUR|21:50|-|-|-
 END
 
-Example 2 - Bidirectional route (two-way service):
-ORIGIN:SALEM
+Example 1D - VIA/THROUGH table (routes passing through a location):
+CRITICAL: Header says "நாகப்பட்டின வழி" (VIA Nagapattinam) - Nagapattinam is NOT the origin!
+Each row has its own origin and destination. Nagapattinam is an intermediate stop.
+ORIGIN:-
 TYPE:route_schedule
 ROUTES:
--|SALEM|KRISHNAGIRI|-|01:35,12:45|-|-
--|KRISHNAGIRI|SALEM|-|05:00,15:15|-|-
--|SALEM|DHARMAPURI|Dharmapuri|08:40,18:40|-|-
--|DHARMAPURI|SALEM|-|11:00,21:00|-|-
+1|Thanjavur|Velankanni|10:30|-|-|Nagapattinam
+2|Kumbakonam|Karaikal|14:30|-|-|Nagapattinam
+3|Trichy|Nagore|08:00|-|-|Nagapattinam
+4|Mayiladuthurai|Poompuhar|16:45|-|-|Nagapattinam
+END
+
+Example 1B - Destination board with paired departure+arrival times (NO location headers):
+CRITICAL: When times appear in TWO columns WITHOUT location names as headers, they represent departure AND arrival times!
+ORIGIN:PALANI
+TYPE:destination_table
+ROUTES:
+-|PALANI|ERODE|06:22|01:45|-|-
+-|PALANI|ERODE|11:30|08:00|-|-
+-|PALANI|ERODE|16:45|10:38|-|-
+-|PALANI|ERODE|19:25|15:27|-|-
+END
+
+Example 1C - Destination board (single times = departures only):
+ORIGIN:TRICHY
+TYPE:destination_table
+ROUTES:
+-|TRICHY|AALANGUDI|15:25,21:05|-|-|-
+-|TRICHY|ARIYALUR|15:30|-|-|-
+-|TRICHY|ARANTHANGI|21:40|-|-|-
+-|TRICHY|PERAMBALUR|21:50|-|-|-
+END
+
+Example 2 - Single direction route (departure times only):
+ORIGIN:MADURAI
+TYPE:route_schedule
+ROUTES:
+166UD|MADURAI|CHENNAI|06:00,14:30|-|EXPRESS|Dindigul,Trichy,Villupuram
+42A|MADURAI|COIMBATORE|07:30,15:00|-|ORDINARY|Palani,Pollachi
 END
 
 Example 3A - SIMPLE TEXT INPUT (conversational format):
@@ -721,41 +803,7 @@ ROUTES:
 27D|Chennai|Madurai|06:00|14:00|-|-
 END
 
-Example 4 - TWO-COLUMN BIDIRECTIONAL DEPARTURE-ONLY TIMES (Most Important for TSS boards!):
-This is the EXACT layout from the image: left column (Hosur→Chennai) and right column (Chennai→Hosur)
-Each column shows 6 DEPARTURE TIMES ONLY (no arrival times visible on board)
-Times are displayed in 2 sub-columns (left and right side of each main column)
-
-ORIGIN:Hosur
-TYPE:route_schedule
-ROUTES:
--|Hosur|Chennai|-|07:45|-|-
--|Hosur|Chennai|-|14:30|-|-
--|Hosur|Chennai|-|17:00|-|-
--|Hosur|Chennai|-|17:35|-|-
--|Hosur|Chennai|-|20:35|-|-
--|Hosur|Chennai|-|23:10|-|-
--|Chennai|Hosur|-|05:30|-|-
--|Chennai|Hosur|-|07:00|-|-
--|Chennai|Hosur|-|08:40|-|-
--|Chennai|Hosur|-|10:15|-|-
--|Chennai|Hosur|-|13:10|-|-
--|Chennai|Hosur|-|21:35|-|-
-END
-
-EXTRACTION EXPLANATION:
-- Left column header: "Hosur → Chennai" (departure times only, no arrival times shown)
-  Times: 07:45, 14:30, 17:00, 17:35, 20:35, 23:10
-  Create 6 separate routes, each with one departure time and "-" for arrival
-- Right column header: "Chennai → Hosur" (departure times only, no arrival times shown)
-  Times: 05:30, 07:00, 08:40, 10:15, 13:10, 21:35
-  Create 6 separate routes, each with one departure time and "-" for arrival
-- Result: 12 SEPARATE routes total (6 Hosur→Chennai + 6 Chennai→Hosur)
-- Each route has one departure time and "-" for arrival (since not shown on board)
-- DO NOT assume or calculate arrival times
-- Do NOT merge: Create individual entries for each departure
-
-Example 5 - Dash format routes (FROM-TO notation):
+Example 4 - Dash format routes (FROM-TO notation):
 ORIGIN:-
 TYPE:route_schedule
 ROUTES:
@@ -765,22 +813,14 @@ ROUTES:
 -|TIRUPATI|UDUPI|-|07:45|14:50|-
 END
 
-Example 4 - Departure board with route numbers:
-ORIGIN:MADURAI
-TYPE:route_schedule
-ROUTES:
-166UD|MADURAI|CHENNAI|06:00,14:30|12:00,20:30|EXPRESS|Dindigul,Trichy,Villupuram
-42A|MADURAI|COIMBATORE|07:30,15:00|-|ORDINARY|Palani,Pollachi
-END
-
-Example 5 - Route with detailed STOP-LEVEL TIMINGS (arrival and departure at each intermediate stop):
+Example 3 - Route with detailed STOP-LEVEL TIMINGS (arrival and departure at each intermediate stop):
 ORIGIN:TIRUVALUR
 TYPE:route_schedule
 ROUTES:
 245E|TIRUVALUR|CHENNAI|12:55|-|ORDINARY|STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Sethiyathope X Road@02:37-,Vadalur@02:57-,Panruti Arch@03:40-,Vikravandi tollgate@04:43-,Tindivanam@05:10-,Athur tollgate@05:33-,Melmaruvathur@05:45-,Chengalpattu bypass@06:25-]
 END
 
-Example 6 - TABLE-STRUCTURED SCHEDULE (column headers = stops, rows = different time slots):
+Example 4 - TABLE-STRUCTURED SCHEDULE (column headers = stops, rows = different time slots):
 ORIGIN:SATHYAMANGALAM
 TYPE:departure_board
 ROUTES:
@@ -791,10 +831,6 @@ ROUTES:
 -|SATHYAMANGALAM|TRICHY|Trichy|11:23|-|-|-
 -|SATHYAMANGALAM|ARIYALUR|Ariyalur|12:05|-|-|-
 END
-Note: In table format, each row represents a departure time FOR THAT COLUMN'S DESTINATION
-The board header = origin station
-Column headers (Parees A, Kumbakonam, etc.) = each destination gets its own route entry
-Times shown under each column = departure time from origin to that destination
 
 CRITICAL INSTRUCTIONS:
 1. Count all visible routes and extract EVERY one - do not skip

@@ -68,6 +68,16 @@ export const RouteContribution: React.FC = () => {
   const preSelectedBus = navigationState?.selectedBus || undefined;
   const preSelectedFromLocation = navigationState?.fromLocation || undefined;
   const preSelectedToLocation = navigationState?.toLocation || undefined;
+  
+  // Scroll to status message when it appears
+  useEffect(() => {
+    if (submissionStatus === 'success' || submissionStatus === 'error') {
+      const statusElement = document.querySelector('.premium-status');
+      if (statusElement) {
+        statusElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [submissionStatus]);
 
   // If user came from bus results with Add Stops, disable switching to image/text/paste
   const isAddStopsFromSearch = navigationState?.method === 'add-stops' && navigationState?.fromSearch === true;
@@ -271,17 +281,39 @@ export const RouteContribution: React.FC = () => {
 
   return (
     <div className="premium-contribution-page">
-      {/* Compact Header */}
-      <div className="compact-header">
-        <div className="header-left">
-          <h1 className="header-title">{t('contribution.heroTitleShort', 'Share Route Knowledge')}</h1>
+      {/* Enhanced Header */}
+      <div className="compact-header enhanced">
+        <div className="header-icon-wrapper">
+          <span className="header-main-icon">🚌</span>
         </div>
-        {!AuthService.isAuthenticated() && (
-          <div className="header-welcome">
-            <span className="wave-icon">👋</span>
-            <span className="welcome-text">{t('welcome.short', 'Guest • No account needed')}</span>
+        <div className="header-content-wrapper">
+          <div className="header-top">
+            <h1 className="header-title">{t('contribution.heroTitleShort', 'Share Route Knowledge')}</h1>
+            {!AuthService.isAuthenticated() && (
+              <div className="header-welcome">
+                <span className="wave-icon">👋</span>
+                <span className="welcome-text">{t('welcome.short', 'Guest • No account needed')}</span>
+              </div>
+            )}
           </div>
-        )}
+          <p className="header-subtitle">
+            {t('contribution.subtitle', 'Help travelers by sharing bus routes, timings, and stops. Every contribution makes a difference!')}
+          </p>
+          <div className="header-benefits">
+            <div className="benefit-item">
+              <span className="benefit-icon">✅</span>
+              <span className="benefit-text">{t('contribution.benefit1', 'Quick & Easy')}</span>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">🎯</span>
+              <span className="benefit-text">{t('contribution.benefit2', 'No Login Required')}</span>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">🌟</span>
+              <span className="benefit-text">{t('contribution.benefit3', 'Help Fellow Travelers')}</span>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div className="premium-contribution-card">

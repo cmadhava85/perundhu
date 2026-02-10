@@ -200,7 +200,8 @@ public class BusScheduleController {
         try {
             List<Location> locations = busScheduleService.searchLocationsByName(query.trim());
 
-            // If locations found in database, return them with appropriate translations
+            // If locations found in database, return them with appropriate translations and
+            // route counts
             if (!locations.isEmpty()) {
                 List<LocationDTO> result = locations.stream()
                         .map(location -> {
@@ -219,15 +220,25 @@ public class BusScheduleController {
                                 }
                             }
 
-                            return LocationDTO.withTranslation(
+                            // Get route count for this location
+                            int routeCount = busScheduleService.getRouteCountForLocation(location.id().value());
+
+                            return LocationDTO.withRoutingInfo(
                                     location.id().value(),
                                     englishName,
                                     translatedName,
-                                    null, null); // Don't expose coordinates for privacy
+                                    null, null, // Don't expose coordinates for privacy
+                                    routeCount);
+                        })
+                        // Sort by route count descending (locations with more routes first)
+                        .sorted((a, b) -> {
+                            int countA = a.getRouteCount() != null ? a.getRouteCount() : 0;
+                            int countB = b.getRouteCount() != null ? b.getRouteCount() : 0;
+                            return Integer.compare(countB, countA);
                         })
                         .toList();
 
-                log.info("Found {} locations in database for query '{}' (language: {})",
+                log.info("Found {} locations in database for query '{}' (language: {}), sorted by route count",
                         result.size(), query, language);
                 return ResponseEntity.ok(result);
             }
@@ -236,21 +247,24 @@ public class BusScheduleController {
             log.info("No locations in database for '{}', falling back to Overpass API (language: {})", query,
                     language);
             try {
-                List<LocationDTO> overpassResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
-                
+                List<LocationDTO> overpassResults = geocodingService.searchTamilNaduLocations(query.trim(), 10,
+                        language);
+
                 if (!overpassResults.isEmpty()) {
-                    log.info("Found {} locations from Overpass API for query '{}' (language: {})", 
+                    log.info("Found {} locations from Overpass API for query '{}' (language: {})",
                             overpassResults.size(), query, language);
                     return ResponseEntity.ok(overpassResults);
                 }
             } catch (Exception overpassError) {
-                log.warn("Overpass search failed for '{}': {}, will return empty list to trigger client-side fallback", 
+                log.warn("Overpass search failed for '{}': {}, will return empty list to trigger client-side fallback",
                         query, overpassError.getMessage());
             }
-            
+
             // Return empty list if both database and Overpass fail/return nothing
-            // This allows frontend to fall back to instant suggestions or client-side Overpass
-            log.info("No results from database or Overpass for query '{}', returning empty for client-side fallback", query);
+            // This allows frontend to fall back to instant suggestions or client-side
+            // Overpass
+            log.info("No results from database or Overpass for query '{}', returning empty for client-side fallback",
+                    query);
             return ResponseEntity.ok(new ArrayList<>());
 
         } catch (Exception e) {
@@ -312,7 +326,8 @@ public class BusScheduleController {
                 log.info("Found {} direct buses", directBuses.size());
 
                 // Get buses passing through (intermediate stops) with language support
-                // These are buses like "Chennai → Madurai" that pass through Trichy (user's destination)
+                // These are buses like "Chennai → Madurai" that pass through Trichy (user's
+                // destination)
                 List<BusDTO> viaBuses = busScheduleService.findBusesPassingThroughLocations(fromLocationId,
                         toLocationId, lang);
                 log.info("Found {} buses via intermediate stops", viaBuses.size());
@@ -802,13 +817,14 @@ public class BusScheduleController {
             List<ConnectingRouteDTO> connectingRoutes = connectingRouteService.findConnectingRoutes(fromLocationId,
                     toLocationId, maxTransfers);
 
-            // Filter out direct routes (0 transfers) - this endpoint should only return connecting routes
+            // Filter out direct routes (0 transfers) - this endpoint should only return
+            // connecting routes
             List<ConnectingRouteDTO> filteredRoutes = connectingRoutes.stream()
                     .filter(route -> route.transfers() > 0)
                     .toList();
 
-            log.info("Returning {} connecting routes (filtered from {} total routes, removed {} direct routes)", 
-                    filteredRoutes.size(), connectingRoutes.size(), 
+            log.info("Returning {} connecting routes (filtered from {} total routes, removed {} direct routes)",
+                    filteredRoutes.size(), connectingRoutes.size(),
                     connectingRoutes.size() - filteredRoutes.size());
             return ResponseEntity.ok(filteredRoutes);
         } catch (Exception e) {
@@ -875,8 +891,7 @@ public class BusScheduleController {
                         route.totalLegs(),
                         route.journeyId(),
                         route.intermediateLocationId(),
-                        route.intermediateLocationName()
-                ))
+                        route.intermediateLocationName()))
                 .toList();
     }
 

@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useFeatureFlags } from '../../contexts/FeatureFlagsContext';
 import { 
   Settings, 
-  ToggleLeft, 
-  ToggleRight, 
   RefreshCw, 
   Shield, 
   Image, 
@@ -53,11 +51,13 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ enabled, onChange, label, d
       </div>
       <button
         type="button"
-        className={`toggle-switch ${enabled ? 'enabled' : 'disabled'}`}
+        className={`modern-toggle ${enabled ? 'enabled' : 'disabled'}`}
         onClick={() => onChange(!enabled)}
         aria-label={`Toggle ${label}`}
       >
-        {enabled ? <ToggleRight size={28} /> : <ToggleLeft size={28} />}
+        <span className="toggle-track">
+          <span className="toggle-thumb"></span>
+        </span>
       </button>
     </div>
   );
@@ -205,7 +205,7 @@ const AdminSettingsPanel: React.FC = () => {
           className={`settings-tab ${activeTab === 'features' ? 'active' : ''}`}
           onClick={() => setActiveTab('features')}
         >
-          <ToggleRight size={18} />
+          <Settings size={18} />
           {t('admin.settings.tabs.features', 'Feature Toggles')}
         </button>
         <button
@@ -315,6 +315,43 @@ const AdminSettingsPanel: React.FC = () => {
                   label={t('admin.settings.reportIssue', 'Report Issue')}
                   description={t('admin.settings.reportIssueDesc', 'Allow users to report issues with bus routes')}
                   icon={<AlertTriangle size={18} />}
+                />
+              </div>
+            </div>
+
+            {/* Bus Reviews */}
+            <div className="settings-group">
+              <h3 className="group-title">
+                <MessageSquare size={18} />
+                {t('admin.settings.busReviews', 'Bus Reviews')}
+              </h3>
+              <p className="group-description">
+                {t('admin.settings.busReviewsDesc', 'Control user review and rating features for buses')}
+              </p>
+              
+              <div className="toggles-list">
+                <ToggleSwitch
+                  enabled={flags.enableBusReviews}
+                  onChange={(v) => handleToggle('enableBusReviews', v)}
+                  label={t('admin.settings.enableBusReviews', 'Enable Bus Reviews')}
+                  description={t('admin.settings.enableBusReviewsDesc', 'Allow users to rate and review buses')}
+                  icon={<MessageSquare size={18} />}
+                />
+                
+                <ToggleSwitch
+                  enabled={flags.busReviewsRequireLogin}
+                  onChange={(v) => handleToggle('busReviewsRequireLogin', v)}
+                  label={t('admin.settings.reviewsRequireLogin', 'Require Login')}
+                  description={t('admin.settings.reviewsRequireLoginDesc', 'Users must be logged in to submit reviews')}
+                  icon={<Lock size={18} />}
+                />
+                
+                <ToggleSwitch
+                  enabled={flags.busReviewsAutoApprove}
+                  onChange={(v) => handleToggle('busReviewsAutoApprove', v)}
+                  label={t('admin.settings.reviewsAutoApprove', 'Auto-Approve Reviews')}
+                  description={t('admin.settings.reviewsAutoApproveDesc', 'Automatically approve user reviews without manual moderation')}
+                  icon={<CheckCircle size={18} />}
                 />
               </div>
             </div>

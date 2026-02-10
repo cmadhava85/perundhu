@@ -76,11 +76,8 @@ export class ApiService {
     // Request interceptor
     this.api.interceptors.request.use(
       (config) => {
-        // Add timestamp to prevent caching
-        config.params = {
-          ...config.params,
-          _: new Date().getTime()
-        };
+        // React Query handles caching via staleTime/gcTime
+        // Do NOT add cache-busting timestamps as they bypass React Query caching
         
         // Add traceId for distributed tracing
         const traceId = traceContext.newTraceId();

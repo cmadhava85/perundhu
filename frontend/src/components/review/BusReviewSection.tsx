@@ -7,6 +7,7 @@ import { useFeatureFlags } from '../../contexts/FeatureFlagsContext';
 import { StarRatingDisplay } from './StarRatingDisplay';
 import { SubmitReviewForm } from './SubmitReviewForm';
 import { ReviewList } from './ReviewList';
+import { LoginModal } from './LoginModal';
 
 // Default auth state for when AuthProvider is not available
 const defaultAuthState = { isAuthenticated: false, user: null, isLoading: false };
@@ -63,6 +64,7 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
   const [hasReviewed, setHasReviewed] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [showReviewList, setShowReviewList] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
@@ -95,8 +97,8 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
 
   const handleWriteReview = () => {
     if (flags.busReviewsRequireLogin && !isAuthenticated) {
-      // Show login prompt or redirect
-      alert(t('review.loginRequired', 'Please log in to submit a review'));
+      // Show login modal instead of alert
+      setShowLoginModal(true);
       return;
     }
     setShowReviewForm(true);
@@ -140,15 +142,15 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
           e.stopPropagation();
           setShowReviewList(true);
         }}
-        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs
+        className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs
                    bg-yellow-50 dark:bg-yellow-900/30 hover:bg-yellow-100 
                    dark:hover:bg-yellow-900/50 transition-all active:scale-95 touch-manipulation ${className}`}
-        style={{ whiteSpace: 'nowrap', minWidth: '60px', flexShrink: 0 }}
+        style={{ whiteSpace: 'nowrap', minWidth: 'auto', flexShrink: 0, fontSize: '12px' }}
       >
         <StarRatingDisplay
           rating={ratingSummary.averageRating}
           size="sm"
-          reviewCount={ratingSummary.reviewCount}
+          reviewCount={0}
           showValue={false}
         />
       </button>
@@ -209,10 +211,15 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
         <div 
           className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
           onClick={() => setShowReviewList(false)}
+          onKeyDown={(e) => e.key === 'Escape' && setShowReviewList(false)}
+          role="presentation"
         >
           <div 
             className="bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-xl shadow-2xl w-full sm:max-w-md max-h-[85vh] overflow-hidden flex flex-col animate-slide-up sm:animate-fade-in"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.key === 'Escape' && setShowReviewList(false)}
+            role="dialog"
+            aria-modal="true"
           >
             {/* Modal Header */}
             <div className="flex justify-between items-center p-4 border-b dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
@@ -237,6 +244,13 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
           </div>
         </div>
       )}
+
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={() => setShowReviewForm(true)}
+      />
     </div>
   );
 };

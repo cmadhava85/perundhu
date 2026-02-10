@@ -1,0 +1,854 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]: ℹ️
+        - generic [ref=e8]:
+          - strong [ref=e9]: Test announcement
+          - generic [ref=e10]: This is a test.
+      - button "Dismiss announcement" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: ×
+    - banner [ref=e13]:
+      - generic [ref=e14]:
+        - link "Go to home page" [ref=e16]:
+          - /url: /
+          - generic [ref=e17]: 🚌
+          - generic [ref=e18]:
+            - heading "பேருந்து" [level=1] [ref=e19]
+            - paragraph [ref=e20]: Bus in Seconds
+        - combobox "Select language" [ref=e23] [cursor=pointer]:
+          - option "🌐 English" [selected]
+          - option "🌐 தமிழ்"
+    - generic [ref=e25]:
+      - generic [ref=e27]:
+        - button "Switch to search for bus routes" [pressed] [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: 🔍
+            - generic [ref=e31]:
+              - generic [ref=e32]: Search
+              - generic [ref=e33]: Find Routes
+        - button "Switch to contribute route data" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]:
+            - img [ref=e37]
+            - generic [ref=e40]:
+              - generic [ref=e41]: Contribute
+              - generic [ref=e42]: Share Routes
+      - paragraph [ref=e46]: Discover bus routes across Tamil Nadu
+    - main [ref=e47]:
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - generic [ref=e52]: Current Search
+            - generic [ref=e54]:
+              - generic [ref=e55]: 📍 KCBT KILAMBAKKAM
+              - generic [ref=e56]: →
+              - generic [ref=e57]: 🎯 Madurai - Mattuthavani
+          - generic [ref=e58]:
+            - button "Edit" [ref=e59] [cursor=pointer]:
+              - img [ref=e60]
+              - generic [ref=e63]: Edit
+            - button "New" [ref=e64] [cursor=pointer]:
+              - img [ref=e65]
+              - generic [ref=e68]: New
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - article "Bus 137UD from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e71] [cursor=pointer]:
+              - generic [ref=e72]:
+                - generic [ref=e73]: ⏱️ Leaves in 1h 28m
+                - generic [ref=e74]: 🚀 Next Bus
+              - generic [ref=e75]:
+                - generic [ref=e76]:
+                  - heading "SETC • SETC" [level=3] [ref=e77]
+                  - paragraph [ref=e78]: "Bus #137UD • Standard"
+                - generic [ref=e79]:
+                  - generic [ref=e80]: ⭐4
+                  - generic [ref=e81]: (0 reviews)
+              - generic [ref=e82]:
+                - generic [ref=e83]:
+                  - generic [ref=e84]: 19:45
+                  - generic [ref=e85]: KCBT KILAMBAKKAM
+                - generic [ref=e88]:
+                  - generic [ref=e89]: 8h 30m
+                  - generic [ref=e90]: 🚌
+                - generic [ref=e92]:
+                  - generic [ref=e93]: 04:15
+                  - generic [ref=e94]: Madurai - Mattuthavani
+              - button "Hide all stops for SETC (10 stops)" [expanded] [ref=e95]:
+                - generic [ref=e96]:
+                  - generic [ref=e97]: 10 stops
+                  - generic [ref=e98]: ▼ View All Stops
+              - generic [ref=e99]:
+                - heading "📍 All Stops" [level=4] [ref=e101]:
+                  - generic [ref=e102]: 📍
+                  - text: All Stops
+                - generic [ref=e103]:
+                  - generic [ref=e104]:
+                    - generic [ref=e105]: "1"
+                    - generic [ref=e106]:
+                      - generic [ref=e107]: CHENNAI KALAIGNAR CBT
+                      - generic [ref=e108]:
+                        - generic [ref=e109]: "Arr: 19:45"
+                        - generic [ref=e110]: "Dep: 19:45"
+                  - generic [ref=e111]:
+                    - generic [ref=e112]: "2"
+                    - generic [ref=e113]:
+                      - generic [ref=e114]: GUDUVANCHERY
+                      - generic [ref=e115]:
+                        - generic [ref=e116]: "Arr: 19:50"
+                        - generic [ref=e117]: "Dep: 19:50"
+                  - generic [ref=e118]:
+                    - generic [ref=e119]: "3"
+                    - generic [ref=e120]:
+                      - generic [ref=e121]: SRM UNIVERSITY
+                      - generic [ref=e122]:
+                        - generic [ref=e123]: "Arr: 19:55"
+                        - generic [ref=e124]: "Dep: 19:55"
+                  - generic [ref=e125]:
+                    - generic [ref=e126]: "4"
+                    - generic [ref=e127]:
+                      - generic [ref=e128]: MARAIMALAI NAGAR BUSSTOP
+                      - generic [ref=e129]:
+                        - generic [ref=e130]: "Arr: 20:05"
+                        - generic [ref=e131]: "Dep: 20:05"
+                  - generic [ref=e132]:
+                    - generic [ref=e133]: "5"
+                    - generic [ref=e134]:
+                      - generic [ref=e135]: MAHINDRA CITY
+                      - generic [ref=e136]:
+                        - generic [ref=e137]: "Arr: 20:15"
+                        - generic [ref=e138]: "Dep: 20:15"
+                  - generic [ref=e139]:
+                    - generic [ref=e140]: "6"
+                    - generic [ref=e141]:
+                      - generic [ref=e142]: CHENGALPATTU TOLL
+                      - generic [ref=e143]:
+                        - generic [ref=e144]: "Arr: 20:25"
+                        - generic [ref=e145]: "Dep: 20:25"
+                  - generic [ref=e146]:
+                    - generic [ref=e147]: "7"
+                    - generic [ref=e148]:
+                      - generic [ref=e149]: CHENGALPATTU BYPASS
+                      - generic [ref=e150]:
+                        - generic [ref=e151]: "Arr: 20:35"
+                        - generic [ref=e152]: "Dep: 20:35"
+                  - generic [ref=e153]:
+                    - generic [ref=e154]: "8"
+                    - generic [ref=e155]:
+                      - generic [ref=e156]: MELMARUVATHUR BUS STOP
+                      - generic [ref=e157]:
+                        - generic [ref=e158]: "Arr: 21:05"
+                        - generic [ref=e159]: "Dep: 21:05"
+                  - generic [ref=e160]:
+                    - generic [ref=e161]: "9"
+                    - generic [ref=e162]:
+                      - generic [ref=e163]: TINDIVANAM
+                      - generic [ref=e164]:
+                        - generic [ref=e165]: "Arr: 21:25"
+                        - generic [ref=e166]: "Dep: 21:25"
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: "10"
+                    - generic [ref=e169]:
+                      - generic [ref=e170]: MATTUTHAVANI BS
+                      - generic [ref=e171]:
+                        - generic [ref=e172]: "Arr: 04:15"
+                        - generic [ref=e173]: "Dep: 04:15"
+              - generic [ref=e174]:
+                - button "Add stops to SETC (137UD)" [ref=e175]: ➕ Add Stops
+                - button "Report issue with SETC (137UD)" [ref=e176]: ⚠️ Report
+                - button "Share SETC (137UD) details" [ref=e177]: 📤 Share
+            - article "Bus 137LB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e178] [cursor=pointer]:
+              - generic [ref=e180]: ⏱️ Leaves in 1h 44m
+              - generic [ref=e181]:
+                - generic [ref=e182]:
+                  - heading "SETC • SETC" [level=3] [ref=e183]
+                  - paragraph [ref=e184]: "Bus #137LB • Standard"
+                - generic [ref=e185]:
+                  - generic [ref=e186]: ⭐4
+                  - generic [ref=e187]: (0 reviews)
+              - generic [ref=e188]:
+                - generic [ref=e189]:
+                  - generic [ref=e190]: 20:01
+                  - generic [ref=e191]: KCBT KILAMBAKKAM
+                - generic [ref=e194]:
+                  - generic [ref=e195]: 8h 30m
+                  - generic [ref=e196]: 🚌
+                - generic [ref=e198]:
+                  - generic [ref=e199]: 04:31
+                  - generic [ref=e200]: Madurai - Mattuthavani
+              - button "Hide all stops for SETC (9 stops)" [expanded] [active] [ref=e201]:
+                - generic [ref=e202]:
+                  - generic [ref=e203]: 9 stops
+                  - generic [ref=e204]: ▼ View All Stops
+              - generic [ref=e205]:
+                - heading "📍 All Stops" [level=4] [ref=e207]:
+                  - generic [ref=e208]: 📍
+                  - text: All Stops
+                - generic [ref=e209]:
+                  - generic [ref=e210]:
+                    - generic [ref=e211]: "1"
+                    - generic [ref=e212]:
+                      - generic [ref=e213]: CHENNAI KALAIGNAR CBT
+                      - generic [ref=e214]:
+                        - generic [ref=e215]: "Arr: 20:01"
+                        - generic [ref=e216]: "Dep: 20:01"
+                  - generic [ref=e217]:
+                    - generic [ref=e218]: "2"
+                    - generic [ref=e219]:
+                      - generic [ref=e220]: GUDUVANCHERY
+                      - generic [ref=e221]:
+                        - generic [ref=e222]: "Arr: 20:06"
+                        - generic [ref=e223]: "Dep: 20:06"
+                  - generic [ref=e224]:
+                    - generic [ref=e225]: "3"
+                    - generic [ref=e226]:
+                      - generic [ref=e227]: SRM UNIVERSITY
+                      - generic [ref=e228]:
+                        - generic [ref=e229]: "Arr: 20:11"
+                        - generic [ref=e230]: "Dep: 20:11"
+                  - generic [ref=e231]:
+                    - generic [ref=e232]: "4"
+                    - generic [ref=e233]:
+                      - generic [ref=e234]: MARAIMALAI NAGAR BUSSTOP
+                      - generic [ref=e235]:
+                        - generic [ref=e236]: "Arr: 20:21"
+                        - generic [ref=e237]: "Dep: 20:21"
+                  - generic [ref=e238]:
+                    - generic [ref=e239]: "5"
+                    - generic [ref=e240]:
+                      - generic [ref=e241]: MAHINDRA CITY
+                      - generic [ref=e242]:
+                        - generic [ref=e243]: "Arr: 20:31"
+                        - generic [ref=e244]: "Dep: 20:31"
+                  - generic [ref=e245]:
+                    - generic [ref=e246]: "6"
+                    - generic [ref=e247]:
+                      - generic [ref=e248]: CHENGALPATTU TOLL
+                      - generic [ref=e249]:
+                        - generic [ref=e250]: "Arr: 20:41"
+                        - generic [ref=e251]: "Dep: 20:41"
+                  - generic [ref=e252]:
+                    - generic [ref=e253]: "7"
+                    - generic [ref=e254]:
+                      - generic [ref=e255]: CHENGALPATTU BYPASS
+                      - generic [ref=e256]:
+                        - generic [ref=e257]: "Arr: 20:51"
+                        - generic [ref=e258]: "Dep: 20:51"
+                  - generic [ref=e259]:
+                    - generic [ref=e260]: "8"
+                    - generic [ref=e261]:
+                      - generic [ref=e262]: MELMARUVATHUR BUS STOP
+                      - generic [ref=e263]:
+                        - generic [ref=e264]: "Arr: 21:21"
+                        - generic [ref=e265]: "Dep: 21:21"
+                  - generic [ref=e266]:
+                    - generic [ref=e267]: "9"
+                    - generic [ref=e268]:
+                      - generic [ref=e269]: MATTUTHAVANI BS
+                      - generic [ref=e270]:
+                        - generic [ref=e271]: "Arr: 04:31"
+                        - generic [ref=e272]: "Dep: 04:31"
+              - generic [ref=e273]:
+                - button "Add stops to SETC (137LB)" [ref=e274]: ➕ Add Stops
+                - button "Report issue with SETC (137LB)" [ref=e275]: ⚠️ Report
+                - button "Share SETC (137LB) details" [ref=e276]: 📤 Share
+            - article "Bus 137AB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e277] [cursor=pointer]:
+              - generic [ref=e279]: ⏱️ Leaves in 2h 13m
+              - generic [ref=e280]:
+                - generic [ref=e281]:
+                  - heading "SETC • SETC" [level=3] [ref=e282]
+                  - paragraph [ref=e283]: "Bus #137AB • Standard"
+                - generic [ref=e284]:
+                  - generic [ref=e285]: ⭐4
+                  - generic [ref=e286]: (0 reviews)
+              - generic [ref=e287]:
+                - generic [ref=e288]:
+                  - generic [ref=e289]: 20:30
+                  - generic [ref=e290]: KCBT KILAMBAKKAM
+                - generic [ref=e293]:
+                  - generic [ref=e294]: 8h 30m
+                  - generic [ref=e295]: 🚌
+                - generic [ref=e297]:
+                  - generic [ref=e298]: 05:00
+                  - generic [ref=e299]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e300]:
+                - generic [ref=e301]:
+                  - generic [ref=e302]: 10 stops
+                  - generic [ref=e303]: ▶ View All Stops
+              - generic [ref=e304]:
+                - button "Add stops to SETC (137AB)" [ref=e305]: ➕ Add Stops
+                - button "Report issue with SETC (137AB)" [ref=e306]: ⚠️ Report
+                - button "Share SETC (137AB) details" [ref=e307]: 📤 Share
+            - article "Bus 137NS from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e308] [cursor=pointer]:
+              - generic [ref=e310]: ⏱️ Leaves in 2h 13m
+              - generic [ref=e311]:
+                - generic [ref=e312]:
+                  - heading "SETC • SETC" [level=3] [ref=e313]
+                  - paragraph [ref=e314]: "Bus #137NS • Standard"
+                - generic [ref=e315]:
+                  - generic [ref=e316]: ⭐4
+                  - generic [ref=e317]: (0 reviews)
+              - generic [ref=e318]:
+                - generic [ref=e319]:
+                  - generic [ref=e320]: 20:30
+                  - generic [ref=e321]: KCBT KILAMBAKKAM
+                - generic [ref=e324]:
+                  - generic [ref=e325]: 8h 30m
+                  - generic [ref=e326]: 🚌
+                - generic [ref=e328]:
+                  - generic [ref=e329]: 05:00
+                  - generic [ref=e330]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (9 stops)" [ref=e331]:
+                - generic [ref=e332]:
+                  - generic [ref=e333]: 9 stops
+                  - generic [ref=e334]: ▶ View All Stops
+              - generic [ref=e335]:
+                - button "Add stops to SETC (137NS)" [ref=e336]: ➕ Add Stops
+                - button "Report issue with SETC (137NS)" [ref=e337]: ⚠️ Report
+                - button "Share SETC (137NS) details" [ref=e338]: 📤 Share
+            - article "Bus 137NS from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e339] [cursor=pointer]:
+              - generic [ref=e341]: ⏱️ Leaves in 2h 43m
+              - generic [ref=e342]:
+                - generic [ref=e343]:
+                  - heading "SETC • SETC" [level=3] [ref=e344]
+                  - paragraph [ref=e345]: "Bus #137NS • Standard"
+                - generic [ref=e346]:
+                  - generic [ref=e347]: ⭐4
+                  - generic [ref=e348]: (0 reviews)
+              - generic [ref=e349]:
+                - generic [ref=e350]:
+                  - generic [ref=e351]: 21:00
+                  - generic [ref=e352]: KCBT KILAMBAKKAM
+                - generic [ref=e355]:
+                  - generic [ref=e356]: 8h 30m
+                  - generic [ref=e357]: 🚌
+                - generic [ref=e359]:
+                  - generic [ref=e360]: 05:30
+                  - generic [ref=e361]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (9 stops)" [ref=e362]:
+                - generic [ref=e363]:
+                  - generic [ref=e364]: 9 stops
+                  - generic [ref=e365]: ▶ View All Stops
+              - generic [ref=e366]:
+                - button "Add stops to SETC (137NS)" [ref=e367]: ➕ Add Stops
+                - button "Report issue with SETC (137NS)" [ref=e368]: ⚠️ Report
+                - button "Share SETC (137NS) details" [ref=e369]: 📤 Share
+            - article "Bus 137AB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e370] [cursor=pointer]:
+              - generic [ref=e372]: ⏱️ Leaves in 3h 13m
+              - generic [ref=e373]:
+                - generic [ref=e374]:
+                  - heading "SETC • SETC" [level=3] [ref=e375]
+                  - paragraph [ref=e376]: "Bus #137AB • Standard"
+                - generic [ref=e377]:
+                  - generic [ref=e378]: ⭐4
+                  - generic [ref=e379]: (0 reviews)
+              - generic [ref=e380]:
+                - generic [ref=e381]:
+                  - generic [ref=e382]: 21:30
+                  - generic [ref=e383]: KCBT KILAMBAKKAM
+                - generic [ref=e386]:
+                  - generic [ref=e387]: 8h 30m
+                  - generic [ref=e388]: 🚌
+                - generic [ref=e390]:
+                  - generic [ref=e391]: 06:00
+                  - generic [ref=e392]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e393]:
+                - generic [ref=e394]:
+                  - generic [ref=e395]: 10 stops
+                  - generic [ref=e396]: ▶ View All Stops
+              - generic [ref=e397]:
+                - button "Add stops to SETC (137AB)" [ref=e398]: ➕ Add Stops
+                - button "Report issue with SETC (137AB)" [ref=e399]: ⚠️ Report
+                - button "Share SETC (137AB) details" [ref=e400]: 📤 Share
+            - article "Bus 137MS from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e401] [cursor=pointer]:
+              - generic [ref=e403]: ⏱️ Leaves in 3h 13m
+              - generic [ref=e404]:
+                - generic [ref=e405]:
+                  - heading "SETC • SETC" [level=3] [ref=e406]
+                  - paragraph [ref=e407]: "Bus #137MS • Standard"
+                - generic [ref=e408]:
+                  - generic [ref=e409]: ⭐4
+                  - generic [ref=e410]: (0 reviews)
+              - generic [ref=e411]:
+                - generic [ref=e412]:
+                  - generic [ref=e413]: 21:30
+                  - generic [ref=e414]: KCBT KILAMBAKKAM
+                - generic [ref=e417]:
+                  - generic [ref=e418]: 8h 30m
+                  - generic [ref=e419]: 🚌
+                - generic [ref=e421]:
+                  - generic [ref=e422]: 06:00
+                  - generic [ref=e423]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e424]:
+                - generic [ref=e425]:
+                  - generic [ref=e426]: 10 stops
+                  - generic [ref=e427]: ▶ View All Stops
+              - generic [ref=e428]:
+                - button "Add stops to SETC (137MS)" [ref=e429]: ➕ Add Stops
+                - button "Report issue with SETC (137MS)" [ref=e430]: ⚠️ Report
+                - button "Share SETC (137MS) details" [ref=e431]: 📤 Share
+            - article "Bus 137LB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e432] [cursor=pointer]:
+              - generic [ref=e434]: ⏱️ Leaves in 3h 48m
+              - generic [ref=e435]:
+                - generic [ref=e436]:
+                  - heading "SETC • SETC" [level=3] [ref=e437]
+                  - paragraph [ref=e438]: "Bus #137LB • Standard"
+                - generic [ref=e439]:
+                  - generic [ref=e440]: ⭐4
+                  - generic [ref=e441]: (0 reviews)
+              - generic [ref=e442]:
+                - generic [ref=e443]:
+                  - generic [ref=e444]: 22:05
+                  - generic [ref=e445]: KCBT KILAMBAKKAM
+                - generic [ref=e448]:
+                  - generic [ref=e449]: 8h 30m
+                  - generic [ref=e450]: 🚌
+                - generic [ref=e452]:
+                  - generic [ref=e453]: 06:35
+                  - generic [ref=e454]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (9 stops)" [ref=e455]:
+                - generic [ref=e456]:
+                  - generic [ref=e457]: 9 stops
+                  - generic [ref=e458]: ▶ View All Stops
+              - generic [ref=e459]:
+                - button "Add stops to SETC (137LB)" [ref=e460]: ➕ Add Stops
+                - button "Report issue with SETC (137LB)" [ref=e461]: ⚠️ Report
+                - button "Share SETC (137LB) details" [ref=e462]: 📤 Share
+            - article "Bus 137NS from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e463] [cursor=pointer]:
+              - generic [ref=e465]: ⏱️ Leaves in 4h 13m
+              - generic [ref=e466]:
+                - generic [ref=e467]:
+                  - heading "SETC • SETC" [level=3] [ref=e468]
+                  - paragraph [ref=e469]: "Bus #137NS • Standard"
+                - generic [ref=e470]:
+                  - generic [ref=e471]: ⭐4
+                  - generic [ref=e472]: (0 reviews)
+              - generic [ref=e473]:
+                - generic [ref=e474]:
+                  - generic [ref=e475]: 22:30
+                  - generic [ref=e476]: KCBT KILAMBAKKAM
+                - generic [ref=e479]:
+                  - generic [ref=e480]: 8h 30m
+                  - generic [ref=e481]: 🚌
+                - generic [ref=e483]:
+                  - generic [ref=e484]: 07:00
+                  - generic [ref=e485]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (9 stops)" [ref=e486]:
+                - generic [ref=e487]:
+                  - generic [ref=e488]: 9 stops
+                  - generic [ref=e489]: ▶ View All Stops
+              - generic [ref=e490]:
+                - button "Add stops to SETC (137NS)" [ref=e491]: ➕ Add Stops
+                - button "Report issue with SETC (137NS)" [ref=e492]: ⚠️ Report
+                - button "Share SETC (137NS) details" [ref=e493]: 📤 Share
+            - article "Bus 137AB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e494] [cursor=pointer]:
+              - generic [ref=e496]: ⏱️ Leaves in 4h 13m
+              - generic [ref=e497]:
+                - generic [ref=e498]:
+                  - heading "SETC • SETC" [level=3] [ref=e499]
+                  - paragraph [ref=e500]: "Bus #137AB • Standard"
+                - generic [ref=e501]:
+                  - generic [ref=e502]: ⭐4
+                  - generic [ref=e503]: (0 reviews)
+              - generic [ref=e504]:
+                - generic [ref=e505]:
+                  - generic [ref=e506]: 22:30
+                  - generic [ref=e507]: KCBT KILAMBAKKAM
+                - generic [ref=e510]:
+                  - generic [ref=e511]: 8h 30m
+                  - generic [ref=e512]: 🚌
+                - generic [ref=e514]:
+                  - generic [ref=e515]: 07:00
+                  - generic [ref=e516]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e517]:
+                - generic [ref=e518]:
+                  - generic [ref=e519]: 10 stops
+                  - generic [ref=e520]: ▶ View All Stops
+              - generic [ref=e521]:
+                - button "Add stops to SETC (137AB)" [ref=e522]: ➕ Add Stops
+                - button "Report issue with SETC (137AB)" [ref=e523]: ⚠️ Report
+                - button "Share SETC (137AB) details" [ref=e524]: 📤 Share
+            - article "Bus 137UD from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e525] [cursor=pointer]:
+              - generic [ref=e527]: ⏱️ Leaves in 4h 43m
+              - generic [ref=e528]:
+                - generic [ref=e529]:
+                  - heading "SETC • SETC" [level=3] [ref=e530]
+                  - paragraph [ref=e531]: "Bus #137UD • Standard"
+                - generic [ref=e532]:
+                  - generic [ref=e533]: ⭐4
+                  - generic [ref=e534]: (0 reviews)
+              - generic [ref=e535]:
+                - generic [ref=e536]:
+                  - generic [ref=e537]: 23:00
+                  - generic [ref=e538]: KCBT KILAMBAKKAM
+                - generic [ref=e541]:
+                  - generic [ref=e542]: 8h 30m
+                  - generic [ref=e543]: 🚌
+                - generic [ref=e545]:
+                  - generic [ref=e546]: 07:30
+                  - generic [ref=e547]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e548]:
+                - generic [ref=e549]:
+                  - generic [ref=e550]: 10 stops
+                  - generic [ref=e551]: ▶ View All Stops
+              - generic [ref=e552]:
+                - button "Add stops to SETC (137UD)" [ref=e553]: ➕ Add Stops
+                - button "Report issue with SETC (137UD)" [ref=e554]: ⚠️ Report
+                - button "Share SETC (137UD) details" [ref=e555]: 📤 Share
+            - article "Bus 137LB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e556] [cursor=pointer]:
+              - generic [ref=e558]: ⏱️ Leaves in 4h 44m
+              - generic [ref=e559]:
+                - generic [ref=e560]:
+                  - heading "SETC • SETC" [level=3] [ref=e561]
+                  - paragraph [ref=e562]: "Bus #137LB • Standard"
+                - generic [ref=e563]:
+                  - generic [ref=e564]: ⭐4
+                  - generic [ref=e565]: (0 reviews)
+              - generic [ref=e566]:
+                - generic [ref=e567]:
+                  - generic [ref=e568]: 23:01
+                  - generic [ref=e569]: KCBT KILAMBAKKAM
+                - generic [ref=e572]:
+                  - generic [ref=e573]: 8h 30m
+                  - generic [ref=e574]: 🚌
+                - generic [ref=e576]:
+                  - generic [ref=e577]: 07:31
+                  - generic [ref=e578]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (8 stops)" [ref=e579]:
+                - generic [ref=e580]:
+                  - generic [ref=e581]: 8 stops
+                  - generic [ref=e582]: ▶ View All Stops
+              - generic [ref=e583]:
+                - button "Add stops to SETC (137LB)" [ref=e584]: ➕ Add Stops
+                - button "Report issue with SETC (137LB)" [ref=e585]: ⚠️ Report
+                - button "Share SETC (137LB) details" [ref=e586]: 📤 Share
+            - article "Bus 137AB from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e587] [cursor=pointer]:
+              - generic [ref=e589]: ⏱️ Leaves in 5h 13m
+              - generic [ref=e590]:
+                - generic [ref=e591]:
+                  - heading "SETC • SETC" [level=3] [ref=e592]
+                  - paragraph [ref=e593]: "Bus #137AB • Standard"
+                - generic [ref=e594]:
+                  - generic [ref=e595]: ⭐4
+                  - generic [ref=e596]: (0 reviews)
+              - generic [ref=e597]:
+                - generic [ref=e598]:
+                  - generic [ref=e599]: 23:30
+                  - generic [ref=e600]: KCBT KILAMBAKKAM
+                - generic [ref=e603]:
+                  - generic [ref=e604]: 8h 30m
+                  - generic [ref=e605]: 🚌
+                - generic [ref=e607]:
+                  - generic [ref=e608]: 08:00
+                  - generic [ref=e609]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e610]:
+                - generic [ref=e611]:
+                  - generic [ref=e612]: 10 stops
+                  - generic [ref=e613]: ▶ View All Stops
+              - generic [ref=e614]:
+                - button "Add stops to SETC (137AB)" [ref=e615]: ➕ Add Stops
+                - button "Report issue with SETC (137AB)" [ref=e616]: ⚠️ Report
+                - button "Share SETC (137AB) details" [ref=e617]: 📤 Share
+            - article "Bus 137AL from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e618] [cursor=pointer]:
+              - generic [ref=e620]: ⏱️ Leaves in 5h 13m
+              - generic [ref=e621]:
+                - generic [ref=e622]:
+                  - heading "SETC • SETC" [level=3] [ref=e623]
+                  - paragraph [ref=e624]: "Bus #137AL • Standard"
+                - generic [ref=e625]:
+                  - generic [ref=e626]: ⭐4
+                  - generic [ref=e627]: (0 reviews)
+              - generic [ref=e628]:
+                - generic [ref=e629]:
+                  - generic [ref=e630]: 23:30
+                  - generic [ref=e631]: KCBT KILAMBAKKAM
+                - generic [ref=e634]:
+                  - generic [ref=e635]: 8h 30m
+                  - generic [ref=e636]: 🚌
+                - generic [ref=e638]:
+                  - generic [ref=e639]: 08:00
+                  - generic [ref=e640]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (8 stops)" [ref=e641]:
+                - generic [ref=e642]:
+                  - generic [ref=e643]: 8 stops
+                  - generic [ref=e644]: ▶ View All Stops
+              - generic [ref=e645]:
+                - button "Add stops to SETC (137AL)" [ref=e646]: ➕ Add Stops
+                - button "Report issue with SETC (137AL)" [ref=e647]: ⚠️ Report
+                - button "Share SETC (137AL) details" [ref=e648]: 📤 Share
+            - article "Bus 137AC from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e649] [cursor=pointer]:
+              - generic [ref=e651]: ⏱️ Leaves in 5h 13m
+              - generic [ref=e652]:
+                - generic [ref=e653]:
+                  - heading "SETC • SETC" [level=3] [ref=e654]
+                  - paragraph [ref=e655]: "Bus #137AC • Standard"
+                - generic [ref=e656]:
+                  - generic [ref=e657]: ⭐4
+                  - generic [ref=e658]: (0 reviews)
+              - generic [ref=e659]:
+                - generic [ref=e660]:
+                  - generic [ref=e661]: 23:30
+                  - generic [ref=e662]: KCBT KILAMBAKKAM
+                - generic [ref=e665]:
+                  - generic [ref=e666]: 8h 30m
+                  - generic [ref=e667]: 🚌
+                - generic [ref=e669]:
+                  - generic [ref=e670]: 08:00
+                  - generic [ref=e671]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (10 stops)" [ref=e672]:
+                - generic [ref=e673]:
+                  - generic [ref=e674]: 10 stops
+                  - generic [ref=e675]: ▶ View All Stops
+              - generic [ref=e676]:
+                - button "Add stops to SETC (137AC)" [ref=e677]: ➕ Add Stops
+                - button "Report issue with SETC (137AC)" [ref=e678]: ⚠️ Report
+                - button "Share SETC (137AC) details" [ref=e679]: 📤 Share
+            - article "Bus 123 from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e680] [cursor=pointer]:
+              - generic [ref=e682]:
+                - generic [ref=e683]:
+                  - heading "123 • 123" [level=3] [ref=e684]
+                  - paragraph [ref=e685]: "Bus #123 • Standard"
+                - generic [ref=e686]:
+                  - generic [ref=e687]: ⭐4
+                  - generic [ref=e688]: (0 reviews)
+              - generic [ref=e689]:
+                - generic [ref=e690]:
+                  - generic [ref=e691]: 00:00
+                  - generic [ref=e692]: KCBT KILAMBAKKAM
+                - generic [ref=e695]:
+                  - generic [ref=e696]: 8h 0m
+                  - generic [ref=e697]: 🚌
+                - generic [ref=e699]:
+                  - generic [ref=e700]: 08:00
+                  - generic [ref=e701]: Madurai - Mattuthavani
+              - button "Show all stops for 123 (2 stops)" [ref=e702]:
+                - generic [ref=e703]:
+                  - generic [ref=e704]: 2 stops
+                  - generic [ref=e705]: ▶ View All Stops
+              - generic [ref=e706]:
+                - button "Add stops to 123 (123)" [ref=e707]: ➕ Add Stops
+                - button "Report issue with 123 (123)" [ref=e708]: ⚠️ Report
+                - button "Share 123 (123) details" [ref=e709]: 📤 Share
+            - article "Bus 1234 from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e710] [cursor=pointer]:
+              - generic [ref=e712]:
+                - generic [ref=e713]:
+                  - heading "1234 • 1234" [level=3] [ref=e714]
+                  - paragraph [ref=e715]: "Bus #1234 • Standard"
+                - generic [ref=e716]:
+                  - generic [ref=e717]: ⭐4
+                  - generic [ref=e718]: (0 reviews)
+              - generic [ref=e719]:
+                - generic [ref=e720]:
+                  - generic [ref=e721]: 00:05
+                  - generic [ref=e722]: KCBT KILAMBAKKAM
+                - generic [ref=e725]:
+                  - generic [ref=e726]: 7h 25m
+                  - generic [ref=e727]: 🚌
+                - generic [ref=e729]:
+                  - generic [ref=e730]: 07:30
+                  - generic [ref=e731]: Madurai - Mattuthavani
+              - button "Show all stops for 1234 (2 stops)" [ref=e732]:
+                - generic [ref=e733]:
+                  - generic [ref=e734]: 2 stops
+                  - generic [ref=e735]: ▶ View All Stops
+              - generic [ref=e736]:
+                - button "Add stops to 1234 (1234)" [ref=e737]: ➕ Add Stops
+                - button "Report issue with 1234 (1234)" [ref=e738]: ⚠️ Report
+                - button "Share 1234 (1234) details" [ref=e739]: 📤 Share
+            - article "Bus 137NS from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e740] [cursor=pointer]:
+              - generic [ref=e742]:
+                - generic [ref=e743]:
+                  - heading "SETC • SETC" [level=3] [ref=e744]
+                  - paragraph [ref=e745]: "Bus #137NS • Standard"
+                - generic [ref=e746]:
+                  - generic [ref=e747]: ⭐4
+                  - generic [ref=e748]: (0 reviews)
+              - generic [ref=e749]:
+                - generic [ref=e750]:
+                  - generic [ref=e751]: 04:00
+                  - generic [ref=e752]: KCBT KILAMBAKKAM
+                - generic [ref=e755]:
+                  - generic [ref=e756]: 8h 30m
+                  - generic [ref=e757]: 🚌
+                - generic [ref=e759]:
+                  - generic [ref=e760]: 12:30
+                  - generic [ref=e761]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (9 stops)" [ref=e762]:
+                - generic [ref=e763]:
+                  - generic [ref=e764]: 9 stops
+                  - generic [ref=e765]: ▶ View All Stops
+              - generic [ref=e766]:
+                - button "Add stops to SETC (137NS)" [ref=e767]: ➕ Add Stops
+                - button "Report issue with SETC (137NS)" [ref=e768]: ⚠️ Report
+                - button "Share SETC (137NS) details" [ref=e769]: 📤 Share
+            - article "Bus 137UD from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e770] [cursor=pointer]:
+              - generic [ref=e772]:
+                - generic [ref=e773]:
+                  - heading "SETC • SETC" [level=3] [ref=e774]
+                  - paragraph [ref=e775]: "Bus #137UD • Standard"
+                - generic [ref=e776]:
+                  - generic [ref=e777]: ⭐4
+                  - generic [ref=e778]: (0 reviews)
+              - generic [ref=e779]:
+                - generic [ref=e780]:
+                  - generic [ref=e781]: 05:00
+                  - generic [ref=e782]: KCBT KILAMBAKKAM
+                - generic [ref=e785]:
+                  - generic [ref=e786]: 8h 30m
+                  - generic [ref=e787]: 🚌
+                - generic [ref=e789]:
+                  - generic [ref=e790]: 13:30
+                  - generic [ref=e791]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (11 stops)" [ref=e792]:
+                - generic [ref=e793]:
+                  - generic [ref=e794]: 11 stops
+                  - generic [ref=e795]: ▶ View All Stops
+              - generic [ref=e796]:
+                - button "Add stops to SETC (137UD)" [ref=e797]: ➕ Add Stops
+                - button "Report issue with SETC (137UD)" [ref=e798]: ⚠️ Report
+                - button "Share SETC (137UD) details" [ref=e799]: 📤 Share
+            - article "Bus 137UD from KCBT KILAMBAKKAM to Madurai - Mattuthavani" [ref=e800] [cursor=pointer]:
+              - generic [ref=e802]:
+                - generic [ref=e803]:
+                  - heading "SETC • SETC" [level=3] [ref=e804]
+                  - paragraph [ref=e805]: "Bus #137UD • Standard"
+                - generic [ref=e806]:
+                  - generic [ref=e807]: ⭐4
+                  - generic [ref=e808]: (0 reviews)
+              - generic [ref=e809]:
+                - generic [ref=e810]:
+                  - generic [ref=e811]: 06:00
+                  - generic [ref=e812]: KCBT KILAMBAKKAM
+                - generic [ref=e815]:
+                  - generic [ref=e816]: 8h 30m
+                  - generic [ref=e817]: 🚌
+                - generic [ref=e819]:
+                  - generic [ref=e820]: 14:30
+                  - generic [ref=e821]: Madurai - Mattuthavani
+              - button "Show all stops for SETC (11 stops)" [ref=e822]:
+                - generic [ref=e823]:
+                  - generic [ref=e824]: 11 stops
+                  - generic [ref=e825]: ▶ View All Stops
+              - generic [ref=e826]:
+                - button "Add stops to SETC (137UD)" [ref=e827]: ➕ Add Stops
+                - button "Report issue with SETC (137UD)" [ref=e828]: ⚠️ Report
+                - button "Share SETC (137UD) details" [ref=e829]: 📤 Share
+          - generic [ref=e830]:
+            - generic [ref=e831]: Showing 20 of 33 results
+            - button "Load More Buses" [ref=e832] [cursor=pointer]:
+              - img [ref=e833]
+              - generic [ref=e835]: Load More Buses
+        - generic [ref=e837]:
+          - generic [ref=e841]: Loading map...
+          - generic [ref=e842]:
+            - generic:
+              - generic [ref=e843]:
+                - button "Zoom in" [ref=e844] [cursor=pointer]: +
+                - button "Zoom out" [ref=e845] [cursor=pointer]: −
+              - link "Leaflet" [ref=e847]:
+                - /url: https://leafletjs.com
+                - img [ref=e848]
+                - text: Leaflet
+          - generic [ref=e852]:
+            - generic [ref=e853]:
+              - generic [ref=e854]: 📍
+              - generic [ref=e855]: Origin
+            - generic [ref=e856]:
+              - generic [ref=e857]: 🎯
+              - generic [ref=e858]: Destination
+            - generic [ref=e859]:
+              - generic [ref=e860]: 🚏
+              - generic [ref=e861]: 10 Stops
+    - contentinfo [ref=e862]:
+      - generic [ref=e863]:
+        - generic [ref=e864]:
+          - generic [ref=e865]:
+            - img [ref=e867]
+            - generic [ref=e871]: 43K+
+            - generic [ref=e872]: Bus Routes
+          - generic [ref=e873]:
+            - img [ref=e875]
+            - generic [ref=e880]: 4K+
+            - generic [ref=e881]: Contributors
+          - generic [ref=e882]:
+            - img [ref=e884]
+            - generic [ref=e887]: 41K+
+            - generic [ref=e888]: Cities Covered
+          - generic [ref=e889]:
+            - generic [ref=e890]: 👥
+            - generic [ref=e891]: 45K+
+            - generic [ref=e892]: Daily Users
+        - generic [ref=e893]:
+          - generic [ref=e894]:
+            - generic [ref=e895]:
+              - generic [ref=e896]: 🚌
+              - generic [ref=e897]:
+                - heading "பேருந்து" [level=2] [ref=e898]
+                - generic [ref=e899]: Perundhu
+            - paragraph [ref=e900]: Community-powered bus schedule platform for Tamil Nadu. Helping commuters find accurate bus timings.
+            - generic [ref=e901]:
+              - link "Twitter" [ref=e902]:
+                - /url: https://twitter.com/perundhu
+                - img [ref=e904]
+              - link "Facebook" [ref=e906]:
+                - /url: https://facebook.com/perundhu
+                - img [ref=e908]
+              - link "Instagram" [ref=e910]:
+                - /url: https://instagram.com/perundhu
+                - img [ref=e912]
+              - link "Email" [ref=e915]:
+                - /url: mailto:support@perundhu.in
+                - img [ref=e917]
+          - generic [ref=e920]:
+            - heading "Quick Links" [level=3] [ref=e921]
+            - generic [ref=e922]:
+              - link "About Us" [ref=e923]:
+                - /url: /about
+                - img [ref=e925]
+                - text: About Us
+              - link "FAQ" [ref=e927]:
+                - /url: /faq
+                - img [ref=e929]
+                - text: FAQ
+              - link "Contact Us" [ref=e932]:
+                - /url: /contact
+                - img [ref=e934]
+                - text: Contact Us
+          - generic [ref=e937]:
+            - heading "Legal" [level=3] [ref=e938]
+            - generic [ref=e939]:
+              - link "Privacy Policy" [ref=e940]:
+                - /url: /privacy
+                - img [ref=e942]
+                - text: Privacy Policy
+              - link "Terms of Service" [ref=e945]:
+                - /url: /terms
+                - img [ref=e947]
+                - text: Terms of Service
+        - generic [ref=e950]:
+          - paragraph [ref=e951]: © 2026 Tamil Nadu Bus Scheduler. All Rights Reserved.
+          - paragraph [ref=e952]:
+            - text: Made with
+            - img [ref=e954]
+            - text: in Tamil Nadu
+    - navigation "Bottom navigation" [ref=e956]:
+      - generic [ref=e957]:
+        - button "Search" [ref=e958] [cursor=pointer]:
+          - img [ref=e960]
+          - generic [ref=e963]: Search
+        - button "Routes" [ref=e964] [cursor=pointer]:
+          - img [ref=e966]
+          - generic [ref=e970]: Routes
+        - button "Track" [ref=e971] [cursor=pointer]:
+          - img [ref=e973]
+          - generic [ref=e976]: Track
+        - button "Contribute" [ref=e977] [cursor=pointer]:
+          - img [ref=e979]
+          - generic [ref=e980]: Contribute
+  - generic [ref=e981]:
+    - img [ref=e983]
+    - button "Open Tanstack query devtools" [ref=e1051] [cursor=pointer]:
+      - img [ref=e1052]
+```

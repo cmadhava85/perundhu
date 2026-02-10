@@ -55,8 +55,6 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const [buses, setBuses] = useState<Bus[]>([]);
   const [selectedBus, setSelectedBus] = useState<Bus | null>(preSelectedBus || null);
   const [existingStops, setExistingStops] = useState<Stop[]>([]);
-  const [editingExistingStops, setEditingExistingStops] = useState(false);
-  const [updatedExistingStops, setUpdatedExistingStops] = useState<Stop[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingStops, setIsLoadingStops] = useState(false);
   
@@ -85,6 +83,10 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   // Wizard mode state
   const [isWizardMode, setIsWizardMode] = useState(false);
   const [wizardEditingIndex, setWizardEditingIndex] = useState<number | null>(null);
+
+  // Collapse state for better UX
+  const [isRouteInfoCollapsed, setIsRouteInfoCollapsed] = useState(false);
+  const [isExistingStopsCollapsed, setIsExistingStopsCollapsed] = useState(false);
 
   // Helper function to get display name based on current language
   // (Simple version for use in useEffect - memoized version defined later)
@@ -141,55 +143,17 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     loadLocations();
   }, []);
 
-  // Lock body scroll when component is mounted (modal is open)
+  // Simple scroll lock when component is mounted - just prevent body scroll
   useEffect(() => {
-    // Save current scroll position
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    // Save original overflow value
+    const originalOverflow = document.body.style.overflow;
     
-    // Set global flag to indicate modal is open (for Header to check)
-    (globalThis as { isModalOpen?: boolean }).isModalOpen = true;
-    
-    // Disable scroll on body
+    // Simply disable scroll on body (no position fixed needed)
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = `-${scrollTop}px`;
     
-    // Also lock html element scroll
-    document.documentElement.style.overflow = 'hidden';
-    document.documentElement.style.position = 'fixed';
-    document.documentElement.style.width = '100%';
-    
-    // Prevent scroll events entirely
-    const preventScroll = (e: Event) => {
-      if (e.target !== document.querySelector('.wizard-overlay') && 
-          !document.querySelector('.wizard-overlay')?.contains(e.target as Node)) {
-        e.preventDefault();
-      }
-    };
-    
-    document.addEventListener('wheel', preventScroll, { passive: false });
-    document.addEventListener('touchmove', preventScroll, { passive: false });
-    
-    // Return scroll position and enable scroll on unmount
+    // Restore on unmount
     return () => {
-      // Clear global flag when modal closes
-      (globalThis as { isModalOpen?: boolean }).isModalOpen = false;
-      
-      // Re-enable scroll
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.position = '';
-      document.documentElement.style.width = '';
-      
-      // Remove scroll prevention
-      document.removeEventListener('wheel', preventScroll);
-      document.removeEventListener('touchmove', preventScroll);
-      
-      window.scrollTo(0, scrollTop);
+      document.body.style.overflow = originalOverflow;
     };
   }, []);
 
@@ -198,11 +162,11 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     setIsLoadingStops(true);
     try {
       const stops = await getStops(busId);
-      // Sort stops by time (departure time first, then arrival time)
+      // Sort stops by their sequence order (stopOrder or order field)
       const sortedStops = [...stops].sort((a, b) => {
-        const timeA = a.departureTime || a.arrivalTime || '00:00';
-        const timeB = b.departureTime || b.arrivalTime || '00:00';
-        return timeA.localeCompare(timeB);
+        const orderA = a.stopOrder ?? a.order ?? 0;
+        const orderB = b.stopOrder ?? b.order ?? 0;
+        return orderA - orderB;
       });
       setExistingStops(sortedStops);
       
@@ -493,10 +457,23 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
         const routeDepMinutes = parseTime(routeDepartureTime);
         const routeArrMinutes = parseTime(routeArrivalTime);
         
+        // Detect overnight route (departure time > arrival time)
+        const isOvernightRoute = routeDepMinutes > routeArrMinutes;
+        
         // Check arrival time
         if (stop.arrivalTime) {
           const stopArrMinutes = parseTime(stop.arrivalTime);
-          if (stopArrMinutes < routeDepMinutes || stopArrMinutes > routeArrMinutes) {
+          
+          let isValidTime: boolean;
+          if (isOvernightRoute) {
+            // For overnight routes: time is valid if it's >= departure OR <= arrival
+            isValidTime = stopArrMinutes >= routeDepMinutes || stopArrMinutes <= routeArrMinutes;
+          } else {
+            // For same-day routes: time must be between departure and arrival
+            isValidTime = stopArrMinutes >= routeDepMinutes && stopArrMinutes <= routeArrMinutes;
+          }
+          
+          if (!isValidTime) {
             onError?.(
               t('addStops.arrivalTimeOutOfRange', 
                 'Stop arrival time must be between route departure ({{depTime}}) and arrival ({{arrTime}})',
@@ -510,7 +487,17 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
         // Check departure time
         if (stop.departureTime) {
           const stopDepMinutes = parseTime(stop.departureTime);
-          if (stopDepMinutes < routeDepMinutes || stopDepMinutes > routeArrMinutes) {
+          
+          let isValidTime: boolean;
+          if (isOvernightRoute) {
+            // For overnight routes: time is valid if it's >= departure OR <= arrival
+            isValidTime = stopDepMinutes >= routeDepMinutes || stopDepMinutes <= routeArrMinutes;
+          } else {
+            // For same-day routes: time must be between departure and arrival
+            isValidTime = stopDepMinutes >= routeDepMinutes && stopDepMinutes <= routeArrMinutes;
+          }
+          
+          if (!isValidTime) {
             onError?.(
               t('addStops.departureTimeOutOfRange', 
                 'Stop departure time must be between route departure ({{depTime}}) and arrival ({{arrTime}})',
@@ -536,93 +523,6 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     }
 
     return true;
-  };
-
-  // Toggle editing mode for existing stops
-  const handleToggleEditExistingStops = () => {
-    if (!editingExistingStops) {
-      // Enter editing mode - copy existing stops to updatedExistingStops
-      setUpdatedExistingStops(existingStops.map(stop => ({ ...stop })));
-    } else {
-      // Exit editing mode - discard changes
-      setUpdatedExistingStops([]);
-    }
-    setEditingExistingStops(!editingExistingStops);
-  };
-
-  // Update time for an existing stop
-  const handleUpdateExistingStopTime = (index: number, field: 'arrivalTime' | 'departureTime', value: string) => {
-    const updated = [...updatedExistingStops];
-    updated[index] = { ...updated[index], [field]: value };
-    setUpdatedExistingStops(updated);
-  };
-
-  // Save updated existing stops
-  const handleSaveExistingStopTimes = async () => {
-    if (!selectedBus) return;
-
-    setIsSubmitting(true);
-    
-    try {
-      // Filter only stops that have been modified (have timing added/updated)
-      const modifiedStops = updatedExistingStops.filter((stop, index) => {
-        const original = existingStops[index];
-        return stop.arrivalTime !== original.arrivalTime || stop.departureTime !== original.departureTime;
-      });
-
-      if (modifiedStops.length === 0) {
-        onError?.(t('addStops.noChanges', 'No timing changes detected'));
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Prepare submission data for existing stops timing updates
-      const submissionData = {
-        busId: selectedBus.id,
-        busNumber: selectedBus.busNumber,
-        busName: selectedBus.busName,
-        fromLocationName: selectedBus.from,
-        toLocationName: selectedBus.to,
-        departureTime: selectedBus.departureTime,
-        arrivalTime: selectedBus.arrivalTime,
-        stops: modifiedStops.map((stop, idx) => ({
-          id: stop.id,
-          locationName: stop.name,
-          locationId: stop.locationId,
-          arrivalTime: stop.arrivalTime,
-          departureTime: stop.departureTime,
-          order: stop.stopOrder || idx + 1
-        })),
-        additionalNotes: `User updated timing for ${modifiedStops.length} existing stop(s)`
-      };
-
-      console.log('Submitting existing stops timing updates:', submissionData);
-      
-      const response = await submitStopsContribution(submissionData);
-      
-      if (response.success) {
-        console.log('Existing stops timing updated successfully:', response);
-        setSubmitSuccess(true);
-        setEditingExistingStops(false);
-        
-        // Update the existing stops with new values
-        setExistingStops(updatedExistingStops);
-        setUpdatedExistingStops([]);
-        
-        setTimeout(() => {
-          setSubmitSuccess(false);
-        }, 3000);
-      } else {
-        const errorMessage = response.message || t('addStops.updateFailed', 'Failed to update stop timing');
-        console.error('Stop timing update failed:', response);
-        onError?.(errorMessage);
-      }
-    } catch (error) {
-      console.error('Error updating existing stop timing:', error);
-      onError?.(t('addStops.updateError', 'An error occurred while updating stop timing'));
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   // Submit stops
@@ -875,20 +775,33 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       {/* Selected Bus Display (READ-ONLY) */}
       {selectedBus && (
         <div className="add-stops-section">
-          <div className="section-header">
-            <span className="step-badge">{preSelectedBus ? '1' : '2'}</span>
-            <h3>{t('addStops.selectedRoute', 'Selected Route')}</h3>
-            <span className="locked-badge">🔒 {t('addStops.locked', 'Locked')}</span>
+          <div className="section-header clickable" onClick={() => setIsRouteInfoCollapsed(!isRouteInfoCollapsed)}>
+            <div className="header-left">
+              <span className="step-badge">{preSelectedBus ? '1' : '2'}</span>
+              <h3>{t('addStops.selectedRoute', 'Selected Route')}</h3>
+              <span className="locked-badge">🔒 {t('addStops.locked', 'Locked')}</span>
+            </div>
+            <button 
+              className="collapse-toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsRouteInfoCollapsed(!isRouteInfoCollapsed);
+              }}
+              aria-label={isRouteInfoCollapsed ? 'Expand' : 'Collapse'}
+            >
+              {isRouteInfoCollapsed ? '▼' : '▲'}
+            </button>
           </div>
           
-          <div className="selected-bus-card readonly">
-            <div className="readonly-notice">
-              <span className="notice-icon">ℹ️</span>
-              <span>{t('addStops.readonlyNotice', 'Route details cannot be edited. You can only add stops.')}</span>
-            </div>
-            
-            {/* Route Visual Display */}
-            <div className="route-visual-display">
+          {!isRouteInfoCollapsed && (
+            <div className="selected-bus-card readonly">
+              <div className="readonly-notice">
+                <span className="notice-icon">ℹ️</span>
+                <span>{t('addStops.readonlyNotice', 'Route details cannot be edited. You can only add stops.')}</span>
+              </div>
+              
+              {/* Route Visual Display */}
+              <div className="route-visual-display">
               <div className="route-endpoint origin">
                 <span className="endpoint-icon">🟢</span>
                 <div className="endpoint-details">
@@ -942,117 +855,81 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
               )}
             </div>
 
-            {!preSelectedBus && (
-              <button 
-                className="change-bus-btn"
-                onClick={() => {
-                  setSelectedBus(null);
-                  setExistingStops([]);
-                  setNewStops([]);
-                }}
-              >
-                ↩️ {t('addStops.changeBus', 'Select Different Bus')}
-              </button>
-            )}
-          </div>
+              {!preSelectedBus && (
+                <button 
+                  className="change-bus-btn"
+                  onClick={() => {
+                    setSelectedBus(null);
+                    setExistingStops([]);
+                    setNewStops([]);
+                  }}
+                >
+                  ↩️ {t('addStops.changeBus', 'Select Different Bus')}
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
 
       {/* Existing Stops Display */}
       {selectedBus && !isLoadingStops && (
         <div className="add-stops-section">
-          <div className="section-header">
-            <span className="step-badge">{preSelectedBus ? '2' : '3'}</span>
-            <h3>{t('addStops.existingStops', 'Existing Stops')}</h3>
-            {existingStops.length === 0 && (
-              <span className="missing-badge">⚠️ {t('addStops.noStops', 'No stops recorded')}</span>
-            )}
-            {existingStops.length > 0 && (
-              <button
-                type="button"
-                className={`edit-existing-btn ${editingExistingStops ? 'active' : ''}`}
-                onClick={handleToggleEditExistingStops}
-              >
-                {editingExistingStops ? '✕ Cancel' : '✏️ Edit Times'}
-              </button>
-            )}
+          <div className="section-header clickable" onClick={() => setIsExistingStopsCollapsed(!isExistingStopsCollapsed)}>
+            <div className="header-left">
+              <span className="step-badge">{preSelectedBus ? '2' : '3'}</span>
+              <h3>{t('addStops.existingStops', 'Existing Stops')}</h3>
+              {existingStops.length === 0 && (
+                <span className="missing-badge">⚠️ {t('addStops.noStops', 'No stops recorded')}</span>
+              )}
+              {existingStops.length > 0 && (
+                <span className="count-badge">{existingStops.length} stops</span>
+              )}
+            </div>
+            <button 
+              className="collapse-toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExistingStopsCollapsed(!isExistingStopsCollapsed);
+              }}
+              aria-label={isExistingStopsCollapsed ? 'Expand' : 'Collapse'}
+            >
+              {isExistingStopsCollapsed ? '▼' : '▲'}
+            </button>
           </div>
 
-          {existingStops.length > 0 ? (
+          {!isExistingStopsCollapsed && existingStops.length > 0 && (
             <div className="existing-stops-list">
-              {(editingExistingStops ? updatedExistingStops : existingStops).map((stop, index) => {
+              {existingStops.map((stop, index) => {
                 const formatTimeWithoutSecs = (time?: string) => {
                   if (!time) return '';
                   const parts = time.split(':');
                   return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
                 };
                 
-                const hasMissingTime = !stop.arrivalTime || !stop.departureTime;
-                
                 return (
-                <div key={stop.id} className={`existing-stop-item ${index === 0 ? 'first' : ''} ${index === existingStops.length - 1 ? 'last' : ''} ${editingExistingStops ? 'editing' : ''}`}>
+                <div key={stop.id} className={`existing-stop-item ${index === 0 ? 'first' : ''} ${index === existingStops.length - 1 ? 'last' : ''}`}>
                   <div className="stop-marker">
                     {getStopMarker(index, existingStops.length)}
                   </div>
                   <div className="stop-details">
                     <span className="stop-name">{i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name}</span>
-                    {editingExistingStops ? (
-                      <div className="stop-time-inputs">
-                        <div className="time-input-wrapper">
-                          <label>Arr:</label>
-                          <input
-                            type="time"
-                            value={stop.arrivalTime || ''}
-                            onChange={(e) => handleUpdateExistingStopTime(index, 'arrivalTime', e.target.value)}
-                            className="time-input-small"
-                            placeholder="HH:MM"
-                          />
-                        </div>
-                        <div className="time-input-wrapper">
-                          <label>Dep:</label>
-                          <input
-                            type="time"
-                            value={stop.departureTime || ''}
-                            onChange={(e) => handleUpdateExistingStopTime(index, 'departureTime', e.target.value)}
-                            className="time-input-small"
-                            placeholder="HH:MM"
-                          />
-                        </div>
-                        {hasMissingTime && <span className="missing-time-badge">⚠️ Add timing</span>}
-                      </div>
-                    ) : (
-                      <span className="stop-time">
-                        {stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : <span className="no-time">No arrival</span>}
-                        {stop.arrivalTime && stop.departureTime && ' | '}
-                        {stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : <span className="no-time">No departure</span>}
-                      </span>
-                    )}
+                    <span className="stop-time">
+                      {stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : <span className="no-time">No arrival</span>}
+                      {stop.arrivalTime && stop.departureTime && ' | '}
+                      {stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : <span className="no-time">No departure</span>}
+                    </span>
                   </div>
                 </div>
               );
               })}
             </div>
-          ) : (
+          )}
+
+          {!isExistingStopsCollapsed && existingStops.length === 0 && (
             <div className="no-stops-message">
               <span className="empty-icon">📭</span>
               <p>{t('addStops.noStopsMessage', 'This route has no stops recorded yet. Be the first to add them!')}</p>
-            </div>
-          )}
-          
-          {/* Save button for existing stops timing updates */}
-          {editingExistingStops && existingStops.length > 0 && (
-            <div className="existing-stops-actions">
-              <button
-                type="button"
-                className="save-existing-times-btn"
-                onClick={handleSaveExistingStopTimes}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? '⏳ Saving...' : '💾 Save Updated Times'}
-              </button>
-              <p className="help-text">
-                💡 {t('addStops.editTimesHelp', 'Add or update arrival and departure times for existing stops')}
-              </p>
             </div>
           )}
         </div>

@@ -82,8 +82,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             FileUpload fileUpload = convertToFileUpload(imageFile);
             String imageUrl = fileStorageService.storeImageFile(fileUpload, userId);
 
-            // 3. Create initial image contribution record
-            ImageContribution contribution = createInitialContribution(imageFile, metadata, userId, imageUrl);
+            // 3. Create initial image contribution record with thumbnail (optimized for database storage)
+            ImageContribution contribution = createInitialContribution(imageFile, metadata, userId, imageUrl, thumbnail);
             ImageContribution saved = imageContributionOutputPort.save(contribution);
 
             // 4. Process asynchronously to avoid blocking the user
@@ -628,19 +628,15 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             MultipartFile imageFile,
             Map<String, String> metadata,
             String userId,
-            String imageUrl) {
+            String imageUrl,
+            byte[] thumbnailData) {
 
-        // Store image bytes directly in database for persistent storage (Cloud Run
-        // compatible)
-        byte[] imageData = null;
-        String contentType = "image/jpeg";
-        try {
-            imageData = imageFile.getBytes();
-            contentType = imageFile.getContentType() != null ? imageFile.getContentType() : "image/jpeg";
-            logger.info("Storing image data in database: {} bytes, type: {}", imageData.length, contentType);
-        } catch (Exception e) {
-            logger.warn("Failed to read image bytes for database storage: {}", e.getMessage());
-        }
+        // Store THUMBNAIL in database instead of original (90% space savings)
+        byte[] imageData = thumbnailData;
+        String contentType = "image/jpeg"; // Thumbnails are always JPEG
+        
+        logger.info("Storing thumbnail in database: {} bytes (thumbnail optimization applied)", 
+                imageData != null ? imageData.length : 0);
 
         return ImageContribution.builder()
                 .id(UUID.randomUUID().toString())
@@ -651,7 +647,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .routeName(metadata.getOrDefault("routeName", ""))
                 .status("PROCESSING")
                 .submissionDate(LocalDateTime.now())
-                .additionalNotes(String.format("Original filename: %s, Size: %d bytes",
+                .additionalNotes(String.format("Original filename: %s, Size: %d bytes (thumbnail stored for DB optimization)",
                         imageFile.getOriginalFilename(), imageFile.getSize()))
                 .imageData(imageData)
                 .imageContentType(contentType)

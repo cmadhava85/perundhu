@@ -295,8 +295,10 @@
 }
 
 /* Toggle Switch Button */
-.toggle-switch {
-  display: flex;
+/* Modern Toggle Switch */
+.modern-toggle {
+  position: relative;
+  display: inline-flex;
   align-items: center;
   background: transparent;
   border: none;
@@ -304,19 +306,48 @@
   padding: 0;
   flex-shrink: 0;
   margin-left: 1rem;
-  transition: transform 0.2s;
 }
 
-.toggle-switch:hover {
-  transform: scale(1.1);
+.modern-toggle .toggle-track {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background-color: #cbd5e1; /* Gray background for OFF */
+  border-radius: 14px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 2px;
 }
 
-.toggle-switch.enabled {
-  color: #10b981;
+.modern-toggle.enabled .toggle-track {
+  background-color: #10b981; /* Green background for ON */
 }
 
-.toggle-switch.disabled {
-  color: #cbd5e1;
+.modern-toggle .toggle-thumb {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.modern-toggle.enabled .toggle-thumb {
+  transform: translateX(24px);
+}
+
+.modern-toggle:hover .toggle-track {
+  opacity: 0.9;
+}
+
+.modern-toggle:focus {
+  outline: none;
+}
+
+.modern-toggle:focus .toggle-track {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
 /* Number Setting (for numeric inputs like maxRequestsPerMinute) */

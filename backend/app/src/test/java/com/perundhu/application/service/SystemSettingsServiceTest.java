@@ -419,7 +419,7 @@ class SystemSettingsServiceTest {
       settingsService.resetToDefaults();
 
       // Then - verify that save was called for each default setting
-      verify(settingPort, times(19)).findBySettingKey(anyString());
+      verify(settingPort, times(20)).findBySettingKey(anyString());
     }
 
     @Test
@@ -434,8 +434,8 @@ class SystemSettingsServiceTest {
       // When
       settingsService.resetFeatureFlagsToDefaults();
 
-      // Then - verify only feature settings are queried (12 feature flags)
-      verify(settingPort, times(12)).findBySettingKey(anyString());
+      // Then - verify only feature settings are queried (13 feature flags)
+      verify(settingPort, times(13)).findBySettingKey(anyString());
     }
   }
 
@@ -451,7 +451,7 @@ class SystemSettingsServiceTest {
           .thenReturn(Optional.of(sampleFeatureFlagSetting));
 
       // When
-      boolean result = settingsService.isFeatureEnabled("share.enabled");
+      boolean result = settingsService.isFeatureEnabled("feature.share.enabled");
 
       // Then
       assertThat(result).isTrue();
@@ -466,7 +466,7 @@ class SystemSettingsServiceTest {
           .thenReturn(Optional.of(disabledSetting));
 
       // When
-      boolean result = settingsService.isFeatureEnabled("share.enabled");
+      boolean result = settingsService.isFeatureEnabled("feature.share.enabled");
 
       // Then
       assertThat(result).isFalse();
@@ -480,7 +480,7 @@ class SystemSettingsServiceTest {
           .thenReturn(Optional.empty());
 
       // When
-      boolean result = settingsService.isFeatureEnabled("nonexistent");
+      boolean result = settingsService.isFeatureEnabled("feature.nonexistent");
 
       // Then
       assertThat(result).isFalse();
@@ -529,8 +529,8 @@ class SystemSettingsServiceTest {
       // When
       settingsService.initializeDefaultSettings();
 
-      // Then - 19 default settings
-      verify(settingPort, times(19)).save(any(SystemSetting.class));
+      // Then - 20 default settings
+      verify(settingPort, times(20)).save(any(SystemSetting.class));
     }
   }
 

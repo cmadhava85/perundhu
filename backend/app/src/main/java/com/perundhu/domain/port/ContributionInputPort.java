@@ -7,8 +7,18 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Input port for contribution use cases
+ * Legacy input port for contribution use cases.
+ * 
+ * @deprecated This interface violates the Interface Segregation Principle.
+ * Use the new focused interfaces instead:
+ *   - {@link RouteContributionInputPort} for route operations
+ *   - {@link ImageContributionInputPort} for image operations
+ *   - {@link ContributionQueryPort} for query operations
+ *   - {@link ContributionProcessingPort} for processing operations
+ * 
+ * This interface is maintained for backward compatibility only and will be removed in a future version.
  */
+@Deprecated
 public interface ContributionInputPort {
 
     /**

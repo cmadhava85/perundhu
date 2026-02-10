@@ -25,7 +25,8 @@
 -- Perfect for bus tracking application!
 
 -- Bus Stop Locations (1246 total, from Overpass API)
-INSERT INTO locations (name, latitude, longitude, district) VALUES
+-- Using INSERT IGNORE to skip duplicates
+INSERT IGNORE INTO locations (name, latitude, longitude, district) VALUES
   ('மைலாப்பூர்', 13.0334336, 80.2679457, 'Tamil Nadu'),
   ('Foreshore Estate Bus Terminus', 13.0224016, 80.2763268, 'Tamil Nadu'),
   ('V House Bus Terminus', 13.0512112, 80.2778386, 'Tamil Nadu'),
@@ -1275,7 +1276,8 @@ INSERT INTO locations (name, latitude, longitude, district) VALUES
 ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitude);
 
 -- City Locations (46 total, from Overpass API)
-INSERT INTO locations (name, latitude, longitude, district) VALUES
+-- Using INSERT IGNORE to skip duplicates
+INSERT IGNORE INTO locations (name, latitude, longitude, district) VALUES
   ('Vellore', 12.9071753, 79.1309695, 'Tamil Nadu'),
   ('Nagercoil', 8.1839904, 77.4315437, 'Tamil Nadu'),
   ('Thiruvananthapuram', 8.4882267, 76.947551, 'Tamil Nadu'),
@@ -1325,7 +1327,8 @@ INSERT INTO locations (name, latitude, longitude, district) VALUES
 ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitude);
 
 -- Neighborhood Locations (5035 total, from Overpass API)
-INSERT INTO locations (name, latitude, longitude, district) VALUES
+-- Using INSERT IGNORE to skip duplicates
+INSERT IGNORE INTO locations (name, latitude, longitude, district) VALUES
   ('CIT Colony', 13.04131, 80.2604719, 'Tamil Nadu'),
   ('Erumbi', 13.1166797, 79.4089016, 'Tamil Nadu'),
   ('Therunattam', 13.4540501, 80.3020861, 'Tamil Nadu'),
@@ -6364,7 +6367,8 @@ INSERT INTO locations (name, latitude, longitude, district) VALUES
 ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitude);
 
 -- Village Locations (24439 total, from Overpass API)
-INSERT INTO locations (name, latitude, longitude, district) VALUES
+-- Using INSERT IGNORE to skip duplicates
+INSERT IGNORE INTO locations (name, latitude, longitude, district) VALUES
   ('Puthalapattu', 13.3462955, 79.0936286, 'Tamil Nadu'),
   ('Ananthapuram', 13.1673168, 79.2128484, 'Tamil Nadu'),
   ('Gopalapuram', 13.1125855, 79.3541555, 'Tamil Nadu'),

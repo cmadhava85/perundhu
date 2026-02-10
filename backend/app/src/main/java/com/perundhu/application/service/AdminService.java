@@ -49,13 +49,25 @@ public class AdminService implements AdminUseCase {
     RouteContribution contribution = routeContributionPort.findRouteContributionById(id)
         .orElseThrow(() -> new RuntimeException("Route contribution not found: " + id));
 
-    // Simply update the status to approved without complex integration
+    // Update status to approved
     contribution.setStatus("APPROVED");
     contribution.setProcessedDate(java.time.LocalDateTime.now());
     contribution.setValidationMessage("Approved by admin");
 
-    // Save and return
-    return routeContributionPort.saveRouteContribution(contribution);
+    // Save first
+    RouteContribution saved = routeContributionPort.saveRouteContribution(contribution);
+
+    // Trigger immediate integration into bus database
+    try {
+      contributionProcessingService.integrateApprovedContribution(saved);
+      log.info("Successfully integrated route contribution ID {} after admin approval", id);
+    } catch (Exception e) {
+      log.error("Failed to integrate route contribution ID {} after approval: {}", id, e.getMessage(), e);
+      // Don't throw - contribution is still approved, integration will be retried by
+      // scheduled job
+    }
+
+    return saved;
   }
 
   @Override
@@ -88,25 +100,25 @@ public class AdminService implements AdminUseCase {
     log.debug("Getting pending image contributions");
     return imageContributionOutputPort.findByStatus("PENDING");
   }
-  
+
   @Override
   public List<ImageContribution> getPendingImageContributionsPaged(int page, int size) {
     log.debug("Getting pending image contributions with pagination - page: {}, size: {}", page, size);
     return imageContributionOutputPort.findByStatusPaged("PENDING", page, size);
   }
-  
+
   @Override
   public List<ImageContribution> getImageContributionsPaged(int page, int size) {
     log.debug("Getting all image contributions with pagination - page: {}, size: {}", page, size);
     return imageContributionOutputPort.findAllPaged(page, size);
   }
-  
+
   @Override
   public long countPendingImageContributions() {
     log.debug("Counting pending image contributions");
     return imageContributionOutputPort.countByStatus("PENDING");
   }
-  
+
   @Override
   public long countAllImageContributions() {
     log.debug("Counting all image contributions");

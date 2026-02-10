@@ -30,10 +30,22 @@ import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.InputValidationPort;
 import com.perundhu.domain.port.RouteContributionOutputPort;
 import com.perundhu.domain.port.SecurityMonitoringPort;
+import com.perundhu.domain.port.RouteContributionInputPort;
+import com.perundhu.domain.port.ImageContributionInputPort;
+import com.perundhu.domain.port.ContributionQueryPort;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Contribution Application Service Tests")
+@DisplayName("Contribution Application Service Tests - Legacy Delegation Adapter")
 class ContributionApplicationServiceTest {
+
+  @Mock
+  private RouteContributionInputPort routeContributionService;
+
+  @Mock
+  private ImageContributionInputPort imageContributionService;
+
+  @Mock
+  private ContributionQueryPort contributionQueryService;
 
   @Mock
   private RouteContributionOutputPort routeContributionOutputPort;
@@ -41,21 +53,16 @@ class ContributionApplicationServiceTest {
   @Mock
   private ImageContributionOutputPort imageContributionOutputPort;
 
-  @Mock
-  private InputValidationPort inputValidationPort;
-
-  @Mock
-  private SecurityMonitoringPort securityMonitoringPort;
-
   private ContributionApplicationService contributionApplicationService;
 
   @BeforeEach
   void setUp() {
     contributionApplicationService = new ContributionApplicationService(
+        routeContributionService,
+        imageContributionService,
+        contributionQueryService,
         routeContributionOutputPort,
-        imageContributionOutputPort,
-        inputValidationPort,
-        securityMonitoringPort);
+        imageContributionOutputPort);
   }
 
   @Nested
@@ -63,8 +70,8 @@ class ContributionApplicationServiceTest {
   class SubmitRouteContributionTests {
 
     @Test
-    @DisplayName("Should submit valid route contribution")
-    void shouldSubmitValidRouteContribution() {
+    @DisplayName("Should delegate route contribution to RouteContributionService")
+    void shouldDelegateRouteContributionToService() {
       // Given
       Map<String, Object> contributionData = new HashMap<>();
       contributionData.put("busNumber", "BUS001");
@@ -72,13 +79,7 @@ class ContributionApplicationServiceTest {
       contributionData.put("fromLocationName", "Chennai");
       contributionData.put("toLocationName", "Bangalore");
 
-      InputValidationPort.ContributionValidationResult validationResult = 
-          new InputValidationPort.ContributionValidationResult(true, new HashMap<>(), contributionData);
-
-      when(inputValidationPort.validateContributionData(any()))
-          .thenReturn(validationResult);
-
-      RouteContribution savedContribution = RouteContribution.builder()
+      RouteContribution expectedContribution = RouteContribution.builder()
           .id(UUID.randomUUID().toString())
           .busNumber("BUS001")
           .status("PENDING")
@@ -86,8 +87,8 @@ class ContributionApplicationServiceTest {
           .submissionDate(LocalDateTime.now())
           .build();
 
-      when(routeContributionOutputPort.save(any(RouteContribution.class)))
-          .thenReturn(savedContribution);
+      when(routeContributionService.submitRouteContribution(contributionData, "user123"))
+          .thenReturn(expectedContribution);
 
       // When
       RouteContribution result = contributionApplicationService
@@ -97,25 +98,18 @@ class ContributionApplicationServiceTest {
       assertThat(result).isNotNull();
       assertThat(result.getBusNumber()).isEqualTo("BUS001");
       assertThat(result.getStatus()).isEqualTo("PENDING");
-      verify(inputValidationPort).validateContributionData(any());
-      verify(routeContributionOutputPort).save(any(RouteContribution.class));
+      verify(routeContributionService).submitRouteContribution(contributionData, "user123");
     }
 
     @Test
-    @DisplayName("Should reject invalid route contribution")
-    void shouldRejectInvalidRouteContribution() {
+    @DisplayName("Should delegate validation to RouteContributionService")
+    void shouldDelegateValidationToService() {
       // Given
       Map<String, Object> contributionData = new HashMap<>();
       contributionData.put("busNumber", "");
-      
-      Map<String, String> errors = new HashMap<>();
-      errors.put("busNumber", "Bus number is required");
-      
-      InputValidationPort.ContributionValidationResult validationResult = 
-          new InputValidationPort.ContributionValidationResult(false, errors, new HashMap<>());
 
-      when(inputValidationPort.validateContributionData(any()))
-          .thenReturn(validationResult);
+      when(routeContributionService.submitRouteContribution(contributionData, "user123"))
+          .thenThrow(new IllegalArgumentException("Invalid contribution data"));
 
       // When & Then
       assertThatThrownBy(() -> 
@@ -130,21 +124,15 @@ class ContributionApplicationServiceTest {
   class SubmitImageContributionTests {
 
     @Test
-    @DisplayName("Should submit valid image contribution")
-    void shouldSubmitValidImageContribution() {
+    @DisplayName("Should delegate image contribution to ImageContributionService")
+    void shouldDelegateImageContributionToService() {
       // Given
       Map<String, Object> contributionData = new HashMap<>();
       contributionData.put("description", "Test image");
       contributionData.put("location", "Chennai");
       contributionData.put("imageUrl", "http://example.com/image.jpg");
 
-      InputValidationPort.ContributionValidationResult validationResult = 
-          new InputValidationPort.ContributionValidationResult(true, new HashMap<>(), contributionData);
-
-      when(inputValidationPort.validateContributionData(any()))
-          .thenReturn(validationResult);
-
-      ImageContribution savedContribution = ImageContribution.builder()
+      ImageContribution expectedContribution = ImageContribution.builder()
           .id(UUID.randomUUID().toString())
           .description("Test image")
           .status("PENDING")
@@ -152,8 +140,8 @@ class ContributionApplicationServiceTest {
           .submissionDate(LocalDateTime.now())
           .build();
 
-      when(imageContributionOutputPort.save(any(ImageContribution.class)))
-          .thenReturn(savedContribution);
+      when(imageContributionService.submitImageContribution(contributionData, "user123"))
+          .thenReturn(expectedContribution);
 
       // When
       ImageContribution result = contributionApplicationService
@@ -163,7 +151,7 @@ class ContributionApplicationServiceTest {
       assertThat(result).isNotNull();
       assertThat(result.getDescription()).isEqualTo("Test image");
       assertThat(result.getStatus()).isEqualTo("PENDING");
-      verify(imageContributionOutputPort).save(any(ImageContribution.class));
+      verify(imageContributionService).submitImageContribution(contributionData, "user123");
     }
   }
 
@@ -172,35 +160,17 @@ class ContributionApplicationServiceTest {
   class GetUserContributionsTests {
 
     @Test
-    @DisplayName("Should return user contributions")
-    void shouldReturnUserContributions() {
+    @DisplayName("Should delegate get user contributions to ContributionQueryService")
+    void shouldDelegateGetUserContributionsToService() {
       // Given
       String userId = "user123";
-      
-      List<RouteContribution> routeContributions = List.of(
-          RouteContribution.builder()
-              .id("1")
-              .busNumber("BUS001")
-              .status("APPROVED")
-              .userId(userId)
-              .submissionDate(LocalDateTime.now())
-              .build()
+      List<Map<String, Object>> expectedContributions = List.of(
+          Map.of("id", "1", "type", "ROUTE", "status", "APPROVED"),
+          Map.of("id", "2", "type", "IMAGE", "status", "PENDING")
       );
 
-      List<ImageContribution> imageContributions = List.of(
-          ImageContribution.builder()
-              .id("2")
-              .description("Test image")
-              .status("PENDING")
-              .userId(userId)
-              .submissionDate(LocalDateTime.now())
-              .build()
-      );
-
-      when(routeContributionOutputPort.findByUserId(userId))
-          .thenReturn(routeContributions);
-      when(imageContributionOutputPort.findByUserId(userId))
-          .thenReturn(imageContributions);
+      when(contributionQueryService.getUserContributions(userId))
+          .thenReturn(expectedContributions);
 
       // When
       List<Map<String, Object>> result = contributionApplicationService
@@ -208,8 +178,7 @@ class ContributionApplicationServiceTest {
 
       // Then
       assertThat(result).hasSize(2);
-      verify(routeContributionOutputPort).findByUserId(userId);
-      verify(imageContributionOutputPort).findByUserId(userId);
+      verify(contributionQueryService).getUserContributions(userId);
     }
 
     @Test
@@ -218,9 +187,7 @@ class ContributionApplicationServiceTest {
       // Given
       String userId = "nonexistent";
 
-      when(routeContributionOutputPort.findByUserId(userId))
-          .thenReturn(new ArrayList<>());
-      when(imageContributionOutputPort.findByUserId(userId))
+      when(contributionQueryService.getUserContributions(userId))
           .thenReturn(new ArrayList<>());
 
       // When
@@ -229,6 +196,7 @@ class ContributionApplicationServiceTest {
 
       // Then
       assertThat(result).isEmpty();
+      verify(contributionQueryService).getUserContributions(userId);
     }
   }
 
@@ -237,52 +205,31 @@ class ContributionApplicationServiceTest {
   class UpdateContributionStatusTests {
 
     @Test
-    @DisplayName("Should approve route contribution")
-    void shouldApproveRouteContribution() {
+    @DisplayName("Should delegate approve route to RouteContributionService")
+    void shouldDelegateApproveRouteToService() {
       // Given
       String contributionId = "1";
-      RouteContribution contribution = RouteContribution.builder()
-          .id(contributionId)
-          .status("PENDING")
-          .busNumber("BUS001")
-          .build();
-
-      when(routeContributionOutputPort.findById(contributionId))
-          .thenReturn(Optional.of(contribution));
-      when(routeContributionOutputPort.save(any(RouteContribution.class)))
-          .thenReturn(contribution);
 
       // When
       contributionApplicationService.approveRouteContribution(contributionId, "admin123");
 
       // Then
-      verify(routeContributionOutputPort).findById(contributionId);
-      verify(routeContributionOutputPort).save(any(RouteContribution.class));
+      verify(routeContributionService).approveRouteContribution(contributionId, "admin123");
     }
 
     @Test
-    @DisplayName("Should reject route contribution with reason")
-    void shouldRejectRouteContributionWithReason() {
+    @DisplayName("Should delegate reject route to RouteContributionService")
+    void shouldDelegateRejectRouteToService() {
       // Given
       String contributionId = "1";
-      RouteContribution contribution = RouteContribution.builder()
-          .id(contributionId)
-          .status("PENDING")
-          .busNumber("BUS001")
-          .build();
-
-      when(routeContributionOutputPort.findById(contributionId))
-          .thenReturn(Optional.of(contribution));
-      when(routeContributionOutputPort.save(any(RouteContribution.class)))
-          .thenReturn(contribution);
 
       // When
       contributionApplicationService.rejectRouteContribution(
           contributionId, "Incomplete information", "admin123");
 
       // Then
-      verify(routeContributionOutputPort).findById(contributionId);
-      verify(routeContributionOutputPort).save(any(RouteContribution.class));
+      verify(routeContributionService).rejectRouteContribution(
+          contributionId, "Incomplete information", "admin123");
     }
 
     @Test
@@ -310,8 +257,8 @@ class ContributionApplicationServiceTest {
   class GetPendingContributionsTests {
 
     @Test
-    @DisplayName("Should get pending route contributions")
-    void shouldGetPendingRouteContributions() {
+    @DisplayName("Should delegate get pending route contributions to ContributionQueryService")
+    void shouldDelegateGetPendingRouteContributionsToService() {
       // Given
       List<RouteContribution> pendingRoutes = List.of(
           RouteContribution.builder()
@@ -321,7 +268,7 @@ class ContributionApplicationServiceTest {
               .build()
       );
 
-      when(routeContributionOutputPort.findByStatus("PENDING"))
+      when(contributionQueryService.getPendingRouteContributions())
           .thenReturn(pendingRoutes);
 
       // When
@@ -331,12 +278,12 @@ class ContributionApplicationServiceTest {
       // Then
       assertThat(result).hasSize(1);
       assertThat(result.get(0).getStatus()).isEqualTo("PENDING");
-      verify(routeContributionOutputPort).findByStatus("PENDING");
+      verify(contributionQueryService).getPendingRouteContributions();
     }
 
     @Test
-    @DisplayName("Should get pending image contributions")
-    void shouldGetPendingImageContributions() {
+    @DisplayName("Should delegate get pending image contributions to ContributionQueryService")
+    void shouldDelegateGetPendingImageContributionsToService() {
       // Given
       List<ImageContribution> pendingImages = List.of(
           ImageContribution.builder()
@@ -346,7 +293,7 @@ class ContributionApplicationServiceTest {
               .build()
       );
 
-      when(imageContributionOutputPort.findByStatus("PENDING"))
+      when(contributionQueryService.getPendingImageContributions())
           .thenReturn(pendingImages);
 
       // When
@@ -356,6 +303,7 @@ class ContributionApplicationServiceTest {
       // Then
       assertThat(result).hasSize(1);
       assertThat(result.get(0).getStatus()).isEqualTo("PENDING");
+      verify(contributionQueryService).getPendingImageContributions();
     }
   }
 
@@ -364,39 +312,23 @@ class ContributionApplicationServiceTest {
   class GetAllContributionsTests {
 
     @Test
-    @DisplayName("Should return all contributions")
-    void shouldReturnAllContributions() {
+    @DisplayName("Should delegate get all contributions to ContributionQueryService")
+    void shouldDelegateGetAllContributionsToService() {
       // Given
-      List<RouteContribution> allRoutes = List.of(
-          RouteContribution.builder()
-              .id("1")
-              .busNumber("BUS001")
-              .userId("user123")
-              .submissionDate(LocalDateTime.now())
-              .build()
+      List<Map<String, Object>> allContributions = List.of(
+          Map.of("id", "1", "type", "ROUTE"),
+          Map.of("id", "2", "type", "IMAGE")
       );
 
-      List<ImageContribution> allImages = List.of(
-          ImageContribution.builder()
-              .id("2")
-              .description("Image")
-              .userId("user456")
-              .submissionDate(LocalDateTime.now())
-              .build()
-      );
-
-      when(routeContributionOutputPort.findAll())
-          .thenReturn(allRoutes);
-      when(imageContributionOutputPort.findAll())
-          .thenReturn(allImages);
+      when(contributionQueryService.getAllContributions())
+          .thenReturn(allContributions);
 
       // When
       List<Map<String, Object>> result = contributionApplicationService.getAllContributions();
 
       // Then
       assertThat(result).hasSize(2);
-      verify(routeContributionOutputPort).findAll();
-      verify(imageContributionOutputPort).findAll();
+      verify(contributionQueryService).getAllContributions();
     }
   }
 
@@ -439,50 +371,31 @@ class ContributionApplicationServiceTest {
   class ApproveRejectImageContributionTests {
 
     @Test
-    @DisplayName("Should approve image contribution")
-    void shouldApproveImageContribution() {
+    @DisplayName("Should delegate approve image to ImageContributionService")
+    void shouldDelegateApproveImageToService() {
       // Given
       String contributionId = "1";
-      ImageContribution contribution = ImageContribution.builder()
-          .id(contributionId)
-          .status("PENDING")
-          .description("Test")
-          .build();
-
-      when(imageContributionOutputPort.findById(contributionId))
-          .thenReturn(Optional.of(contribution));
-      when(imageContributionOutputPort.save(any(ImageContribution.class)))
-          .thenReturn(contribution);
 
       // When
       contributionApplicationService.approveImageContribution(contributionId, "admin123");
 
       // Then
-      verify(imageContributionOutputPort).save(any(ImageContribution.class));
+      verify(imageContributionService).approveImageContribution(contributionId, "admin123");
     }
 
     @Test
-    @DisplayName("Should reject image contribution with reason")
-    void shouldRejectImageContributionWithReason() {
+    @DisplayName("Should delegate reject image to ImageContributionService")
+    void shouldDelegateRejectImageToService() {
       // Given
       String contributionId = "1";
-      ImageContribution contribution = ImageContribution.builder()
-          .id(contributionId)
-          .status("PENDING")
-          .description("Test")
-          .build();
-
-      when(imageContributionOutputPort.findById(contributionId))
-          .thenReturn(Optional.of(contribution));
-      when(imageContributionOutputPort.save(any(ImageContribution.class)))
-          .thenReturn(contribution);
 
       // When
       contributionApplicationService.rejectImageContribution(
           contributionId, "Poor quality", "admin123");
 
       // Then
-      verify(imageContributionOutputPort).save(any(ImageContribution.class));
+      verify(imageContributionService).rejectImageContribution(
+          contributionId, "Poor quality", "admin123");
     }
   }
 
@@ -491,8 +404,8 @@ class ContributionApplicationServiceTest {
   class FindByIdTests {
 
     @Test
-    @DisplayName("Should find contribution by ID")
-    void shouldFindContributionById() {
+    @DisplayName("Should delegate find by ID to ImageContributionService")
+    void shouldDelegateFindByIdToService() {
       // Given
       String contributionId = "1";
       ImageContribution contribution = ImageContribution.builder()
@@ -500,7 +413,7 @@ class ContributionApplicationServiceTest {
           .description("Test")
           .build();
 
-      when(imageContributionOutputPort.findById(contributionId))
+      when(imageContributionService.findById(contributionId))
           .thenReturn(Optional.of(contribution));
 
       // When
@@ -510,13 +423,14 @@ class ContributionApplicationServiceTest {
       // Then
       assertThat(result).isPresent();
       assertThat(result.get().getId()).isEqualTo(contributionId);
+      verify(imageContributionService).findById(contributionId);
     }
 
     @Test
     @DisplayName("Should return empty when contribution not found")
     void shouldReturnEmptyWhenContributionNotFound() {
       // Given
-      when(imageContributionOutputPort.findById("nonexistent"))
+      when(imageContributionService.findById("nonexistent"))
           .thenReturn(Optional.empty());
 
       // When
@@ -525,6 +439,7 @@ class ContributionApplicationServiceTest {
 
       // Then
       assertThat(result).isEmpty();
+      verify(imageContributionService).findById("nonexistent");
     }
   }
 }

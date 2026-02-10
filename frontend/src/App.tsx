@@ -106,25 +106,20 @@ function AppContent() {
     LoadingComponent: _LoadingComponent
   } = useBusSearchEnhanced();
   
-  // State for selected locations with safer initialization
+  // State for selected locations - use defaults from hook (KCBT Kilambakkam to Madurai - Mattuthavani)
   const [fromLocation, setFromLocation] = useState(initialFromLocation);
   const [toLocation, setToLocation] = useState(initialToLocation);
   const [_isSearching, setIsSearching] = useState(false);
-  // Track if initial locations have been set to prevent infinite loops
-  const [initialLocationsSet, setInitialLocationsSet] = useState(false);
   
-  // Update location states when API data is loaded (only once)
+  // Sync with the hook's default locations when they're set
   useEffect(() => {
-    if (locations && locations.length > 0 && !initialLocationsSet) {
-      if (!fromLocation) {
-        setFromLocation(locations[0]);
-      }
-      if (!toLocation && locations.length > 1) {
-        setToLocation(locations[1]);
-      }
-      setInitialLocationsSet(true);
+    if (initialFromLocation && !fromLocation) {
+      setFromLocation(initialFromLocation);
     }
-  }, [locations, fromLocation, toLocation, initialLocationsSet]);
+    if (initialToLocation && !toLocation) {
+      setToLocation(initialToLocation);
+    }
+  }, [initialFromLocation, initialToLocation, fromLocation, toLocation]);
   
   useEffect(() => {
     const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
@@ -206,16 +201,25 @@ function AppContent() {
 
   // Handler for the "Find Buses" button click
   const handleSearch = useCallback(async (fromLoc?: BusLocation, toLoc?: BusLocation) => {
+    console.log('handleSearch called with:', { fromLoc, toLoc, fromLocation, toLocation });
     const searchFrom = fromLoc || fromLocation;
     const searchTo = toLoc || toLocation;
     
-    if (!searchFrom || !searchTo) return;
+    console.log('handleSearch - searchFrom:', searchFrom);
+    console.log('handleSearch - searchTo:', searchTo);
+    
+    if (!searchFrom || !searchTo) {
+      console.log('handleSearch - Early return: missing locations');
+      return;
+    }
 
     setIsSearching(true);
     resetResults();
 
     try {
+      console.log('handleSearch - calling searchBuses');
       await searchBuses(searchFrom, searchTo);
+      console.log('handleSearch - navigating to results page');
       navigate(`/search-results?from=${searchFrom.id}&to=${searchTo.id}`);
     } catch (error) {
       console.error('Error searching buses:', error);

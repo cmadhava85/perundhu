@@ -34,8 +34,8 @@ export function usePublicFeatureFlag(featureName: string): UsePublicFeatureFlagR
         return false; // Default to disabled if API fails
       }
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+    staleTime: 30 * 1000, // 30 seconds - shorter for dev (was 5 minutes)
+    gcTime: 2 * 60 * 1000, // 2 minutes (was 10 minutes)
     retry: 1,
   });
 
@@ -47,8 +47,8 @@ export function usePublicFeatureFlag(featureName: string): UsePublicFeatureFlagR
 }
 
 /**
- * Fetch multiple feature flags in parallel
- * Efficient when you need several flags at once
+ * Fetch multiple feature flags efficiently
+ * Uses bulk endpoint to fetch all flags in ONE request instead of N requests
  * 
  * Usage:
  *   const result = usePublicFeatureFlags(['enableShareRoute', 'enableManualContribution']);
@@ -63,22 +63,25 @@ export function usePublicFeatureFlags(flagNames: string[]): {
     queryKey: ['public-feature-flags', flagNames.sort().join(',')],
     queryFn: async (): Promise<Record<string, boolean>> => {
       try {
-        // Fetch all flags in parallel
-        const promises = flagNames.map(name =>
-          apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-enabled', undefined, { feature: name })
-            .then((res: Record<string, boolean>) => ({ [name]: res[name] ?? false }))
-        );
+        // Fetch ALL flags in ONE request using bulk endpoint (much more efficient!)
+        // This prevents N+1 API calls problem and rate limiting issues
+        const allFlags = await apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-flags');
         
-        const results = await Promise.all(promises);
-        return Object.assign({}, ...results);
+        // Return only the requested flags with their values, default to false if missing
+        const result: Record<string, boolean> = {};
+        flagNames.forEach(name => {
+          result[name] = allFlags[name] ?? false;
+        });
+        
+        return result;
       } catch (err) {
         console.warn('Failed to fetch feature flags:', err);
         // Return all disabled as default
         return Object.fromEntries(flagNames.map(name => [name, false]));
       }
     },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
+    staleTime: 30 * 1000, // 30 seconds - shorter for dev (was 5 minutes)
+    gcTime: 2 * 60 * 1000, // 2 minutes (was 10 minutes)
     retry: 1,
   });
 

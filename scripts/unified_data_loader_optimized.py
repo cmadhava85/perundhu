@@ -39,31 +39,78 @@ def upload_opt(self, locations, batch_size: int = 5000, skip_duplicates: bool = 
     logger.info(f"\n🚀 Uploading {len(locations)} locations (OPTIMIZED batch mode)...")
     self.stats['total'] = len(locations)
     
-    query = """
-        INSERT INTO locations (name, latitude, longitude, district, state, osm_id, type, neighborhood, priority)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ON DUPLICATE KEY UPDATE
-            district = VALUES(district),
-            updated_at = NOW()
-    """
+    if hasattr(self, '_load_schema'):
+        self._load_schema()
+
+    fields = ['name']
+    if hasattr(self, '_has_column') and self._has_column('location_type'):
+        fields.append('location_type')
+    if hasattr(self, '_has_column') and self._has_column('parent_id'):
+        fields.append('parent_id')
+    if hasattr(self, '_has_column') and self._has_column('latitude'):
+        fields.append('latitude')
+    if hasattr(self, '_has_column') and self._has_column('longitude'):
+        fields.append('longitude')
+    if hasattr(self, '_has_column') and self._has_column('district'):
+        fields.append('district')
+    if hasattr(self, '_has_column') and self._has_column('state'):
+        fields.append('state')
+    if hasattr(self, '_has_column') and self._has_column('osm_id'):
+        fields.append('osm_id')
+    if hasattr(self, '_has_column') and self._has_column('type'):
+        fields.append('type')
+    if hasattr(self, '_has_column') and self._has_column('neighborhood'):
+        fields.append('neighborhood')
+    if hasattr(self, '_has_column') and self._has_column('priority'):
+        fields.append('priority')
+
+    placeholders = ','.join(['%s'] * len(fields))
+    update_fields = [
+        'district = VALUES(district)',
+        'updated_at = NOW()'
+    ]
+    if hasattr(self, '_has_column') and self._has_column('location_type'):
+        update_fields.append('location_type = COALESCE(VALUES(location_type), location_type)')
+    if hasattr(self, '_has_column') and self._has_column('parent_id'):
+        update_fields.append('parent_id = COALESCE(VALUES(parent_id), parent_id)')
+
+    query = f"INSERT INTO locations ({','.join(fields)}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {', '.join(update_fields)}"
     
     try:
         # OPTIMIZATION #1: Prepare all parameters at once (removes N+1 queries)
         logger.info("📊 Preparing batch parameters...")
         all_params = []
         for loc in locations:
-            params = (
-                loc.name,
-                loc.latitude,
-                loc.longitude,
-                loc.district,
-                loc.state,
-                loc.osm_id,
-                loc.type,
-                loc.neighborhood,
-                loc.priority
-            )
-            all_params.append(params)
+            loc_type = None
+            parent_id = None
+            if hasattr(self, '_infer_location_type_and_parent'):
+                loc_type, parent_id = self._infer_location_type_and_parent(loc.name, loc.type or 'unknown')
+
+            params = []
+            for field in fields:
+                if field == 'name':
+                    params.append(loc.name)
+                elif field == 'location_type':
+                    params.append(loc_type)
+                elif field == 'parent_id':
+                    params.append(parent_id)
+                elif field == 'latitude':
+                    params.append(loc.latitude)
+                elif field == 'longitude':
+                    params.append(loc.longitude)
+                elif field == 'district':
+                    params.append(loc.district)
+                elif field == 'state':
+                    params.append(loc.state)
+                elif field == 'osm_id':
+                    params.append(loc.osm_id)
+                elif field == 'type':
+                    params.append(loc.type)
+                elif field == 'neighborhood':
+                    params.append(loc.neighborhood)
+                elif field == 'priority':
+                    params.append(loc.priority)
+            all_params.append(tuple(params))
         
         logger.info(f"✅ Prepared {len(all_params)} rows for bulk insert")
         
@@ -153,13 +200,42 @@ def upload_smart_dedup(self, locations, batch_size: int = 3000, skip_duplicates:
     logger.info(f"\n🚀 Uploading {len(locations)} locations (smart dedup mode)...")
     self.stats['total'] = len(locations)
     
-    query = """
-        INSERT INTO locations (name, latitude, longitude, district, state, osm_id, type, neighborhood, priority)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ON DUPLICATE KEY UPDATE
-            district = VALUES(district),
-            updated_at = NOW()
-    """
+    if hasattr(self, '_load_schema'):
+        self._load_schema()
+
+    fields = ['name']
+    if hasattr(self, '_has_column') and self._has_column('location_type'):
+        fields.append('location_type')
+    if hasattr(self, '_has_column') and self._has_column('parent_id'):
+        fields.append('parent_id')
+    if hasattr(self, '_has_column') and self._has_column('latitude'):
+        fields.append('latitude')
+    if hasattr(self, '_has_column') and self._has_column('longitude'):
+        fields.append('longitude')
+    if hasattr(self, '_has_column') and self._has_column('district'):
+        fields.append('district')
+    if hasattr(self, '_has_column') and self._has_column('state'):
+        fields.append('state')
+    if hasattr(self, '_has_column') and self._has_column('osm_id'):
+        fields.append('osm_id')
+    if hasattr(self, '_has_column') and self._has_column('type'):
+        fields.append('type')
+    if hasattr(self, '_has_column') and self._has_column('neighborhood'):
+        fields.append('neighborhood')
+    if hasattr(self, '_has_column') and self._has_column('priority'):
+        fields.append('priority')
+
+    placeholders = ','.join(['%s'] * len(fields))
+    update_fields = [
+        'district = VALUES(district)',
+        'updated_at = NOW()'
+    ]
+    if hasattr(self, '_has_column') and self._has_column('location_type'):
+        update_fields.append('location_type = COALESCE(VALUES(location_type), location_type)')
+    if hasattr(self, '_has_column') and self._has_column('parent_id'):
+        update_fields.append('parent_id = COALESCE(VALUES(parent_id), parent_id)')
+
+    query = f"INSERT INTO locations ({','.join(fields)}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {', '.join(update_fields)}"
     
     try:
         start_time = time.time()
@@ -181,11 +257,36 @@ def upload_smart_dedup(self, locations, batch_size: int = 3000, skip_duplicates:
             if key in existing_set:
                 skipped += 1
             else:
-                params = (
-                    loc.name, loc.latitude, loc.longitude, loc.district, loc.state,
-                    loc.osm_id, loc.type, loc.neighborhood, loc.priority
-                )
-                to_insert.append(params)
+                loc_type = None
+                parent_id = None
+                if hasattr(self, '_infer_location_type_and_parent'):
+                    loc_type, parent_id = self._infer_location_type_and_parent(loc.name, loc.type or 'unknown')
+
+                params = []
+                for field in fields:
+                    if field == 'name':
+                        params.append(loc.name)
+                    elif field == 'location_type':
+                        params.append(loc_type)
+                    elif field == 'parent_id':
+                        params.append(parent_id)
+                    elif field == 'latitude':
+                        params.append(loc.latitude)
+                    elif field == 'longitude':
+                        params.append(loc.longitude)
+                    elif field == 'district':
+                        params.append(loc.district)
+                    elif field == 'state':
+                        params.append(loc.state)
+                    elif field == 'osm_id':
+                        params.append(loc.osm_id)
+                    elif field == 'type':
+                        params.append(loc.type)
+                    elif field == 'neighborhood':
+                        params.append(loc.neighborhood)
+                    elif field == 'priority':
+                        params.append(loc.priority)
+                to_insert.append(tuple(params))
         
         logger.info(f"📊 Analysis: {len(to_insert)} new, {skipped} duplicates")
         

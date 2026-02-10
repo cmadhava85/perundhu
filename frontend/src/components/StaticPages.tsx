@@ -24,15 +24,15 @@ export const AboutUs: React.FC = () => {
           <h2>{t('pages.about.whatWeDoTitle', 'What We Do')}</h2>
           <ul>
             <li>{t('pages.about.feature1', 'Comprehensive bus schedule database for Tamil Nadu')}</li>
-            <li>{t('pages.about.feature2', 'Real-time bus tracking powered by community contributions')}</li>
+            <li>{t('pages.about.feature2', 'Real-time bus tracking powered by people contributions')}</li>
             <li>{t('pages.about.feature3', 'Easy-to-use search to find the best routes')}</li>
             <li>{t('pages.about.feature4', 'Support for multiple languages including Tamil and English')}</li>
           </ul>
         </section>
         
         <section className="content-section">
-          <h2>{t('pages.about.communityTitle', 'People Powered')}</h2>
-          <p>{t('pages.about.communityText', 'Our platform is powered by contributions from travelers like you. By sharing route information, bus timings, and real-time location updates, our community helps keep the data accurate and up-to-date.')}</p>
+          <h2>{t('pages.about.peopleTitle', 'People Powered')}</h2>
+          <p>{t('pages.about.peopleText', 'Our platform is powered by contributions from travelers like you. By sharing route information, bus timings, and real-time location updates, people like you help keep the data accurate and up-to-date.')}</p>
         </section>
         
         <section className="content-section">
@@ -444,7 +444,7 @@ export const FAQ: React.FC = () => {
     },
     {
       question: t('pages.faq.q2', 'Is the bus timing information accurate?'),
-      answer: t('pages.faq.a2', 'Our database is updated regularly through official sources and community contributions. However, actual timings may vary due to traffic and other factors. Always allow extra time for your journey.')
+      answer: t('pages.faq.a2', 'Our database is updated regularly through official sources and people contributions. However, actual timings may vary due to traffic and other factors. Always allow extra time for your journey.')
     },
     {
       question: t('pages.faq.q3', 'How can I contribute route information?'),

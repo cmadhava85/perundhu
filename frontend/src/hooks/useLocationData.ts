@@ -51,6 +51,31 @@ const useLocationData = (language?: string) => {
           // If we have locations data, set the destinations too
           if (data && data.length > 0) {
             setDestinations(data);
+            
+            // Set default locations: KCBT Kilambakkam to Madurai - Mattuthavani
+            // Only set if not already set to preserve user selections
+            if (!fromLocation) {
+              // Find KCBT Kilambakkam (try multiple variations)
+              const defaultFrom = data.find(loc => 
+                loc.name?.toLowerCase().includes('kcbt') || 
+                loc.name?.toLowerCase().includes('kilambakkam')
+              );
+              if (defaultFrom) {
+                setFromLocation(defaultFrom);
+              }
+            }
+            
+            if (!toLocation) {
+              // Find Madurai - Mattuthavani (try multiple variations)
+              const defaultTo = data.find(loc => 
+                loc.name?.toLowerCase().includes('mattuthavani') ||
+                (loc.name?.toLowerCase().includes('madurai') && 
+                 loc.name?.toLowerCase().includes('mattuthavani'))
+              );
+              if (defaultTo) {
+                setToLocation(defaultTo);
+              }
+            }
           }
         }
       } catch (err: unknown) {
@@ -76,7 +101,7 @@ const useLocationData = (language?: string) => {
       isMounted = false;
       abortController.abort();
     };
-  }, [i18n.language, language]); // Only language changes should trigger fetch
+  }, [i18n.language, language, fromLocation, toLocation]); // Added fromLocation and toLocation dependencies
 
   // Clear error state
   const clearError = useCallback(() => {

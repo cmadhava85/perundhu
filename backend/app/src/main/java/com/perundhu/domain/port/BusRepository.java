@@ -128,8 +128,10 @@ public interface BusRepository {
         List<Bus> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds);
 
         /**
-         * Find direct buses from any of the source locations to any of the destination locations.
-         * Used for hierarchical search where source/destination may include parent city + child terminals.
+         * Find direct buses from any of the source locations to any of the destination
+         * locations.
+         * Used for hierarchical search where source/destination may include parent city
+         * + child terminals.
          * 
          * Example: Search "Chennai → Madurai" where:
          * - Chennai includes: [1 (city), 62428 (CMBT), 99355 (KCBT), 99295 (Tambaram)]
@@ -137,7 +139,7 @@ public interface BusRepository {
          * Returns all direct buses from any Chennai terminal to any Madurai terminal
          * 
          * @param fromLocationIds List of source location IDs (parent + children)
-         * @param toLocationIds List of destination location IDs (parent + children)
+         * @param toLocationIds   List of destination location IDs (parent + children)
          * @return List of direct buses from any source to any destination
          */
         List<Bus> findBusesBetweenLocationSets(List<Long> fromLocationIds, List<Long> toLocationIds);
@@ -148,4 +150,13 @@ public interface BusRepository {
          * @return The total number of buses
          */
         long count();
+
+        /**
+         * Count the number of bus routes that serve a given location
+         * (either as origin, destination, or intermediate stop).
+         * 
+         * @param locationId The location ID to count routes for
+         * @return The number of routes serving this location
+         */
+        int countRoutesForLocation(Long locationId);
 }

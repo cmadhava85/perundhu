@@ -26,6 +26,7 @@ export interface Location {
   };
   source?: 'database' | 'map' | 'local' | 'offline' | 'overpass' | 'nominatim' | 'google' | 'user-input'; // Added user-input for manual entries
   state?: string; // Added state property
+  routeCount?: number; // Number of bus routes serving this location
 }
 
 export interface SearchFilters {

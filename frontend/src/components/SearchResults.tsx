@@ -210,8 +210,9 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
 
   // Handle report issue submission success
   const handleReportSubmit = useCallback(() => {
-    setReportIssueBus(null);
-    // Could add a toast notification here
+    // Don't close immediately - let ReportIssue component show success message
+    // and close automatically after 3 seconds
+    // Could add a toast notification here if needed
   }, []);
 
   // Handle report issue error

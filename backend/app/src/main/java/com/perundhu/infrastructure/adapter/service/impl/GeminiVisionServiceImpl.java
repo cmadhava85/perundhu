@@ -38,7 +38,7 @@ import io.github.resilience4j.retry.annotation.Retry;
 
 import org.springframework.cache.annotation.Cacheable;
 
-import static com.perundhu.infrastructure.config.GeminiCacheConfig.GEMINI_OCR_CACHE;
+import static com.perundhu.infrastructure.config.CacheConfig.GEMINI_OCR_CACHE;
 
 /**
  * Implementation of GeminiVisionService using Google's Gemini API.
@@ -1242,10 +1242,22 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     upper = upper.replaceAll("\\[.*?\\]", "").trim(); // Remove bracket info
     upper = upper.replaceAll("\\d+$", "").trim(); // Remove trailing numbers
 
-    // Remove leading single letters or single letter + space (bus number artifacts)
-    // E.g., "A Coimbatore" → "Coimbatore", "D from Chennai" → "from Chennai"
-    upper = upper.replaceAll("^[A-Z]\\s+", "").trim(); // Remove "X " at start
-    upper = upper.replaceAll("^[A-Z]{1,3}\\d+[A-Z]*\\s+", "").trim(); // Remove bus numbers like "27D " at start
+    // Remove leading bus number artifacts (CRITICAL FIX for Gemini extraction issue)
+    // Bus numbers can appear as:
+    // - Single letters: "A Coimbatore" → "Coimbatore"
+    // - Letter + digits: "27D Coimbatore" → "Coimbatore"
+    // - Multiple digits: "123A Coimbatore" → "Coimbatore"
+    // - Just digits: "520 Madurai" → "Madurai"
+    // Pattern: [0-9]+ optionally followed by [A-Z], followed by space
+    upper = upper.replaceAll("^\\d{1,3}[A-Z]?\\s+", "").trim(); // Remove "27D " or "123A " or "520 "
+    upper = upper.replaceAll("^[A-Z]\\s+", "").trim(); // Remove single letter "A " at start (catch-all)
+    upper = upper.replaceAll("^[A-Z]{1,3}\\d+[A-Z]*\\s+", "").trim(); // Remove "27D " format (alternative)
+    
+    // Additional cleanup for edge cases
+    // If string still starts with single letter followed by space+city, remove the letter
+    if (upper.matches("^[A-Z]\\s+[A-Z].*")) {
+      upper = upper.replaceFirst("^[A-Z]\\s+", "");
+    }
 
     // Strip common suffixes (order matters - longer patterns first)
     String[] suffixesToRemove = {

@@ -1076,4 +1076,16 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
         return stats;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getRouteCountForLocation(Long locationId) {
+        log.debug("Getting route count for location ID: {}", locationId);
+        try {
+            return busRepository.countRoutesForLocation(locationId);
+        } catch (Exception e) {
+            log.error("Error counting routes for location {}", locationId, e);
+            return 0;
+        }
+    }
 }

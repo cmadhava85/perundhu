@@ -6,6 +6,20 @@
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px;
+  padding-bottom: 40px;
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .add-stops-container {
+    padding-bottom: 120px;
+  }
 }
 
 /* Info Banner */
@@ -42,49 +56,106 @@
 .add-stops-section {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.5);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: visible !important;
+  flex-shrink: 0;
 }
 
 .section-header {
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.section-header.clickable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+  padding: 6px 10px;
+  margin: -6px -10px 0px -10px;
+  border-radius: 8px;
+}
+
+.section-header.clickable:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.section-header .header-left {
+  display: flex;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  flex: 1;
   flex-wrap: wrap;
 }
 
 .section-header h3 {
   margin: 0;
   color: var(--text-primary, #1e293b);
-  font-size: 1.1rem;
+  font-size: 1rem;
+}
+
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-primary, #1e293b);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.collapse-toggle:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.collapse-toggle:active {
+  transform: scale(0.95);
+}
+
+.count-badge {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
 .step-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   background: var(--primary-color, #2563eb);
   color: white;
   border-radius: 50%;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
 }
 
 .locked-badge {
   margin-left: auto;
   background: #fef3c7;
   color: #92400e;
-  padding: 4px 10px;
-  border-radius: 16px;
-  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
   font-weight: 600;
 }
 
@@ -331,8 +402,8 @@
   padding: 10px 14px;
   background: #fef3c7;
   border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 0.875rem;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
   color: #92400e;
 }
 
@@ -343,7 +414,7 @@
 .bus-details-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .detail-item {
@@ -397,8 +468,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 20px;
-  padding: 20px;
+  margin-bottom: 16px;
+  padding: 16px;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   border-radius: 12px;
   border: 1px solid #bae6fd;
@@ -445,13 +516,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0 8px 6px;
+  padding: 6px 0 6px 6px;
   margin-left: 3px;
 }
 
 .route-line-connector .line {
   width: 3px;
-  height: 40px;
+  height: 30px;
   background: linear-gradient(180deg, #10b981 0%, #f59e0b 50%, #ef4444 100%);
   border-radius: 2px;
 }
@@ -460,12 +531,12 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin-top: 8px;
-  padding: 6px 12px;
+  margin-top: 6px;
+  padding: 5px 10px;
   background: #fff;
   border: 2px dashed #f59e0b;
   border-radius: 16px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #b45309;
   font-weight: 600;
   animation: pulse-hint 2s ease-in-out infinite;
@@ -487,6 +558,30 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  border-radius: 8px;
+}
+
+/* Scrollbar styling for existing stops */
+.existing-stops-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.existing-stops-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.existing-stops-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.existing-stops-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .existing-stop-item {
@@ -497,6 +592,7 @@
   background: #f8fafc;
   border-left: 3px solid #e2e8f0;
   position: relative;
+  flex-shrink: 0;
 }
 
 .existing-stop-item.first {
@@ -1080,6 +1176,84 @@
 
 /* Responsive */
 @media (max-width: 640px) {
+  /* Reduce info banner size on mobile */
+  .info-banner {
+    padding: 12px 14px;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .info-banner .info-icon {
+    font-size: 20px;
+  }
+
+  .info-banner .info-text strong {
+    font-size: 0.9rem;
+  }
+
+  .info-banner .info-text p {
+    font-size: 0.8rem;
+  }
+
+  /* Compact help tip */
+  .help-tip {
+    padding: 10px 12px;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .help-tip .tip-icon {
+    font-size: 18px;
+  }
+
+  /* Compact existing stops for mobile - limit height and reduce padding */
+  .existing-stops-list {
+    max-height: 35vh;
+    gap: 1px;
+  }
+
+  /* Make stop items more compact on mobile */
+  .existing-stop-item {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .existing-stop-item .stop-marker {
+    font-size: 0.9rem;
+  }
+
+  .existing-stop-item .stop-name {
+    font-size: 0.9rem;
+  }
+
+  .existing-stop-item .stop-time {
+    font-size: 0.8rem;
+  }
+
+  /* Ensure Add New Stops section is always visible */
+  .add-stops-section {
+    margin-bottom: 20px;
+  }
+
+  /* Add Stop button more prominent on mobile */
+  .add-stop-btn {
+    padding: 14px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  /* Action buttons easier to tap on mobile */
+  .action-buttons {
+    gap: 10px;
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
   .bus-details-grid {
     grid-template-columns: 1fr;
   }
@@ -1152,6 +1326,44 @@
 }
 
 @media (max-width: 480px) {
+  /* Further compact for very small screens */
+  .existing-stops-list {
+    max-height: 30vh;
+  }
+
+  /* Make existing stops even more compact */
+  .existing-stop-item {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .existing-stop-item .stop-marker {
+    font-size: 0.85rem;
+  }
+
+  .existing-stop-item .stop-name {
+    font-size: 0.85rem;
+  }
+
+  .existing-stop-item .stop-time {
+    font-size: 0.75rem;
+  }
+
+  /* Section headers more compact */
+  .section-header {
+    padding: 10px 12px;
+  }
+
+  .section-header h3 {
+    font-size: 1rem;
+  }
+
+  .step-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 0.85rem;
+  }
+
   .new-stop-entry {
     padding: 10px;
     gap: 10px;

@@ -1,6 +1,7 @@
 package com.perundhu.infrastructure.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -126,7 +128,10 @@ class SecurityFiltersIntegrationTest {
 
         @BeforeEach
         void setUp() {
-            filter = new AdminBasicAuthFilter();
+            // AdminBasicAuthFilter requires SecurityContextRepository
+            SecurityContextRepository mockSecurityContextRepository = 
+                mock(SecurityContextRepository.class);
+            filter = new AdminBasicAuthFilter(mockSecurityContextRepository);
         }
 
         @Test

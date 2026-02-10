@@ -137,10 +137,9 @@ export const createApiInstance = (): AxiosInstance => {
       'Content-Type': 'application/json',
     },
     timeout: 30000, // 30 second timeout
-    // Disable caching to always get fresh data from the backend
-    params: {
-      _: new Date().getTime() // Add timestamp to prevent caching
-    }
+    // NOTE: Removed cache-busting timestamp (_ parameter)
+    // React Query handles caching via staleTime/gcTime
+    // Axios cache buster was preventing response caching and causing N+1 requests
   });
 
   // Add request interceptor to attach traceId and CSRF token to all requests

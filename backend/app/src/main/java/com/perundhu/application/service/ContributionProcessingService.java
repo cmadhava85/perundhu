@@ -39,6 +39,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ContributionProcessingService {
 
+    // Configuration for auto-approval feature (default: false - require admin
+    // review)
+    @org.springframework.beans.factory.annotation.Value("${perundhu.features.reviews.auto-approve:false}")
+    private boolean autoApproveEnabled;
+
     // Using sealed interface for contribution status
     private sealed interface ContributionStatus
             permits ApprovedStatus, RejectedStatus, PendingStatus, FailedStatus, DuplicateStatus {
@@ -98,11 +103,13 @@ public class ContributionProcessingService {
 
     /**
      * Scheduled job to process pending route contributions
+     * Only validates contributions - manual admin approval required unless
+     * auto-approve is enabled
      */
     @Scheduled(cron = "0 0 * * * *") // Run once every hour
     @Transactional
     public void processRouteContributions() {
-        log.info("Starting scheduled processing of route contributions");
+        log.info("Starting scheduled processing of route contributions (auto-approve: {})", autoApproveEnabled);
 
         // Process both pending and approved contributions
         var pendingContributions = routeContributionRepository.findByStatus(new PendingStatus().getValue());
@@ -111,18 +118,19 @@ public class ContributionProcessingService {
         log.info("Found {} pending and {} approved route contributions to process",
                 pendingContributions.size(), approvedContributions.size());
 
-        // Process pending contributions (for validation and auto-approval)
+        // Process pending contributions (validation only, no auto-approval unless
+        // enabled)
         for (var contribution : pendingContributions) {
             try {
-                processRouteContribution(contribution);
+                validateRouteContribution(contribution);
             } catch (Exception e) {
-                log.error("Error processing pending route contribution ID {}: {}",
+                log.error("Error validating pending route contribution ID {}: {}",
                         contribution.getId(), e.getMessage(), e);
 
                 updateContributionStatus(
                         contribution,
                         new FailedStatus(),
-                        "Processing error: " + e.getMessage());
+                        "Validation error: " + e.getMessage());
             }
         }
 
@@ -174,10 +182,12 @@ public class ContributionProcessingService {
     }
 
     /**
-     * Process a single route contribution
+     * Validate a route contribution without auto-approving.
+     * Contributions remain in PENDING status for admin review unless auto-approve
+     * is enabled.
      */
-    private void processRouteContribution(RouteContribution contribution) {
-        log.info("Processing route contribution ID {}", contribution.getId());
+    private void validateRouteContribution(RouteContribution contribution) {
+        log.info("Validating route contribution ID {}", contribution.getId());
 
         // 1. Validate locations
         var locationValidationResult = validateLocations(contribution);
@@ -241,7 +251,7 @@ public class ContributionProcessingService {
             }
         }
 
-        // 2. Check for existing bus routes
+        // 2. Check for existing bus routes (duplicate detection)
         if (busRepository.existsByBusNumberAndFromAndToLocations(
                 contribution.getBusNumber(),
                 contribution.getFromLocationName(),
@@ -256,7 +266,46 @@ public class ContributionProcessingService {
             return;
         }
 
-        // 3. Create/get locations
+        // 3. Validate and parse time fields
+        try {
+            if (contribution.getDepartureTime() == null || contribution.getDepartureTime().trim().isEmpty()) {
+                throw new IllegalArgumentException("Departure time is required");
+            }
+            // Just validate time format, don't create entities yet
+            LocalTime.parse(contribution.getDepartureTime());
+            if (contribution.getArrivalTime() != null && !contribution.getArrivalTime().trim().isEmpty()) {
+                LocalTime.parse(contribution.getArrivalTime());
+            }
+        } catch (Exception e) {
+            updateContributionStatus(
+                    contribution,
+                    new FailedStatus(),
+                    "Invalid time format: " + e.getMessage());
+            return;
+        }
+
+        // 4. If auto-approve is enabled, proceed with integration
+        if (autoApproveEnabled) {
+            log.info("Auto-approve enabled - processing contribution ID {} for integration", contribution.getId());
+            processRouteContributionForIntegration(contribution);
+        } else {
+            // Validation passed - keep in PENDING status for admin review
+            log.info("Validation passed for contribution ID {} - awaiting admin approval", contribution.getId());
+            updateContributionStatus(
+                    contribution,
+                    new PendingStatus(),
+                    "Contribution validated successfully. Awaiting admin approval.");
+        }
+    }
+
+    /**
+     * Process a validated contribution for integration (creates bus entity).
+     * Called either by auto-approve or after manual admin approval.
+     */
+    private void processRouteContributionForIntegration(RouteContribution contribution) {
+        log.info("Processing route contribution ID {} for integration", contribution.getId());
+
+        // 1. Create/get locations
         var fromLocation = getOrCreateLocation(
                 contribution.getFromLocationName(),
                 contribution.getFromLatitude(),
@@ -267,19 +316,14 @@ public class ContributionProcessingService {
                 contribution.getToLatitude(),
                 contribution.getToLongitude());
 
-        // 4. Validate and parse time fields
+        // 2. Parse time fields
         LocalTime departureTime;
         LocalTime arrivalTime;
         try {
-            if (contribution.getDepartureTime() == null || contribution.getDepartureTime().trim().isEmpty()) {
-                throw new IllegalArgumentException("Departure time is required");
-            }
-            // Arrival time is optional - will be estimated during integration if missing
-            
             departureTime = LocalTime.parse(contribution.getDepartureTime());
-            arrivalTime = contribution.getArrivalTime() != null && !contribution.getArrivalTime().trim().isEmpty() 
-                ? LocalTime.parse(contribution.getArrivalTime()) 
-                : null;
+            arrivalTime = contribution.getArrivalTime() != null && !contribution.getArrivalTime().trim().isEmpty()
+                    ? LocalTime.parse(contribution.getArrivalTime())
+                    : null;
         } catch (Exception e) {
             updateContributionStatus(
                     contribution,
@@ -288,7 +332,7 @@ public class ContributionProcessingService {
             return;
         }
 
-        // 5. Create new bus
+        // 3. Create new bus
         var newBus = Bus.create(
                 new BusId(1L), // Temporary ID, will be replaced by database
                 contribution.getBusNumber(), // Bus number (e.g., "27D")
@@ -300,19 +344,19 @@ public class ContributionProcessingService {
 
         var savedBus = busRepository.save(newBus);
 
-        // 6. Create stops if provided
+        // 4. Create stops if provided
         processStops(contribution, savedBus);
 
-        // 7. Mark contribution as approved
+        // 5. Mark contribution as approved
         updateContributionStatus(
                 contribution,
                 new ApprovedStatus(),
-                "Route successfully added to the system.");
+                "Route successfully integrated into the system.");
 
-        // 7. Notify user
+        // 6. Notify user
         notificationService.notifyContributionApproved(contribution);
 
-        log.info("Successfully processed route contribution ID {}", contribution.getId());
+        log.info("Successfully integrated route contribution ID {}", contribution.getId());
     }
 
     /**
@@ -1547,7 +1591,8 @@ public class ContributionProcessingService {
             }
 
             // 3. Smart duplicate detection using DuplicateDetectionService
-            // Handles: exact matches, possible duplicates (different bus#), pass-through routes
+            // Handles: exact matches, possible duplicates (different bus#), pass-through
+            // routes
             var duplicateResult = duplicateDetectionService.checkForDuplicate(
                     fromLocation,
                     toLocation,
@@ -1654,7 +1699,8 @@ public class ContributionProcessingService {
     }
 
     /**
-     * Process stops with merge capability - add new stops without duplicating existing ones
+     * Process stops with merge capability - add new stops without duplicating
+     * existing ones
      */
     private void processStopsWithMerge(RouteContribution contribution, Bus bus, boolean mergeMode) {
         List<StopContribution> newStops = contribution.getStops();
@@ -1706,11 +1752,11 @@ public class ContributionProcessingService {
 
                 // Use Stop.create with correct signature
                 Stop newStop = Stop.create(
-                        new com.perundhu.domain.model.StopId(0L),  // Temp ID, DB will assign
+                        new com.perundhu.domain.model.StopId(0L), // Temp ID, DB will assign
                         stopName,
                         stopLocation,
-                        stopTime,  // arrival time
-                        null,      // departure time
+                        stopTime, // arrival time
+                        null, // departure time
                         sequence);
                 stopRepository.save(newStop);
                 addedCount++;
@@ -1818,7 +1864,8 @@ public class ContributionProcessingService {
      * 
      * @param timeStr The time string to parse
      * @return Parsed LocalTime, or null if time string is null/empty
-     * @throws IllegalArgumentException if time cannot be parsed (and is not null/empty)
+     * @throws IllegalArgumentException if time cannot be parsed (and is not
+     *                                  null/empty)
      */
     private LocalTime parseTimeFlexible(String timeStr) {
         if (timeStr == null || timeStr.isBlank()) {

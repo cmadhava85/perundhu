@@ -508,36 +508,21 @@ public class ContributionController {
                 "Image content validation failed. Please ensure the image is a valid bus schedule."));
       }
 
-      // NEW: Tesseract validation to detect junk images (selfies, personal photos,
-      // etc.)
-      log.info("Validating image content with Tesseract OCR (userId: {})", userId);
-      TesseractValidationResult tesseractResult = validateImageWithTesseract(imageFile);
-
-      if (!tesseractResult.isValid) {
-        log.warn("Image failed Tesseract validation - likely not a bus schedule (userId: {}, indicators: {})",
-            userId, tesseractResult.indicatorsFound);
-
-        securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
-            clientId,
-            "JUNK_IMAGE_REJECTED",
-            "INFO",
-            "Image rejected by Tesseract validation (indicators: " + tesseractResult.indicatorsFound + ")",
-            "/api/v1/contributions/images",
-            request.getHeader("User-Agent"),
-            LocalDateTime.now()));
-
-        return ResponseEntity.badRequest()
-            .body(createErrorResponse(
-                "This image does not appear to contain bus schedule information. " +
-                    "Please upload a clear photo of:\n" +
-                    "• Bus timing boards or displays\n" +
-                    "• Route information boards\n" +
-                    "• Bus stop timetables\n\n" +
-                    "Selfies, personal photos, and unrelated images are not accepted."));
+      // Optional: Tesseract validation for image quality analysis (non-blocking)
+      // This is informational only and won't reject uploads
+      log.info("Analyzing image content with Tesseract OCR (userId: {})", userId);
+      try {
+        TesseractValidationResult tesseractResult = validateImageWithTesseract(imageFile);
+        if (!tesseractResult.isValid) {
+          log.info("Image may not contain typical bus schedule content (userId: {}, indicators: {}/5)",
+              userId, tesseractResult.indicatorsFound);
+        } else {
+          log.info("Image appears to contain bus schedule content (userId: {}, indicators: {}/5)",
+              userId, tesseractResult.indicatorsFound);
+        }
+      } catch (Exception e) {
+        log.debug("Tesseract analysis skipped: {}", e.getMessage());
       }
-
-      log.info("Image passed Tesseract validation (userId: {}, indicators: {})",
-          userId, tesseractResult.indicatorsFound);
 
       // Process image contribution with enhanced AI/OCR processing
       ImageContribution contribution = imageProcessingService.processImageContribution(

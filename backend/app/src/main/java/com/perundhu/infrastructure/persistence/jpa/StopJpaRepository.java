@@ -34,7 +34,8 @@ public interface StopJpaRepository extends JpaRepository<StopJpaEntity, Long> {
     /**
      * Batch load stops for multiple buses in a single query.
      * Prevents N+1 query issue when building route graphs.
-     * Eagerly fetches location, bus, and bus locations to prevent LazyInitializationException.
+     * Eagerly fetches location, bus, and bus locations to prevent
+     * LazyInitializationException.
      * 
      * @param busIds List of bus IDs to load stops for
      * @return List of stops ordered by bus ID and stop order
@@ -47,4 +48,18 @@ public interface StopJpaRepository extends JpaRepository<StopJpaEntity, Long> {
             "WHERE s.bus.id IN :busIds " +
             "ORDER BY s.bus.id, s.stopOrder")
     List<StopJpaEntity> findByBusIdsOrderByStopOrder(@Param("busIds") List<Long> busIds);
+
+    /**
+     * Efficiently count stops for multiple buses in a single query.
+     * Returns a list of Object arrays where:
+     * - Index 0 is the bus ID (Long)
+     * - Index 1 is the stop count (Long)
+     * 
+     * This prevents N+1 query problem when paginating buses.
+     * 
+     * @param busIds List of bus IDs to count stops for
+     * @return List of [busId, stopCount] arrays
+     */
+    @Query("SELECT s.bus.id, COUNT(s) FROM StopJpaEntity s WHERE s.bus.id IN :busIds GROUP BY s.bus.id")
+    List<Object[]> countStopsByBusIds(@Param("busIds") List<Long> busIds);
 }

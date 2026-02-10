@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../design-system/Toast';
 import './VoiceContributionRecorder.css';
 
 // Type declarations for Web Speech API
@@ -68,6 +69,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
   maxDuration = 120 // 2 minutes default
 }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -138,7 +140,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
           // Ignore no-speech errors during recording
           return;
         }
-        setError(t('voice.error.recognitionFailed', 'Speech recognition failed. Please try again.'));
+        showToast(t('voice.error.recognitionFailed', 'Speech recognition failed. Please try again.'), 'error');
       };
 
       // Handle recognition end
@@ -173,11 +175,10 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
 
   const startRecording = async () => {
     if (!isBrowserSupported()) {
-      setError(t('voice.error.notSupported', 'Your browser does not support audio recording'));
+      showToast(t('voice.error.notSupported', 'Your browser does not support audio recording'), 'error');
       return;
     }
 
-    setError('');
     audioChunksRef.current = [];
     setTranscribedText('');
     setInterimTranscript('');
@@ -231,7 +232,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       }, 1000);
     } catch {
       // Error accessing microphone
-      setError(t('voice.error.microphoneAccess', 'Could not access microphone. Please check permissions.'));
+      showToast(t('voice.error.microphoneAccess', 'Could not access microphone. Please check permissions.'), 'error');
     }
   };
 
@@ -311,22 +312,20 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
     setTranscribedText('');
     setInterimTranscript('');
     audioChunksRef.current = [];
-    setError('');
   };
 
   const handleSubmit = async () => {
     if (!audioURL) {
-      setError(t('voice.error.noRecording', 'No recording available'));
+      showToast(t('voice.error.noRecording', 'No recording available'), 'warning');
       return;
     }
 
     if (!transcribedText || transcribedText.trim().length === 0) {
-      setError(t('voice.error.noTranscription', 'No transcription available. Please try recording again.'));
+      showToast(t('voice.error.noTranscription', 'No transcription available. Please try recording again.'), 'warning');
       return;
     }
 
     setIsProcessing(true);
-    setError('');
 
     try {
       // Get the audio blob
@@ -346,7 +345,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       audioChunksRef.current = [];
     } catch {
       // Error processing recording
-      setError(t('voice.error.processing', 'Failed to process recording. Please try again.'));
+      showToast(t('voice.error.processing', 'Failed to process recording. Please try again.'), 'error');
     } finally {
       setIsProcessing(false);
     }
@@ -619,14 +618,6 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
             </div>
           )}
         </div>
-
-        {/* Error Message */}
-        {error && (
-          <div className="error-message">
-            <span className="error-icon">⚠️</span>
-            <span className="error-text">{error}</span>
-          </div>
-        )}
 
         {/* Live Transcription Display */}
         {(transcribedText || interimTranscript) && (

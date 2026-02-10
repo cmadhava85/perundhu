@@ -134,18 +134,24 @@ public class BusDatabaseService {
   }
 
   /**
-   * Get stop counts for multiple buses efficiently
+   * Get stop counts for multiple buses efficiently using a single query.
+   * Uses GROUP BY to avoid N+1 query problem.
    */
   private java.util.Map<Long, Integer> getStopCounts(List<Long> busIds) {
     if (busIds == null || busIds.isEmpty()) {
       return java.util.Map.of();
     }
 
+    // Single query with GROUP BY - much more efficient than N queries
+    List<Object[]> results = stopJpaRepository.countStopsByBusIds(busIds);
+
     java.util.Map<Long, Integer> counts = new java.util.HashMap<>();
-    for (Long busId : busIds) {
-      List<StopJpaEntity> stops = stopJpaRepository.findByBusId(busId);
-      counts.put(busId, stops.size());
+    for (Object[] result : results) {
+      Long busId = (Long) result[0];
+      Long count = (Long) result[1];
+      counts.put(busId, count.intValue());
     }
+
     return counts;
   }
 

@@ -36,19 +36,21 @@ public class SystemSettingsService {
     DEFAULT_SETTINGS.put("feature.contribution.manual.enabled",
         new SettingDefault("true", "features", "Enable manual route contribution"));
     DEFAULT_SETTINGS.put("feature.contribution.image.enabled",
-        new SettingDefault("true", "features", "Enable image-based route contribution"));
+        new SettingDefault("false", "features", "Enable image-based route contribution"));
     DEFAULT_SETTINGS.put("feature.contribution.paste.enabled",
-        new SettingDefault("true", "features", "Enable paste text contribution"));
+        new SettingDefault("false", "features", "Enable paste text contribution"));
     DEFAULT_SETTINGS.put("feature.contribution.voice.enabled",
         new SettingDefault("false", "features", "Enable voice input contribution"));
+    DEFAULT_SETTINGS.put("feature.contribution.verification.enabled",
+        new SettingDefault("false", "features", "Enable route verification contribution"));
 
     // UI action toggles
     DEFAULT_SETTINGS.put("feature.share.enabled",
-        new SettingDefault("true", "features", "Enable share route functionality"));
+        new SettingDefault("false", "features", "Enable share route functionality"));
     DEFAULT_SETTINGS.put("feature.addStops.enabled",
-        new SettingDefault("true", "features", "Enable add stops functionality"));
+        new SettingDefault("false", "features", "Enable add stops functionality"));
     DEFAULT_SETTINGS.put("feature.reportIssue.enabled",
-        new SettingDefault("true", "features", "Enable report issue functionality"));
+        new SettingDefault("false", "features", "Enable report issue functionality"));
 
     // Other feature toggles
     DEFAULT_SETTINGS.put("feature.socialMedia.enabled",
@@ -114,7 +116,8 @@ public class SystemSettingsService {
       log.info("System settings initialization complete");
     } catch (Exception e) {
       log.error("Error during system settings initialization", e);
-      // Don't throw - allow application to continue even if settings initialization fails
+      // Don't throw - allow application to continue even if settings initialization
+      // fails
     }
   }
 
@@ -315,11 +318,20 @@ public class SystemSettingsService {
 
   /**
    * Check if a feature is enabled
+   * Accepts both frontend format (e.g., "enableShareRoute") and backend format
+   * (e.g., "feature.share.enabled")
    */
   @Transactional(readOnly = true)
   public boolean isFeatureEnabled(String featureKey) {
-    String fullKey = featureKey.startsWith("feature.") ? featureKey : "feature." + featureKey;
-    return getBooleanSetting(fullKey, false);
+    // If it's already a backend format key (starts with "feature."), use it
+    // directly
+    // Otherwise, convert from frontend format (e.g., "enableShareRoute" ->
+    // "feature.share.enabled")
+    String backendKey = featureKey.startsWith("feature.")
+        ? featureKey
+        : convertFrontendKeyToBackendFormat(featureKey);
+
+    return getBooleanSetting(backendKey, false);
   }
 
   // Helper methods for key format conversion
@@ -336,6 +348,7 @@ public class SystemSettingsService {
         Map.entry("feature.contribution.image.enabled", "enableImageContribution"),
         Map.entry("feature.contribution.paste.enabled", "enablePasteContribution"),
         Map.entry("feature.contribution.voice.enabled", "enableVoiceContribution"),
+        Map.entry("feature.contribution.verification.enabled", "enableRouteVerification"),
         Map.entry("feature.share.enabled", "enableShareRoute"),
         Map.entry("feature.addStops.enabled", "enableAddStops"),
         Map.entry("feature.reportIssue.enabled", "enableReportIssue"),
@@ -368,6 +381,7 @@ public class SystemSettingsService {
         Map.entry("enableImageContribution", "feature.contribution.image.enabled"),
         Map.entry("enablePasteContribution", "feature.contribution.paste.enabled"),
         Map.entry("enableVoiceContribution", "feature.contribution.voice.enabled"),
+        Map.entry("enableRouteVerification", "feature.contribution.verification.enabled"),
         Map.entry("enableShareRoute", "feature.share.enabled"),
         Map.entry("enableAddStops", "feature.addStops.enabled"),
         Map.entry("enableReportIssue", "feature.reportIssue.enabled"),

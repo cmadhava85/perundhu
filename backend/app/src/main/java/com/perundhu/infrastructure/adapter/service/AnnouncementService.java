@@ -27,11 +27,12 @@ public class AnnouncementService {
      */
     public AnnouncementJpaEntity createAnnouncement(AnnouncementJpaEntity announcement) {
         log.info("Creating announcement with ID: {}", announcement.getUniqueId());
-        
+
         if (announcementRepository.existsByUniqueId(announcement.getUniqueId())) {
-            throw new IllegalArgumentException("Announcement with unique ID already exists: " + announcement.getUniqueId());
+            throw new IllegalArgumentException(
+                    "Announcement with unique ID already exists: " + announcement.getUniqueId());
         }
-        
+
         return announcementRepository.save(announcement);
     }
 
@@ -40,10 +41,10 @@ public class AnnouncementService {
      */
     public AnnouncementJpaEntity updateAnnouncement(Long id, AnnouncementJpaEntity announcement) {
         log.info("Updating announcement with ID: {}", id);
-        
+
         AnnouncementJpaEntity existing = announcementRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Announcement not found with ID: " + id));
-        
+                .orElseThrow(() -> new IllegalArgumentException("Announcement not found with ID: " + id));
+
         // Update fields
         existing.setType(announcement.getType());
         existing.setTitleKey(announcement.getTitleKey());
@@ -64,7 +65,7 @@ public class AnnouncementService {
         existing.setExpiresAt(announcement.getExpiresAt());
         existing.setUpdatedBy(announcement.getUpdatedBy());
         existing.setStatus(announcement.getStatus());
-        
+
         return announcementRepository.save(existing);
     }
 
@@ -98,7 +99,8 @@ public class AnnouncementService {
 
     /**
      * Get active announcements for target audience by string (controller-friendly)
-     * Handles parsing of audience string to enum in service layer to avoid controller-infrastructure coupling
+     * Handles parsing of audience string to enum in service layer to avoid
+     * controller-infrastructure coupling
      */
     public List<AnnouncementJpaEntity> getAnnouncementsByAudienceString(String audienceStr) {
         try {
@@ -165,14 +167,14 @@ public class AnnouncementService {
      */
     public AnnouncementJpaEntity publishAnnouncement(Long id, String publishedBy) {
         log.info("Publishing announcement with ID: {}", id);
-        
+
         AnnouncementJpaEntity announcement = announcementRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Announcement not found with ID: " + id));
-        
+                .orElseThrow(() -> new IllegalArgumentException("Announcement not found with ID: " + id));
+
         announcement.setStatus("PUBLISHED");
         announcement.setIsActive(true);
         announcement.setUpdatedBy(publishedBy);
-        
+
         return announcementRepository.save(announcement);
     }
 
@@ -181,14 +183,14 @@ public class AnnouncementService {
      */
     public AnnouncementJpaEntity unpublishAnnouncement(Long id, String unpublishedBy) {
         log.info("Unpublishing announcement with ID: {}", id);
-        
+
         AnnouncementJpaEntity announcement = announcementRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Announcement not found with ID: " + id));
-        
+                .orElseThrow(() -> new IllegalArgumentException("Announcement not found with ID: " + id));
+
         announcement.setStatus("DRAFT");
         announcement.setIsActive(false);
         announcement.setUpdatedBy(unpublishedBy);
-        
+
         return announcementRepository.save(announcement);
     }
 
@@ -229,26 +231,25 @@ public class AnnouncementService {
         List<AnnouncementJpaEntity> active = getActiveAnnouncements();
         List<AnnouncementJpaEntity> expired = getExpiredAnnouncements();
         List<AnnouncementJpaEntity> upcoming = getUpcomingAnnouncements();
-        
+
         return new AnnouncementStats(
-            (long) all.size(),
-            (long) active.size(),
-            (long) expired.size(),
-            (long) upcoming.size(),
-            all.stream().mapToLong(AnnouncementJpaEntity::getViewCount).sum(),
-            all.stream().mapToLong(AnnouncementJpaEntity::getDismissCount).sum()
-        );
+                (long) all.size(),
+                (long) active.size(),
+                (long) expired.size(),
+                (long) upcoming.size(),
+                all.stream().mapToLong(a -> a.getViewCount() != null ? a.getViewCount() : 0L).sum(),
+                all.stream().mapToLong(a -> a.getDismissCount() != null ? a.getDismissCount() : 0L).sum());
     }
 
     /**
      * Statistics DTO
      */
     public record AnnouncementStats(
-        Long total,
-        Long active,
-        Long expired,
-        Long upcoming,
-        Long totalViews,
-        Long totalDismisses
-    ) {}
+            Long total,
+            Long active,
+            Long expired,
+            Long upcoming,
+            Long totalViews,
+            Long totalDismisses) {
+    }
 }

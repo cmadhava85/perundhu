@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import { usePublicFeatureFlags } from '../hooks/usePublicFeatureFlag';
+import { BusReviewSection } from './review/BusReviewSection';
 import '../styles/premium-design-system.css';
 import '../styles/bus-card-modern-premium.css';
 import '../styles/premium-bus-grid.css';
@@ -34,10 +35,11 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
 }) => {
   const { i18n } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
   const [leavingIn, setLeavingIn] = useState<string | null>(null);
   
   // Fetch feature flags from public endpoint (no auth required)
-  const { flags } = usePublicFeatureFlags(['enableAddStops', 'enableReportIssue', 'enableShareRoute']);
+  const { flags } = usePublicFeatureFlags(['enableAddStops', 'enableReportIssue', 'enableShareRoute', 'enableBusReviews']);
 
   // Calculate bus title with operator name
   const busTitle = React.useMemo(() => {
@@ -364,6 +366,21 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
           </button>
         )}
         
+        {/* Reviews Button - controlled by public feature flag */}
+        {flags.enableBusReviews && (
+          <button
+            className="btn btn-reviews"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowReviews(true);
+            }}
+            title="View and write reviews"
+            aria-label={`Reviews for ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
+          >
+            ⭐ Reviews
+          </button>
+        )}
+        
         {/* Share Button - controlled by public feature flag */}
         {flags.enableShareRoute && (
           <button
@@ -473,6 +490,30 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
       {bus.fare && (
         <div className="bus-card-fare">
           ₹{bus.fare}
+        </div>
+      )}
+
+      {/* Reviews Modal */}
+      {showReviews && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
+              <h2 className="text-xl font-bold">{bus.busName || 'Bus'} Reviews</h2>
+              <button
+                onClick={() => setShowReviews(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="p-4">
+              <BusReviewSection
+                busId={bus.id}
+                busName={bus.busName || 'Bus'}
+                compact={false}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

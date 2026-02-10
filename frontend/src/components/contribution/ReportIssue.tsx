@@ -5,6 +5,7 @@ import { searchBuses, getLocations, api } from '../../services/api';
 import { useEffect } from 'react';
 import HoneypotFields from '../common/HoneypotFields';
 import { useSubmissionSecurity } from '../../hooks/useSubmissionSecurity';
+import { useToast } from '../design-system/Toast';
 import './ReportIssue.css';
 
 interface ReportIssueProps {
@@ -65,6 +66,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
 }) => {
   const { t } = useTranslation();
   const { prepareSubmission, isLoading: isSecurityLoading } = useSubmissionSecurity();
+  const { showToast } = useToast();
   
   // Route selection state
   const [locations, setLocations] = useState<Location[]>([]);
@@ -89,7 +91,6 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
   const [lastTraveledDate, setLastTraveledDate] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const issueTypes: IssueTypeOption[] = [
     {
@@ -189,17 +190,16 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
   // Submit the issue report
   const handleSubmit = async () => {
     if (!issueType) {
-      setSubmitError(t('reportIssue.selectIssueType', 'Please select an issue type'));
+      showToast(t('reportIssue.selectIssueType', 'Please select an issue type'), 'warning');
       return;
     }
     
     if (!description.trim() && issueType !== 'BUS_NOT_AVAILABLE') {
-      setSubmitError(t('reportIssue.descriptionRequired', 'Please describe the issue'));
+      showToast(t('reportIssue.descriptionRequired', 'Please describe the issue'), 'warning');
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitError(null);
     
     const issueData: RouteIssueData = {
       busId: selectedBus?.id,
@@ -218,7 +218,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
     // Validate security (honeypot, reCAPTCHA)
     const securePayload = await prepareSubmission(issueData as unknown as Record<string, unknown>, 'report_issue');
     if (!securePayload.isValid) {
-      setSubmitError(t('reportIssue.securityFailed', 'Security validation failed. Please try again.'));
+      showToast(t('reportIssue.securityFailed', 'Security validation failed. Please try again.'), 'error');
       return;
     }
     
@@ -232,18 +232,20 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
       
       if (data.success) {
         setSubmitSuccess(true);
+        showToast(t('reportIssue.successMessage', 'Your report has been submitted. We\'ll review and update the information.'), 'success', 3000);
         onSubmit?.(issueData);
         
         // Close after showing success
         setTimeout(() => {
           onClose?.();
-        }, 3000);
+        }, 2000);
       } else {
-        setSubmitError(data.error || t('reportIssue.submitFailed', 'Failed to submit report'));
+        const errorMsg = data.error || t('reportIssue.submitFailed', 'Failed to submit report');
+        showToast(errorMsg, 'error');
       }
     } catch (error) {
       console.error('Error submitting issue:', error);
-      setSubmitError(t('reportIssue.submitFailed', 'Failed to submit report. Please try again.'));
+      showToast(t('reportIssue.submitFailed', 'Failed to submit report. Please try again.'), 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -459,7 +461,6 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
                 value={issueType || ''}
                 onChange={(e) => {
                   setIssueType((e.target.value || null) as IssueType | null);
-                  setSubmitError(null);
                 }}
                 className="issue-type-select"
               >
@@ -521,10 +522,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
                   </label>
                   <textarea
                     value={description}
-                    onChange={(e) => {
-                      setDescription(e.target.value);
-                      setSubmitError(null);
-                    }}
+                    onChange={(e) => setDescription(e.target.value)}
                     placeholder={getDescriptionPlaceholder(issueType, t)}
                     rows={2}
                   />
@@ -547,14 +545,6 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
                     <option value="never">{t('reportIssue.date.never', 'Never')}</option>
                   </select>
                 </div>
-                
-                {/* Error message */}
-                {submitError && (
-                  <div className="error-message">
-                    <span className="error-icon">⚠️</span>
-                    {submitError}
-                  </div>
-                )}
                 
                 {/* Submit button */}
                 <button

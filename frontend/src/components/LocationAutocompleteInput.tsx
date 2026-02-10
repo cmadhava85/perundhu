@@ -317,13 +317,31 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
                   onMouseLeave={(e) => e.currentTarget.style.background = suggestion.name.includes(' - ') ? '#f0fdf4' : 'transparent'}
                 >
                   <span style={{ fontSize: '18px' }}>
-                    {suggestion.name.includes(' - ') ? '🚏' : suggestion.source === 'database' ? '🚍' : suggestion.source === 'local' ? '⚡' : '🌍'}
+                    {/* Show bus icon for locations with routes, otherwise show based on source */}
+                    {suggestion.routeCount && suggestion.routeCount > 0 ? '🚍' : 
+                     suggestion.name.includes(' - ') ? '🚏' : 
+                     suggestion.source === 'database' ? '🚍' : 
+                     suggestion.source === 'local' ? '⚡' : '🌍'}
                   </span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 500, color: '#1f2937' }}>
                       {getDisplayName(suggestion)}
                       {suggestion.name.includes(' - ') && (
                         <span style={{ marginLeft: '8px', fontSize: '11px', background: '#22c55e', color: 'white', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>Bus Stand</span>
+                      )}
+                      {/* Show route count badge for locations with routes */}
+                      {suggestion.routeCount && suggestion.routeCount > 0 && (
+                        <span style={{ 
+                          marginLeft: '8px', 
+                          fontSize: '11px', 
+                          background: '#3b82f6', 
+                          color: 'white', 
+                          padding: '2px 6px', 
+                          borderRadius: '4px', 
+                          fontWeight: 600 
+                        }}>
+                          {suggestion.routeCount} {suggestion.routeCount === 1 ? 'route' : 'routes'}
+                        </span>
                       )}
                     </div>
                     {/* Show secondary language name if available and different */}

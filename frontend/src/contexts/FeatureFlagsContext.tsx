@@ -156,31 +156,13 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     setLastSyncError(null);
     
     try {
-      const flagNames = Object.keys(defaultFlags).filter((key) => {
-        const value = defaultFlags[key as keyof FeatureFlags];
-        return typeof value === 'boolean';
-      });
-
-      const results = await Promise.allSettled(
-        flagNames.map((name) =>
-          apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-enabled', undefined, { feature: name })
-        )
+      // Use bulk endpoint to get all feature flags in ONE call instead of 30+ individual calls
+      // This prevents rate limiting (429 errors) and improves performance
+      const backendFlags = await apiRequest<Record<string, boolean>>(
+        'GET', 
+        '/api/v1/settings/feature-flags',
+        undefined
       );
-
-      const backendFlags = results.reduce<Record<string, boolean>>((acc, result, index) => {
-        const name = flagNames[index];
-        if (result.status === 'fulfilled') {
-          acc[name] = result.value[name] ?? false;
-        } else {
-          acc[name] = false;
-        }
-        return acc;
-      }, {});
-
-      const hasSuccess = results.some(result => result.status === 'fulfilled');
-      if (!hasSuccess) {
-        throw new Error('Public feature flags unavailable');
-      }
 
       setIsBackendAvailable(true);
       
@@ -189,7 +171,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       setFlags(mergedFlags);
       saveToLocalStorage(mergedFlags);
       
-      console.log('Feature flags synced from public endpoint');
+      console.log('Feature flags synced from bulk endpoint:', Object.keys(backendFlags).length, 'flags');
     } catch (error) {
       console.warn('Public feature flags not available, using local settings:', error);
       setIsBackendAvailable(false);

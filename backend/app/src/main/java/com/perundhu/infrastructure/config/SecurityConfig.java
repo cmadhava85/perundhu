@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,6 +27,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -71,6 +74,57 @@ public class SecurityConfig {
   }
 
   @Bean
+  public SecurityContextRepository securityContextRepository() {
+    // Shared repository for admin authentication
+    // This bean is injected into both AdminBasicAuthFilter and SecurityFilterChains
+    // Using RequestAttributeSecurityContextRepository for stateless admin auth
+    return new RequestAttributeSecurityContextRepository();
+  }
+
+  @Bean
+  @Order(1) // Higher priority - matches admin endpoints first
+  public SecurityFilterChain adminSecurityFilterChain(
+      HttpSecurity http,
+      SecurityContextRepository securityContextRepository) throws Exception {
+    // CSRF protection configuration
+    XorCsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new XorCsrfTokenRequestAttributeHandler();
+    csrfTokenRequestAttributeHandler.setCsrfRequestAttributeName("_csrf");
+
+    http
+        // Only match admin endpoints
+        .securityMatcher("/api/admin/**", "/api/v1/admin/**")
+        // Configure security context repository to use request attributes
+        .securityContext(context -> context.securityContextRepository(securityContextRepository))
+        .csrf(csrf -> csrf
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
+            .ignoringRequestMatchers(
+                "/api/admin/**", // All admin endpoints (Protected by Basic Auth)
+                "/api/v1/admin/**")) // Admin v1 endpoints
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // Disable anonymous authentication - admin endpoints require explicit auth
+        .anonymous(anonymous -> anonymous.disable())
+        // Add security filters - admin basic auth is key here
+        .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(originValidationFilter, RateLimitingFilter.class)
+        .addFilterAfter(apiKeyValidationFilter, OriginValidationFilter.class)
+        .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
+        .authorizeHttpRequests(authz -> authz
+            // Admin auth endpoints are public (for login)
+            .requestMatchers("/api/admin/auth/**").permitAll()
+            // All other admin endpoints require authentication (role check via
+            // @PreAuthorize in controllers)
+            .anyRequest().authenticated());
+
+    // NO OAuth2 resource server for admin endpoints - they use BasicAuth via
+    // AdminBasicAuthFilter
+
+    return http.build();
+  }
+
+  @Bean
+  @Order(2) // Lower priority - matches everything else after admin filter chain
   public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
     // CSRF protection: Use HttpOnly=false so JavaScript can read the token for AJAX
     // requests
@@ -120,38 +174,22 @@ public class SecurityConfig {
             .requestMatchers("/api/v1/locations/**").permitAll()
             .requestMatchers("/api/images/**").permitAll() // Allow public access to images
             .requestMatchers("/actuator/health").permitAll()
-            // Protected endpoints - user management and admin
+            // Protected endpoints - user management
             .requestMatchers("/api/v1/contributions/manage/**").authenticated()
-            // Admin authentication endpoints (public for login)
-            .requestMatchers("/api/admin/auth/**").permitAll()
-            // Admin endpoints require authentication (role check via @PreAuthorize)
-            .requestMatchers("/api/v1/admin/**").authenticated()
-            .requestMatchers("/api/admin/**").authenticated()
-            // Route issues endpoints - public for reporting, admin for management
+            // Route issues endpoints - public for reporting, admin handled by separate
+            // filter chain
             .requestMatchers("/api/v1/route-issues/report").permitAll()
-            .requestMatchers("/api/v1/route-issues/admin/**").authenticated()
             // Allow all other requests for development
             .anyRequest().permitAll());
 
-    // Configure OAuth2 Resource Server with JWT for development
-    // Exclude admin endpoints from OAuth2 authentication (handled by AdminBasicAuthFilter)
+    // Configure OAuth2 Resource Server with JWT for API endpoints (admin endpoints
+    // handled separately)
     http.oauth2ResourceServer(oauth2 -> oauth2
         .jwt(jwt -> jwt
             .decoder(jwtDecoder)
             .jwtAuthenticationConverter(jwtAuthenticationConverter()))
         .authenticationEntryPoint((request, response, authException) -> {
-          // Check if this is an admin endpoint
-          String requestUri = request.getRequestURI();
-          if (requestUri.startsWith("/api/admin/") || requestUri.startsWith("/api/v1/admin/") 
-              || requestUri.contains("/admin/")) {
-            // For admin endpoints, let AdminBasicAuthFilter handle authentication
-            // Don't send WWW-Authenticate: Bearer header
-            response.setStatus(401);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\":\"UNAUTHORIZED\",\"message\":\"Authentication required\",\"status\":401}");
-            return;
-          }
-          // For non-admin endpoints, use default OAuth2 behavior
+          // API endpoints need JWT
           response.setStatus(401);
           response.setHeader("WWW-Authenticate", "Bearer");
           response.setContentType("application/json");

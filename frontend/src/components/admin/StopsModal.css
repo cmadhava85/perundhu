@@ -170,6 +170,7 @@
   border: 1px solid var(--border-light, #e5e7eb);
   border-radius: var(--radius-md, 0.5rem);
   transition: border-color 0.2s, box-shadow 0.2s;
+  align-items: center;
 }
 
 .stop-item:hover {
@@ -198,6 +199,17 @@
 
 .stop-item.editing .stop-order {
   background: var(--primary-dark, #2563eb);
+}
+
+.drag-handle {
+  color: var(--text-tertiary, #9ca3af);
+  cursor: grab;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
 }
 
 .stop-details {
@@ -279,7 +291,8 @@
 .stop-actions {
   display: flex;
   gap: 0.5rem;
-  align-items: flex-start;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .stop-action-btn {

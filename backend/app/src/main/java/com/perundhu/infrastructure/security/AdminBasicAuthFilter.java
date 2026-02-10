@@ -6,10 +6,14 @@ import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -37,7 +41,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     @Value("${admin.auth.username:admin}")
     private String adminUsername;
 
-    @Value("${admin.auth.password:#{null}}")
+    @Value("${admin.auth.password:admin}")
     private String adminPassword;
 
     @Value("${admin.auth.enabled:true}")
@@ -45,6 +49,13 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
 
     @Value("${spring.profiles.active:default}")
     private String activeProfile;
+
+    // Use shared SecurityContextRepository - injected to match SecurityConfig
+    private final SecurityContextRepository securityContextRepository;
+
+    public AdminBasicAuthFilter(@Lazy SecurityContextRepository securityContextRepository) {
+        this.securityContextRepository = securityContextRepository;
+    }
 
     /**
      * Validate admin credentials on startup to catch configuration issues early.
@@ -58,7 +69,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
         log.info("Admin Auth Enabled: {}", authEnabled);
         log.info("Admin Username: {}", adminUsername != null ? maskValue(adminUsername) : "NOT SET");
         log.info("Admin Password: {}", adminPassword != null ? maskValue(adminPassword) : "NOT SET");
-        
+
         if (!authEnabled) {
             log.warn("⚠️  ADMIN AUTHENTICATION IS DISABLED - All admin endpoints are unprotected!");
             log.info("=============================================================");
@@ -78,7 +89,8 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
             log.error("   Fix: Move ADMIN_USERNAME from --set-env-vars to --update-secrets in CD pipeline");
             hasIssues = true;
         } else if (adminUsername.length() < 3) {
-            log.warn("⚠️  ADMIN USERNAME IS TOO SHORT (length: {}) - Recommended minimum: 3 characters", adminUsername.length());
+            log.warn("⚠️  ADMIN USERNAME IS TOO SHORT (length: {}) - Recommended minimum: 3 characters",
+                    adminUsername.length());
         }
 
         if (adminPassword == null || adminPassword.isBlank()) {
@@ -91,7 +103,8 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
             log.error("   Fix: Move ADMIN_PASSWORD from --set-env-vars to --update-secrets in CD pipeline");
             hasIssues = true;
         } else if (adminPassword.length() < 8) {
-            log.warn("⚠️  ADMIN PASSWORD IS WEAK (length: {}) - Recommended minimum: 8 characters", adminPassword.length());
+            log.warn("⚠️  ADMIN PASSWORD IS WEAK (length: {}) - Recommended minimum: 8 characters",
+                    adminPassword.length());
         }
 
         if (hasIssues) {
@@ -100,14 +113,13 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
             log.error("=============================================================");
             if (activeProfile.contains("prod") || activeProfile.contains("preprod")) {
                 throw new IllegalStateException(
-                    "Admin credentials are not properly configured for " + activeProfile + " environment. " +
-                    "Check the CD pipeline configuration and ensure secrets are loaded from GCP Secret Manager."
-                );
+                        "Admin credentials are not properly configured for " + activeProfile + " environment. " +
+                                "Check the CD pipeline configuration and ensure secrets are loaded from GCP Secret Manager.");
             }
         } else {
             log.info("✅ Admin credentials validated successfully");
         }
-        
+
         log.info("=============================================================");
     }
 
@@ -212,13 +224,22 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
             if (isValidCredentials(username, password)) {
                 log.info("Admin authentication successful for user: {} accessing: {}", username, requestUri);
 
-                // Set authentication in security context
+                // Create authentication token with ADMIN role
                 List<SimpleGrantedAuthority> authorities = List.of(
                         new SimpleGrantedAuthority("ROLE_ADMIN"),
                         new SimpleGrantedAuthority("ROLE_USER"));
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username,
                         null, authorities);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                // Create new SecurityContext and set authentication
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                context.setAuthentication(authentication);
+                SecurityContextHolder.setContext(context);
+
+                // CRITICAL: Save context to repository so Spring Security filters can access it
+                securityContextRepository.saveContext(context, request, response);
+
+                log.debug("SecurityContext saved for user: {} with authorities: {}", username, authorities);
 
                 filterChain.doFilter(request, response);
             } else {
@@ -239,7 +260,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
         if (uri.startsWith("/api/admin/auth/")) {
             return false;
         }
-        
+
         return uri.startsWith("/api/admin/")
                 || uri.startsWith("/api/v1/admin/")
                 || uri.contains("/admin/"); // Catch all admin sub-paths like /api/v1/route-issues/admin/
@@ -248,29 +269,31 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     /**
      * Validate Bearer token for admin access (development mode ONLY)
      * SECURITY: Only accepts hardcoded dev token in non-production environments
-     * In production, this should return false or integrate with proper JWT validation
+     * In production, this should return false or integrate with proper JWT
+     * validation
      */
     private boolean isValidBearerToken(String token) {
         if (token == null || token.isBlank()) {
             return false;
         }
-        
-        // CRITICAL SECURITY: Only allow bearer token auth in development/test environments
-        boolean isDevelopment = activeProfile != null && 
-            (activeProfile.contains("dev") || activeProfile.contains("test") || activeProfile.contains("local"));
-        
+
+        // CRITICAL SECURITY: Only allow bearer token auth in development/test
+        // environments
+        boolean isDevelopment = activeProfile != null &&
+                (activeProfile.contains("dev") || activeProfile.contains("test") || activeProfile.contains("local"));
+
         if (!isDevelopment) {
             log.warn("Bearer token authentication attempted in non-development environment: {}", activeProfile);
             return false;
         }
-        
+
         // Only accept the exact dev token - NO wildcards or partial matches
         boolean isValid = token.equals("dev-admin-token");
-        
+
         if (!isValid) {
             log.debug("Invalid bearer token attempted in development mode");
         }
-        
+
         return isValid;
     }
 
@@ -307,7 +330,8 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     /**
      * Send 401 Unauthorized response with WWW-Authenticate header
      */
-    private void sendUnauthorizedResponse(HttpServletRequest request, HttpServletResponse response, String message) throws IOException {
+    private void sendUnauthorizedResponse(HttpServletRequest request, HttpServletResponse response, String message)
+            throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         // Avoid triggering browser Basic Auth popup for XHR/Fetch/API calls

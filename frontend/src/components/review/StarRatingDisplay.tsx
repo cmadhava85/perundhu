@@ -20,7 +20,7 @@ export const StarRatingDisplay: React.FC<StarRatingDisplayProps> = ({
   className = '',
 }) => {
   const sizeStyles = {
-    sm: { fontSize: '14px', gap: '2px' },
+    sm: { fontSize: '12px', gap: '1px' },
     md: { fontSize: '16px', gap: '2px' },
     lg: { fontSize: '20px', gap: '3px' },
   };

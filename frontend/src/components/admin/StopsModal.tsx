@@ -256,9 +256,9 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
                   key={stop.id} 
                   className={`stop-item ${editingStopId === stop.id ? 'editing' : ''}`}
                 >
+                  <GripVertical size={16} className="drag-handle" />
                   <div className="stop-order">
-                    <GripVertical size={16} className="drag-handle" />
-                    <span className="order-number">{index + 1}</span>
+                    {index + 1}
                   </div>
 
                   {editingStopId === stop.id ? (
@@ -352,14 +352,14 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
                       </div>
                       <div className="stop-actions">
                         <button
-                          className="action-btn edit"
+                          className="stop-action-btn edit-btn"
                           onClick={() => handleEditStart(stop)}
                           title={t('admin.stops.edit', 'Edit stop')}
                         >
                           <Edit2 size={14} />
                         </button>
                         <button
-                          className="action-btn delete"
+                          className="stop-action-btn delete-btn"
                           onClick={() => handleDeleteStop(stop.id)}
                           title={t('admin.stops.delete', 'Delete stop')}
                         >

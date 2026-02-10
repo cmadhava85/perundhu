@@ -191,7 +191,7 @@ export const RouteVerification: React.FC<RouteVerificationProps> = ({
 
   return (
     <div className="route-verification">
-      {/* Community Stats Banner */}
+      {/* Platform Stats Banner */}
       <div className="verification-stats-banner">
         <div className="stats-grid">
           <div className="stat-item">

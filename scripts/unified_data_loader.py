@@ -551,6 +551,8 @@ class LocationLoader:
             'translations': 0,
             'errors': []
         }
+        self.location_columns: List[str] = []
+        self.city_cache: Dict[str, int] = {}
         
         # Initialize Tamil translator if enabled
         if self.enable_translation:
@@ -654,6 +656,77 @@ class LocationLoader:
                     self.stats['errors'].append(str(e))
         
         return locations
+
+    def _load_schema(self):
+        if self.location_columns:
+            return
+        try:
+            cols = self.db.execute("SHOW COLUMNS FROM locations", fetch=True) or []
+            self.location_columns = [c.get('Field') for c in cols if c.get('Field')]
+        except Exception as e:
+            logger.warning(f"Could not load locations schema: {e}")
+
+        if self._has_column('location_type'):
+            try:
+                cities = self.db.execute("SELECT id, name FROM locations WHERE location_type = 'CITY'", fetch=True) or []
+                for row in cities:
+                    self.city_cache[row['name'].strip().lower()] = row['id']
+            except Exception as e:
+                logger.debug(f"City cache preload skipped: {e}")
+
+    def _has_column(self, column: str) -> bool:
+        return column in self.location_columns
+
+    TERMINAL_KEYWORDS = [
+        'terminus', 'bus stand', 'busstand', 'bus stop', 'b.s', 'b.s.', 'bs',
+        'bus station', 'mtc terminus', 'mtc bus stand', 'tnstc bus stand', 'depot'
+    ]
+
+    TERMINAL_PARENT_MAP = {
+        'cmbt': 'chennai',
+        'koyambedu': 'chennai',
+        'kilambakkam': 'chennai',
+        'kcbt': 'chennai',
+        'tambaram': 'chennai',
+        'adyar': 'chennai',
+        'vadapalani': 'chennai',
+        'broadway': 'chennai',
+        't nagar': 'chennai', 't. nagar': 'chennai', 'tnagar': 'chennai',
+        'gandhipuram': 'coimbatore',
+        'singanallur': 'coimbatore',
+        'central bus stand': 'tiruchirappalli',
+        'mattuthavani': 'madurai',
+    }
+
+    def _infer_location_type_and_parent(self, name: str, fallback_type: str) -> Tuple[str, Optional[int]]:
+        n = (name or '').strip().lower()
+        fallback = (fallback_type or '').strip().lower()
+
+        if 'city' in fallback:
+            loc_type = 'CITY'
+        elif any(k in n for k in self.TERMINAL_KEYWORDS) or fallback.startswith('bus_terminal'):
+            loc_type = 'TERMINAL'
+        elif fallback.startswith('bus_stop') or 'stop' in n:
+            loc_type = 'STATION'
+        elif fallback in ('town', 'village'):
+            loc_type = 'TOWN'
+        else:
+            loc_type = 'TOWN'
+
+        parent_id = None
+        for key, city in self.TERMINAL_PARENT_MAP.items():
+            if key in n:
+                parent_id = self.city_cache.get(city.lower())
+                if parent_id:
+                    break
+
+        if parent_id is None and self.city_cache:
+            for city_name, cid in self.city_cache.items():
+                if city_name in n:
+                    parent_id = cid
+                    break
+
+        return loc_type, parent_id
     
     def upload(self, locations: List[LocationData], batch_size: int = 1000, 
                skip_duplicates: bool = True) -> bool:
@@ -661,16 +734,43 @@ class LocationLoader:
         logger.info(f"\n🚀 Uploading {len(locations)} locations...")
         self.stats['total'] = len(locations)
         
-        query = """
-            INSERT INTO locations (name, latitude, longitude, district, state, osm_id, type, neighborhood, priority)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            ON DUPLICATE KEY UPDATE
-                id = LAST_INSERT_ID(id),
-                district = VALUES(district),
-                latitude = VALUES(latitude),
-                longitude = VALUES(longitude),
-                updated_at = NOW()
-        """
+        self._load_schema()
+        fields = ['name']
+        if self._has_column('location_type'):
+            fields.append('location_type')
+        if self._has_column('parent_id'):
+            fields.append('parent_id')
+        if self._has_column('latitude'):
+            fields.append('latitude')
+        if self._has_column('longitude'):
+            fields.append('longitude')
+        if self._has_column('district'):
+            fields.append('district')
+        if self._has_column('state'):
+            fields.append('state')
+        if self._has_column('osm_id'):
+            fields.append('osm_id')
+        if self._has_column('type'):
+            fields.append('type')
+        if self._has_column('neighborhood'):
+            fields.append('neighborhood')
+        if self._has_column('priority'):
+            fields.append('priority')
+
+        placeholders = ','.join(['%s'] * len(fields))
+        update_fields = [
+            'id = LAST_INSERT_ID(id)',
+            'district = VALUES(district)',
+            'latitude = VALUES(latitude)',
+            'longitude = VALUES(longitude)',
+            'updated_at = NOW()'
+        ]
+        if self._has_column('location_type'):
+            update_fields.append('location_type = COALESCE(VALUES(location_type), location_type)')
+        if self._has_column('parent_id'):
+            update_fields.append('parent_id = COALESCE(VALUES(parent_id), parent_id)')
+
+        query = f"INSERT INTO locations ({','.join(fields)}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {', '.join(update_fields)}"
         
         try:
             for i in range(0, len(locations), batch_size):
@@ -683,20 +783,37 @@ class LocationLoader:
                         continue
                     
                     try:
-                        params = (
-                            loc.name,
-                            loc.latitude,
-                            loc.longitude,
-                            loc.district,
-                            loc.state,
-                            loc.osm_id,
-                            loc.type,
-                            loc.neighborhood,
-                            loc.priority
-                        )
-                        self.db.execute(query, params)
+                        loc_type, parent_id = self._infer_location_type_and_parent(loc.name, loc.type or 'unknown')
+                        params: List[Any] = []
+                        for field in fields:
+                            if field == 'name':
+                                params.append(loc.name)
+                            elif field == 'location_type':
+                                params.append(loc_type)
+                            elif field == 'parent_id':
+                                params.append(parent_id)
+                            elif field == 'latitude':
+                                params.append(loc.latitude)
+                            elif field == 'longitude':
+                                params.append(loc.longitude)
+                            elif field == 'district':
+                                params.append(loc.district)
+                            elif field == 'state':
+                                params.append(loc.state)
+                            elif field == 'osm_id':
+                                params.append(loc.osm_id)
+                            elif field == 'type':
+                                params.append(loc.type)
+                            elif field == 'neighborhood':
+                                params.append(loc.neighborhood)
+                            elif field == 'priority':
+                                params.append(loc.priority)
+
+                        self.db.execute(query, tuple(params))
                         location_id = self.db.cursor.lastrowid
                         self.stats['inserted'] += 1
+                        if loc_type == 'CITY' and location_id:
+                            self.city_cache[loc.name.strip().lower()] = location_id
                         
                         # Insert Tamil translation if enabled
                         if self.enable_translation and location_id:

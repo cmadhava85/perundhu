@@ -34,19 +34,42 @@ public class SettingsPublicController {
      * @param feature The feature flag name (e.g., enableAddStops, enableShareRoute)
      * @return Map with feature name as key and boolean status as value
      * 
-     * Example: GET /api/v1/settings/feature-enabled?feature=enableShareRoute
-     * Response: {"enableShareRoute": true}
+     *         Example: GET
+     *         /api/v1/settings/feature-enabled?feature=enableShareRoute
+     *         Response: {"enableShareRoute": true}
      */
     @GetMapping("/feature-enabled")
     @PreAuthorize("permitAll()")
     public ResponseEntity<Map<String, Boolean>> isFeatureEnabled(@RequestParam String feature) {
         log.debug("Public feature flag request for: {}", feature);
-        
+
         boolean enabled = settingsService.isFeatureEnabled(feature);
         Map<String, Boolean> response = new HashMap<>();
         response.put(feature, enabled);
-        
+
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Get ALL feature flags in one call (bulk endpoint).
+     * This is more efficient than calling feature-enabled multiple times.
+     * 
+     * @return Map with all feature flag names as keys and boolean statuses as
+     *         values
+     * 
+     *         Example: GET /api/v1/settings/feature-flags
+     *         Response: {"enableAddStops": true, "enableShareRoute": false,
+     *         "enableImageContribution": true, ...}
+     */
+    @GetMapping("/feature-flags")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<Map<String, Boolean>> getAllFeatureFlags() {
+        log.debug("Public bulk feature flags request");
+
+        Map<String, Boolean> allFlags = settingsService.getFeatureFlags();
+
+        log.debug("Returning {} feature flags", allFlags.size());
+        return ResponseEntity.ok(allFlags);
     }
 
     /**
@@ -55,16 +78,17 @@ public class SettingsPublicController {
      * @param features Comma-separated list of feature flag names
      * @return Map with feature names as keys and boolean statuses as values
      * 
-     * Example: GET /api/v1/settings/features?features=enableAddStops,enableShareRoute
-     * Response: {"enableAddStops": true, "enableShareRoute": false}
+     *         Example: GET
+     *         /api/v1/settings/features?features=enableAddStops,enableShareRoute
+     *         Response: {"enableAddStops": true, "enableShareRoute": false}
      */
     @GetMapping("/features")
     @PreAuthorize("permitAll()")
     public ResponseEntity<Map<String, Boolean>> getFeatures(@RequestParam(required = false) String features) {
         log.debug("Public features request: {}", features);
-        
+
         Map<String, Boolean> response = new HashMap<>();
-        
+
         if (features != null && !features.isBlank()) {
             String[] featureNames = features.split(",");
             for (String feature : featureNames) {
@@ -74,7 +98,7 @@ public class SettingsPublicController {
                 }
             }
         }
-        
+
         return ResponseEntity.ok(response);
     }
 }

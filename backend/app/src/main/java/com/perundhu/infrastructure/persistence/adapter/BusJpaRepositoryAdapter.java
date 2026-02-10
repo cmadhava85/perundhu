@@ -216,4 +216,17 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     public long count() {
         return jpaRepository.count();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int countRoutesForLocation(Long locationId) {
+        // Count buses where this location is origin, destination, or in stops
+        long originCount = jpaRepository.countByFromLocationId(locationId);
+        long destinationCount = jpaRepository.countByToLocationId(locationId);
+        long viaCount = jpaRepository.countByStopsLocationId(locationId);
+
+        // Return total unique routes (may have some overlap, but gives a good
+        // indicator)
+        return (int) (originCount + destinationCount + viaCount);
+    }
 }

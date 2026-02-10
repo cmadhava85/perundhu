@@ -16,34 +16,36 @@ public record LocationDTO(
         @JsonProperty("longitude") Double longitude,
         @JsonProperty("district") String district,
         @JsonProperty("nearbyCity") String nearbyCity,
-        @JsonProperty("displayName") String displayName) {
+        @JsonProperty("displayName") String displayName,
+        @JsonProperty("routeCount") Integer routeCount) {
 
     /**
      * Constructor without translation for non-language methods
      */
     public LocationDTO(Long id, String name, Double latitude, Double longitude) {
-        this(id, name, name, latitude, longitude, null, null, name);
+        this(id, name, name, latitude, longitude, null, null, name, null);
     }
 
     /**
      * Constructor with translation but without district info
      */
     public LocationDTO(Long id, String name, String translatedName, Double latitude, Double longitude) {
-        this(id, name, translatedName, latitude, longitude, null, null, translatedName != null ? translatedName : name);
+        this(id, name, translatedName, latitude, longitude, null, null, translatedName != null ? translatedName : name,
+                null);
     }
 
     /**
      * Factory method for creating a basic location
      */
     public static LocationDTO of(Long id, String name) {
-        return new LocationDTO(id, name, name, null, null, null, null, name);
+        return new LocationDTO(id, name, name, null, null, null, null, name, null);
     }
 
     /**
      * Factory method with coordinates
      */
     public static LocationDTO withCoordinates(Long id, String name, Double latitude, Double longitude) {
-        return new LocationDTO(id, name, name, latitude, longitude, null, null, name);
+        return new LocationDTO(id, name, name, latitude, longitude, null, null, name, null);
     }
 
     /**
@@ -52,7 +54,16 @@ public record LocationDTO(
     public static LocationDTO withTranslation(Long id, String name, String translatedName,
             Double latitude, Double longitude) {
         return new LocationDTO(id, name, translatedName, latitude, longitude, null, null,
-                translatedName != null ? translatedName : name);
+                translatedName != null ? translatedName : name, null);
+    }
+
+    /**
+     * Factory method with translation and route count
+     */
+    public static LocationDTO withRoutingInfo(Long id, String name, String translatedName,
+            Double latitude, Double longitude, Integer routeCount) {
+        return new LocationDTO(id, name, translatedName, latitude, longitude, null, null,
+                translatedName != null ? translatedName : name, routeCount);
     }
 
     /**
@@ -61,7 +72,7 @@ public record LocationDTO(
     public static LocationDTO withDistrict(Long id, String name, String translatedName,
             Double latitude, Double longitude, String district, String nearbyCity) {
         String display = buildDisplayName(translatedName != null ? translatedName : name, district, nearbyCity);
-        return new LocationDTO(id, name, translatedName, latitude, longitude, district, nearbyCity, display);
+        return new LocationDTO(id, name, translatedName, latitude, longitude, district, nearbyCity, display, null);
     }
 
     /**
@@ -111,5 +122,9 @@ public record LocationDTO(
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public Integer getRouteCount() {
+        return routeCount;
     }
 }

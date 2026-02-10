@@ -63,7 +63,7 @@ describe('RouteVerification Component', () => {
       expect(screen.getByText('Select a Route to Verify')).toBeDefined();
     });
 
-    it('displays community stats', () => {
+    it('displays platform stats', () => {
       render(<RouteVerification {...defaultProps} />);
       expect(screen.getByText('Verifications')).toBeDefined();
       expect(screen.getByText('Routes Verified')).toBeDefined();

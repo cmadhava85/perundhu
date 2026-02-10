@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <p className="footer-description">
-              {t('footer.description', 'Community-powered bus schedule platform for Tamil Nadu. Helping commuters find accurate bus timings.')}
+              {t('footer.description', 'People-powered bus schedule platform for Tamil Nadu. Helping commuters find accurate bus timings.')}
             </p>
             
             {/* Social Links */}

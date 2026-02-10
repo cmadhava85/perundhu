@@ -91,7 +91,7 @@ export const announcements: Announcement[] = [
   //   titleKey: 'announcements.milestone.title',
   //   messageKey: 'announcements.milestone.message',
   //   titleFallback: '🎉 Milestone!',
-  //   messageFallback: 'We just crossed 10,000 community contributions! Thank you!',
+  //   messageFallback: 'We just crossed 10,000 people contributions! Thank you!',
   //   dismissible: true,
   //   priority: 3
   // },

@@ -39,6 +39,10 @@ public class CacheConfig {
         public static final String REVIEWS_CACHE = "reviewsCache";
         public static final String BUSES_CACHE = "busesCache";
         public static final String BUS_ROUTES_CACHE = "busRoutesCache";
+        
+        // Gemini Vision AI caches (cost optimization)
+        public static final String GEMINI_OCR_CACHE = "geminiOcrCache";
+        public static final String GEMINI_BATCH_CACHE = "geminiBatchCache";
 
         /**
          * Custom cache manager with specific TTLs for different cache types.
@@ -75,7 +79,9 @@ public class CacheConfig {
                                 IMAGE_CONTRIBUTIONS_CACHE,
                                 REVIEWS_CACHE,
                                 BUSES_CACHE,
-                                BUS_ROUTES_CACHE));
+                                BUS_ROUTES_CACHE,
+                                GEMINI_OCR_CACHE,
+                                GEMINI_BATCH_CACHE));
 
                 cacheManager.setAllowNullValues(false);
                 return cacheManager;
@@ -146,6 +152,14 @@ public class CacheConfig {
                                         .expireAfterWrite(30, TimeUnit.MINUTES)
                                         .maximumSize(2000)
                                         .recordStats();
+
+                        // Gemini Vision AI caches (7 days TTL for OCR results)
+                        case GEMINI_OCR_CACHE, GEMINI_BATCH_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(7, TimeUnit.DAYS)
+                                        .maximumSize(1000)
+                                        .recordStats();
+
+                        //              .recordStats();
 
                         // Default for all other caches
                         default -> Caffeine.newBuilder()

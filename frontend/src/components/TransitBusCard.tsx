@@ -351,7 +351,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               busId={bus.id}
               busName={bus.busNumber || bus.busName || 'Bus'}
               compact={true}
-              className="ml-2"
+              className="flex-shrink-0"
             />
           )}
           
@@ -366,6 +366,8 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               borderRadius: '16px',
               fontSize: '12px',
               fontWeight: '600',
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
               ...getTimeBadgeStyle(timeUntil.type)
             }}>
               <span>{getTimeBadgeIcon(timeUntil.type)}</span>

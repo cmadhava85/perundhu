@@ -358,8 +358,8 @@ class PerundhuDataLoader:
                     stops_data = bus.get('stops', [])
                     for stop_idx, stop in enumerate(stops_data):
                         stop_location_name = (
-                            stop.get('location')
-                            or stop.get('landmark')
+                            stop.get('landmark')
+                            or stop.get('location')
                             or stop.get('original_city')
                             or ''
                         )

@@ -21,36 +21,36 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * (e.g., from @Async methods).
          */
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                LEFT JOIN FETCH b.fromLocation
-                LEFT JOIN FETCH b.toLocation
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
+                        """)
         List<BusJpaEntity> findAllWithLocations();
 
         // ID-based methods (currently being used by BusJpaRepositoryAdapter)
         // Only return active buses for search results
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                WHERE b.fromLocation.id = :fromLocationId
-                  AND b.toLocation.id = :toLocationId
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        WHERE b.fromLocation.id = :fromLocationId
+                          AND b.toLocation.id = :toLocationId
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findByFromLocationIdAndToLocationId(
                         @Param("fromLocationId") Long fromLocationId,
                         @Param("toLocationId") Long toLocationId);
 
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                WHERE b.fromLocation.id = :fromLocationId
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        WHERE b.fromLocation.id = :fromLocationId
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findByFromLocationId(@Param("fromLocationId") Long fromLocationId);
 
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                WHERE (b.fromLocation.id = :fromLocationId OR b.toLocation.id = :toLocationId)
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        WHERE (b.fromLocation.id = :fromLocationId OR b.toLocation.id = :toLocationId)
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findByFromLocationIdOrToLocationId(
                         @Param("fromLocationId") Long fromLocationId,
                         @Param("toLocationId") Long toLocationId);
@@ -58,28 +58,28 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
         // Entity-based methods (used by tests)
         // Using explicit JPQL queries to avoid property reference issues
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                WHERE b.fromLocation = :fromLocation
-                  AND b.toLocation = :toLocation
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        WHERE b.fromLocation = :fromLocation
+                          AND b.toLocation = :toLocation
+                        """)
         List<BusJpaEntity> findByFromLocationAndToLocation(
                         @Param("fromLocation") LocationJpaEntity fromLocation,
                         @Param("toLocation") LocationJpaEntity toLocation);
 
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                WHERE b.fromLocation = :fromLocation
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        WHERE b.fromLocation = :fromLocation
+                        """)
         List<BusJpaEntity> findByFromLocation(@Param("fromLocation") LocationJpaEntity fromLocation);
 
         // Query method for checking bus existence
         @Query("""
-                SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END
-                FROM BusJpaEntity b
-                WHERE b.busNumber = :busNumber
-                  AND b.fromLocation.name = :fromLocationName
-                  AND b.toLocation.name = :toLocationName
-                """)
+                        SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END
+                        FROM BusJpaEntity b
+                        WHERE b.busNumber = :busNumber
+                          AND b.fromLocation.name = :fromLocationName
+                          AND b.toLocation.name = :toLocationName
+                        """)
         boolean existsByBusNumberAndFromAndToLocations(
                         @Param("busNumber") String busNumber,
                         @Param("fromLocationName") String fromLocationName,
@@ -87,14 +87,14 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
 
         // New query method for checking bus existence with timing
         @Query("""
-                SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END
-                FROM BusJpaEntity b
-                WHERE b.busNumber = :busNumber
-                  AND b.fromLocation.name = :fromLocationName
-                  AND b.toLocation.name = :toLocationName
-                  AND b.departureTime = :departureTime
-                  AND b.arrivalTime = :arrivalTime
-                """)
+                        SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END
+                        FROM BusJpaEntity b
+                        WHERE b.busNumber = :busNumber
+                          AND b.fromLocation.name = :fromLocationName
+                          AND b.toLocation.name = :toLocationName
+                          AND b.departureTime = :departureTime
+                          AND b.arrivalTime = :arrivalTime
+                        """)
         boolean existsByBusNumberAndFromAndToLocationsAndTiming(
                         @Param("busNumber") String busNumber,
                         @Param("fromLocationName") String fromLocationName,
@@ -114,13 +114,13 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * @return List of active buses between the specified locations
          */
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                JOIN FETCH b.fromLocation
-                JOIN FETCH b.toLocation
-                WHERE b.fromLocation.id = :fromLocationId
-                  AND b.toLocation.id = :toLocationId
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        JOIN FETCH b.fromLocation
+                        JOIN FETCH b.toLocation
+                        WHERE b.fromLocation.id = :fromLocationId
+                          AND b.toLocation.id = :toLocationId
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findBusesBetweenLocations(
                         @Param("fromLocationId") Long fromLocationId,
                         @Param("toLocationId") Long toLocationId);
@@ -133,23 +133,25 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * Uses JOIN FETCH to load locations in single query (prevents N+1)
          * Only returns active buses
          * IMPORTANT: This includes buses where toLocation is NOT the final destination
-         * Example: Chennai → Madurai bus that passes through Trichy (if searching Chennai → Trichy)
+         * Example: Chennai → Madurai bus that passes through Trichy (if searching
+         * Chennai → Trichy)
          * 
          * @param fromLocationId The ID of the origin location
          * @param toLocationId   The ID of the destination location
-         * @return List of active buses that have stops at both locations in the correct order
+         * @return List of active buses that have stops at both locations in the correct
+         *         order
          */
         @Query("""
-                SELECT DISTINCT b FROM BusJpaEntity b
-                JOIN FETCH b.fromLocation
-                JOIN FETCH b.toLocation
-                JOIN StopJpaEntity s1 ON s1.bus.id = b.id
-                JOIN StopJpaEntity s2 ON s2.bus.id = b.id
-                WHERE s1.location.id = :fromLocationId
-                  AND s2.location.id = :toLocationId
-                  AND s1.stopOrder < s2.stopOrder
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT DISTINCT b FROM BusJpaEntity b
+                        JOIN FETCH b.fromLocation
+                        JOIN FETCH b.toLocation
+                        JOIN StopJpaEntity s1 ON s1.bus.id = b.id
+                        JOIN StopJpaEntity s2 ON s2.bus.id = b.id
+                        WHERE s1.location.id = :fromLocationId
+                          AND s2.location.id = :toLocationId
+                          AND s1.stopOrder < s2.stopOrder
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findBusesPassingThroughLocations(
                         @Param("fromLocationId") Long fromLocationId,
                         @Param("toLocationId") Long toLocationId);
@@ -162,22 +164,23 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * 
          * @param fromLocationId The ID of the origin location
          * @param toLocationId   The ID of the intermediate destination location
-         * @return List of active buses that pass through toLocationId and continue further
+         * @return List of active buses that pass through toLocationId and continue
+         *         further
          */
         @Query("""
-                SELECT DISTINCT b FROM BusJpaEntity b
-                JOIN StopJpaEntity s1 ON s1.bus.id = b.id
-                JOIN StopJpaEntity s2 ON s2.bus.id = b.id
-                WHERE s1.location.id = :fromLocationId
-                  AND s2.location.id = :toLocationId
-                  AND s1.stopOrder < s2.stopOrder
-                  AND b.toLocation.id != :toLocationId
-                  AND (b.active = true OR b.active IS NULL)
-                  AND EXISTS (
-                      SELECT s3 FROM StopJpaEntity s3
-                      WHERE s3.bus.id = b.id AND s3.stopOrder > s2.stopOrder
-                  )
-                """)
+                        SELECT DISTINCT b FROM BusJpaEntity b
+                        JOIN StopJpaEntity s1 ON s1.bus.id = b.id
+                        JOIN StopJpaEntity s2 ON s2.bus.id = b.id
+                        WHERE s1.location.id = :fromLocationId
+                          AND s2.location.id = :toLocationId
+                          AND s1.stopOrder < s2.stopOrder
+                          AND b.toLocation.id != :toLocationId
+                          AND (b.active = true OR b.active IS NULL)
+                          AND EXISTS (
+                              SELECT s3 FROM StopJpaEntity s3
+                              WHERE s3.bus.id = b.id AND s3.stopOrder > s2.stopOrder
+                          )
+                        """)
         List<BusJpaEntity> findBusesContinuingBeyondDestination(
                         @Param("fromLocationId") Long fromLocationId,
                         @Param("toLocationId") Long toLocationId);
@@ -188,11 +191,11 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
         List<BusJpaEntity> findByCategory(String category);
 
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                WHERE b.busNumber = :busNumber
-                  AND b.fromLocation.id = :fromLocationId
-                  AND b.toLocation.id = :toLocationId
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        WHERE b.busNumber = :busNumber
+                          AND b.fromLocation.id = :fromLocationId
+                          AND b.toLocation.id = :toLocationId
+                        """)
         List<BusJpaEntity> findByBusNumberAndFromLocationIdAndToLocationId(
                         @Param("busNumber") String busNumber,
                         @Param("fromLocationId") Long fromLocationId,
@@ -210,43 +213,63 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * 
          * @param fromLocationIds List of possible origin location IDs
          * @param toLocationIds   List of possible destination location IDs
-         * @return List of active buses passing through any from location to any to location
+         * @return List of active buses passing through any from location to any to
+         *         location
          */
         @Query("""
-                SELECT DISTINCT b FROM BusJpaEntity b
-                JOIN StopJpaEntity s1 ON s1.bus.id = b.id
-                JOIN StopJpaEntity s2 ON s2.bus.id = b.id
-                WHERE s1.location.id IN :fromLocationIds
-                  AND s2.location.id IN :toLocationIds
-                  AND s1.stopOrder < s2.stopOrder
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT DISTINCT b FROM BusJpaEntity b
+                        JOIN StopJpaEntity s1 ON s1.bus.id = b.id
+                        JOIN StopJpaEntity s2 ON s2.bus.id = b.id
+                        WHERE s1.location.id IN :fromLocationIds
+                          AND s2.location.id IN :toLocationIds
+                          AND s1.stopOrder < s2.stopOrder
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findBusesPassingThroughAnyLocations(
                         @Param("fromLocationIds") List<Long> fromLocationIds,
                         @Param("toLocationIds") List<Long> toLocationIds);
 
         /**
          * Find direct buses from any source location to any destination location.
-         * Used for hierarchical search (e.g., Chennai → Madurai includes all terminals).
+         * Used for hierarchical search (e.g., Chennai → Madurai includes all
+         * terminals).
          * Only returns active buses with direct routes (not via intermediate stops).
          * 
          * Example: Search "Chennai → Madurai" where Chennai includes [1, 62428, 99355]
          * and Madurai includes [3, 62434]. Returns buses where:
          * - from_location_id IN (1, 62428, 99355) AND to_location_id IN (3, 62434)
          * 
-         * @param fromLocationIds List of source location IDs (parent city + child terminals)
-         * @param toLocationIds List of destination location IDs (parent city + child terminals)
+         * @param fromLocationIds List of source location IDs (parent city + child
+         *                        terminals)
+         * @param toLocationIds   List of destination location IDs (parent city + child
+         *                        terminals)
          * @return List of active direct buses from any source to any destination
          */
         @Query("""
-                SELECT b FROM BusJpaEntity b
-                JOIN FETCH b.fromLocation
-                JOIN FETCH b.toLocation
-                WHERE b.fromLocation.id IN :fromLocationIds
-                  AND b.toLocation.id IN :toLocationIds
-                  AND (b.active = true OR b.active IS NULL)
-                """)
+                        SELECT b FROM BusJpaEntity b
+                        JOIN FETCH b.fromLocation
+                        JOIN FETCH b.toLocation
+                        WHERE b.fromLocation.id IN :fromLocationIds
+                          AND b.toLocation.id IN :toLocationIds
+                          AND (b.active = true OR b.active IS NULL)
+                        """)
         List<BusJpaEntity> findBusesBetweenLocationSets(
                         @Param("fromLocationIds") List<Long> fromLocationIds,
                         @Param("toLocationIds") List<Long> toLocationIds);
+
+        /**
+         * Count buses where this location is the origin
+         */
+        long countByFromLocationId(Long locationId);
+
+        /**
+         * Count buses where this location is the destination
+         */
+        long countByToLocationId(Long locationId);
+
+        /**
+         * Count buses where this location appears as an intermediate stop
+         */
+        @Query("SELECT COUNT(DISTINCT s.bus.id) FROM StopJpaEntity s WHERE s.location.id = :locationId")
+        long countByStopsLocationId(@Param("locationId") Long locationId);
 }

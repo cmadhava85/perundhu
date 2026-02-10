@@ -94,7 +94,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const [statistics, setStatistics] = useState<Statistics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<IssueStatus | 'ALL'>('ALL');
+  const [statusFilter, setStatusFilter] = useState<IssueStatus | 'ALL'>('PENDING'); // Changed from 'ALL' to 'PENDING' - only fetch pending issues by default
   const [priorityFilter, setPriorityFilter] = useState<IssuePriority | 'ALL'>('ALL');
   const [expandedIssueId, setExpandedIssueId] = useState<number | null>(null);
   const [actionLoading, setActionLoading] = useState<number | null>(null);

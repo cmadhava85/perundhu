@@ -146,11 +146,12 @@ public interface BusScheduleService {
      * Groups city, bus stands, and neighborhoods together
      * Example: "Salem" returns {city: Salem, busStands: [Salem New, Salem Old]}
      * 
-     * @param query The search query
+     * @param query        The search query
      * @param languageCode Language code for translations (e.g., "ta" for Tamil)
      * @return Grouped location search response
      */
-    java.util.List<com.perundhu.application.dto.LocationGroupDTO> searchLocationsGrouped(String query, String languageCode);
+    java.util.List<com.perundhu.application.dto.LocationGroupDTO> searchLocationsGrouped(String query,
+            String languageCode);
 
     /**
      * Discover intermediate bus stops between two locations using OSM data
@@ -253,4 +254,13 @@ public interface BusScheduleService {
      * @return Map containing routeCount, contributorCount, and cityCount
      */
     java.util.Map<String, Object> getPublicStats();
+
+    /**
+     * Get the number of bus routes that serve a given location.
+     * Used to prioritize locations with more routes in autocomplete.
+     * 
+     * @param locationId The location ID to count routes for
+     * @return The number of routes serving this location
+     */
+    int getRouteCountForLocation(Long locationId);
 }
