@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.ActiveProfiles;
@@ -38,10 +38,10 @@ public class SecurityConfigurationTest {
   private ApplicationContext applicationContext;
 
   // Mock dependencies required by admin auth controller
-  @MockBean
+  @MockitoBean
   private RecaptchaValidationService recaptchaValidationService;
 
-  @MockBean
+  @MockitoBean
   private AuthenticationManager authenticationManager;
 
   @Nested
