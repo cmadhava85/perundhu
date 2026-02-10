@@ -84,3 +84,23 @@ mtc_batch*_*.json
 *_old.py
 *_backup.sh
 *_deprecated.*.secrets-production-checklist.txt
+
+# Large test/demo files
+demo-videos/
+*.hprof
+frontend/playwright-report/data/*.zip
+frontend/playwright-report/data/*.webm
+frontend/playwright-report/trace/
+frontend/test-results/
+# Java heap dumps
+*.hprof
+
+# Demo videos (too large for git)
+demo-videos/
+
+# Playwright large artifacts
+frontend/playwright-report/data/*.zip
+frontend/playwright-report/trace/
+
+# Test results
+frontend/test-results/
