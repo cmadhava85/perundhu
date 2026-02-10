@@ -12,11 +12,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.service.BusScheduleService;
@@ -24,19 +27,25 @@ import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.LocationId;
 
-@SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+/**
+ * Controller tests for LocationController.
+ * Uses pure Mockito (no Spring context) for fast execution.
+ */
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("LocationController Language Support Tests")
 class LocationControllerTest {
 
-  @Autowired
   private MockMvc mockMvc;
 
-  @MockBean
+  @Mock
   private BusScheduleService busScheduleService;
 
-  @MockBean
+  @Mock
   private OpenStreetMapGeocodingService geocodingService;
+
+  @InjectMocks
+  private LocationController locationController;
 
   private LocationDTO englishLocation;
   private LocationDTO tamilLocation;
@@ -44,6 +53,9 @@ class LocationControllerTest {
 
   @BeforeEach
   void setUp() {
+    // Initialize MockMvc with standalone setup (no Spring context)
+    mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
+
     // Setup English location
     englishLocation = LocationDTO.withTranslation(1L, "Chennai", "Chennai", null, null);
 
