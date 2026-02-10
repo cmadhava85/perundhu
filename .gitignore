@@ -92,15 +92,19 @@ frontend/playwright-report/data/*.zip
 frontend/playwright-report/data/*.webm
 frontend/playwright-report/trace/
 frontend/test-results/
-# Java heap dumps
-*.hprof
 
-# Demo videos (too large for git)
-demo-videos/
+# PID files
+.pids/
+*.pid
 
-# Playwright large artifacts
-frontend/playwright-report/data/*.zip
-frontend/playwright-report/trace/
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Test results
-frontend/test-results/
+# Thumbnails
+._*
+
+# JVM crash logs
+hs_err_pid*.log
+replay_pid*.log
