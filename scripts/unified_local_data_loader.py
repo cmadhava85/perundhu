@@ -54,6 +54,29 @@ class LoadStats:
     def total_skipped(self) -> int:
         return self.locations_skipped + self.buses_skipped + self.stops_skipped
 
+
+# Location hierarchy inference constants (aligned with unified_data_loader.py)
+TERMINAL_KEYWORDS = [
+    'terminus', 'bus stand', 'busstand', 'bus stop', 'b.s', 'b.s.', 'bs',
+    'bus station', 'mtc terminus', 'mtc bus stand', 'tnstc bus stand', 'depot'
+]
+
+TERMINAL_PARENT_MAP = {
+    'cmbt': 'chennai',
+    'koyambedu': 'chennai',
+    'kilambakkam': 'chennai',
+    'kcbt': 'chennai',
+    'tambaram': 'chennai',
+    'adyar': 'chennai',
+    'vadapalani': 'chennai',
+    'broadway': 'chennai',
+    't nagar': 'chennai', 't. nagar': 'chennai', 'tnagar': 'chennai',
+    'gandhipuram': 'coimbatore',
+    'singanallur': 'coimbatore',
+    'central bus stand': 'tiruchirappalli',
+    'mattuthavani': 'madurai',
+}
+
 class PerundhuDataLoader:
     """Unified data loader for Perundhu local development"""
     
@@ -74,6 +97,8 @@ class PerundhuDataLoader:
         self.data_dir = Path(__file__).parent.parent / 'data'
         self.location_index = None
         self.location_cache = {}
+        self.location_columns: List[str] = []
+        self.city_cache: Dict[str, int] = {}
         
     def connect(self) -> bool:
         """Connect to database"""
@@ -103,6 +128,64 @@ class PerundhuDataLoader:
             self.conn.close()
             print(f"{Colors.OKGREEN}✅ Disconnected from database{Colors.ENDC}")
     
+    def _load_schema(self):
+        """Load locations table schema for column-aware inserts"""
+        if self.location_columns:
+            return
+        try:
+            self.cursor.execute("SHOW COLUMNS FROM locations")
+            cols = self.cursor.fetchall()
+            self.location_columns = [c[0] for c in cols if c]
+        except Exception as e:
+            print(f"  ⚠️  Could not load locations schema: {e}")
+
+        # Preload city cache for parent ID lookups
+        if self._has_column('location_type'):
+            try:
+                self.cursor.execute("SELECT id, name FROM locations WHERE location_type = 'CITY'")
+                for row in self.cursor.fetchall():
+                    self.city_cache[row[1].strip().lower()] = row[0]
+            except Exception:
+                pass
+
+    def _has_column(self, column: str) -> bool:
+        """Check if column exists in locations table"""
+        return column in self.location_columns
+
+    def _infer_location_type_and_parent(self, name: str, fallback_type: str) -> Tuple[str, Optional[int]]:
+        """Infer location type and parent ID based on name patterns (aligned with preprod/prod)"""
+        n = (name or '').strip().lower()
+        fallback = (fallback_type or '').strip().lower()
+
+        # Determine location type
+        if 'city' in fallback:
+            loc_type = 'CITY'
+        elif any(k in n for k in TERMINAL_KEYWORDS) or fallback.startswith('bus_terminal'):
+            loc_type = 'TERMINAL'
+        elif fallback.startswith('bus_stop') or 'stop' in n:
+            loc_type = 'STATION'
+        elif fallback in ('town', 'village'):
+            loc_type = 'TOWN'
+        else:
+            loc_type = 'TOWN'
+
+        # Determine parent ID from terminal-to-city mapping
+        parent_id = None
+        for key, city in TERMINAL_PARENT_MAP.items():
+            if key in n:
+                parent_id = self.city_cache.get(city.lower())
+                if parent_id:
+                    break
+
+        # Fallback: check if any city name is part of the location name
+        if parent_id is None and self.city_cache:
+            for city_name, cid in self.city_cache.items():
+                if city_name in n:
+                    parent_id = cid
+                    break
+
+        return loc_type, parent_id
+    
     def clean_data(self) -> bool:
         """Clean existing data from tables"""
         try:
@@ -130,7 +213,7 @@ class PerundhuDataLoader:
             return False
     
     def load_locations(self) -> bool:
-        """Load locations from JSON file"""
+        """Load locations from JSON file (schema-aware, aligned with preprod/prod)"""
         try:
             locations_file = self.data_dir / 'tamil_nadu_locations.json'
             
@@ -144,36 +227,93 @@ class PerundhuDataLoader:
             
             print(f"  📊 Total locations to import: {len(locations):,}")
             
+            # Load schema to determine available columns
+            self._load_schema()
+            
+            # Build dynamic field list based on schema (aligned with preprod/prod)
+            fields = ['name']
+            if self._has_column('location_type'):
+                fields.append('location_type')
+            if self._has_column('parent_id'):
+                fields.append('parent_id')
+            if self._has_column('latitude'):
+                fields.append('latitude')
+            if self._has_column('longitude'):
+                fields.append('longitude')
+            if self._has_column('district'):
+                fields.append('district')
+            if self._has_column('state'):
+                fields.append('state')
+            if self._has_column('osm_id'):
+                fields.append('osm_id')
+            if self._has_column('type'):
+                fields.append('type')
+            if self._has_column('neighborhood'):
+                fields.append('neighborhood')
+            if self._has_column('priority'):
+                fields.append('priority')
+
+            placeholders = ','.join(['%s'] * len(fields))
+            update_fields = [
+                'id = LAST_INSERT_ID(id)',
+                'latitude = VALUES(latitude)',
+                'longitude = VALUES(longitude)',
+                'updated_at = NOW()'
+            ]
+            if self._has_column('district'):
+                update_fields.append('district = VALUES(district)')
+            if self._has_column('location_type'):
+                update_fields.append('location_type = COALESCE(VALUES(location_type), location_type)')
+            if self._has_column('parent_id'):
+                update_fields.append('parent_id = COALESCE(VALUES(parent_id), parent_id)')
+
+            query = f"INSERT INTO locations ({','.join(fields)}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {', '.join(update_fields)}"
+            
             batch_size = 500
             for i in range(0, len(locations), batch_size):
                 batch = locations[i:i+batch_size]
                 
                 for loc in batch:
                     try:
-                        # Check if location already exists
-                        self.cursor.execute(
-                            "SELECT id FROM locations WHERE name = %s AND latitude = %s AND longitude = %s LIMIT 1",
-                            (loc.get('name'), loc.get('latitude'), loc.get('longitude'))
-                        )
+                        name = loc.get('name')
+                        loc_type_raw = loc.get('type', 'unknown')
                         
-                        if self.cursor.fetchone():
-                            self.stats.locations_skipped += 1
-                            continue
+                        # Infer location type and parent (aligned with preprod/prod)
+                        loc_type, parent_id = self._infer_location_type_and_parent(name, loc_type_raw)
                         
-                        # id is auto_increment, so don't insert it
-                        self.cursor.execute("""
-                            INSERT INTO locations 
-                            (name, type, latitude, longitude, osm_id, created_at, updated_at)
-                            VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
-                        """, (
-                            loc.get('name'),
-                            loc.get('type', 'unknown'),
-                            float(loc.get('latitude', 0)),
-                            float(loc.get('longitude', 0)),
-                            int(loc.get('osm_id')) if loc.get('osm_id') else None
-                        ))
+                        # Build params dynamically based on fields
+                        params: List = []
+                        for field in fields:
+                            if field == 'name':
+                                params.append(name)
+                            elif field == 'location_type':
+                                params.append(loc_type)
+                            elif field == 'parent_id':
+                                params.append(parent_id)
+                            elif field == 'latitude':
+                                params.append(float(loc.get('latitude', 0)))
+                            elif field == 'longitude':
+                                params.append(float(loc.get('longitude', 0)))
+                            elif field == 'district':
+                                params.append(loc.get('district'))
+                            elif field == 'state':
+                                params.append(loc.get('state', 'Tamil Nadu'))
+                            elif field == 'osm_id':
+                                params.append(int(loc.get('osm_id')) if loc.get('osm_id') else None)
+                            elif field == 'type':
+                                params.append(loc_type_raw)
+                            elif field == 'neighborhood':
+                                params.append(loc.get('neighborhood'))
+                            elif field == 'priority':
+                                params.append(loc.get('priority'))
                         
+                        self.cursor.execute(query, tuple(params))
+                        location_id = self.cursor.lastrowid
                         self.stats.locations_loaded += 1
+                        
+                        # Update city cache for parent lookups
+                        if loc_type == 'CITY' and location_id:
+                            self.city_cache[name.strip().lower()] = location_id
                         
                     except Exception as e:
                         self.stats.errors += 1
@@ -253,13 +393,15 @@ class PerundhuDataLoader:
 
         return index
 
-    def get_location_id(self, location_name: str) -> Optional[int]:
-        """Get location ID by name or alias using normalized index"""
+    def get_location_id(self, location_name: str, fallback_type: str = 'bus_stop') -> Optional[int]:
+        """Get location ID by name or alias using normalized index.
+        Creates location with proper hierarchy if not found (aligned with preprod/prod)."""
         if not location_name:
             return None
 
         if self.location_index is None:
             self.location_index = self.build_location_index()
+            self._load_schema()
 
         if location_name in self.location_cache:
             return self.location_cache[location_name]
@@ -269,19 +411,42 @@ class PerundhuDataLoader:
                 self.location_cache[location_name] = self.location_index[candidate]
                 return self.location_cache[location_name]
 
-        # Create a placeholder location when no match is found
-        self.cursor.execute(
-            """
-            INSERT INTO locations (name, location_type, type, created_at, updated_at)
-            VALUES (%s, %s, %s, NOW(), NOW())
-            """,
-            (location_name.strip(), "CITY", "unknown")
-        )
+        # Create a placeholder location with proper hierarchy inference (aligned with preprod/prod)
+        loc_type, parent_id = self._infer_location_type_and_parent(location_name, fallback_type)
+        
+        # Build dynamic insert based on schema
+        fields = ['name']
+        params: List = [location_name.strip()]
+        
+        if self._has_column('location_type'):
+            fields.append('location_type')
+            params.append(loc_type)
+        if self._has_column('parent_id'):
+            fields.append('parent_id')
+            params.append(parent_id)
+        if self._has_column('type'):
+            fields.append('type')
+            params.append(fallback_type)
+        if self._has_column('state'):
+            fields.append('state')
+            params.append('Tamil Nadu')
+        
+        placeholders = ','.join(['%s'] * len(fields))
+        query = f"INSERT INTO locations ({','.join(fields)}, created_at, updated_at) VALUES ({placeholders}, NOW(), NOW())"
+        
+        self.cursor.execute(query, tuple(params))
         location_id = self.cursor.lastrowid
+        
+        # Update caches
         normalized_key = self.normalize_location_name(location_name)
         if normalized_key:
             self.location_index[normalized_key] = location_id
         self.location_cache[location_name] = location_id
+        
+        # Update city cache if this is a city
+        if loc_type == 'CITY' and location_id:
+            self.city_cache[location_name.strip().lower()] = location_id
+        
         return location_id
     
     def load_buses(self) -> bool:
@@ -305,6 +470,7 @@ class PerundhuDataLoader:
             
             self.location_index = self.build_location_index()
             self.location_cache = {}
+            self._load_schema()  # Load schema for hierarchy-aware inserts
 
             def normalize_time(value: Optional[str]) -> Optional[str]:
                 if not value:
@@ -320,13 +486,13 @@ class PerundhuDataLoader:
             
             for idx, bus in enumerate(buses):
                 try:
-                    # Get or resolve location IDs
+                    # Get or resolve location IDs with proper fallback types (aligned with preprod/prod)
                     origin = bus.get('origin', '')
                     destination = bus.get('destination', '')
                     
-                    # Use cache or look up
-                    origin_id = self.get_location_id(origin)
-                    destination_id = self.get_location_id(destination)
+                    # Use bus_terminal type for origin/destination (these are typically terminals)
+                    origin_id = self.get_location_id(origin, fallback_type='bus_terminal')
+                    destination_id = self.get_location_id(destination, fallback_type='bus_terminal')
                     
                     if not origin_id or not destination_id:
                         self.stats.buses_skipped += 1
@@ -363,7 +529,8 @@ class PerundhuDataLoader:
                             or stop.get('original_city')
                             or ''
                         )
-                        stop_location_id = self.get_location_id(stop_location_name)
+                        # Use bus_stop type for intermediate stops (aligned with preprod/prod)
+                        stop_location_id = self.get_location_id(stop_location_name, fallback_type='bus_stop')
                         
                         if stop_location_id:
                             self.cursor.execute("""
