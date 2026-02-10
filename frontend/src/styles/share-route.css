@@ -8,9 +8,9 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-width: 44px;
+  min-width: fit-content;
   min-height: 44px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
   color: #fff;
   border: none;
@@ -20,6 +20,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .share-route-button:hover {

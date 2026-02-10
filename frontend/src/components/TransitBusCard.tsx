@@ -422,7 +422,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             <div className="stops-info">
               🛑 {stops.length} stops
             </div>
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'nowrap', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap', overflow: 'visible' }}>
               {/* Add Stops CTA for buses with 5 or fewer stops */}
               {flags.enableAddStops && stops.length <= 5 && onAddStops && (
                 <button
@@ -438,9 +438,9 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '4px',
-                    minWidth: '44px',
+                    minWidth: 'fit-content',
                     minHeight: '44px',
-                    padding: '4px 10px',
+                    padding: '4px 12px',
                     background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                     color: 'white',
                     borderRadius: '12px',
@@ -491,9 +491,9 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '4px',
-                    minWidth: '44px',
+                    minWidth: 'fit-content',
                     minHeight: '44px',
-                    padding: '4px 10px',
+                    padding: '4px 12px',
                     background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
                     color: 'white',
                     borderRadius: '12px',

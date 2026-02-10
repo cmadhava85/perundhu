@@ -243,6 +243,7 @@
   align-items: center;
   width: 100%;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .stops-info {
