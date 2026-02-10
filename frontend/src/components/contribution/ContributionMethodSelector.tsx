@@ -77,7 +77,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             title={t('method.manual.title', 'Manually enter route information')}
           >
             <span className="chip-icon">✍️</span>
-            <span className="chip-label">{t('method.text.label', 'Text')}</span>
+            <span className="chip-label">{t('method.manual.label', 'Manual Entry')}</span>
           </button>
         )}
 

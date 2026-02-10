@@ -259,18 +259,22 @@
   "method": {
     "selectMethod": "Select contribution method",
     "manual": {
+      "label": "Manual Entry",
       "title": "Manual Entry",
       "desc": "Fill out detailed route information"
     },
     "voice": {
+      "label": "Voice",
       "title": "Voice Recording",
       "desc": "Speak route details naturally"
     },
     "image": {
+      "label": "Image",
       "title": "Upload Schedule",
       "desc": "Share photos of official bus schedules"
     },
     "paste": {
+      "label": "Paste",
       "title": "Quick Entry",
       "desc": "Copy-paste route info from WhatsApp, Facebook, etc."
     },
