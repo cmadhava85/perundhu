@@ -98,7 +98,16 @@
     "swapLocations": "இடங்களை மாற்றவும்",
     "viewOnMap": "வரைபடத்தில் பார்க்கவும்",
     "scheduleView": "அட்டவணை காட்சி",
-    "suggestions": "பரிந்துரைகள்"
+    "suggestions": "பரிந்துரைகள்",
+    "selectLocationsForMap": "வரைபடத்தில் காண குறைந்தது ஒரு இடத்தைத் தேர்ந்தெடுக்கவும்",
+    "selectBothLocationsForSchedule": "அட்டவணைகளைக் காண புறப்படும் மற்றும் சேரும் இடங்கள் இரண்டையும் தேர்ந்தெடுக்கவும்",
+    "popularRoutes": "பிரபலமான வழிகள்",
+    "loadingSchedules": "அட்டவணைகளை ஏற்றுகிறது...",
+    "failedToLoadSchedules": "அட்டவணைகளை ஏற்ற இயலவில்லை",
+    "noSchedulesFound": "இந்த வழிக்கு அட்டவணைகள் இல்லை",
+    "departure": "புறப்படுதல்",
+    "arrival": "வருகை",
+    "selectOrigin": "புறப்படும் இடத்தைத் தேர்ந்தெடுக்கவும்"
   },
   "searchResults": {
     "currentSearch": "தற்போதைய தேடல்",

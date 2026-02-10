@@ -122,7 +122,16 @@
     "swapLocations": "Swap locations",
     "viewOnMap": "View on Map",
     "scheduleView": "Schedule View",
-    "suggestions": "Suggestions"
+    "suggestions": "Suggestions",
+    "selectLocationsForMap": "Please select at least one location to view on map",
+    "selectBothLocationsForSchedule": "Please select both origin and destination to view schedules",
+    "popularRoutes": "Popular Routes",
+    "loadingSchedules": "Loading schedules...",
+    "failedToLoadSchedules": "Failed to load schedules",
+    "noSchedulesFound": "No schedules found for this route",
+    "departure": "Departure",
+    "arrival": "Arrival",
+    "selectOrigin": "Please select an origin"
   },
   "searchResults": {
     "currentSearch": "Current Search",

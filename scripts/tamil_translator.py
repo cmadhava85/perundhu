@@ -33,7 +33,7 @@ class TamilTranslator:
     
     TAMIL_DICTIONARY = {
         # Common bus stop locations
-        'BROADWAY': 'பாடாவே',
+        'BROADWAY': 'பிராட்வே',
         'ANNA NAGAR': 'அண்ணா நகர்',
         'KOYAMBEDU': 'கோயம்பேடு',
         'POONAMALLEE': 'பூணமல்லி',
@@ -105,21 +105,21 @@ class TamilTranslator:
         'POONAMALLEE B.S': 'பூணமல்லி பி.எஸ்',
     }
     
-    def __init__(self, use_api: bool = False, api_key: Optional[str] = None):
+    def __init__(self, use_api: bool = True, api_key: Optional[str] = None):
         """
         Initialize translator
         
         Args:
-            use_api: If True, use Google Translate API (requires credentials)
-            api_key: Google Cloud API key (optional, can be set via environment)
+            use_api: If True, use free Google Translate via deep-translator library
+            api_key: Not needed for deep-translator (kept for compatibility)
         """
         self.use_api = use_api
-        self.api_key = api_key or os.getenv('GOOGLE_TRANSLATE_API_KEY')
+        self.api_key = api_key  # Not needed for deep-translator
         self.translator = None
         self.cache = {}
         self.cache_file = Path('data/translation_cache.json')
         
-        if use_api and self.api_key:
+        if use_api:
             self._init_google_translator()
         else:
             logger.info("Using offline Tamil dictionary for translation")
@@ -127,16 +127,16 @@ class TamilTranslator:
         self._load_cache()
     
     def _init_google_translator(self):
-        """Initialize Google Translate API client"""
+        """Initialize free Google Translate via deep-translator library"""
         try:
-            from google.cloud import translate_v2
-            self.translator = translate_v2.Client()
-            logger.info("Initialized Google Translate API")
+            from deep_translator import GoogleTranslator
+            self.translator = GoogleTranslator(source='en', target='ta')
+            logger.info("Initialized free Google Translate (deep-translator)")
         except ImportError:
-            logger.warning("google-cloud-translate not installed. Using offline dictionary.")
+            logger.warning("deep-translator not installed. Run: pip install deep-translator")
             self.use_api = False
         except Exception as e:
-            logger.warning(f"Failed to initialize Google Translate: {e}. Using offline dictionary.")
+            logger.warning(f"Failed to initialize deep-translator: {e}. Using offline dictionary.")
             self.use_api = False
     
     def _load_cache(self):
@@ -160,18 +160,13 @@ class TamilTranslator:
             logger.warning(f"Failed to save cache: {e}")
     
     def _translate_via_api(self, text: str) -> Optional[str]:
-        """Translate using Google Translate API"""
+        """Translate using free Google Translate (deep-translator)"""
         try:
             if not self.translator:
                 return None
             
-            result = self.translator.translate_text(
-                text,
-                source_language='en',
-                target_language='ta'
-            )
-            
-            return result.get('translatedText')
+            result = self.translator.translate(text)
+            return result
         except Exception as e:
             logger.warning(f"API translation failed for '{text}': {e}")
             return None
@@ -194,26 +189,25 @@ class TamilTranslator:
     def translate(self, text: str) -> Optional[str]:
         """
         Translate English text to Tamil
-        Uses cache first, then tries API or dictionary
+        Uses cache first, then dictionary (fast), then API (slow) as fallback
         """
         if not text or not isinstance(text, str):
             return None
         
         text_key = text.lower().strip()
         
-        # Check cache
+        # Check cache first (instant)
         if text_key in self.cache:
             return self.cache[text_key]
         
         tamil_text = None
         
-        # Try API if enabled
-        if self.use_api and self.translator:
-            tamil_text = self._translate_via_api(text)
+        # Try dictionary FIRST (instant, no network)
+        tamil_text = self._translate_via_dictionary(text)
         
-        # Fallback to dictionary
-        if not tamil_text:
-            tamil_text = self._translate_via_dictionary(text)
+        # Only use API as fallback for unknown words (slow, but necessary)
+        if not tamil_text and self.use_api and self.translator:
+            tamil_text = self._translate_via_api(text)
         
         # Cache result
         if tamil_text:

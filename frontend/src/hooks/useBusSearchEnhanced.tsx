@@ -36,18 +36,14 @@ export function useBusSearchEnhanced() {
         bus.fromLocationNameTranslated,
         bus.fromLocationName,
         bus.fromLocation?.translatedName,
-        bus.fromLocation?.name,
-        fromLocation?.translatedName,
-        fromLocation?.name
+        bus.fromLocation?.name
       );
       const toName = pickName(
         bus.to,
         bus.toLocationNameTranslated,
         bus.toLocationName,
         bus.toLocation?.translatedName,
-        bus.toLocation?.name,
-        toLocation?.translatedName,
-        toLocation?.name
+        bus.toLocation?.name
       );
 
       return {
@@ -56,11 +52,21 @@ export function useBusSearchEnhanced() {
         to: toName,
         busName: bus.busName || bus.name || '',
         busNumber: bus.busNumber || bus.number || '',
-        fromLocation: bus.fromLocation || fromLocation || undefined,
-        toLocation: bus.toLocation || toLocation || undefined,
+        fromLocation: bus.fromLocation,
+        toLocation: bus.toLocation,
       };
     });
-  }, [busSearchQuery.data, fromLocation, toLocation]);
+  }, [busSearchQuery.data]); // Only depend on data, not location objects
+
+  // Stable bus IDs for effect dependency
+  const busIds = React.useMemo(() => 
+    allBuses.map(b => b.id).sort((a, b) => a - b).join(','), 
+    [allBuses]
+  );
+
+  // Keep allBuses in a ref for stable access in effect
+  const allBusesRef = React.useRef<Bus[]>(allBuses);
+  allBusesRef.current = allBuses;
 
   // Get total count from first page
   const totalCount = busSearchQuery.data?.pages?.[0]?.totalCount ?? 0;
@@ -144,26 +150,41 @@ export function useBusSearchEnhanced() {
     }
   };
 
+  // Track which bus IDs we've already fetched stops for (persists across renders)
+  const fetchedBusIdsRef = React.useRef<Set<number>>(new Set());
+  const currentLangRef = React.useRef<string>(i18n.language);
+
   React.useEffect(() => {
-    if (allBuses.length === 0) {
+    // Reset cache if language changes
+    if (currentLangRef.current !== i18n.language) {
+      fetchedBusIdsRef.current.clear();
+      currentLangRef.current = i18n.language;
       setStopsMap({});
+    }
+    
+    const currentBuses = allBusesRef.current;
+    if (currentBuses.length === 0) {
       return;
+    }
+
+    // Filter to only buses we haven't fetched yet
+    const busesToFetch = currentBuses.filter(bus => !fetchedBusIdsRef.current.has(bus.id));
+    
+    if (busesToFetch.length === 0) {
+      return; // All buses already fetched
     }
 
     let isMounted = true;
     const abortController = new AbortController();
 
-    // Fetch stops for all buses with concurrent request limiting
+    // Fetch stops for NEW buses only with concurrent request limiting
     const fetchAllStops = async () => {
-      const newStopsMap: Record<number, Stop[]> = {};
-      
       // Limit concurrent API calls to prevent server overload
-      // Process buses in batches of 5 to balance speed and server load
       const CONCURRENT_LIMIT = 5;
       const batches: Bus[][] = [];
       
-      for (let i = 0; i < allBuses.length; i += CONCURRENT_LIMIT) {
-        batches.push(allBuses.slice(i, i + CONCURRENT_LIMIT));
+      for (let i = 0; i < busesToFetch.length; i += CONCURRENT_LIMIT) {
+        batches.push(busesToFetch.slice(i, i + CONCURRENT_LIMIT));
       }
       
       // Process each batch sequentially, but requests within batch are parallel
@@ -177,16 +198,18 @@ export function useBusSearchEnhanced() {
         const results = await Promise.all(promises);
         
         // Update map with results from this batch
-        for (const result of results) {
-          if (result) {
-            newStopsMap[result.busId] = result.stops;
-          }
+        if (isMounted) {
+          setStopsMap(prev => {
+            const updated = { ...prev };
+            for (const result of results) {
+              if (result) {
+                updated[result.busId] = result.stops;
+                fetchedBusIdsRef.current.add(result.busId);
+              }
+            }
+            return updated;
+          });
         }
-      }
-      
-      // Only update state if component is still mounted
-      if (isMounted) {
-        setStopsMap(newStopsMap);
       }
     };
 
@@ -197,7 +220,7 @@ export function useBusSearchEnhanced() {
       isMounted = false;
       abortController.abort();
     };
-  }, [allBuses, i18n.language]);
+  }, [busIds, i18n.language]); // Use stable busIds string instead of allBuses array
 
   // Backward compatible search function
   const searchBuses = React.useCallback(

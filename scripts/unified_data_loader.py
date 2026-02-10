@@ -448,7 +448,38 @@ class ConfigurationLoader:
         """Load from environment variables or config file"""
         env_name = env.value.upper()
 
-        # First, attempt to load Spring properties if present
+        # FIRST: Check if TCP host is explicitly provided via env vars (highest priority)
+        host = os.getenv(f"DB_HOST_{env_name}")
+        port_str = os.getenv(f"DB_PORT_{env_name}")
+        
+        if host and not host.startswith('/'):
+            port = int(port_str) if port_str else 3306
+            logger.info(f"📍 Using TCP connection to {host}:{port} (from env vars)")
+            
+            user = (os.getenv(f"DB_USER_{env_name}") or 
+                    os.getenv(f"DB_USERNAME_{env_name}") or 
+                    os.getenv("DB_USERNAME") or
+                    os.getenv("MYSQL_USERNAME") or 
+                    "root")
+            
+            password = (os.getenv(f"DB_PASSWORD_{env_name}") or 
+                       os.getenv("DB_PASSWORD") or
+                       os.getenv("MYSQL_PASSWORD") or
+                       "")
+            
+            database = os.getenv(f"DB_NAME_{env_name}", "perundhu")
+            ssl_ca = os.getenv(f"DB_SSL_CA_{env_name}")
+            
+            return DatabaseConfig(
+                host=host,
+                port=port,
+                user=user,
+                password=password,
+                database=database,
+                ssl_ca=ssl_ca
+            )
+
+        # SECOND: Attempt to load Spring properties if present
         props_path = Path("backend/app/src/main/resources") / f"application-{env.value}.properties"
         props = ConfigurationLoader._read_properties_file(props_path)
         if props:

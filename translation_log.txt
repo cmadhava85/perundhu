@@ -1,0 +1,1 @@
+INFO:tamil_translator:Initialized free Google Translate (deep-translator)

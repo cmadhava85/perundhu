@@ -34,7 +34,8 @@ def add_translations():
     cursor = conn.cursor()
     print(f"✅ Connected to: {db_config['database']}")
     
-    translator = TamilTranslator()
+    # Use API for full translations (slower but more coverage)
+    translator = TamilTranslator(use_api=True)
     
     # Batch insert translation query
     translation_query = """

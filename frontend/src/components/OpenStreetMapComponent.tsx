@@ -1,8 +1,22 @@
 import React, { useEffect, useRef, useMemo, memo, useState, useCallback } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { logDebug, logWarn } from '../utils/logger';
 import type { Location, Stop } from '../types/index';
 import { getStopCoordinates, getStopCoordinatesAsync, getCoordinateSource } from '../utils/cityCoordinates';
 import '../styles/OpenStreetMapComponent.css';
+
+// Fix Leaflet default icons for bundlers
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+});
 
 interface OpenStreetMapComponentProps {
   fromLocation: Location;
@@ -39,7 +53,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
   // Center on route handler
   const handleCenterOnRoute = useCallback(() => {
     if (mapInstanceRef.current && fromLocation && toLocation) {
-      const bounds = new (window as { L: typeof import('leaflet') }).L.LatLngBounds([
+      const bounds = new L.LatLngBounds([
         [fromLocation.latitude, fromLocation.longitude],
         [toLocation.latitude, toLocation.longitude]
       ]);
@@ -93,47 +107,34 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
         }
         
         isInitializingRef.current = true;
-        
-        // Check if Leaflet is available
-        if (typeof window !== 'undefined') {
-          // Try to load Leaflet dynamically
-          const L = (window as { L?: typeof import('leaflet') }).L;
-          
-          if (!L) {
-            logWarn('Leaflet not loaded, showing fallback', {
-              component: 'OpenStreetMapComponent'
-            });
-            isInitializingRef.current = false;
-            return;
-          }
 
-          if (mapRef.current) {
-            // Clean up existing map first
-            if (mapInstanceRef.current) {
-              try {
-                mapInstanceRef.current.remove();
-                mapInstanceRef.current = null;
-              } catch (error) {
-                logWarn('Error cleaning up previous map', {
-                  component: 'OpenStreetMapComponent',
-                  error
-                });
-                mapInstanceRef.current = null;
-              }
+        if (mapRef.current) {
+          // Clean up existing map first
+          if (mapInstanceRef.current) {
+            try {
+              mapInstanceRef.current.remove();
+              mapInstanceRef.current = null;
+            } catch (error) {
+              logWarn('Error cleaning up previous map', {
+                component: 'OpenStreetMapComponent',
+                error
+              });
+              mapInstanceRef.current = null;
             }
-            
-            // Wait a bit for DOM to settle after cleanup
-            await new Promise(resolve => setTimeout(resolve, 100));
-            // Calculate center point between origin and destination
-            const centerLat = (fromLocation.latitude + toLocation.latitude) / 2;
-            const centerLng = (fromLocation.longitude + toLocation.longitude) / 2;
+          }
+          
+          // Wait a bit for DOM to settle after cleanup
+          await new Promise(resolve => setTimeout(resolve, 100));
+          // Calculate center point between origin and destination
+          const centerLat = (fromLocation.latitude + toLocation.latitude) / 2;
+          const centerLng = (fromLocation.longitude + toLocation.longitude) / 2;
 
-            // Initialize map with error handling
-            const map = L.map(mapRef.current, {
-              // Add options to prevent _leaflet_pos errors
-              preferCanvas: false,
-              attributionControl: true,
-              zoomControl: true,
+          // Initialize map with error handling
+          const map = L.map(mapRef.current, {
+            // Add options to prevent _leaflet_pos errors
+            preferCanvas: false,
+            attributionControl: true,
+            zoomControl: true,
               trackResize: true,
               boxZoom: true,
               doubleClickZoom: true,
@@ -378,7 +379,6 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
             window.addEventListener('resize', handleResize);
             window.addEventListener('orientationchange', handleResize);
           }
-        }
       } catch (_error) {
         // Error initializing OpenStreetMap
       } finally {

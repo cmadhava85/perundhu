@@ -474,7 +474,8 @@ export const searchBuses = async (
     });
     
     // Transform backend BusDTO objects to frontend Bus objects
-    const busDTOs: BusDTO[] = response.data;
+    // Backend returns PaginatedResponse with 'items' array
+    const busDTOs: BusDTO[] = response.data.items || response.data || [];
     const buses: Bus[] = busDTOs.map(busDTO => 
       transformBusDTOToBus(busDTO, fromLocation, toLocation)
     );
@@ -566,7 +567,10 @@ export const searchBusesViaStops = async (
     });
     
     // Transform backend BusDTO objects to frontend Bus objects
-    const busDTOs: BusDTO[] = response.data;
+    // Handle both raw array and paginated response formats
+    const busDTOs: BusDTO[] = Array.isArray(response.data) 
+      ? response.data 
+      : (response.data.items || response.data || []);
     const buses: Bus[] = busDTOs.map(busDTO => 
       transformBusDTOToBus(busDTO, fromLoc, toLoc)
     );

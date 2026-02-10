@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Location as AppLocation } from '../types';
+import type { Location as AppLocation, Bus } from '../types';
 import { locationAutocompleteService, type LocationSuggestion } from '../services/locationAutocompleteService';
 import { findNearbyLocationFromGPS, checkLocationPermission } from '../services/nearbyLocationService';
 import { getGeolocationSupport } from '../services/geolocation';
+import { searchBuses } from '../services/api';
+import MapComponent from './MapComponent';
 import { Skeleton } from '../design-system';
 import { triggerHaptic } from '../utils/haptic';
 import { 
@@ -16,6 +18,16 @@ import {
 } from '../utils/locationNormalizer';
 import '../styles/premium-design-system.css';
 import '../styles/transit-design-system.css';
+
+// Popular routes in Tamil Nadu for suggestions
+const POPULAR_ROUTES = [
+  { from: { id: 1, name: 'Chennai', translatedName: 'சென்னை' }, to: { id: 2, name: 'Coimbatore', translatedName: 'கோயம்புத்தூர்' } },
+  { from: { id: 1, name: 'Chennai', translatedName: 'சென்னை' }, to: { id: 3, name: 'Madurai', translatedName: 'மதுரை' } },
+  { from: { id: 1, name: 'Chennai', translatedName: 'சென்னை' }, to: { id: 4, name: 'Trichy', translatedName: 'திருச்சி' } },
+  { from: { id: 2, name: 'Coimbatore', translatedName: 'கோயம்புத்தூர்' }, to: { id: 3, name: 'Madurai', translatedName: 'மதுரை' } },
+  { from: { id: 3, name: 'Madurai', translatedName: 'மதுரை' }, to: { id: 5, name: 'Rameshwaram', translatedName: 'ராமேஸ்வரம்' } },
+  { from: { id: 1, name: 'Chennai', translatedName: 'சென்னை' }, to: { id: 6, name: 'Bangalore', translatedName: 'பெங்களூர்' } },
+];
 
 // Recent search interface
 interface RecentSearch {
@@ -78,6 +90,14 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   
   // Validation state
   const [validationError, setValidationError] = useState<ValidationResult | null>(null);
+  
+  // Quick action modal states
+  const [showMapModal, setShowMapModal] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [showSuggestionsModal, setShowSuggestionsModal] = useState(false);
+  const [scheduleData, setScheduleData] = useState<Bus[]>([]);
+  const [isLoadingSchedule, setIsLoadingSchedule] = useState(false);
+  const [scheduleError, setScheduleError] = useState<string | null>(null);
   
   // Debounce timers for autocomplete
   const fromDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -513,6 +533,84 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     // Notify parent component of the swap
     if (selectedFromLocation && selectedToLocation && onLocationChange) {
       onLocationChange(selectedToLocation, selectedFromLocation);
+    }
+  };
+
+  // Quick Action: View on Map
+  const handleViewOnMap = () => {
+    if (selectedFromLocation || selectedToLocation) {
+      triggerHaptic('light');
+      setShowMapModal(true);
+    } else {
+      // Show a message if no locations selected
+      setValidationError({
+        valid: false,
+        message: t('searchForm.selectLocationsForMap', 'Please select at least one location to view on map'),
+        severity: 'warning'
+      });
+      setTimeout(() => setValidationError(null), 3000);
+    }
+  };
+
+  // Quick Action: Schedule View
+  const handleScheduleView = async () => {
+    if (!selectedFromLocation || !selectedToLocation) {
+      setValidationError({
+        valid: false,
+        message: t('searchForm.selectBothLocationsForSchedule', 'Please select both origin and destination to view schedules'),
+        severity: 'warning'
+      });
+      setTimeout(() => setValidationError(null), 3000);
+      return;
+    }
+
+    triggerHaptic('light');
+    setShowScheduleModal(true);
+    setIsLoadingSchedule(true);
+    setScheduleError(null);
+
+    try {
+      const buses = await searchBuses(selectedFromLocation, selectedToLocation, true, i18n.language);
+      setScheduleData(buses);
+    } catch (error) {
+      setScheduleError(error instanceof Error ? error.message : t('searchForm.failedToLoadSchedules', 'Failed to load schedules'));
+    } finally {
+      setIsLoadingSchedule(false);
+    }
+  };
+
+  // Quick Action: Suggestions
+  const handleSuggestions = () => {
+    triggerHaptic('light');
+    setShowSuggestionsModal(true);
+  };
+
+  // Apply suggestion route
+  const applySuggestion = (from: { id: number; name: string; translatedName?: string }, to: { id: number; name: string; translatedName?: string }) => {
+    const fromLoc = locations.find(l => l.id === from.id) || {
+      id: from.id,
+      name: from.name,
+      translatedName: from.translatedName,
+      latitude: 0,
+      longitude: 0
+    };
+    const toLoc = locations.find(l => l.id === to.id) || {
+      id: to.id,
+      name: to.name,
+      translatedName: to.translatedName,
+      latitude: 0,
+      longitude: 0
+    };
+
+    setFromQuery(getLocationDisplayName(fromLoc));
+    setToQuery(getLocationDisplayName(toLoc));
+    setSelectedFromLocation(fromLoc);
+    setSelectedToLocation(toLoc);
+    setShowSuggestionsModal(false);
+
+    // Auto-search after applying suggestion
+    if (onSearch) {
+      onSearch(fromLoc, toLoc, searchOptions);
     }
   };
 
@@ -1371,18 +1469,594 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
           {/* Quick Action Buttons */}
           <div className="row row-sm" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="transit-button secondary" style={{ fontSize: 'var(--text-sm)' }}>
+            <button 
+              className="transit-button secondary" 
+              style={{ fontSize: 'var(--text-sm)' }}
+              onClick={handleViewOnMap}
+            >
               🗺️ {t('searchForm.viewOnMap', 'View on Map')}
             </button>
-            <button className="transit-button secondary" style={{ fontSize: 'var(--text-sm)' }}>
+            <button 
+              className="transit-button secondary" 
+              style={{ fontSize: 'var(--text-sm)' }}
+              onClick={handleScheduleView}
+            >
               🕐 {t('searchForm.scheduleView', 'Schedule View')}
             </button>
-            <button className="transit-button secondary" style={{ fontSize: 'var(--text-sm)' }}>
+            <button 
+              className="transit-button secondary" 
+              style={{ fontSize: 'var(--text-sm)' }}
+              onClick={handleSuggestions}
+            >
               💡 {t('searchForm.suggestions', 'Suggestions')}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Map Modal */}
+      {showMapModal && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setShowMapModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}
+        >
+          <div 
+            className="modal-content card"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '90%',
+              maxWidth: '800px',
+              height: '80vh',
+              maxHeight: '600px',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: 0,
+              borderRadius: 'var(--radius-lg)',
+              overflow: 'hidden'
+            }}
+          >
+            <div style={{
+              padding: 'var(--spacing-md)',
+              borderBottom: '1px solid var(--border)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <h3 style={{ margin: 0 }}>🗺️ {t('searchForm.viewOnMap', 'View on Map')}</h3>
+              <button 
+                className="transit-button secondary" 
+                onClick={() => setShowMapModal(false)}
+                style={{ padding: 'var(--spacing-xs) var(--spacing-sm)' }}
+              >
+                ✕
+              </button>
+            </div>
+            <div style={{ flex: 1, position: 'relative', minHeight: '400px' }}>
+              {selectedFromLocation && selectedToLocation ? (
+                <MapComponent
+                  fromLocation={selectedFromLocation}
+                  toLocation={selectedToLocation}
+                  style={{ height: '100%', width: '100%', minHeight: '400px' }}
+                />
+              ) : (
+                <div style={{ 
+                  height: '100%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'var(--text-secondary)'
+                }}>
+                  {!selectedFromLocation && !selectedToLocation 
+                    ? t('searchForm.selectLocationsForMap', 'Please select locations to view on map')
+                    : selectedFromLocation 
+                      ? t('searchForm.selectDestination', 'Please select a destination')
+                      : t('searchForm.selectOrigin', 'Please select an origin')
+                  }
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Schedule Modal - Modern Design */}
+      {showScheduleModal && (
+        <div 
+          onClick={() => setShowScheduleModal(false)}
+          onKeyDown={(e) => e.key === 'Escape' && setShowScheduleModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="schedule-modal-title"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1050,
+            padding: '1rem'
+          }}
+        >
+          {/* Modal Content */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '480px',
+              maxHeight: '85vh',
+              backgroundColor: 'white',
+              borderRadius: '1.5rem',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              animation: 'modalSlideIn 0.3s ease-out'
+            }}
+          >
+            {/* Header */}
+            <div style={{
+              padding: '1.25rem 1.5rem',
+              borderBottom: '1px solid #f3f4f6',
+              background: 'linear-gradient(135deg, #eff6ff 0%, #eef2ff 100%)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{
+                    width: '2.5rem',
+                    height: '2.5rem',
+                    borderRadius: '0.75rem',
+                    backgroundColor: '#3b82f6',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)'
+                  }}>
+                    <span style={{ fontSize: '1.25rem' }}>🕐</span>
+                  </div>
+                  <div>
+                    <h3 id="schedule-modal-title" style={{ 
+                      margin: 0, 
+                      fontSize: '1.125rem', 
+                      fontWeight: 600, 
+                      color: '#111827' 
+                    }}>
+                      {t('searchForm.scheduleView', 'Schedule View')}
+                    </h3>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#6b7280' }}>
+                      {scheduleData.length} {t('searchForm.busesAvailable', 'buses available')}
+                    </p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setShowScheduleModal(false)}
+                  aria-label="Close"
+                  style={{
+                    width: '2.25rem',
+                    height: '2.25rem',
+                    borderRadius: '50%',
+                    backgroundColor: '#f3f4f6',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.25rem',
+                    color: '#6b7280',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#e5e7eb'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+            
+            {/* Body with scroll */}
+            <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'contain' }}>
+              {/* Loading State */}
+              {isLoadingSchedule && (
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  padding: '4rem 1.5rem' 
+                }}>
+                  <div style={{ position: 'relative' }}>
+                    <div style={{
+                      width: '4rem',
+                      height: '4rem',
+                      borderRadius: '50%',
+                      border: '4px solid #dbeafe',
+                      borderTopColor: '#3b82f6',
+                      animation: 'spin 1s linear infinite'
+                    }} />
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <span style={{ fontSize: '1.5rem' }}>🚌</span>
+                    </div>
+                  </div>
+                  <p style={{ marginTop: '1rem', color: '#4b5563', fontWeight: 500 }}>
+                    {t('searchForm.loadingSchedules', 'Loading schedules...')}
+                  </p>
+                </div>
+              )}
+              
+              {/* Error State */}
+              {scheduleError && (
+                <div style={{ 
+                  margin: '1rem', 
+                  padding: '1rem', 
+                  borderRadius: '0.75rem', 
+                  backgroundColor: '#fef2f2',
+                  border: '1px solid #fee2e2'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '2.5rem',
+                      height: '2.5rem',
+                      borderRadius: '50%',
+                      backgroundColor: '#fee2e2',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}>
+                      <span style={{ fontSize: '1.25rem' }}>⚠️</span>
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontWeight: 500, color: '#991b1b' }}>
+                        {t('searchForm.errorOccurred', 'Something went wrong')}
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.875rem', color: '#dc2626' }}>
+                        {scheduleError}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Empty State */}
+              {!isLoadingSchedule && !scheduleError && scheduleData.length === 0 && (
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  padding: '4rem 1.5rem',
+                  textAlign: 'center'
+                }}>
+                  <div style={{
+                    width: '5rem',
+                    height: '5rem',
+                    borderRadius: '50%',
+                    backgroundColor: '#f3f4f6',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '1rem'
+                  }}>
+                    <span style={{ fontSize: '2.5rem', opacity: 0.5 }}>🚌</span>
+                  </div>
+                  <h4 style={{ margin: '0 0 0.5rem', fontSize: '1.125rem', fontWeight: 600, color: '#111827' }}>
+                    {t('searchForm.noSchedulesFound', 'No schedules found')}
+                  </h4>
+                  <p style={{ margin: 0, color: '#6b7280', fontSize: '0.875rem', maxWidth: '16rem' }}>
+                    {t('searchForm.tryDifferentRoute', 'Try searching for a different route or time')}
+                  </p>
+                </div>
+              )}
+              
+              {/* Bus List */}
+              {!isLoadingSchedule && !scheduleError && scheduleData.length > 0 && (
+                <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {scheduleData.map((bus, index) => {
+                    const isExpress = bus.busType === 'Express' || bus.busType === 'AC';
+                    const isDeluxe = bus.busType === 'Deluxe' || bus.busType === 'Super Deluxe';
+                    let badgeBg = '#f3f4f6';
+                    let badgeColor = '#4b5563';
+                    if (isExpress) { badgeBg = '#d1fae5'; badgeColor = '#047857'; }
+                    else if (isDeluxe) { badgeBg = '#ede9fe'; badgeColor = '#6d28d9'; }
+                    
+                    return (
+                      <div 
+                        key={bus.id || index} 
+                        style={{
+                          position: 'relative',
+                          backgroundColor: 'white',
+                          borderRadius: '0.75rem',
+                          border: '1px solid #e5e7eb',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                          overflow: 'hidden',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        {/* Accent Bar */}
+                        <div style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          width: '4px',
+                          background: 'linear-gradient(180deg, #3b82f6 0%, #2563eb 100%)'
+                        }} />
+                        
+                        <div style={{ padding: '1rem', paddingLeft: '1.25rem' }}>
+                          {/* Top Row */}
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+                              <div style={{
+                                width: '2rem',
+                                height: '2rem',
+                                borderRadius: '0.5rem',
+                                backgroundColor: '#3b82f6',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                <span style={{ fontSize: '0.875rem' }}>🚌</span>
+                              </div>
+                              <span style={{ fontWeight: 700, color: '#111827', fontSize: '1.125rem' }}>
+                                {bus.busNumber || bus.routeName}
+                              </span>
+                            </div>
+                            <span style={{
+                              padding: '0.25rem 0.625rem',
+                              borderRadius: '9999px',
+                              fontSize: '0.75rem',
+                              fontWeight: 500,
+                              backgroundColor: badgeBg,
+                              color: badgeColor
+                            }}>
+                              {bus.busType || t('searchForm.regular', 'Regular')}
+                            </span>
+                          </div>
+                          
+                          {/* Route Name */}
+                          {bus.routeName && bus.busNumber && (
+                            <p style={{ 
+                              margin: '0 0 0.75rem', 
+                              fontSize: '0.875rem', 
+                              color: '#6b7280',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap'
+                            }}>
+                              {bus.routeName}
+                            </p>
+                          )}
+                          
+                          {/* Time Row */}
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            padding: '0.75rem',
+                            backgroundColor: '#f9fafb',
+                            borderRadius: '0.5rem',
+                            margin: '0 -0.25rem'
+                          }}>
+                            {/* Departure */}
+                            <div style={{ flex: 1 }}>
+                              <p style={{ 
+                                margin: 0, 
+                                fontSize: '0.625rem', 
+                                color: '#9ca3af', 
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em'
+                              }}>
+                                {t('searchForm.departure', 'Departure')}
+                              </p>
+                              <p style={{ 
+                                margin: 0, 
+                                fontSize: '1.125rem', 
+                                fontWeight: 600, 
+                                color: '#111827',
+                                fontVariantNumeric: 'tabular-nums'
+                              }}>
+                                {bus.departureTime ? bus.departureTime.substring(0, 5) : '--:--'}
+                              </p>
+                            </div>
+                            
+                            {/* Journey Line */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', padding: '0 0.5rem' }}>
+                              <div style={{
+                                width: '0.5rem',
+                                height: '0.5rem',
+                                borderRadius: '50%',
+                                backgroundColor: '#3b82f6'
+                              }} />
+                              <div style={{
+                                width: '2.5rem',
+                                height: '2px',
+                                background: 'linear-gradient(90deg, #3b82f6 0%, #10b981 100%)'
+                              }} />
+                              <span style={{ fontSize: '1rem', color: '#10b981' }}>→</span>
+                            </div>
+                            
+                            {/* Arrival */}
+                            <div style={{ flex: 1, textAlign: 'right' }}>
+                              <p style={{ 
+                                margin: 0, 
+                                fontSize: '0.625rem', 
+                                color: '#9ca3af', 
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em'
+                              }}>
+                                {t('searchForm.arrival', 'Arrival')}
+                              </p>
+                              <p style={{ 
+                                margin: 0, 
+                                fontSize: '1.125rem', 
+                                fontWeight: 600, 
+                                color: '#111827',
+                                fontVariantNumeric: 'tabular-nums'
+                              }}>
+                                {bus.arrivalTime ? bus.arrivalTime.substring(0, 5) : '--:--'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Suggestions Modal */}
+      {showSuggestionsModal && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setShowSuggestionsModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}
+        >
+          <div 
+            className="modal-content card"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '90%',
+              maxWidth: '500px',
+              maxHeight: '80vh',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: 0,
+              borderRadius: 'var(--radius-lg)',
+              overflow: 'hidden'
+            }}
+          >
+            <div style={{
+              padding: 'var(--spacing-md)',
+              borderBottom: '1px solid var(--border)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <h3 style={{ margin: 0 }}>💡 {t('searchForm.suggestions', 'Suggestions')}</h3>
+              <button 
+                className="transit-button secondary" 
+                onClick={() => setShowSuggestionsModal(false)}
+                style={{ padding: 'var(--spacing-xs) var(--spacing-sm)' }}
+              >
+                ✕
+              </button>
+            </div>
+            <div style={{ 
+              flex: 1, 
+              overflowY: 'auto', 
+              padding: 'var(--spacing-md)' 
+            }}>
+              {/* Popular Routes */}
+              <div style={{ marginBottom: 'var(--spacing-lg)' }}>
+                <h4 style={{ 
+                  margin: '0 0 var(--spacing-sm) 0',
+                  color: 'var(--text-secondary)',
+                  fontSize: 'var(--text-sm)'
+                }}>
+                  🔥 {t('searchForm.popularRoutes', 'Popular Routes')}
+                </h4>
+                <div className="column column-sm">
+                  {POPULAR_ROUTES.map((route, index) => (
+                    <button
+                      key={index}
+                      className="transit-button secondary"
+                      style={{
+                        width: '100%',
+                        textAlign: 'left',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 'var(--spacing-sm)'
+                      }}
+                      onClick={() => applySuggestion(route.from, route.to)}
+                    >
+                      <span>📍</span>
+                      <span style={{ flex: 1 }}>
+                        {i18n.language === 'ta' ? route.from.translatedName : route.from.name}
+                        <span style={{ margin: '0 var(--spacing-xs)' }}>→</span>
+                        {i18n.language === 'ta' ? route.to.translatedName : route.to.name}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Recent Searches */}
+              {recentSearches.length > 0 && (
+                <div>
+                  <h4 style={{ 
+                    margin: '0 0 var(--spacing-sm) 0',
+                    color: 'var(--text-secondary)',
+                    fontSize: 'var(--text-sm)'
+                  }}>
+                    🕐 {t('searchForm.recentSearches', 'Recent Searches')}
+                  </h4>
+                  <div className="column column-sm">
+                    {recentSearches.slice(0, 5).map((search, index) => (
+                      <button
+                        key={index}
+                        className="transit-button secondary"
+                        style={{
+                          width: '100%',
+                          textAlign: 'left',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 'var(--spacing-sm)'
+                        }}
+                        onClick={() => applySuggestion(search.from, search.to)}
+                      >
+                        <span>🔄</span>
+                        <span style={{ flex: 1 }}>
+                          {search.from.name}
+                          <span style={{ margin: '0 var(--spacing-xs)' }}>→</span>
+                          {search.to.name}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
