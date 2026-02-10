@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { useRecaptcha, addRecaptchaTokenToHeaders } from '../hooks/useRecaptcha';
 
@@ -9,17 +9,28 @@ interface AdminAuthContextType {
   login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
   getAuthHeader: () => string | null;
+  extendSession: () => void;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
 const ADMIN_AUTH_KEY = 'admin_auth_credentials';
 const ADMIN_AUTH_EXPIRY_KEY = 'admin_auth_expiry';
-const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
+const ADMIN_LAST_ACTIVITY_KEY = 'admin_last_activity';
+
+// Session timeout: configurable via env var, default 30 minutes
+const SESSION_DURATION = (import.meta.env?.VITE_ADMIN_SESSION_MINUTES 
+  ? Number.parseInt(import.meta.env.VITE_ADMIN_SESSION_MINUTES, 10) 
+  : 30) * 60 * 1000;
+
+// Inactivity timeout: log out after 15 minutes of no activity
+const INACTIVITY_TIMEOUT = (import.meta.env?.VITE_ADMIN_INACTIVITY_MINUTES 
+  ? Number.parseInt(import.meta.env.VITE_ADMIN_INACTIVITY_MINUTES, 10) 
+  : 15) * 60 * 1000;
 
 // Get API base URL
 const getApiBaseUrl = (): string => {
-  if (typeof window !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) {
+  if (globalThis.window !== undefined && import.meta.env?.VITE_API_BASE_URL) {
     return import.meta.env.VITE_API_BASE_URL;
   }
   return 'http://localhost:8080';
@@ -34,28 +45,120 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { executeRecaptcha, isConfigured } = useRecaptcha();
+  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const sessionCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clear all session data
+  const clearSession = useCallback(() => {
+    sessionStorage.removeItem(ADMIN_AUTH_KEY);
+    sessionStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
+    sessionStorage.removeItem(ADMIN_LAST_ACTIVITY_KEY);
+    setIsAdminAuthenticated(false);
+    setError(null);
+  }, []);
+
+  // Update last activity timestamp
+  const updateLastActivity = useCallback(() => {
+    if (isAdminAuthenticated) {
+      sessionStorage.setItem(ADMIN_LAST_ACTIVITY_KEY, String(Date.now()));
+    }
+  }, [isAdminAuthenticated]);
+
+  // Check for session expiry (both absolute and inactivity)
+  const checkSessionValidity = useCallback(() => {
+    const storedCredentials = sessionStorage.getItem(ADMIN_AUTH_KEY);
+    const expiry = sessionStorage.getItem(ADMIN_AUTH_EXPIRY_KEY);
+    const lastActivity = sessionStorage.getItem(ADMIN_LAST_ACTIVITY_KEY);
+
+    if (!storedCredentials || !expiry) {
+      return false;
+    }
+
+    const now = Date.now();
+    const expiryTime = Number.parseInt(expiry, 10);
+    const lastActivityTime = lastActivity ? Number.parseInt(lastActivity, 10) : now;
+
+    // Check absolute session expiry
+    if (now >= expiryTime) {
+      console.warn('Admin session expired (absolute timeout)');
+      return false;
+    }
+
+    // Check inactivity timeout
+    if (now - lastActivityTime >= INACTIVITY_TIMEOUT) {
+      console.warn('Admin session expired (inactivity timeout)');
+      return false;
+    }
+
+    return true;
+  }, []);
 
   // Check for existing session on mount
   useEffect(() => {
     const checkExistingSession = () => {
-      const storedCredentials = sessionStorage.getItem(ADMIN_AUTH_KEY);
-      const expiry = sessionStorage.getItem(ADMIN_AUTH_EXPIRY_KEY);
-      
-      if (storedCredentials && expiry) {
-        const expiryTime = parseInt(expiry, 10);
-        if (Date.now() < expiryTime) {
-          setIsAdminAuthenticated(true);
-        } else {
-          // Session expired, clear it
-          sessionStorage.removeItem(ADMIN_AUTH_KEY);
-          sessionStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
-        }
+      if (checkSessionValidity()) {
+        setIsAdminAuthenticated(true);
+        updateLastActivity();
+      } else {
+        clearSession();
       }
       setIsLoading(false);
     };
 
     checkExistingSession();
-  }, []);
+  }, [checkSessionValidity, clearSession, updateLastActivity]);
+
+  // Set up activity listeners when authenticated
+  useEffect(() => {
+    if (!isAdminAuthenticated) {
+      return;
+    }
+
+    // Activity events to track
+    const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart', 'mousemove'];
+
+    // Throttled activity handler (update at most once per minute)
+    let lastUpdate = 0;
+    const handleActivity = () => {
+      const now = Date.now();
+      if (now - lastUpdate >= 60000) { // Update at most once per minute
+        lastUpdate = now;
+        updateLastActivity();
+      }
+    };
+
+    // Add event listeners
+    activityEvents.forEach(event => {
+      globalThis.addEventListener(event, handleActivity, { passive: true });
+    });
+
+    // Set up periodic session validity check (every minute)
+    sessionCheckIntervalRef.current = setInterval(() => {
+      if (!checkSessionValidity()) {
+        console.warn('Admin session expired, logging out...');
+        clearSession();
+      }
+    }, 60000); // Check every minute
+
+    // Cleanup
+    return () => {
+      activityEvents.forEach(event => {
+        globalThis.removeEventListener(event, handleActivity);
+      });
+      if (sessionCheckIntervalRef.current) {
+        clearInterval(sessionCheckIntervalRef.current);
+      }
+    };
+  }, [isAdminAuthenticated, updateLastActivity, checkSessionValidity, clearSession]);
+
+  // Extend session (can be called by components to reset timeout)
+  const extendSession = useCallback(() => {
+    if (isAdminAuthenticated) {
+      const newExpiry = Date.now() + SESSION_DURATION;
+      sessionStorage.setItem(ADMIN_AUTH_EXPIRY_KEY, String(newExpiry));
+      updateLastActivity();
+    }
+  }, [isAdminAuthenticated, updateLastActivity]);
 
   const login = useCallback(async (username: string, password: string): Promise<boolean> => {
     setIsLoading(true);
@@ -94,6 +197,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
         // Store credentials in session storage (not localStorage for security)
         sessionStorage.setItem(ADMIN_AUTH_KEY, credentials);
         sessionStorage.setItem(ADMIN_AUTH_EXPIRY_KEY, String(Date.now() + SESSION_DURATION));
+        sessionStorage.setItem(ADMIN_LAST_ACTIVITY_KEY, String(Date.now()));
         setIsAdminAuthenticated(true);
         setIsLoading(false);
         return true;
@@ -125,11 +229,15 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
   }, [executeRecaptcha, isConfigured]);
 
   const logout = useCallback(() => {
-    sessionStorage.removeItem(ADMIN_AUTH_KEY);
-    sessionStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
-    setIsAdminAuthenticated(false);
-    setError(null);
-  }, []);
+    // Clear inactivity timer
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current);
+    }
+    if (sessionCheckIntervalRef.current) {
+      clearInterval(sessionCheckIntervalRef.current);
+    }
+    clearSession();
+  }, [clearSession]);
 
   const getAuthHeader = useCallback((): string | null => {
     const credentials = sessionStorage.getItem(ADMIN_AUTH_KEY);
@@ -139,17 +247,18 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
     return null;
   }, []);
 
+  const contextValue = useMemo(() => ({
+    isAdminAuthenticated,
+    isLoading,
+    error,
+    login,
+    logout,
+    getAuthHeader,
+    extendSession,
+  }), [isAdminAuthenticated, isLoading, error, login, logout, getAuthHeader, extendSession]);
+
   return (
-    <AdminAuthContext.Provider
-      value={{
-        isAdminAuthenticated,
-        isLoading,
-        error,
-        login,
-        logout,
-        getAuthHeader,
-      }}
-    >
+    <AdminAuthContext.Provider value={contextValue}>
       {children}
     </AdminAuthContext.Provider>
   );

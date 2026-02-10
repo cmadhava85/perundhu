@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.port.BusRepository;
-import com.perundhu.domain.port.ImageContributionRepository;
+import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.LocationValidationService;
 import com.perundhu.domain.port.RouteContributionRepository;
@@ -34,7 +36,7 @@ class ContributionProcessingServiceTest {
         private RouteContributionRepository routeContributionRepository;
 
         @Mock
-        private ImageContributionRepository imageContributionRepository;
+        private ImageContributionOutputPort imageContributionPort;
 
         @Mock
         private BusRepository busRepository;
@@ -52,7 +54,16 @@ class ContributionProcessingServiceTest {
         private NotificationService notificationService;
 
         @Mock
-        private RouteContributionValidationService routeContributionValidationService;
+        private RouteContributionValidationService validationService;
+
+        @Mock
+        private LocationTranslationService locationTranslationService;
+
+        @Mock
+        private DataQualityValidationService dataQualityValidationService;
+
+        @Mock
+        private DuplicateDetectionService duplicateDetectionService;
 
         @InjectMocks
         private ContributionProcessingService contributionProcessingService;
@@ -107,10 +118,24 @@ class ContributionProcessingServiceTest {
                 // Given
                 when(routeContributionRepository.findByStatus("PENDING"))
                                 .thenReturn(Arrays.asList(pendingContribution));
+                when(routeContributionRepository.findByStatus("APPROVED"))
+                                .thenReturn(Collections.emptyList());
 
                 // Mock the save operation to return the updated contribution
                 when(routeContributionRepository.save(any(RouteContribution.class)))
                                 .thenReturn(pendingContribution);
+
+                // Mock location validation to pass
+                lenient().when(locationValidationService.isValidLocation(any(String.class)))
+                                .thenReturn(true);
+                lenient().when(locationValidationService.isValidLocationCoordinates(anyDouble(), anyDouble()))
+                                .thenReturn(true);
+
+                // Mock data quality validation to return a valid report
+                var validReport = new DataQualityValidationService.ValidationReport(
+                                true, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+                lenient().when(dataQualityValidationService.validateRouteContribution(any(RouteContribution.class)))
+                                .thenReturn(validReport);
 
                 // When
                 contributionProcessingService.processRouteContributions();
@@ -124,6 +149,8 @@ class ContributionProcessingServiceTest {
         void testProcessRouteContributions_HandlesNoContributions() {
                 // Given
                 when(routeContributionRepository.findByStatus("PENDING"))
+                                .thenReturn(Collections.emptyList());
+                when(routeContributionRepository.findByStatus("APPROVED"))
                                 .thenReturn(Collections.emptyList());
 
                 // When
@@ -147,7 +174,7 @@ class ContributionProcessingServiceTest {
                                 .fromLongitude(80.2707)
                                 .toLatitude(12.9716)
                                 .toLongitude(77.5946)
-                                .departureTime(null) // This will cause the service to fail with NullPointerException
+                                .departureTime(null) // This will cause the service to fail with validation error
                                 .arrivalTime(null)
                                 .status("PENDING")
                                 .submissionDate(LocalDateTime.now())
@@ -160,20 +187,29 @@ class ContributionProcessingServiceTest {
                 when(locationValidationService.isValidLocationCoordinates(anyDouble(), anyDouble()))
                                 .thenReturn(true);
 
+                // Mock data quality validation to return a valid report (pass data quality)
+                var validReport = new DataQualityValidationService.ValidationReport(
+                                true, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+                when(dataQualityValidationService.validateRouteContribution(any(RouteContribution.class)))
+                                .thenReturn(validReport);
+
                 when(routeContributionRepository.findByStatus("PENDING"))
                                 .thenReturn(Arrays.asList(invalidContribution));
+                when(routeContributionRepository.findByStatus("APPROVED"))
+                                .thenReturn(Collections.emptyList());
                 when(routeContributionRepository.save(any(RouteContribution.class)))
                                 .thenAnswer(invocation -> invocation.getArgument(0));
 
                 // When
                 contributionProcessingService.processRouteContributions();
 
-                // Then - Verify that the contribution was marked as FAILED due to processing
-                // error
+                // Then - Verify that the contribution was marked as FAILED due to time validation
+                // The service checks for null/empty departureTime and marks it as FAILED
                 verify(routeContributionRepository)
                                 .save(argThat(contribution -> "FAILED".equals(contribution.getStatus()) &&
                                                 contribution.getValidationMessage() != null &&
-                                                contribution.getValidationMessage().contains("Processing error")));
+                                                (contribution.getValidationMessage().contains("time") ||
+                                                                contribution.getValidationMessage().contains("Departure"))));
         }
 
         @Test
@@ -194,6 +230,8 @@ class ContributionProcessingServiceTest {
 
                 when(routeContributionRepository.findByStatus("PENDING"))
                                 .thenReturn(Arrays.asList(invalidContribution));
+                when(routeContributionRepository.findByStatus("APPROVED"))
+                                .thenReturn(Collections.emptyList());
                 when(routeContributionRepository.save(any(RouteContribution.class)))
                                 .thenAnswer(invocation -> invocation.getArgument(0));
 
