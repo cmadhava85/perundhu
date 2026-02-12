@@ -527,6 +527,10 @@ class ConfigurationLoader:
             if env == Environment.PREPROD and not cloud_sql_instance and not host:
                 cloud_sql_instance = "astute-strategy-406601:asia-south1:perundhu-preprod-mysql"
             
+            # For prod, use hardcoded Cloud SQL instance if env vars not set and no TCP host
+            if env == Environment.PROD and not cloud_sql_instance and not host:
+                cloud_sql_instance = "perundhu-prod-001:asia-south1:perundhu-prod-mysql"
+            
             # If Cloud SQL instance provided, use Unix socket (preprod on GCP)
             if cloud_sql_instance:
                 host = f"/cloudsql/{cloud_sql_instance}"

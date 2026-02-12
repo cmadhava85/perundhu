@@ -203,13 +203,15 @@ class ContributionProcessingServiceTest {
                 // When
                 contributionProcessingService.processRouteContributions();
 
-                // Then - Verify that the contribution was marked as FAILED due to time validation
+                // Then - Verify that the contribution was marked as FAILED due to time
+                // validation
                 // The service checks for null/empty departureTime and marks it as FAILED
                 verify(routeContributionRepository)
                                 .save(argThat(contribution -> "FAILED".equals(contribution.getStatus()) &&
                                                 contribution.getValidationMessage() != null &&
                                                 (contribution.getValidationMessage().contains("time") ||
-                                                                contribution.getValidationMessage().contains("Departure"))));
+                                                                contribution.getValidationMessage()
+                                                                                .contains("Departure"))));
         }
 
         @Test

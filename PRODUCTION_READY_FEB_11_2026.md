@@ -135,6 +135,15 @@ Monitor for first 24-48 hours:
 | PRODUCTION_QUICK_REFERENCE.md | Quick command reference |
 | PRODUCTION_DEPLOYMENT_RUNBOOK.md | Hour-by-hour deployment timeline |
 
+### DEPLOYMENT SCRIPTS (NEW - Feb 2026)
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/setup_production_infrastructure.sh` | Creates Artifact Registry, VPC Connector, Secrets |
+| `scripts/build_and_push_images.sh` | Builds and pushes Docker images to Artifact Registry |
+| `scripts/deploy_cloud_run.sh` | Deploys backend & frontend to Cloud Run |
+| `scripts/run_upload_prod.sh` | Uploads location & bus data to production database |
+
 ### CONFIGURATION REFERENCES
 
 | File | Purpose |
@@ -252,22 +261,25 @@ Monitor for first 24-48 hours:
 ### If You Want to Deploy TODAY:
 
 1. **5 minutes**: Read this file
-2. **15 minutes**: Run Pre-Deployment Checklist
-3. **2-3 hours**: Follow Deployment Start Guide
+2. **15 minutes**: Run Infrastructure Setup Script
+3. **45 minutes**: Build and Deploy
 4. **GO LIVE!** 🚀
 
 ```bash
 # Quick start commands:
 cd /Users/mchand69/Documents/perundhu
 
-# Read pre-deployment checklist
-cat PRODUCTION_PRE_DEPLOYMENT_CHECKLIST_JAN_2026.md
+# Step 1: Set up missing infrastructure (Artifact Registry, VPC, Secrets)
+./scripts/setup_production_infrastructure.sh
 
-# Read deployment guide
-cat PRODUCTION_DEPLOYMENT_START_HERE_JAN_2026.md
+# Step 2: Build and push Docker images
+./scripts/build_and_push_images.sh
 
-# Start verification
-bash PRODUCTION_PRE_DEPLOYMENT_CHECKLIST_JAN_2026.md
+# Step 3: Deploy to Cloud Run
+./scripts/deploy_cloud_run.sh
+
+# Step 4: Upload production data (after Cloud SQL is running)
+./scripts/run_upload_prod.sh
 ```
 
 ### If You Need Immediate Help:
