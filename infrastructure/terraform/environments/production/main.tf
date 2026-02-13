@@ -108,6 +108,7 @@ module "database" {
   app_name                = var.app_name
   vpc_network             = module.vpc.private_vpc_connection
   private_subnet          = module.vpc.private_subnet_name
+  use_public_ip           = var.use_public_ip
   db_version              = var.db_version
   db_instance_tier        = var.db_instance_tier
   db_instance_name_suffix = var.db_instance_name_suffix
@@ -119,6 +120,7 @@ module "database" {
   db_disk_autoresize_limit          = var.db_disk_autoresize_limit
   db_availability_type              = var.db_availability_type
   db_deletion_protection            = var.db_deletion_protection
+  db_activation_policy              = var.db_activation_policy
   db_backup_enabled                 = var.db_backup_enabled
   db_backup_start_time              = var.db_backup_start_time
   db_retained_backups_count         = var.db_retained_backups_count

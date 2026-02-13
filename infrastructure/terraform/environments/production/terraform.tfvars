@@ -25,7 +25,13 @@ environment = "production"
 app_name    = "perundhu"
 
 # ============================================
-# Database Configuration (Optimized for < $20/month)
+# Cloud SQL IP Configuration
+# ============================================
+# Use public IP to avoid VPC Connector costs ($14/month savings)
+# With public IP, Cloud Run connects directly to Cloud SQL over the internet
+# Database allows only specific IPs via firewall rules
+use_public_ip = true
+
 # ============================================
 db_version              = "MYSQL_8_0"
 db_instance_tier        = "db-g1-small" # Shared-core for cost optimization (was db-n1-standard-1)

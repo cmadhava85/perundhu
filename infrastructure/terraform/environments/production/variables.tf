@@ -32,6 +32,12 @@ variable "app_name" {
   default     = "perundhu"
 }
 
+variable "use_public_ip" {
+  description = "Use public IP instead of private IP for Cloud SQL (for cost savings)"
+  type        = bool
+  default     = true
+}
+
 variable "db_version" {
   description = "MySQL database version"
   type        = string
@@ -203,6 +209,12 @@ variable "db_deletion_protection" {
   description = "Database deletion protection"
   type        = bool
   default     = false
+}
+
+variable "db_activation_policy" {
+  description = "Database activation policy (ALWAYS, NEVER, or ON_DEMAND)"
+  type        = string
+  default     = "ALWAYS"
 }
 
 # ============================================
@@ -399,4 +411,14 @@ variable "enable_custom_role" {
   description = "Enable creation of custom IAM role"
   type        = bool
   default     = true
+}
+
+# ============================================
+# Container Image Configuration
+# ============================================
+
+variable "container_image" {
+  description = "Container image for Cloud Run (backend image)"
+  type        = string
+  default     = "asia-south1-docker.pkg.dev/perundhu-prod-001/perundhu/backend:latest"
 }
