@@ -100,9 +100,6 @@ jobs:
       run: |
         VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
         
-        # Get backend URL from Cloud Run (use existing service or placeholder for first deploy)
-        BACKEND_URL=$(gcloud run services describe perundhu-backend --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://api.perundhu.com")
-        
         # Get Google Maps API key from Secret Manager
         GOOGLE_MAPS_API_KEY=$(gcloud secrets versions access latest --secret=google-maps-api-key 2>/dev/null || echo "")
         
@@ -110,13 +107,12 @@ jobs:
         FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${VERSION}"
         FRONTEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:latest"
         
-        # Create .env.production.local to override .env.production with real URLs
-        echo "VITE_API_URL=${BACKEND_URL}" > ./frontend/.env.production.local
-        echo "VITE_API_BASE_URL=${BACKEND_URL}" >> ./frontend/.env.production.local
-        echo "VITE_APP_VERSION=${VERSION}" >> ./frontend/.env.production.local
+        # Create .env.production.local to add runtime values (DO NOT override VITE_API_URL!)
+        # .env.production already has VITE_API_URL=/api for reverse proxy routing
+        echo "VITE_APP_VERSION=${VERSION}" > ./frontend/.env.production.local
         echo "VITE_GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}" >> ./frontend/.env.production.local
         
-        echo "Created .env.production.local with VITE_API_URL=$BACKEND_URL"
+        echo "Created .env.production.local with VERSION=$VERSION"
         cat ./frontend/.env.production.local
         
         # Clear Docker BuildKit cache to avoid corrupted layer issues
