@@ -113,3 +113,65 @@ variable "custom_domain" {
   type        = string
   default     = ""
 }
+
+# Flyway migration variables
+variable "flyway_enabled" {
+  description = "Enable Flyway database migrations"
+  type        = bool
+  default     = true
+}
+
+variable "spring_flyway_enabled" {
+  description = "Enable Spring Boot Flyway integration"
+  type        = bool
+  default     = true
+}
+
+variable "restart_trigger" {
+  description = "Restart trigger for forcing Cloud Run revision updates"
+  type        = string
+  default     = ""
+}
+
+# Secret names for environment variables
+variable "db_url_secret_name" {
+  description = "Secret name for database URL (leave empty to use MYSQL_* variables)"
+  type        = string
+  default     = ""
+}
+
+variable "admin_username_secret_name" {
+  description = "Secret name for admin username"
+  type        = string
+  default     = "admin-username"
+}
+
+variable "admin_password_secret_name" {
+  description = "Secret name for admin password"
+  type        = string
+  default     = "admin-password"
+}
+
+variable "data_encryption_key_secret_name" {
+  description = "Secret name for data encryption key"
+  type        = string
+  default     = ""
+}
+
+variable "gemini_api_key_secret_name" {
+  description = "Secret name for Gemini API key"
+  type        = string
+  default     = "gemini-api-key"
+}
+
+variable "recaptcha_secret_key_secret_name" {
+  description = "Secret name for reCAPTCHA secret key"
+  type        = string
+  default     = "recaptcha-secret-key"
+}
+
+variable "recaptcha_site_key_secret_name" {
+  description = "Secret name for reCAPTCHA site key"
+  type        = string
+  default     = "recaptcha-site-key"
+}

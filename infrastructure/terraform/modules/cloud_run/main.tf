@@ -47,6 +47,26 @@ resource "google_cloud_run_service" "backend" {
           value = var.environment # Uses "production" or "preprod" based on environment
         }
 
+        # Flyway migration flags
+        env {
+          name  = "FLYWAY_ENABLED"
+          value = tostring(var.flyway_enabled)
+        }
+
+        env {
+          name  = "SPRING_FLYWAY_ENABLED"
+          value = tostring(var.spring_flyway_enabled)
+        }
+
+        # Restart trigger for forcing Cloud Run revision updates
+        dynamic "env" {
+          for_each = var.restart_trigger != "" ? [1] : []
+          content {
+            name  = "RESTART_TRIGGER"
+            value = var.restart_trigger
+          }
+        }
+
         env {
           name  = "GCP_PROJECT_ID"
           value = var.project_id
@@ -55,6 +75,20 @@ resource "google_cloud_run_service" "backend" {
         env {
           name  = "GCP_INSTANCE_CONNECTION_NAME"
           value = var.db_connection_name
+        }
+
+        # Database URL secret (new format) - optional
+        dynamic "env" {
+          for_each = var.db_url_secret_name != "" ? [1] : []
+          content {
+            name = "DB_URL"
+            value_from {
+              secret_key_ref {
+                name = var.db_url_secret_name
+                key  = "latest"
+              }
+            }
+          }
         }
 
         env {
@@ -72,6 +106,95 @@ resource "google_cloud_run_service" "backend" {
           value_from {
             secret_key_ref {
               name = "db-password"
+              key  = "latest"
+            }
+          }
+        }
+
+        # DB_USERNAME secret (new format) - for consistency with DB_URL
+        env {
+          name = "DB_USERNAME"
+          value_from {
+            secret_key_ref {
+              name = "db-username"
+              key  = "latest"
+            }
+          }
+        }
+
+        # DB_PASSWORD secret (new format) - for consistency with DB_URL
+        env {
+          name = "DB_PASSWORD"
+          value_from {
+            secret_key_ref {
+              name = "db-password"
+              key  = "latest"
+            }
+          }
+        }
+
+        # Admin credentials
+        env {
+          name = "ADMIN_USERNAME"
+          value_from {
+            secret_key_ref {
+              name = var.admin_username_secret_name
+              key  = "latest"
+            }
+          }
+        }
+
+        env {
+          name = "ADMIN_PASSWORD"
+          value_from {
+            secret_key_ref {
+              name = var.admin_password_secret_name
+              key  = "latest"
+            }
+          }
+        }
+
+        # Data encryption key (for sensitive data at rest)
+        dynamic "env" {
+          for_each = var.data_encryption_key_secret_name != "" ? [1] : []
+          content {
+            name = "SECURITY_DATA_ENCRYPTION_KEY"
+            value_from {
+              secret_key_ref {
+                name = var.data_encryption_key_secret_name
+                key  = "latest"
+              }
+            }
+          }
+        }
+
+        # Gemini API key
+        env {
+          name = "GEMINI_API_KEY"
+          value_from {
+            secret_key_ref {
+              name = var.gemini_api_key_secret_name
+              key  = "latest"
+            }
+          }
+        }
+
+        # reCAPTCHA keys
+        env {
+          name = "RECAPTCHA_SECRET_KEY"
+          value_from {
+            secret_key_ref {
+              name = var.recaptcha_secret_key_secret_name
+              key  = "latest"
+            }
+          }
+        }
+
+        env {
+          name = "RECAPTCHA_SITE_KEY"
+          value_from {
+            secret_key_ref {
+              name = var.recaptcha_site_key_secret_name
               key  = "latest"
             }
           }

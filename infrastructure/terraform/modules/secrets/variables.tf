@@ -24,3 +24,24 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "db_url" {
+  description = "Full database connection URL (optional, for modern Spring Boot apps)"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "data_encryption_key" {
+  description = "Data encryption key for sensitive data at rest (optional)"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "jwt_secret" {
+  description = "JWT secret key for token signing (optional)"
+  type        = string
+  sensitive   = true
+  default     = ""
+}

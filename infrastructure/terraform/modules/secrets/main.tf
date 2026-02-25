@@ -66,3 +66,94 @@ resource "google_secret_manager_secret_version" "db_password" {
     create_before_destroy = true
   }
 }
+
+# Database URL secret (environment-specific - includes connection string)
+# Format: jdbc:mysql:///<instance>/<database>?cloudSqlInstance=<instance>&...
+resource "google_secret_manager_secret" "db_url" {
+  count     = var.db_url != "" ? 1 : 0
+  secret_id = "${var.environment}-db-url"
+
+  replication {
+    auto {}
+  }
+
+  labels = {
+    scope       = "database"
+    app         = var.app_name
+    environment = var.environment
+  }
+
+  lifecycle {
+    ignore_changes = [replication]
+  }
+}
+
+resource "google_secret_manager_secret_version" "db_url" {
+  count       = var.db_url != "" ? 1 : 0
+  secret      = google_secret_manager_secret.db_url[0].id
+  secret_data = var.db_url
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# Data encryption key secret (environment-specific)
+resource "google_secret_manager_secret" "data_encryption_key" {
+  count     = var.data_encryption_key != "" ? 1 : 0
+  secret_id = "${var.environment}-data-encryption-key"
+
+  replication {
+    auto {}
+  }
+
+  labels = {
+    scope       = "security"
+    app         = var.app_name
+    environment = var.environment
+  }
+
+  lifecycle {
+    ignore_changes = [replication]
+  }
+}
+
+resource "google_secret_manager_secret_version" "data_encryption_key" {
+  count       = var.data_encryption_key != "" ? 1 : 0
+  secret      = google_secret_manager_secret.data_encryption_key[0].id
+  secret_data = var.data_encryption_key
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# JWT secret (environment-specific)
+resource "google_secret_manager_secret" "jwt_secret" {
+  count     = var.jwt_secret != "" ? 1 : 0
+  secret_id = "${var.environment}-jwt-secret"
+
+  replication {
+    auto {}
+  }
+
+  labels = {
+    scope       = "authentication"
+    app         = var.app_name
+    environment = var.environment
+  }
+
+  lifecycle {
+    ignore_changes = [replication]
+  }
+}
+
+resource "google_secret_manager_secret_version" "jwt_secret" {
+  count       = var.jwt_secret != "" ? 1 : 0
+  secret      = google_secret_manager_secret.jwt_secret[0].id
+  secret_data = var.jwt_secret
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}

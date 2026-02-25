@@ -161,6 +161,11 @@ module "storage" {
 # Secret Manager for database credentials
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
 # are managed by the shared-secrets module
+#
+# NOTE: For existing production secrets (production-db-url, production-data-encryption-key, production-jwt-secret),
+# we reference them using data sources instead of creating them, as they were created manually.
+# To manage these via Terraform in the future, import them into state:
+#   terraform import module.secrets.google_secret_manager_secret.db_url[0] projects/perundhu-prod-001/secrets/production-db-url
 module "secrets" {
   source = "../../modules/secrets"
 
@@ -170,8 +175,29 @@ module "secrets" {
   db_username = module.database.db_user
   db_password = module.database.db_password
 
+  # Leave these empty to avoid creating duplicates of manually-created secrets
+  # Cloud Run will reference the existing secrets directly by name
+  db_url              = ""
+  data_encryption_key = ""
+  jwt_secret          = ""
+
   depends_on = [module.database]
 }
+
+# Data sources for existing production secrets (created manually)
+# These allow Terraform to reference them without managing their lifecycle
+data "google_secret_manager_secret" "production_db_url" {
+  secret_id = "production-db-url"
+}
+
+data "google_secret_manager_secret" "production_data_encryption_key" {
+  secret_id = "production-data-encryption-key"
+}
+
+data "google_secret_manager_secret" "production_jwt_secret" {
+  secret_id = "production-jwt-secret"
+}
+
 
 # IAM and Service Accounts
 module "iam" {
@@ -205,10 +231,29 @@ module "cloud_run" {
   db_user               = module.database.db_user
   storage_bucket_name   = module.storage.images_bucket_name
 
-  # Redis and JWT disabled - not needed for current app scale
-  redis_host      = var.redis_host
-  redis_port      = var.redis_port
-  jwt_secret_name = var.jwt_secret_name
+  # Flyway migration flags
+  flyway_enabled        = true
+  spring_flyway_enabled = true
+  restart_trigger       = "" # Set manually via gcloud or leave empty
+
+  # Environment-specific secrets - use existing manually-created secrets
+  db_url_secret_name              = data.google_secret_manager_secret.production_db_url.secret_id
+  data_encryption_key_secret_name = data.google_secret_manager_secret.production_data_encryption_key.secret_id
+
+  # JWT secret (uses production-jwt-secret)
+  jwt_secret_name = data.google_secret_manager_secret.production_jwt_secret.secret_id
+
+  # Shared secrets (from shared-secrets module, referenced by default names)
+  # These use the default variable values in cloud_run module:
+  # - gemini_api_key_secret_name = "gemini-api-key"
+  # - admin_username_secret_name = "admin-username"
+  # - admin_password_secret_name = "admin-password"
+  # - recaptcha_secret_key_secret_name = "recaptcha-secret-key"
+  # - recaptcha_site_key_secret_name = "recaptcha-site-key"
+
+  # Redis disabled - not needed for current app scale
+  redis_host = var.redis_host
+  redis_port = var.redis_port
 
   # Cloud Run scaling and resource config from variables
   min_instances = var.cloud_run_min_instances
@@ -216,7 +261,7 @@ module "cloud_run" {
   cpu_limit     = var.cloud_run_cpu_limit
   memory_limit  = var.cloud_run_memory_limit
 
-  depends_on = [module.vpc, module.database, module.storage, module.iam]
+  depends_on = [module.vpc, module.database, module.storage, module.iam, module.secrets]
 }
 
 # NOTE: Pub/Sub removed - app uses synchronous processing
