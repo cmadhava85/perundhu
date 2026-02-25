@@ -144,7 +144,7 @@ export class LocationAutocompleteService {
       
       try {
         const response = await api.get(
-          `/api/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
+          `/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
           { signal: combinedSignal }
         );
         
@@ -688,7 +688,7 @@ export class LocationAutocompleteService {
         searchParams.append('city', city.trim());
       }
 
-      const response = await api.get(`/api/v1/locations/neighborhoods?${searchParams}`, {
+      const response = await api.get(`/v1/locations/neighborhoods?${searchParams}`, {
         signal: controller.signal
       });
 
@@ -738,7 +738,7 @@ export class LocationAutocompleteService {
       const timeoutId = setTimeout(() => controller.abort(), 5000);
 
       const response = await api.get(
-        `/api/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
+        `/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
         { signal: controller.signal }
       );
 
@@ -805,7 +805,7 @@ export class LocationAutocompleteService {
       const timeoutId = setTimeout(() => controller.abort(), 3000);
       
       const response = await api.get(
-        `/api/v1/locations/autocomplete-grouped?q=${encodeURIComponent(query.trim())}&language=${language}`,
+        `/v1/locations/autocomplete-grouped?q=${encodeURIComponent(query.trim())}&language=${language}`,
         { signal: controller.signal }
       );
       

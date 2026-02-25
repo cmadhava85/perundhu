@@ -225,7 +225,7 @@ export function useBusStops(
         throw new Error('Bus ID and locations are required');
       }
       
-      const response = await api.get(`/api/v1/bus-schedules/buses/${busId}/stops`, {
+      const response = await api.get(`/v1/bus-schedules/buses/${busId}/stops`, {
         params: {
           fromLocationId,
           toLocationId,

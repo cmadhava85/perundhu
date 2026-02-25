@@ -105,7 +105,7 @@ export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
  */
 export const getBusLocationsOnRoute = async (fromLocationId: number, toLocationId: number): Promise<BusLocation[]> => {
   try {
-    const response = await api.get(`/api/v1/bus-tracking/route/${fromLocationId}/${toLocationId}`);
+    const response = await api.get(`/v1/bus-tracking/route/${fromLocationId}/${toLocationId}`);
     return response.data;
   } catch (error) {
     logger.error('Error getting bus locations on route:', error);
@@ -118,7 +118,7 @@ export const getBusLocationsOnRoute = async (fromLocationId: number, toLocationI
  */
 export const getBusLocationHistory = async (busId: number): Promise<BusLocation[]> => {
   try {
-    const response = await api.get(`/api/v1/bus-tracking/history/${busId}`);
+    const response = await api.get(`/v1/bus-tracking/history/${busId}`);
     return response.data;
   } catch (error) {
     logger.error('Error getting bus location history:', error);
@@ -131,7 +131,7 @@ export const getBusLocationHistory = async (busId: number): Promise<BusLocation[
  */
 export const getUserRewardPoints = async (userId: string): Promise<RewardPoints> => {
   try {
-    const response = await api.get(`/api/v1/bus-tracking/rewards/${userId}`);
+    const response = await api.get(`/v1/bus-tracking/rewards/${userId}`);
     return response.data;
   } catch (error) {
     logger.error('Error getting user reward points:', error);
@@ -150,7 +150,7 @@ export const getEstimatedArrival = async (busId: number, stopId: number): Promis
   confidence: number;
 }> => {
   try {
-    const response = await api.get(`/api/v1/bus-tracking/eta/${busId}/${stopId}`);
+    const response = await api.get(`/v1/bus-tracking/eta/${busId}/${stopId}`);
     return response.data;
   } catch (error) {
     logger.error('Error getting estimated arrival:', error);

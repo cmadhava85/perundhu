@@ -141,8 +141,8 @@ const ContributionAdminPanel: React.FC = () => {
     setActionLoading(true);
     try {
       const endpoint = type === 'route' 
-        ? `/api/v1/admin/contributions/routes/${contributionId}/approve`
-        : `/api/v1/admin/contributions/images/${contributionId}/approve`;
+        ? `/v1/admin/contributions/routes/${contributionId}/approve`
+        : `/v1/admin/contributions/images/${contributionId}/approve`;
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -169,8 +169,8 @@ const ContributionAdminPanel: React.FC = () => {
     setActionLoading(true);
     try {
       const endpoint = type === 'route' 
-        ? `/api/v1/admin/contributions/routes/${contributionId}/reject`
-        : `/api/v1/admin/contributions/images/${contributionId}/reject`;
+        ? `/v1/admin/contributions/routes/${contributionId}/reject`
+        : `/v1/admin/contributions/images/${contributionId}/reject`;
 
       const response = await fetch(endpoint, {
         method: 'POST',

@@ -128,7 +128,7 @@ export function useBusSearchEnhanced() {
   ): Promise<{ busId: number; stops: Stop[] } | null> => {
     try {
       const response = await api.get(
-        `/api/v1/bus-schedules/buses/${bus.id}/stops/basic`,
+        `/v1/bus-schedules/buses/${bus.id}/stops/basic`,
         { 
           signal,
           params: { lang: i18n.language }

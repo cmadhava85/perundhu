@@ -623,7 +623,7 @@ const transformStopDTOToStop = (stopDTO: StopDTO, busId: number): Stop => {
 export const getStops = async (busId: number, languageCode: string = 'en'): Promise<Stop[]> => {
   try {
     logger.debug(`Fetching stops for bus ${busId} with language ${languageCode}`);
-    const response = await api.get(`/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
+    const response = await api.get(`/v1/bus-schedules/buses/${busId}/stops/basic`, {
       params: { lang: languageCode }
     });
     logger.debug('Stops API response:', response.data);
@@ -677,7 +677,7 @@ export const reportBusLocation = async (
   report: BusLocationReport
 ): Promise<boolean> => {
   try {
-    await api.post(`/api/v1/bus-tracking/report`, {
+    await api.post(`/v1/bus-tracking/report`, {
       busId,
       ...report,
       timestamp: report.timestamp || new Date().toISOString()
@@ -697,7 +697,7 @@ export const disembarkBus = async (
   stopId: number
 ): Promise<boolean> => {
   try {
-    await api.post(`/api/v1/bus-tracking/disembark/${busId}`, {
+    await api.post(`/v1/bus-tracking/disembark/${busId}`, {
       stopId,
       timestamp: new Date().toISOString()
     });
@@ -716,7 +716,7 @@ export const getLiveBusLocations = async (
   toLocation: Location
 ): Promise<BusLocation[]> => {
   try {
-    const response = await api.get(`/api/v1/bus-tracking/route/${fromLocation.id}/${toLocation.id}`);
+    const response = await api.get(`/v1/bus-tracking/route/${fromLocation.id}/${toLocation.id}`);
     return response.data;
   } catch (error) {
     logger.error('Error fetching live bus locations:', error);
@@ -729,7 +729,7 @@ export const getLiveBusLocations = async (
  */
 export const getUserRewardPoints = async (userId: string): Promise<RewardPoints> => {
   try {
-    const response = await api.get(`/api/v1/bus-tracking/rewards/${userId}`);
+    const response = await api.get(`/v1/bus-tracking/rewards/${userId}`);
     return response.data;
   } catch (error: unknown) {
     logger.error('Error fetching reward points:', error);
@@ -800,7 +800,7 @@ export const submitRouteContribution = async (data: RouteContribution, recaptcha
     if (recaptchaToken) {
       headers['X-reCAPTCHA-Token'] = recaptchaToken;
     }
-    const response = await api.post(`/api/v1/contributions/routes`, data, { headers });
+    const response = await api.post(`/v1/contributions/routes`, data, { headers });
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -839,7 +839,7 @@ export interface AddStopsSubmission {
 
 export const submitStopsContribution = async (data: AddStopsSubmission) => {
   try {
-    const response = await api.post(`/api/v1/contributions/routes/stops`, data);
+    const response = await api.post(`/v1/contributions/routes/stops`, data);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -880,7 +880,7 @@ export const submitImageContribution = async (data: ImageContribution, file: Fil
     }
 
     const response = await api.post(
-      `/api/v1/contributions/images`,
+      `/v1/contributions/images`,
       formData,
       {
         headers,
@@ -902,7 +902,7 @@ export const submitImageContribution = async (data: ImageContribution, file: Fil
  */
 export const getUserContributions = async (userId: string) => {
   try {
-    const response = await api.get(`/api/v1/contributions/user/${userId}`);
+    const response = await api.get(`/v1/contributions/user/${userId}`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -1020,7 +1020,7 @@ export const rejectImageContribution = async (id: string, reason: string) => {
  */
 export const getContributionStatus = async () => {
   try {
-    const response = await api.get(`/api/v1/contributions/status`);
+    const response = await api.get(`/v1/contributions/status`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -1206,7 +1206,7 @@ export const getImageProcessingStatistics = async () => {
  */
 export const getImageProcessingStatus = async (contributionId: string) => {
   try {
-    const response = await api.get(`/api/v1/contributions/images/${contributionId}/status`);
+    const response = await api.get(`/v1/contributions/images/${contributionId}/status`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -1218,7 +1218,7 @@ export const getImageProcessingStatus = async (contributionId: string) => {
  */
 export const retryImageProcessing = async (contributionId: string) => {
   try {
-    const response = await api.post(`/api/v1/contributions/images/${contributionId}/retry`);
+    const response = await api.post(`/v1/contributions/images/${contributionId}/retry`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
