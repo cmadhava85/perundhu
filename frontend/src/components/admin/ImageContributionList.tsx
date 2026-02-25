@@ -158,7 +158,7 @@ const ImageContributionList: React.FC = () => {
     
     // Use the new API endpoint to serve image data from database
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-    return `${API_URL}/api/admin/contributions/images/${contribution.id}/data`;
+    return `${API_URL}/admin/contributions/images/${contribution.id}/data`;
   };
 
   const markImageAsLoaded = (id: string) => {

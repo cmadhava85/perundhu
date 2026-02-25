@@ -139,7 +139,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
   // Fetch statistics
   const fetchStatistics = useCallback(async () => {
     try {
-      const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/statistics`, {
+      const response = await fetch(`${API_BASE}/v1/route-issues/admin/statistics`, {
         headers: getAuthHeaders()
       });
       if (response.ok) {
@@ -155,7 +155,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const fetchIssueDetails = useCallback(async (issueId: number) => {
     try {
       setLoadingDetails(true);
-      const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/${issueId}/details`, {
+      const response = await fetch(`${API_BASE}/v1/route-issues/admin/${issueId}/details`, {
         headers: getAuthHeaders()
       });
       if (response.ok) {
@@ -180,7 +180,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
         const statuses: IssueStatus[] = ['PENDING', 'UNDER_REVIEW', 'CONFIRMED', 'RESOLVED', 'REJECTED'];
         const responses = await Promise.all(
           statuses.map(status => 
-            fetch(`${API_BASE}/api/v1/route-issues/admin/by-status?status=${status}&page=0&size=100`, { 
+            fetch(`${API_BASE}/v1/route-issues/admin/by-status?status=${status}&page=0&size=100`, { 
               headers: getAuthHeaders() 
             })
           )
@@ -198,7 +198,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
       } else {
         // Fetch specific status
         const response = await fetch(
-          `${API_BASE}/api/v1/route-issues/admin/by-status?status=${statusFilter}&page=0&size=100`,
+          `${API_BASE}/v1/route-issues/admin/by-status?status=${statusFilter}&page=0&size=100`,
           { headers: getAuthHeaders() }
         );
         
@@ -252,7 +252,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
     try {
       setActionLoading(issueId);
       
-      const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/${issueId}/status`, {
+      const response = await fetch(`${API_BASE}/v1/route-issues/admin/${issueId}/status`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({
@@ -329,7 +329,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
     setApplyingChanges(true);
     try {
       // Update the bus timing in the database
-      const response = await fetch(`${API_BASE}/api/v1/admin/buses/${applyChangesModal.busDetails.id}`, {
+      const response = await fetch(`${API_BASE}/v1/admin/buses/${applyChangesModal.busDetails.id}`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({

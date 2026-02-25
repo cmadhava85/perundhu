@@ -40,7 +40,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/contributions/timing-images'),
+        expect.stringContaining('/v1/contributions/timing-images'),
         expect.any(FormData),
         expect.objectContaining({
           headers: {
@@ -91,7 +91,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockContributions);
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/admin/contributions/timing-images/pending')
+        expect.stringContaining('/v1/admin/contributions/timing-images/pending')
       );
     });
   });
@@ -117,7 +117,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockContributions);
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/contributions/timing-images?status=APPROVED')
+        expect.stringContaining('/v1/contributions/timing-images?status=APPROVED')
       );
     });
 
@@ -130,7 +130,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockContributions);
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/contributions/timing-images?userId=user123')
+        expect.stringContaining('/v1/contributions/timing-images?userId=user123')
       );
     });
   });
@@ -154,7 +154,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockContribution);
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/contributions/timing-images/1')
+        expect.stringContaining('/v1/contributions/timing-images/1')
       );
     });
   });
@@ -181,7 +181,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockResult);
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/admin/contributions/timing-images/1/extract')
+        expect.stringContaining('/v1/admin/contributions/timing-images/1/extract')
       );
     });
   });
@@ -221,7 +221,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/admin/contributions/timing-images/1/approve'),
+        expect.stringContaining('/v1/admin/contributions/timing-images/1/approve'),
         mockTimings
       );
     });
@@ -249,7 +249,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/admin/contributions/timing-images/1/reject'),
+        expect.stringContaining('/v1/admin/contributions/timing-images/1/reject'),
         { reason: 'Image quality too poor' }
       );
     });
@@ -276,7 +276,7 @@ describe('BusTimingService', () => {
 
       expect(result).toEqual(mockContributions);
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/contributions/timing-images/user/user123')
+        expect.stringContaining('/v1/contributions/timing-images/user/user123')
       );
     });
   });
@@ -288,7 +288,7 @@ describe('BusTimingService', () => {
       await busTimingService.deleteContribution(1);
 
       expect(mockedAxios.delete).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/contributions/timing-images/1')
+        expect.stringContaining('/v1/contributions/timing-images/1')
       );
     });
 

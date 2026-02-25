@@ -156,7 +156,7 @@ export function useBusSearch({
         throw new Error('Both from and to locations are required');
       }
       
-      const response = await api.get('/api/v1/bus-schedules/search', {
+      const response = await api.get('/v1/bus-schedules/search', {
         params: {
           fromLocationId,
           toLocationId,
@@ -262,7 +262,7 @@ export function useConnectingRoutes(
         throw new Error('Both locations are required');
       }
       
-      const response = await api.get('/api/v1/bus-schedules/connecting-routes', {
+      const response = await api.get('/v1/bus-schedules/connecting-routes', {
         params: {
           fromLocationId,
           toLocationId,

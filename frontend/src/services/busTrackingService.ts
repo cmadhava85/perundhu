@@ -54,7 +54,7 @@ export interface RewardPoints {
  */
 export const reportBusLocation = async (report: BusLocationReport): Promise<RewardPoints> => {
   try {
-    const response = await api.post('/api/v1/bus-tracking/report', report);
+    const response = await api.post('/v1/bus-tracking/report', report);
     return response.data;
   } catch (error) {
     logger.error('Error reporting bus location:', error);
@@ -77,7 +77,7 @@ export const reportBusLocationSimple = async (locationReport: {
   deviceInfo: string;
 }): Promise<RewardPoints> => {
   try {
-    const response = await api.post('/api/v1/bus-tracking/report-simple', locationReport);
+    const response = await api.post('/v1/bus-tracking/report-simple', locationReport);
     return response.data;
   } catch (error) {
     logger.error('Error reporting bus location (simplified):', error);
@@ -90,7 +90,7 @@ export const reportBusLocationSimple = async (locationReport: {
  */
 export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
   try {
-    const response = await api.get('/api/v1/bus-tracking/live');
+    const response = await api.get('/v1/bus-tracking/live');
     // Convert object to array
     const locationsMap = response.data;
     return Object.values(locationsMap);
@@ -163,7 +163,7 @@ export const getEstimatedArrival = async (busId: number, stopId: number): Promis
  */
 export const reportDisembarkation = async (busId: number, userId: string): Promise<void> => {
   try {
-    await api.post('/api/v1/bus-tracking/disembark', {
+    await api.post('/v1/bus-tracking/disembark', {
       busId,
       userId,
       timestamp: new Date().toISOString()

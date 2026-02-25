@@ -183,7 +183,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
       headers = addRecaptchaTokenToHeaders(headers, recaptchaToken);
 
       // Use dedicated admin login endpoint (fast, DB-independent)
-      const response = await fetch(`${getApiBaseUrl()}/api/admin/auth/login`, {
+      const response = await fetch(`${API_URL}/admin/auth/login`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ username, password }),

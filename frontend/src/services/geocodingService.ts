@@ -146,7 +146,7 @@ export class GeocodingService {
       
       // Try database first
       try {
-        const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
+        const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
           params: {
             q: query.trim(),
             language: 'en'
@@ -201,7 +201,7 @@ export class GeocodingService {
     
     try {
       // 1. First try database (your existing implementation)
-      const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
+      const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
         params: {
           q: query.trim(),
           language: 'en'

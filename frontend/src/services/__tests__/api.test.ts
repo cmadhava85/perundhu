@@ -61,7 +61,7 @@ describe('API Service', () => {
 
       const locations = await getLocations();
 
-      expect(mockGet).toHaveBeenCalledWith('/api/v1/bus-schedules/locations', {
+      expect(mockGet).toHaveBeenCalledWith('/v1/bus-schedules/locations', {
         params: { lang: 'en' }
       });
       expect(locations).toEqual(mockLocations);
@@ -99,7 +99,7 @@ describe('API Service', () => {
       const buses = await searchBuses(fromLocation, toLocation);
 
       // Assert - just verify the API was called correctly and data was returned
-      expect(mockGet).toHaveBeenCalledWith('/api/v1/bus-schedules/search', {
+      expect(mockGet).toHaveBeenCalledWith('/v1/bus-schedules/search', {
         params: {
           fromLocationId: fromLocation.id,
           toLocationId: toLocation.id,
@@ -124,7 +124,7 @@ describe('API Service', () => {
       const stops = await getStops(1);
 
       // Assert - just verify the API was called correctly and data was returned
-      expect(mockGet).toHaveBeenCalledWith('/api/v1/bus-schedules/buses/1/stops/basic', {
+      expect(mockGet).toHaveBeenCalledWith('/v1/bus-schedules/buses/1/stops/basic', {
         params: { lang: 'en' }
       });
       expect(stops).toBeDefined();
@@ -150,7 +150,7 @@ describe('API Service', () => {
 
       const routes = await getConnectingRoutes(1, 3);
 
-      expect(mockGet).toHaveBeenCalledWith('/api/v1/bus-schedules/connecting-routes', {
+      expect(mockGet).toHaveBeenCalledWith('/v1/bus-schedules/connecting-routes', {
         params: {
           fromLocationId: 1,
           toLocationId: 3
@@ -176,7 +176,7 @@ describe('API Service', () => {
 
       const locations = await getCurrentBusLocations();
 
-      expect(mockGet).toHaveBeenCalledWith('/api/v1/bus-tracking/live');
+      expect(mockGet).toHaveBeenCalledWith('/v1/bus-tracking/live');
       
       // The response should be transformed to include all required BusLocation fields
       expect(locations).toHaveLength(1);

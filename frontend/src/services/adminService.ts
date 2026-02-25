@@ -59,7 +59,7 @@ const AdminService = {
   // Route contribution methods
   getRouteContributions: async (): Promise<RouteContribution[]> => {
     const authHeader = AdminService.getAuthHeader();
-    const response = await axios.get(`${API_URL}/api/admin/contributions/routes`, {
+    const response = await axios.get(`${API_URL}/admin/contributions/routes`, {
       headers: { Authorization: authHeader }
     });
     return response.data;
@@ -67,7 +67,7 @@ const AdminService = {
 
   getPendingRouteContributions: async (): Promise<RouteContribution[]> => {
     const authHeader = AdminService.getAuthHeader();
-    const response = await axios.get(`${API_URL}/api/admin/contributions/routes/pending`, {
+    const response = await axios.get(`${API_URL}/admin/contributions/routes/pending`, {
       headers: { Authorization: authHeader }
     });
     return response.data;
@@ -76,7 +76,7 @@ const AdminService = {
   approveRouteContribution: async (id: number): Promise<RouteContribution> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
-      `${API_URL}/api/admin/contributions/routes/${id}/approve`,
+      `${API_URL}/admin/contributions/routes/${id}/approve`,
       {},
       { headers: { Authorization: authHeader } }
     );
@@ -86,7 +86,7 @@ const AdminService = {
   rejectRouteContribution: async (id: number, reason: string): Promise<RouteContribution> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
-      `${API_URL}/api/admin/contributions/routes/${id}/reject`, 
+      `${API_URL}/admin/contributions/routes/${id}/reject`, 
       { reason },
       { headers: { Authorization: authHeader } }
     );
@@ -95,7 +95,7 @@ const AdminService = {
 
   deleteRouteContribution: async (id: number): Promise<void> => {
     const authHeader = AdminService.getAuthHeader();
-    await axios.delete(`${API_URL}/api/admin/contributions/routes/${id}`, {
+    await axios.delete(`${API_URL}/admin/contributions/routes/${id}`, {
       headers: { Authorization: authHeader }
     });
   },
@@ -105,7 +105,7 @@ const AdminService = {
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
-        `${API_URL}/api/admin/integration/approved-routes`,
+        `${API_URL}/admin/integration/approved-routes`,
         {},
         { headers: { Authorization: authHeader } }
       );
@@ -144,7 +144,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
-        `${API_URL}/api/admin/integration/route/${id}`,
+        `${API_URL}/admin/integration/route/${id}`,
         {},
         { headers: { Authorization: authHeader } }
       );
@@ -160,7 +160,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
-        `${API_URL}/api/admin/integration/integrate/${id}`,
+        `${API_URL}/admin/integration/integrate/${id}`,
         {},
         { headers: { Authorization: authHeader } }
       );
@@ -177,7 +177,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   getIntegrationStatus: async (): Promise<unknown> => {
     const authHeader = AdminService.getAuthHeader();
     try {
-      const response = await axios.get(`${API_URL}/api/admin/integration/status`, {
+      const response = await axios.get(`${API_URL}/admin/integration/status`, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -190,7 +190,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   // Image contribution methods
   getImageContributions: async (): Promise<ImageContribution[]> => {
     const authHeader = AdminService.getAuthHeader();
-    const response = await axios.get(`${API_URL}/api/admin/contributions/images`, {
+    const response = await axios.get(`${API_URL}/admin/contributions/images`, {
       headers: { Authorization: authHeader }
     });
     return response.data;
@@ -198,7 +198,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
 
   getPendingImageContributions: async (): Promise<ImageContribution[]> => {
     const authHeader = AdminService.getAuthHeader();
-    const response = await axios.get(`${API_URL}/api/admin/contributions/images/pending`, {
+    const response = await axios.get(`${API_URL}/admin/contributions/images/pending`, {
       headers: { Authorization: authHeader }
     });
     return response.data;
@@ -206,7 +206,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
 
   getPendingImageContributionsPaged: async (page: number, size: number): Promise<PaginatedResponse<ImageContribution>> => {
     const authHeader = AdminService.getAuthHeader();
-    const response = await axios.get(`${API_URL}/api/admin/contributions/images/pending?page=${page}&size=${size}`, {
+    const response = await axios.get(`${API_URL}/admin/contributions/images/pending?page=${page}&size=${size}`, {
       headers: { Authorization: authHeader }
     });
     return response.data;
@@ -214,7 +214,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
 
   getImageContributionsPaged: async (page: number, size: number): Promise<PaginatedResponse<ImageContribution>> => {
     const authHeader = AdminService.getAuthHeader();
-    const response = await axios.get(`${API_URL}/api/admin/contributions/images?page=${page}&size=${size}`, {
+    const response = await axios.get(`${API_URL}/admin/contributions/images?page=${page}&size=${size}`, {
       headers: { Authorization: authHeader }
     });
     return response.data;
@@ -223,7 +223,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   approveImageContribution: async (id: number): Promise<ImageContribution> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
-      `${API_URL}/api/admin/contributions/images/${id}/approve`,
+      `${API_URL}/admin/contributions/images/${id}/approve`,
       {},
       { headers: { Authorization: authHeader } }
     );
@@ -233,7 +233,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   rejectImageContribution: async (id: number, reason: string): Promise<ImageContribution> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
-      `${API_URL}/api/admin/contributions/images/${id}/reject`,
+      `${API_URL}/admin/contributions/images/${id}/reject`,
       { reason },
       { headers: { Authorization: authHeader }
     });
@@ -242,7 +242,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
 
   deleteImageContribution: async (id: number): Promise<void> => {
     const authHeader = AdminService.getAuthHeader();
-    await axios.delete(`${API_URL}/api/admin/contributions/images/${id}`, {
+    await axios.delete(`${API_URL}/admin/contributions/images/${id}`, {
       headers: { Authorization: authHeader }
     });
   },
@@ -264,14 +264,14 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     }>;
   } | null> => {
     try {
-      const response = await axios.get(`${API_URL}/api/v1/bus-schedules/buses/${busId}`, {
+      const response = await axios.get(`${API_URL}/v1/bus-schedules/buses/${busId}`, {
         headers: { 'User-Agent': 'Mozilla/5.0' }
       });
       
       // Also fetch stops for this bus
       let stops: Array<{name: string; arrivalTime?: string; departureTime?: string; stopOrder: number}> = [];
       try {
-        const stopsResponse = await axios.get(`${API_URL}/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
+        const stopsResponse = await axios.get(`${API_URL}/v1/bus-schedules/buses/${busId}/stops/basic`, {
           headers: { 'User-Agent': 'Mozilla/5.0' }
         });
         stops = stopsResponse.data || [];
@@ -300,7 +300,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   getFeatureFlags: async (): Promise<Record<string, boolean>> => {
     const authHeader = AdminService.getAuthHeader();
     try {
-      const response = await axios.get(`${API_URL}/api/admin/settings/feature-flags`, {
+      const response = await axios.get(`${API_URL}/admin/settings/feature-flags`, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -318,7 +318,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.put(
-        `${API_URL}/api/admin/settings/feature-flags`,
+        `${API_URL}/admin/settings/feature-flags`,
         flags,
         { headers: { Authorization: authHeader } }
       );
@@ -337,7 +337,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
-        `${API_URL}/api/admin/settings/feature-flags/reset`,
+        `${API_URL}/admin/settings/feature-flags/reset`,
         {},
         { headers: { Authorization: authHeader } }
       );
@@ -359,7 +359,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   }>> => {
     const authHeader = AdminService.getAuthHeader();
     try {
-      const response = await axios.get(`${API_URL}/api/admin/settings`, {
+      const response = await axios.get(`${API_URL}/admin/settings`, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -379,7 +379,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.put(
-        `${API_URL}/api/admin/settings/key/${encodeURIComponent(key)}`,
+        `${API_URL}/admin/settings/key/${encodeURIComponent(key)}`,
         { value },
         { headers: { Authorization: authHeader } }
       );
@@ -399,7 +399,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
-        `${API_URL}/api/admin/settings/reset`,
+        `${API_URL}/admin/settings/reset`,
         {},
         { headers: { Authorization: authHeader } }
       );
@@ -424,7 +424,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     try {
       logger.info('Syncing feature flags to preprod environment');
       const response = await axios.put(
-        `${PREPROD_API_URL}/api/admin/settings/feature-flags`,
+        `${PREPROD_API_URL}/admin/settings/feature-flags`,
         flags,
         { 
           headers: { Authorization: authHeader },
@@ -450,7 +450,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const authHeader = AdminService.getAuthHeader();
     try {
       logger.info('Fetching feature flags from preprod environment');
-      const response = await axios.get(`${PREPROD_API_URL}/api/admin/settings/feature-flags`, {
+      const response = await axios.get(`${PREPROD_API_URL}/admin/settings/feature-flags`, {
         headers: { Authorization: authHeader },
         timeout: 30000
       });

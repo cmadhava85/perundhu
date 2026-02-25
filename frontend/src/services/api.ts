@@ -156,9 +156,9 @@ export const createApiInstance = (): AxiosInstance => {
       // Add CSRF token for state-changing requests (POST, PUT, DELETE, PATCH)
       // But not for GET, OPTIONS, HEAD, or read-only validation endpoints
       const isStateChanging = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(config.method?.toUpperCase() || '');
-      const isAnalyticsRequest = config.url?.includes('/api/v1/analytics/');
-      const isImageAnalysis = config.url?.includes('/api/v1/contributions/analyze-image');
-      const isVoiceTranscribe = config.url?.includes('/api/v1/contributions/voice/transcribe');
+      const isAnalyticsRequest = config.url?.includes('/v1/analytics/');
+      const isImageAnalysis = config.url?.includes('/v1/contributions/analyze-image');
+      const isVoiceTranscribe = config.url?.includes('/v1/contributions/voice/transcribe');
       
       if (isStateChanging && !isAnalyticsRequest && !isImageAnalysis && !isVoiceTranscribe) {
         try {
@@ -291,7 +291,7 @@ export const checkOnlineStatus = async (): Promise<boolean> => {
  */
 export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
   try {
-    const response = await api.get('/api/v1/bus-tracking/live');
+    const response = await api.get('/v1/bus-tracking/live');
     
     // The backend can return either Map<Long, BusLocationDTO> or BusLocation[]
     // Properly handle both formats to ensure consistent array response
@@ -319,7 +319,7 @@ export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
 export const getLocations = async (language?: string): Promise<Location[]> => {
   try {
     logger.debug('getLocations: Starting location fetch');
-    const response = await api.get('/api/v1/bus-schedules/locations', {
+    const response = await api.get('/v1/bus-schedules/locations', {
       params: {
         lang: language || 'en' // Default to English if language not provided
       }
@@ -464,7 +464,7 @@ export const searchBuses = async (
       );
     }
     
-    const response = await api.get('/api/v1/bus-schedules/search', {
+    const response = await api.get('/v1/bus-schedules/search', {
       params: {
         fromLocationId: fromLocation.id,
         toLocationId: toLocation.id,
@@ -559,7 +559,7 @@ export const searchBusesViaStops = async (
     const fromLoc = typeof fromLocation === 'object' ? fromLocation : { id: fromId, name: 'Unknown' } as Location;
     const toLoc = typeof toLocation === 'object' ? toLocation : { id: toId, name: 'Unknown' } as Location;
     
-    const response = await api.get('/api/v1/bus-schedules/search-via-stops', {
+    const response = await api.get('/v1/bus-schedules/search-via-stops', {
       params: {
         fromLocationId: fromId,
         toLocationId: toId
@@ -656,7 +656,7 @@ export const getConnectingRoutes = async (
     const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
     const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
     
-    const response = await api.get('/api/v1/bus-schedules/connecting-routes', {
+    const response = await api.get('/v1/bus-schedules/connecting-routes', {
       params: {
         fromLocationId: fromId,
         toLocationId: toId
@@ -1044,7 +1044,7 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
   try {
     // First search in database
     logger.debug(`searchLocations: Searching for "${query}" in database`);
-    const response = await api.get('/api/v1/locations/search', {
+    const response = await api.get('/v1/locations/search', {
       params: { 
         query,
         limit,
@@ -1063,7 +1063,7 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
     // If database has no results or insufficient results, check map API
     try {
       logger.debug(`searchLocations: Not enough database results, trying map API for "${query}"`);
-      const mapResponse = await api.get('/api/v1/locations/search', {
+      const mapResponse = await api.get('/v1/locations/search', {
         params: { 
           query,
           limit: limit - dbResults.length, // Only get what we still need
@@ -1194,7 +1194,7 @@ export const transformBusLocation = (location: RawBusLocation): BusLocation => {
  */
 export const getImageProcessingStatistics = async () => {
   try {
-    const response = await api.get('/api/v1/admin/image-processing/statistics');
+    const response = await api.get('/v1/admin/image-processing/statistics');
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -1257,7 +1257,7 @@ export const searchBusesMultiStand = async (
   try {
     logger.info(`Multi-stand search: from='${fromLocation}' to='${toLocation}'`);
     
-    const response = await api.get('/api/v1/bus-schedules/search/multi-stand', {
+    const response = await api.get('/v1/bus-schedules/search/multi-stand', {
       params: {
         from: fromLocation,
         to: toLocation,
@@ -1344,7 +1344,7 @@ export const searchBusesMultiStand = async (
  */
 export const getBusStandsForCity = async (cityName: string): Promise<BusStand[]> => {
   try {
-    const response = await api.get('/api/v1/bus-schedules/bus-stands', {
+    const response = await api.get('/v1/bus-schedules/bus-stands', {
       params: { city: cityName }
     });
     return response.data;
@@ -1362,7 +1362,7 @@ export const getBusStandsForCity = async (cityName: string): Promise<BusStand[]>
  */
 export const checkMultiStandCity = async (location: string): Promise<MultiStandCheckResponse> => {
   try {
-    const response = await api.get('/api/v1/bus-schedules/check-multi-stand', {
+    const response = await api.get('/v1/bus-schedules/check-multi-stand', {
       params: { location }
     });
     return response.data;

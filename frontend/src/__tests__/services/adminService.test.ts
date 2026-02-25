@@ -108,7 +108,7 @@ describe('AdminService', () => {
 
         expect(result).toEqual(mockContributions);
         expect(mockedAxios.get).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/routes'),
+          expect.stringContaining('/admin/contributions/routes'),
           expect.objectContaining({
             headers: { Authorization: expect.stringContaining('Bearer') }
           })
@@ -125,7 +125,7 @@ describe('AdminService', () => {
 
         expect(result).toEqual(mockContributions);
         expect(mockedAxios.get).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/routes/pending'),
+          expect.stringContaining('/admin/contributions/routes/pending'),
           expect.any(Object)
         );
       });
@@ -140,7 +140,7 @@ describe('AdminService', () => {
 
         expect(result.status).toBe('APPROVED');
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/routes/1/approve'),
+          expect.stringContaining('/admin/contributions/routes/1/approve'),
           {},
           expect.objectContaining({
             headers: { Authorization: expect.any(String) }
@@ -158,7 +158,7 @@ describe('AdminService', () => {
 
         expect(result.status).toBe('REJECTED');
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/routes/1/reject'),
+          expect.stringContaining('/admin/contributions/routes/1/reject'),
           { reason: 'Invalid route' },
           expect.any(Object)
         );
@@ -172,7 +172,7 @@ describe('AdminService', () => {
         await AdminService.deleteRouteContribution(1);
 
         expect(mockedAxios.delete).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/routes/1'),
+          expect.stringContaining('/admin/contributions/routes/1'),
           expect.any(Object)
         );
       });
@@ -189,7 +189,7 @@ describe('AdminService', () => {
 
         expect(result).toEqual(mockContributions);
         expect(mockedAxios.get).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/images'),
+          expect.stringContaining('/admin/contributions/images'),
           expect.any(Object)
         );
       });
@@ -204,7 +204,7 @@ describe('AdminService', () => {
 
         expect(result).toEqual(mockContributions);
         expect(mockedAxios.get).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/images/pending'),
+          expect.stringContaining('/admin/contributions/images/pending'),
           expect.any(Object)
         );
       });
@@ -219,7 +219,7 @@ describe('AdminService', () => {
 
         expect(result.status).toBe('APPROVED');
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/images/1/approve'),
+          expect.stringContaining('/admin/contributions/images/1/approve'),
           {},
           expect.any(Object)
         );
@@ -235,7 +235,7 @@ describe('AdminService', () => {
 
         expect(result.status).toBe('REJECTED');
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/images/1/reject'),
+          expect.stringContaining('/admin/contributions/images/1/reject'),
           { reason: 'Low quality image' },
           expect.any(Object)
         );
@@ -249,7 +249,7 @@ describe('AdminService', () => {
         await AdminService.deleteImageContribution(1);
 
         expect(mockedAxios.delete).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/contributions/images/1'),
+          expect.stringContaining('/admin/contributions/images/1'),
           expect.any(Object)
         );
       });
@@ -266,7 +266,7 @@ describe('AdminService', () => {
 
         expect(result).toEqual(mockResult);
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/integration/approved-routes'),
+          expect.stringContaining('/admin/integration/approved-routes'),
           {},
           expect.any(Object)
         );
@@ -293,7 +293,7 @@ describe('AdminService', () => {
 
         expect(result.successCount).toBe(1);
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          expect.stringContaining('/api/admin/integration/route/1'),
+          expect.stringContaining('/admin/integration/route/1'),
           {},
           expect.any(Object)
         );

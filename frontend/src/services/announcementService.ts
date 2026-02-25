@@ -44,7 +44,7 @@ const AnnouncementService = {
   // Public endpoints
   getActiveAnnouncements: async (): Promise<Announcement[]> => {
     try {
-      const response = await axios.get(`${API_URL}/api/v1/announcements`);
+      const response = await axios.get(`${API_URL}/v1/announcements`);
       return response.data;
     } catch (error) {
       console.error('Error fetching active announcements:', error);
@@ -54,7 +54,7 @@ const AnnouncementService = {
 
   getAnnouncementsByAudience: async (audience: string): Promise<Announcement[]> => {
     try {
-      const response = await axios.get(`${API_URL}/api/v1/announcements/audience/${audience}`);
+      const response = await axios.get(`${API_URL}/v1/announcements/audience/${audience}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching announcements for audience ${audience}:`, error);
@@ -64,7 +64,7 @@ const AnnouncementService = {
 
   trackView: async (id: number): Promise<void> => {
     try {
-      await axios.post(`${API_URL}/api/v1/announcements/${id}/view`);
+      await axios.post(`${API_URL}/v1/announcements/${id}/view`);
     } catch (error) {
       console.error('Error tracking announcement view:', error);
     }
@@ -72,7 +72,7 @@ const AnnouncementService = {
 
   trackDismiss: async (id: number): Promise<void> => {
     try {
-      await axios.post(`${API_URL}/api/v1/announcements/${id}/dismiss`);
+      await axios.post(`${API_URL}/v1/announcements/${id}/dismiss`);
     } catch (error) {
       console.error('Error tracking announcement dismiss:', error);
     }
@@ -82,7 +82,7 @@ const AnnouncementService = {
   getAllAnnouncements: async (): Promise<Announcement[]> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.get(`${API_URL}/api/admin/announcements`, {
+      const response = await axios.get(`${API_URL}/admin/announcements`, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -95,7 +95,7 @@ const AnnouncementService = {
   getAnnouncement: async (id: number): Promise<Announcement | null> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.get(`${API_URL}/api/admin/announcements/${id}`, {
+      const response = await axios.get(`${API_URL}/admin/announcements/${id}`, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -108,7 +108,7 @@ const AnnouncementService = {
   createAnnouncement: async (announcement: Announcement): Promise<Announcement | null> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.post(`${API_URL}/api/admin/announcements`, announcement, {
+      const response = await axios.post(`${API_URL}/admin/announcements`, announcement, {
         headers: { Authorization: authHeader, 'Content-Type': 'application/json' }
       });
       return response.data;
@@ -121,7 +121,7 @@ const AnnouncementService = {
   updateAnnouncement: async (id: number, announcement: Announcement): Promise<Announcement | null> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.put(`${API_URL}/api/admin/announcements/${id}`, announcement, {
+      const response = await axios.put(`${API_URL}/admin/announcements/${id}`, announcement, {
         headers: { Authorization: authHeader, 'Content-Type': 'application/json' }
       });
       return response.data;
@@ -134,7 +134,7 @@ const AnnouncementService = {
   deleteAnnouncement: async (id: number): Promise<boolean> => {
     try {
       const authHeader = getAuthHeader();
-      await axios.delete(`${API_URL}/api/admin/announcements/${id}`, {
+      await axios.delete(`${API_URL}/admin/announcements/${id}`, {
         headers: { Authorization: authHeader }
       });
       return true;
@@ -147,7 +147,7 @@ const AnnouncementService = {
   publishAnnouncement: async (id: number): Promise<Announcement | null> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.post(`${API_URL}/api/admin/announcements/${id}/publish`, {}, {
+      const response = await axios.post(`${API_URL}/admin/announcements/${id}/publish`, {}, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -160,7 +160,7 @@ const AnnouncementService = {
   unpublishAnnouncement: async (id: number): Promise<Announcement | null> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.post(`${API_URL}/api/admin/announcements/${id}/unpublish`, {}, {
+      const response = await axios.post(`${API_URL}/admin/announcements/${id}/unpublish`, {}, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -173,7 +173,7 @@ const AnnouncementService = {
   getAnnouncementsByStatus: async (status: string): Promise<Announcement[]> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.get(`${API_URL}/api/admin/announcements/status/${status}`, {
+      const response = await axios.get(`${API_URL}/admin/announcements/status/${status}`, {
         headers: { Authorization: authHeader }
       });
       return response.data;
@@ -186,7 +186,7 @@ const AnnouncementService = {
   getStatistics: async (): Promise<AnnouncementStats | null> => {
     try {
       const authHeader = getAuthHeader();
-      const response = await axios.get(`${API_URL}/api/admin/announcements/stats`, {
+      const response = await axios.get(`${API_URL}/admin/announcements/stats`, {
         headers: { Authorization: authHeader }
       });
       return response.data;

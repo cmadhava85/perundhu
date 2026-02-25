@@ -33,7 +33,7 @@ export interface DuplicateCheckResponse {
 export async function checkForDuplicates(request: DuplicateCheckRequest): Promise<DuplicateCheckResponse> {
   try {
     const response = await axios.post<DuplicateCheckResponse>(
-      `${API_URL}/api/v1/duplicates/check`,
+      `${API_URL}/v1/duplicates/check`,
       request
     );
     return response.data;

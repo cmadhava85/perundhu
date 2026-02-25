@@ -15,7 +15,7 @@ export const reviewService = {
    * Check if reviews feature is enabled
    */
   async getFeatureStatus(): Promise<ReviewFeatureStatus> {
-    const response = await api.get<ReviewFeatureStatus>('/api/reviews/feature-status');
+    const response = await api.get<ReviewFeatureStatus>('/reviews/feature-status');
     return response.data;
   },
 
@@ -23,7 +23,7 @@ export const reviewService = {
    * Submit a new review for a bus
    */
   async submitReview(request: SubmitReviewRequest): Promise<Review> {
-    const response = await api.post<Review>('/api/reviews', request);
+    const response = await api.post<Review>('/reviews', request);
     return response.data;
   },
 
@@ -47,7 +47,7 @@ export const reviewService = {
    * Get all reviews by current user
    */
   async getMyReviews(): Promise<Review[]> {
-    const response = await api.get<Review[]>('/api/reviews/my-reviews');
+    const response = await api.get<Review[]>('/reviews/my-reviews');
     return response.data;
   },
 
@@ -80,7 +80,7 @@ export const reviewService = {
    * Get all pending reviews (admin only)
    */
   async getPendingReviews(): Promise<Review[]> {
-    const response = await api.get<Review[]>('/api/reviews/admin/pending');
+    const response = await api.get<Review[]>('/reviews/admin/pending');
     return response.data;
   },
 

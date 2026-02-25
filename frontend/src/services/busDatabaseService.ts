@@ -97,7 +97,7 @@ const BusDatabaseService = {
     if (filters.sortDir) params.append('sortDir', filters.sortDir);
 
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/bus-database/buses?${params.toString()}`,
+      `${API_URL}/v1/admin/bus-database/buses?${params.toString()}`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
@@ -112,7 +112,7 @@ const BusDatabaseService = {
    */
   async getBusById(busId: number): Promise<BusDetail> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/bus-database/buses/${busId}`,
+      `${API_URL}/v1/admin/bus-database/buses/${busId}`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
@@ -127,7 +127,7 @@ const BusDatabaseService = {
    */
   async getStopsForBus(busId: number): Promise<StopDetail[]> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/bus-database/buses/${busId}/stops`,
+      `${API_URL}/v1/admin/bus-database/buses/${busId}/stops`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
@@ -146,7 +146,7 @@ const BusDatabaseService = {
     arrivalTime?: string
   ): Promise<{ success: boolean; message: string; bus: BusDetail }> {
     const response = await axios.put(
-      `${API_URL}/api/v1/admin/bus-database/buses/${busId}/timing`,
+      `${API_URL}/v1/admin/bus-database/buses/${busId}/timing`,
       { departureTime, arrivalTime },
       {
         headers: {
@@ -166,7 +166,7 @@ const BusDatabaseService = {
     active: boolean
   ): Promise<{ success: boolean; message: string; bus: BusDetail }> {
     const response = await axios.put(
-      `${API_URL}/api/v1/admin/bus-database/buses/${busId}/active`,
+      `${API_URL}/v1/admin/bus-database/buses/${busId}/active`,
       { active },
       {
         headers: {
@@ -186,7 +186,7 @@ const BusDatabaseService = {
     stop: StopInput
   ): Promise<{ success: boolean; message: string; stop: StopDetail }> {
     const response = await axios.post(
-      `${API_URL}/api/v1/admin/bus-database/buses/${busId}/stops`,
+      `${API_URL}/v1/admin/bus-database/buses/${busId}/stops`,
       stop,
       {
         headers: {
@@ -206,7 +206,7 @@ const BusDatabaseService = {
     stop: StopInput
   ): Promise<{ success: boolean; message: string; stop: StopDetail }> {
     const response = await axios.put(
-      `${API_URL}/api/v1/admin/bus-database/stops/${stopId}`,
+      `${API_URL}/v1/admin/bus-database/stops/${stopId}`,
       stop,
       {
         headers: {
@@ -223,7 +223,7 @@ const BusDatabaseService = {
    */
   async deleteStop(stopId: number): Promise<{ success: boolean; message: string }> {
     const response = await axios.delete(
-      `${API_URL}/api/v1/admin/bus-database/stops/${stopId}`,
+      `${API_URL}/v1/admin/bus-database/stops/${stopId}`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
@@ -238,7 +238,7 @@ const BusDatabaseService = {
    */
   async getUniqueOrigins(): Promise<string[]> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/bus-database/filters/origins`,
+      `${API_URL}/v1/admin/bus-database/filters/origins`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
@@ -253,7 +253,7 @@ const BusDatabaseService = {
    */
   async getUniqueDestinations(): Promise<string[]> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/bus-database/filters/destinations`,
+      `${API_URL}/v1/admin/bus-database/filters/destinations`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
@@ -268,7 +268,7 @@ const BusDatabaseService = {
    */
   async searchLocations(query: string): Promise<LocationSuggestion[]> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/bus-database/locations/search?query=${encodeURIComponent(query)}`,
+      `${API_URL}/v1/admin/bus-database/locations/search?query=${encodeURIComponent(query)}`,
       {
         headers: {
           'Authorization': AdminService.getAuthHeader(),

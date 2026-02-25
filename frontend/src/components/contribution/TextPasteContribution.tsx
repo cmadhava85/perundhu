@@ -146,7 +146,7 @@ Via: Chengalpattu, Villupuram, Trichy`,
     setIsValidating(true);
     
     try {
-      const response = await api.post('/api/v1/contributions/paste/validate', {
+      const response = await api.post('/v1/contributions/paste/validate', {
         text: pastedText,
       });
 
@@ -198,7 +198,7 @@ Via: Chengalpattu, Villupuram, Trichy`,
     }
 
     try {
-      const response = await api.post('/api/v1/contributions/paste', securePayload.data, {
+      const response = await api.post('/v1/contributions/paste', securePayload.data, {
         headers: securePayload.headers
       });
 

@@ -39,7 +39,7 @@ class CsrfTokenManager {
     }
 
     // Fetch token from server
-    this.tokenFetchPromise = fetch('/api/v1/csrf/token', {
+    this.tokenFetchPromise = fetch('/v1/csrf/token', {
       method: 'GET',
       credentials: 'include', // Include cookies
       headers: {

@@ -75,10 +75,10 @@ const Analytics: React.FC<AnalyticsProps> = ({ fromLocation, toLocation, busId }
         
         // Make API calls to fetch the different analytics datasets
         const [delayResponse, punctualityResponse, performanceResponse, crowdResponse] = await Promise.all([
-          api.get('/api/v1/analytics/delay', { params }),
-          api.get('/api/v1/analytics/punctuality', { params }),
-          api.get('/api/v1/analytics/performance', { params }),
-          api.get('/api/v1/analytics/crowding', { params })
+          api.get('/v1/analytics/delay', { params }),
+          api.get('/v1/analytics/punctuality', { params }),
+          api.get('/v1/analytics/performance', { params }),
+          api.get('/v1/analytics/crowding', { params })
         ]);
 
         // Set the data from API responses

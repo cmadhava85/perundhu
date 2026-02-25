@@ -23,7 +23,7 @@ export const findNearestLocationsFromDatabase = async (
 ): Promise<NearbyLocationResult[]> => {
   try {
     // First, get all locations from the database
-    const response = await api.get('/api/v1/bus-schedules/locations');
+    const response = await api.get('/v1/bus-schedules/locations');
     const locations: AppLocation[] = response.data || [];
 
     if (locations.length === 0) {
@@ -226,7 +226,7 @@ export const findNearbyLocationFromGPS = async (): Promise<{
  */
 const matchNominatimWithDatabase = async (placeName: string): Promise<AppLocation | null> => {
   try {
-    const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
+    const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
       params: { q: placeName.trim() }
     });
 

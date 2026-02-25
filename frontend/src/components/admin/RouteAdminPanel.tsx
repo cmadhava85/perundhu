@@ -189,7 +189,7 @@ const RouteAdminPanel: React.FC = () => {
       // Update the route with the new times first
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
       const updateResponse = await fetch(
-        `${API_BASE_URL}/api/admin/contributions/routes/${routeToEdit.id}/update-times`,
+        `${API_BASE_URL}/admin/contributions/routes/${routeToEdit.id}/update-times`,
         {
           method: 'PUT',
           headers: {

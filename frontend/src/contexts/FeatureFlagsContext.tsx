@@ -160,7 +160,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       // This prevents rate limiting (429 errors) and improves performance
       const backendFlags = await apiRequest<Record<string, boolean>>(
         'GET', 
-        '/api/v1/settings/feature-flags',
+        '/v1/settings/feature-flags',
         undefined
       );
 

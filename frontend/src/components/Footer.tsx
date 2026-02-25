@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
     const fetchStats = async () => {
       try {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-        const response = await fetch(`${apiUrl}/api/v1/bus-schedules/public-stats`);
+        const response = await fetch(`${API_URL}/v1/bus-schedules/public-stats`);
         if (response.ok) {
           const data = await response.json();
           setStats(data);

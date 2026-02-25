@@ -153,7 +153,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
           setLoading(true);
         }
         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
-        const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images`, {
+        const response = await fetch(`${API_BASE_URL}/admin/contributions/images`, {
           headers: {
             'Authorization': AdminService.getAuthHeader()
           }
@@ -183,7 +183,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
     try {
       setLoading(true);
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
-      const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images`, {
+      const response = await fetch(`${API_BASE_URL}/admin/contributions/images`, {
         headers: {
           'Authorization': AdminService.getAuthHeader()
         }
@@ -202,7 +202,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       setExtractingOCRId(contribution.id);
       setSelectedContribution(contribution);
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
-      const url = `${API_BASE_URL}/api/admin/contributions/images/${contribution.id}/extract-ocr`;
+      const url = `${API_BASE_URL}/admin/contributions/images/${contribution.id}/extract-ocr`;
       
       const response = await fetch(url, {
         method: 'POST',
@@ -341,7 +341,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
 
       // Save to backend
       const response = await fetch(
-        `${API_BASE_URL}/api/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
+        `${API_BASE_URL}/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
         {
           method: 'PUT',
           headers: {
@@ -415,7 +415,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
       const response = await fetch(
-        `${API_BASE_URL}/api/v1/terminals/resolve?source=${encodeURIComponent(fromLocation)}&destination=${encodeURIComponent(toLocation)}`
+        `${API_BASE_URL}/v1/terminals/resolve?source=${encodeURIComponent(fromLocation)}&destination=${encodeURIComponent(toLocation)}`
       );
       
       if (!response.ok) {
@@ -534,7 +534,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       };
 
       const response = await fetch(
-        `${API_BASE_URL}/api/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
+        `${API_BASE_URL}/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
         {
           method: 'PUT',
           headers: {
@@ -588,7 +588,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       };
 
       const response = await fetch(
-        `${API_BASE_URL}/api/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
+        `${API_BASE_URL}/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
         {
           method: 'PUT',
           headers: {
@@ -620,7 +620,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
     try {
       setProcessingId(contributionId);
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
-      const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images/${contributionId}/approve`, {
+      const response = await fetch(`${API_BASE_URL}/admin/contributions/images/${contributionId}/approve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -655,7 +655,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
     try {
       setProcessingId(contributionId);
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
-      const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images/${contributionId}/reject`, {
+      const response = await fetch(`${API_BASE_URL}/admin/contributions/images/${contributionId}/reject`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

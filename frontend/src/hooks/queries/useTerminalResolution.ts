@@ -25,7 +25,7 @@ export const useTerminalResolution = (source: string, destination: string, enabl
   return useQuery<TerminalResolutionResponse>({
     queryKey: ['terminalResolution', source, destination],
     queryFn: async () => {
-      const response = await axios.get('/api/v1/terminals/resolve', {
+      const response = await axios.get('/v1/terminals/resolve', {
         params: { source, destination },
       });
       return response.data;
@@ -38,7 +38,7 @@ export const useChennaiTerminals = () => {
   return useQuery<TerminalInfo[]>({
     queryKey: ['chennaiTerminals'],
     queryFn: async () => {
-      const response = await axios.get('/api/v1/terminals/chennai');
+      const response = await axios.get('/v1/terminals/chennai');
       return response.data;
     },
   });

@@ -224,7 +224,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
     
     try {
       // Use axios api instance to leverage interceptors (CSRF token, trace headers)
-      const response = await api.post('/api/v1/route-issues', securePayload.data, {
+      const response = await api.post('/v1/route-issues', securePayload.data, {
         headers: securePayload.headers
       });
       

@@ -27,7 +27,7 @@ export const busTimingService = {
     }
 
     const response = await axios.post(
-      `${API_URL}/api/v1/contributions/timing-images`,
+      `${API_URL}/v1/contributions/timing-images`,
       formData,
       {
         headers: {
@@ -44,7 +44,7 @@ export const busTimingService = {
    */
   async getPendingContributions(): Promise<TimingImageContribution[]> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/contributions/timing-images/pending`
+      `${API_URL}/v1/admin/contributions/timing-images/pending`
     );
     return response.data;
   },
@@ -61,7 +61,7 @@ export const busTimingService = {
     if (userId) params.append('userId', userId);
 
     const response = await axios.get(
-      `${API_URL}/api/v1/contributions/timing-images?${params.toString()}`
+      `${API_URL}/v1/contributions/timing-images?${params.toString()}`
     );
     return response.data;
   },
@@ -71,7 +71,7 @@ export const busTimingService = {
    */
   async getContribution(id: number): Promise<TimingImageContribution> {
     const response = await axios.get(
-      `${API_URL}/api/v1/contributions/timing-images/${id}`
+      `${API_URL}/v1/contributions/timing-images/${id}`
     );
     return response.data;
   },
@@ -81,7 +81,7 @@ export const busTimingService = {
    */
   async extractTimings(id: number): Promise<TimingExtractionResult> {
     const response = await axios.post(
-      `${API_URL}/api/v1/admin/contributions/timing-images/${id}/extract`
+      `${API_URL}/v1/admin/contributions/timing-images/${id}/extract`
     );
     return response.data;
   },
@@ -94,7 +94,7 @@ export const busTimingService = {
     extractedTimings?: TimingExtractionResult
   ): Promise<TimingImageContribution> {
     const response = await axios.post(
-      `${API_URL}/api/v1/admin/contributions/timing-images/${id}/approve`,
+      `${API_URL}/v1/admin/contributions/timing-images/${id}/approve`,
       extractedTimings
     );
     return response.data;
@@ -108,7 +108,7 @@ export const busTimingService = {
     reason: string
   ): Promise<TimingImageContribution> {
     const response = await axios.post(
-      `${API_URL}/api/v1/admin/contributions/timing-images/${id}/reject`,
+      `${API_URL}/v1/admin/contributions/timing-images/${id}/reject`,
       { reason }
     );
     return response.data;
@@ -119,7 +119,7 @@ export const busTimingService = {
    */
   async getMyContributions(userId: string): Promise<TimingImageContribution[]> {
     const response = await axios.get(
-      `${API_URL}/api/v1/contributions/timing-images/user/${userId}`
+      `${API_URL}/v1/contributions/timing-images/user/${userId}`
     );
     return response.data;
   },
@@ -129,7 +129,7 @@ export const busTimingService = {
    */
   async deleteContribution(id: number): Promise<void> {
     await axios.delete(
-      `${API_URL}/api/v1/contributions/timing-images/${id}`
+      `${API_URL}/v1/contributions/timing-images/${id}`
     );
   },
 
@@ -141,7 +141,7 @@ export const busTimingService = {
     extractionResult: TimingExtractionResult
   ): Promise<TimingImageContribution> {
     const response = await axios.put(
-      `${API_URL}/api/v1/admin/contributions/timing-images/${id}/timings`,
+      `${API_URL}/v1/admin/contributions/timing-images/${id}/timings`,
       extractionResult
     );
     return response.data;
@@ -160,7 +160,7 @@ export const busTimingService = {
     }>;
   }> {
     const response = await axios.get(
-      `${API_URL}/api/v1/admin/contributions/timing-images/${id}/check-duplicates`
+      `${API_URL}/v1/admin/contributions/timing-images/${id}/check-duplicates`
     );
     return response.data;
   },

@@ -17,7 +17,7 @@ interface OfflineCachedData {
 const offlineService = {
   isOnline: async (): Promise<boolean> => {
     try {
-      await api.head('/api/v1/health/status');
+      await api.head('/v1/health/status');
       return true;
     } catch {
       return false;
@@ -101,7 +101,7 @@ export const getHistoricalData = async (
     const isOnline = await offlineService.isOnline();
     
     if (isOnline) {
-      const response = await api.get('/api/v1/analytics/historical', {
+      const response = await api.get('/v1/analytics/historical', {
         params: {
           fromLocationId,
           toLocationId,

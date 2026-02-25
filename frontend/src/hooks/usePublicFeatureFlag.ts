@@ -26,7 +26,7 @@ export function usePublicFeatureFlag(featureName: string): UsePublicFeatureFlagR
     queryKey: ['public-feature-flag', featureName],
     queryFn: async (): Promise<boolean> => {
       try {
-        const response = await apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-enabled', undefined, { feature: featureName });
+        const response = await apiRequest<Record<string, boolean>>('GET', '/v1/settings/feature-enabled', undefined, { feature: featureName });
         // Response is { [featureName]: boolean }
         return response[featureName] ?? false;
       } catch (err) {
@@ -65,7 +65,7 @@ export function usePublicFeatureFlags(flagNames: string[]): {
       try {
         // Fetch ALL flags in ONE request using bulk endpoint (much more efficient!)
         // This prevents N+1 API calls problem and rate limiting issues
-        const allFlags = await apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-flags');
+        const allFlags = await apiRequest<Record<string, boolean>>('GET', '/v1/settings/feature-flags');
         
         // Return only the requested flags with their values, default to false if missing
         const result: Record<string, boolean> = {};
