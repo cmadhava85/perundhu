@@ -24,12 +24,9 @@ FROM nginx:alpine
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-# Remove default nginx configs
-RUN rm /etc/nginx/conf.d/default.conf
-
 # Copy custom nginx configurations
 COPY nginx-main.conf /etc/nginx/nginx.conf
-COPY nginx.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built application from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
@@ -50,7 +47,8 @@ EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:8080 || exit 1
+    CMD curl -f http://localhost:8080/health || exit 1
 
-# Start nginx
+# Override entrypoint and start nginx
+ENTRYPOINT []
 CMD ["nginx", "-g", "daemon off;"]
