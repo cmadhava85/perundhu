@@ -96,7 +96,8 @@ def prepare_stop_records(buses_data: List[dict], bus_map: Dict[str, int],
         
         # Process each stop
         for idx, stop in enumerate(stops):
-            stop_name = stop.get('location', stop.get('landmark', ''))
+            # Use landmark (bus stop name) instead of location (city name)
+            stop_name = stop.get('landmark', stop.get('location', ''))
             if not stop_name:
                 stops_skipped += 1
                 continue
