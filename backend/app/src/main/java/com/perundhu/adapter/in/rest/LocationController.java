@@ -295,8 +295,18 @@ public class LocationController {
 
     try {
       List<Location> dbLocations = busScheduleService.searchLocationsByName(query.trim());
+      
+      // Deduplicate database results by name (case-insensitive) - keep first occurrence
       List<LocationDTO> locations = dbLocations.stream()
           .map(location -> LocationDTO.of(location.id().value(), location.name()))
+          .collect(java.util.stream.Collectors.toMap(
+              loc -> loc.getName().toUpperCase().trim(), // Key: normalized name
+              loc -> loc,                                 // Value: LocationDTO
+              (existing, replacement) -> existing,        // Keep first occurrence
+              java.util.LinkedHashMap::new                // Preserve order
+          ))
+          .values()
+          .stream()
           .toList();
 
       // If no exact matches in database, search OSM for neighborhoods
