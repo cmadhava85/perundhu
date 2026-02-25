@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  * Follows Single Responsibility Principle - handles only image admin operations.
  */
 @RestController
-@RequestMapping("/api/admin/contributions/images")
+@RequestMapping("/admin/contributions/images")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")

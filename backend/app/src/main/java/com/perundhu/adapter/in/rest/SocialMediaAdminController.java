@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * Follows Single Responsibility Principle - handles only social media operations.
  */
 @RestController
-@RequestMapping("/api/admin/social-media")
+@RequestMapping("/admin/social-media")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")

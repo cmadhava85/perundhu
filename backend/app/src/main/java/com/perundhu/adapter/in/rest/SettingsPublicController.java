@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * These endpoints are accessible without authentication.
  */
 @RestController
-@RequestMapping("/api/v1/settings")
+@RequestMapping("/v1/settings")
 @RequiredArgsConstructor
 @Slf4j
 public class SettingsPublicController {

@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * Follows Single Responsibility Principle - handles only reprocessing operations.
  */
 @RestController
-@RequestMapping("/api/admin/contributions/reprocess")
+@RequestMapping("/admin/contributions/reprocess")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")

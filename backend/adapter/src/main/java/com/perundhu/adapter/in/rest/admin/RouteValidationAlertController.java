@@ -34,7 +34,7 @@ import java.util.UUID;
  * All endpoints require ADMIN role.
  */
 @RestController
-@RequestMapping("/api/v1/admin/validation-alerts")
+@RequestMapping("/v1/admin/validation-alerts")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Admin - Route Validation Alerts", description = "Manage and review route validation alerts")

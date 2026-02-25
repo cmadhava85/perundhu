@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * Follows Single Responsibility Principle - handles only route admin operations.
  */
 @RestController
-@RequestMapping("/api/admin/contributions/routes")
+@RequestMapping("/admin/contributions/routes")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")

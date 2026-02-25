@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * Provides endpoints to query and analyze admin activity
  */
 @RestController
-@RequestMapping("/api/admin/audit-logs")
+@RequestMapping("/admin/audit-logs")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")
