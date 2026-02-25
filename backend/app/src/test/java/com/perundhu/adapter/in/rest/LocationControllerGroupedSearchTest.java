@@ -75,7 +75,7 @@ class LocationControllerGroupedSearchTest {
                                         .thenReturn(List.of(salemGroup));
 
                         // Execute request
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .param("language", "en")
                                         .contentType(MediaType.APPLICATION_JSON))
@@ -93,7 +93,7 @@ class LocationControllerGroupedSearchTest {
                 @Test
                 @DisplayName("Should return 400 for query less than 2 characters")
                 void shouldReturn400ForQueryLessThan2Characters() throws Exception {
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "S")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isBadRequest());
@@ -102,7 +102,7 @@ class LocationControllerGroupedSearchTest {
                 @Test
                 @DisplayName("Should return 400 for empty query")
                 void shouldReturn400ForEmptyQuery() throws Exception {
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isBadRequest());
@@ -111,7 +111,7 @@ class LocationControllerGroupedSearchTest {
                 @Test
                 @DisplayName("Should return 400 for whitespace query")
                 void shouldReturn400ForWhitespaceQuery() throws Exception {
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "  ")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isBadRequest());
@@ -127,7 +127,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "en"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -144,7 +144,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "ta"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .param("language", "ta")
                                         .contentType(MediaType.APPLICATION_JSON))
@@ -158,7 +158,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("XYZ999", "en"))
                                         .thenReturn(new ArrayList<>());
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "XYZ999")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -175,7 +175,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "en"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "  Salem  ")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -188,7 +188,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped(anyString(), anyString()))
                                         .thenThrow(new RuntimeException("Database error"));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isInternalServerError());
@@ -217,7 +217,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Chennai", "en"))
                                         .thenReturn(List.of(chennaiGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Chennai")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -243,7 +243,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("ch", "en"))
                                         .thenReturn(List.of(salemGroup, maduraiGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "ch")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -262,7 +262,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "en"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -280,7 +280,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "ta"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .param("language", "ta")
                                         .contentType(MediaType.APPLICATION_JSON))
@@ -306,7 +306,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "en"))
                                         .thenReturn(List.of(group));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -325,7 +325,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Salem", "en"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Salem")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -339,7 +339,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("T. Nagar", "en"))
                                         .thenReturn(new ArrayList<>());
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "T. Nagar")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk());
@@ -355,7 +355,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("சேலம்", "ta"))
                                         .thenReturn(List.of(salemGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "சேலம்")
                                         .param("language", "ta")
                                         .contentType(MediaType.APPLICATION_JSON))
@@ -381,7 +381,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("ch", "en"))
                                         .thenReturn(largeResultSet);
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "ch")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())
@@ -404,7 +404,7 @@ class LocationControllerGroupedSearchTest {
                         when(busScheduleService.searchLocationsGrouped("Chennai", "en"))
                                         .thenReturn(List.of(chennaiGroup));
 
-                        mockMvc.perform(get("/api/v1/locations/autocomplete-grouped")
+                        mockMvc.perform(get("/v1/locations/autocomplete-grouped")
                                         .param("q", "Chennai")
                                         .contentType(MediaType.APPLICATION_JSON))
                                         .andExpect(status().isOk())

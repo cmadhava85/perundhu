@@ -49,7 +49,7 @@ class EnhancedSearchIntegrationTest {
   @Test
   void testEnhancedSearchEndpoint_IntegrationTest() throws Exception {
     // Test the enhanced search endpoint with real data flow
-    String response = mockMvc.perform(get("/api/v1/bus-schedules/search")
+    String response = mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "2")
         .param("includeContinuing", "true"))
@@ -98,7 +98,7 @@ class EnhancedSearchIntegrationTest {
   @Test
   void testEnhancedSearchEndpoint_WithoutContinuing_IntegrationTest() throws Exception {
     // Test the enhanced search endpoint without continuing buses
-    String response = mockMvc.perform(get("/api/v1/bus-schedules/search")
+    String response = mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "2")
         .param("includeContinuing", "false"))
@@ -138,7 +138,7 @@ class EnhancedSearchIntegrationTest {
   @Test
   void testEnhancedSearchEndpoint_DefaultIncludeContinuing_IntegrationTest() throws Exception {
     // Test that continuing buses are included by default
-    String responseWithDefault = mockMvc.perform(get("/api/v1/bus-schedules/search")
+    String responseWithDefault = mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "2"))
         .andExpect(status().isOk())
@@ -146,7 +146,7 @@ class EnhancedSearchIntegrationTest {
         .getResponse()
         .getContentAsString();
 
-    String responseWithExplicitTrue = mockMvc.perform(get("/api/v1/bus-schedules/search")
+    String responseWithExplicitTrue = mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "2")
         .param("includeContinuing", "true"))
@@ -162,7 +162,7 @@ class EnhancedSearchIntegrationTest {
   @Test
   void testEnhancedSearchEndpoint_PaginationLimit_IntegrationTest() throws Exception {
     // Test that pagination limits are enforced
-    mockMvc.perform(get("/api/v1/bus-schedules/search")
+    mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "2")
         .param("size", "20")) // Request more than the limit
@@ -175,23 +175,23 @@ class EnhancedSearchIntegrationTest {
     // Test various invalid parameter combinations
 
     // Missing fromLocationId
-    mockMvc.perform(get("/api/v1/bus-schedules/search")
+    mockMvc.perform(get("/v1/bus-schedules/search")
         .param("toLocationId", "2"))
         .andExpect(status().isBadRequest());
 
     // Missing toLocationId
-    mockMvc.perform(get("/api/v1/bus-schedules/search")
+    mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1"))
         .andExpect(status().isBadRequest());
 
     // Same from and to location
-    mockMvc.perform(get("/api/v1/bus-schedules/search")
+    mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "1"))
         .andExpect(status().isBadRequest());
 
     // Invalid location IDs
-    mockMvc.perform(get("/api/v1/bus-schedules/search")
+    mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "invalid")
         .param("toLocationId", "2"))
         .andExpect(status().isBadRequest());
@@ -200,7 +200,7 @@ class EnhancedSearchIntegrationTest {
   @Test
   void testBackwardCompatibility_LegacyStringSearch_IntegrationTest() throws Exception {
     // Test that legacy string-based search still works
-    mockMvc.perform(get("/api/v1/bus-schedules/search")
+    mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocation", "Chennai")
         .param("toLocation", "Trichy"))
         .andExpect(status().isOk())
@@ -210,7 +210,7 @@ class EnhancedSearchIntegrationTest {
   @Test
   void testEnhancedSearchEndpoint_DeduplicationWorking_IntegrationTest() throws Exception {
     // This test verifies that duplicate buses are properly removed
-    String response = mockMvc.perform(get("/api/v1/bus-schedules/search")
+    String response = mockMvc.perform(get("/v1/bus-schedules/search")
         .param("fromLocationId", "1")
         .param("toLocationId", "2")
         .param("includeContinuing", "true"))

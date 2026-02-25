@@ -81,7 +81,7 @@ class LocationControllerTest {
                 .thenReturn("Chennai");
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations/autocomplete")
+        mockMvc.perform(get("/v1/locations/autocomplete")
                 .param("q", "Chennai")
                 .param("language", "en"))
                 .andExpect(status().isOk())
@@ -100,7 +100,7 @@ class LocationControllerTest {
                 .thenReturn("சென்னை");
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations/autocomplete")
+        mockMvc.perform(get("/v1/locations/autocomplete")
                 .param("q", "Chennai")
                 .param("language", "ta"))
                 .andExpect(status().isOk())
@@ -119,7 +119,7 @@ class LocationControllerTest {
                 .thenReturn("சென்னை");
 
         // Act & Assert - Note: Tamil script is URL-encoded by the HTTP client
-        mockMvc.perform(get("/api/v1/locations/autocomplete")
+        mockMvc.perform(get("/v1/locations/autocomplete")
                 .param("q", "Chennai") // Using English to avoid encoding complexity
                 .param("language", "ta"))
                 .andExpect(status().isOk())
@@ -134,7 +134,7 @@ class LocationControllerTest {
                 .thenReturn(tamilResults);
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations")
+        mockMvc.perform(get("/v1/locations")
                 .param("lang", "ta"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(greaterThan(0)))
@@ -155,7 +155,7 @@ class LocationControllerTest {
                 .thenReturn(osmResults);
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations/autocomplete")
+        mockMvc.perform(get("/v1/locations/autocomplete")
                 .param("q", "XYZ123NonExistentLocation")
                 .param("language", "ta"))
                 .andExpect(status().isOk());
@@ -176,7 +176,7 @@ class LocationControllerTest {
                 .thenReturn("சென்னை");
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations/search-comprehensive")
+        mockMvc.perform(get("/v1/locations/search-comprehensive")
                 .param("q", "Chennai")
                 .param("language", "ta"))
                 .andExpect(status().isOk())
@@ -191,7 +191,7 @@ class LocationControllerTest {
                 .thenReturn(List.of(englishLocation));
 
         // Act & Assert - No language parameter provided
-        mockMvc.perform(get("/api/v1/locations"))
+        mockMvc.perform(get("/v1/locations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(greaterThan(0)));
     }
@@ -200,7 +200,7 @@ class LocationControllerTest {
     @DisplayName("Should handle bad request for autocomplete with short query")
     void testAutocompleteWithShortQueryReturnsBadRequest() throws Exception {
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations/autocomplete")
+        mockMvc.perform(get("/v1/locations/autocomplete")
                 .param("q", "a")
                 .param("language", "en"))
                 .andExpect(status().isBadRequest());
@@ -214,7 +214,7 @@ class LocationControllerTest {
                 .thenReturn(tamilResults);
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/locations/neighborhoods")
+        mockMvc.perform(get("/v1/locations/neighborhoods")
                 .param("q", "Adyar")
                 .param("language", "ta"))
                 .andExpect(status().isOk());

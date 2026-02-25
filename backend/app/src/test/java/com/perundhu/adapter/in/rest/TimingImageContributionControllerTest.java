@@ -70,7 +70,7 @@ class TimingImageContributionControllerTest {
     @DisplayName("Should return empty list when no filter provided")
     void shouldReturnEmptyListWhenNoFilterProvided() throws Exception {
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images")
+      mockMvc.perform(get("/v1/contributions/timing-images")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$").isArray())
@@ -93,7 +93,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(contributions);
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images")
+      mockMvc.perform(get("/v1/contributions/timing-images")
           .param("status", "PENDING")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
@@ -119,7 +119,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Arrays.asList(contribution));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images")
+      mockMvc.perform(get("/v1/contributions/timing-images")
           .param("userId", userId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
@@ -133,7 +133,7 @@ class TimingImageContributionControllerTest {
     @DisplayName("Should return 400 for invalid status value")
     void shouldReturn400ForInvalidStatusValue() throws Exception {
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images")
+      mockMvc.perform(get("/v1/contributions/timing-images")
           .param("status", "INVALID_STATUS")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isBadRequest());
@@ -159,7 +159,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Optional.of(contribution));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/{id}", contributionId)
+      mockMvc.perform(get("/v1/contributions/timing-images/{id}", contributionId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.originLocation").value("Chennai"));
@@ -175,7 +175,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Optional.empty());
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/{id}", 999L)
+      mockMvc.perform(get("/v1/contributions/timing-images/{id}", 999L)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNotFound());
     }
@@ -201,7 +201,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Arrays.asList(contribution));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/user/{userId}", userId)
+      mockMvc.perform(get("/v1/contributions/timing-images/user/{userId}", userId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$[0].userId").value(userId));
@@ -217,7 +217,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn("user456");
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/user/{userId}", userId)
+      mockMvc.perform(get("/v1/contributions/timing-images/user/{userId}", userId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isForbidden())
           .andExpect(jsonPath("$.error").exists());
@@ -238,7 +238,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Arrays.asList(contribution));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/user/{userId}", userId)
+      mockMvc.perform(get("/v1/contributions/timing-images/user/{userId}", userId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$[0].userId").value(userId));
@@ -265,7 +265,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn(userId);
 
       // When & Then
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", contributionId)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", contributionId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNoContent());
 
@@ -280,7 +280,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Optional.empty());
 
       // When & Then
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", 999L)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", 999L)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNotFound());
     }
@@ -300,7 +300,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn("user456");
 
       // When & Then
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", contributionId)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", contributionId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isForbidden())
           .andExpect(jsonPath("$.error").exists());
@@ -322,7 +322,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn(userId);
 
       // When & Then
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", contributionId)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", contributionId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNoContent());
 
@@ -352,7 +352,7 @@ class TimingImageContributionControllerTest {
               TimingImageContribution.builder().imageUrl("4").build()));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/stats")
+      mockMvc.perform(get("/v1/contributions/timing-images/stats")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.pending").value(2))
@@ -375,7 +375,7 @@ class TimingImageContributionControllerTest {
           .thenReturn(Arrays.asList());
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/stats")
+      mockMvc.perform(get("/v1/contributions/timing-images/stats")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.pending").value(0))
@@ -397,7 +397,7 @@ class TimingImageContributionControllerTest {
           .thenThrow(new RuntimeException("Database error"));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images")
+      mockMvc.perform(get("/v1/contributions/timing-images")
           .param("status", "PENDING")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isInternalServerError());
@@ -411,7 +411,7 @@ class TimingImageContributionControllerTest {
           .thenThrow(new RuntimeException("Database error"));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/{id}", 1L)
+      mockMvc.perform(get("/v1/contributions/timing-images/{id}", 1L)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isInternalServerError());
     }
@@ -424,7 +424,7 @@ class TimingImageContributionControllerTest {
           .thenThrow(new RuntimeException("Database error"));
 
       // When & Then
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", 1L)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", 1L)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isInternalServerError());
     }
@@ -437,7 +437,7 @@ class TimingImageContributionControllerTest {
           .thenThrow(new RuntimeException("Database error"));
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/stats")
+      mockMvc.perform(get("/v1/contributions/timing-images/stats")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isInternalServerError());
     }
@@ -455,7 +455,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn("user456");
 
       // When & Then
-      mockMvc.perform(get("/api/v1/contributions/timing-images/user/{userId}", requestedUserId)
+      mockMvc.perform(get("/v1/contributions/timing-images/user/{userId}", requestedUserId)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isForbidden());
     }
@@ -473,7 +473,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn("user456");
 
       // When & Then
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", 1L)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", 1L)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isForbidden());
     }
@@ -491,7 +491,7 @@ class TimingImageContributionControllerTest {
       when(authenticationService.getCurrentUserId()).thenReturn("user456");
 
       // When & Then - Verify endpoint responds with 403
-      mockMvc.perform(delete("/api/v1/contributions/timing-images/{id}", 1L)
+      mockMvc.perform(delete("/v1/contributions/timing-images/{id}", 1L)
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isForbidden());
       // Note: Actual log verification would require logging framework integration testing

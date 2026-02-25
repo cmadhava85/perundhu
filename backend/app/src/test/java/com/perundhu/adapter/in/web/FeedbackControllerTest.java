@@ -62,7 +62,7 @@ class FeedbackControllerTest {
     @DisplayName("Should reject feedback with empty message")
     void shouldRejectFeedbackWithEmptyMessage() throws Exception {
       // When
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "")
@@ -76,7 +76,7 @@ class FeedbackControllerTest {
     @DisplayName("Should reject feedback with empty email")
     void shouldRejectFeedbackWithEmptyEmail() throws Exception {
       // When
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test message")
@@ -90,7 +90,7 @@ class FeedbackControllerTest {
     @DisplayName("Should reject feedback with invalid email format")
     void shouldRejectFeedbackWithInvalidEmailFormat() throws Exception {
       // When
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test message")
@@ -117,7 +117,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test message")
@@ -146,7 +146,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "suggestion")
           .param("message", "Test with special chars: !@#$%^&*()")
@@ -172,7 +172,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "general")
           .param("message", "   Trimmed message   ")
@@ -203,7 +203,7 @@ class FeedbackControllerTest {
           .thenReturn(Optional.of(feedback));
 
       // When & Then
-      mockMvc.perform(get("/api/feedback/1")
+      mockMvc.perform(get("/feedback/1")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.id").value(1L))
@@ -221,7 +221,7 @@ class FeedbackControllerTest {
           .thenReturn(Optional.empty());
 
       // When & Then
-      mockMvc.perform(get("/api/feedback/999")
+      mockMvc.perform(get("/feedback/999")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNotFound());
     }
@@ -245,7 +245,7 @@ class FeedbackControllerTest {
       when(feedbackOutputPort.countFeedbackByCategory("general")).thenReturn(3L);
 
       // When & Then
-      mockMvc.perform(get("/api/feedback/stats/overview")
+      mockMvc.perform(get("/feedback/stats/overview")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.newCount").value(5))
@@ -272,7 +272,7 @@ class FeedbackControllerTest {
       when(feedbackOutputPort.countFeedbackByCategory("general")).thenReturn(0L);
 
       // When & Then
-      mockMvc.perform(get("/api/feedback/stats/overview")
+      mockMvc.perform(get("/feedback/stats/overview")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.newCount").value(0))
@@ -301,7 +301,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test")
@@ -326,7 +326,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test")
@@ -338,7 +338,7 @@ class FeedbackControllerTest {
     @DisplayName("Should reject email without @ symbol")
     void shouldRejectEmailWithoutAtSymbol() throws Exception {
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test")
@@ -368,7 +368,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "general")
           .param("message", "Test message")
@@ -394,7 +394,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test")
@@ -421,7 +421,7 @@ class FeedbackControllerTest {
           .thenReturn(testFeedback);
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "suggestion")
           .param("message", "Test")
@@ -443,7 +443,7 @@ class FeedbackControllerTest {
           .thenThrow(new RuntimeException("Database error"));
 
       // When & Then
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test")
@@ -456,7 +456,7 @@ class FeedbackControllerTest {
     @DisplayName("Should handle missing required parameters")
     void shouldHandleMissingRequiredParameters() throws Exception {
       // When & Then - Missing email parameter
-      mockMvc.perform(post("/api/feedback")
+      mockMvc.perform(post("/feedback")
           .contentType(MediaType.APPLICATION_FORM_URLENCODED)
           .param("category", "bug")
           .param("message", "Test"))

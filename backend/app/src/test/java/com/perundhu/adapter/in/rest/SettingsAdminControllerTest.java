@@ -90,7 +90,7 @@ class SettingsAdminControllerTest {
       when(settingsService.getAllSettings()).thenReturn(settings);
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings")
+      mockMvc.perform(get("/admin/settings")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$", hasSize(2)))
@@ -110,7 +110,7 @@ class SettingsAdminControllerTest {
       when(settingsService.getAllSettingsAsMap()).thenReturn(settingsMap);
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/map")
+      mockMvc.perform(get("/admin/settings/map")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.['feature.share.enabled']", is("true")))
@@ -128,7 +128,7 @@ class SettingsAdminControllerTest {
       when(settingsService.getFeatureFlags()).thenReturn(flags);
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/feature-flags")
+      mockMvc.perform(get("/admin/settings/feature-flags")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.enableShareRoute", is(true)))
@@ -144,7 +144,7 @@ class SettingsAdminControllerTest {
           .thenReturn(Arrays.asList(sampleFeatureSetting));
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/category/features")
+      mockMvc.perform(get("/admin/settings/category/features")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$", hasSize(1)))
@@ -159,7 +159,7 @@ class SettingsAdminControllerTest {
           .thenReturn(Optional.of(sampleFeatureSetting));
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/key/feature.share.enabled")
+      mockMvc.perform(get("/admin/settings/key/feature.share.enabled")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.settingKey", is("feature.share.enabled")))
@@ -174,7 +174,7 @@ class SettingsAdminControllerTest {
           .thenReturn(Optional.empty());
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/key/nonexistent")
+      mockMvc.perform(get("/admin/settings/key/nonexistent")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNotFound());
     }
@@ -196,7 +196,7 @@ class SettingsAdminControllerTest {
           .thenReturn(updatedSetting);
 
       // When & Then
-      mockMvc.perform(put("/api/admin/settings/key/feature.share.enabled")
+      mockMvc.perform(put("/admin/settings/key/feature.share.enabled")
           .contentType(MediaType.APPLICATION_JSON)
           .content("{\"value\": \"false\"}"))
           .andExpect(status().isOk())
@@ -209,7 +209,7 @@ class SettingsAdminControllerTest {
     @DisplayName("Should return 400 when value is missing")
     void shouldReturn400WhenValueIsMissing() throws Exception {
       // When & Then
-      mockMvc.perform(put("/api/admin/settings/key/feature.share.enabled")
+      mockMvc.perform(put("/admin/settings/key/feature.share.enabled")
           .contentType(MediaType.APPLICATION_JSON)
           .content("{}"))
           .andExpect(status().isBadRequest())
@@ -224,7 +224,7 @@ class SettingsAdminControllerTest {
           .thenThrow(new IllegalArgumentException("Setting not found: nonexistent"));
 
       // When & Then
-      mockMvc.perform(put("/api/admin/settings/key/nonexistent")
+      mockMvc.perform(put("/admin/settings/key/nonexistent")
           .contentType(MediaType.APPLICATION_JSON)
           .content("{\"value\": \"value\"}"))
           .andExpect(status().isNotFound());
@@ -240,7 +240,7 @@ class SettingsAdminControllerTest {
       doNothing().when(settingsService).updateSettings(any());
 
       // When & Then
-      mockMvc.perform(put("/api/admin/settings/bulk")
+      mockMvc.perform(put("/admin/settings/bulk")
           .contentType(MediaType.APPLICATION_JSON)
           .content(objectMapper.writeValueAsString(updates)))
           .andExpect(status().isOk())
@@ -264,7 +264,7 @@ class SettingsAdminControllerTest {
       when(settingsService.getFeatureFlags()).thenReturn(updatedFlags);
 
       // When & Then
-      mockMvc.perform(put("/api/admin/settings/feature-flags")
+      mockMvc.perform(put("/admin/settings/feature-flags")
           .contentType(MediaType.APPLICATION_JSON)
           .content(objectMapper.writeValueAsString(flags)))
           .andExpect(status().isOk())
@@ -301,7 +301,7 @@ class SettingsAdminControllerTest {
           """;
 
       // When & Then
-      mockMvc.perform(post("/api/admin/settings")
+      mockMvc.perform(post("/admin/settings")
           .contentType(MediaType.APPLICATION_JSON)
           .content(requestBody))
           .andExpect(status().isOk())
@@ -320,7 +320,7 @@ class SettingsAdminControllerTest {
           """;
 
       // When & Then
-      mockMvc.perform(post("/api/admin/settings")
+      mockMvc.perform(post("/admin/settings")
           .contentType(MediaType.APPLICATION_JSON)
           .content(requestBody))
           .andExpect(status().isBadRequest())
@@ -336,7 +336,7 @@ class SettingsAdminControllerTest {
           "feature.share.enabled", "true"));
 
       // When & Then
-      mockMvc.perform(post("/api/admin/settings/reset")
+      mockMvc.perform(post("/admin/settings/reset")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.success", is(true)))
@@ -354,7 +354,7 @@ class SettingsAdminControllerTest {
           "enableShareRoute", true));
 
       // When & Then
-      mockMvc.perform(post("/api/admin/settings/feature-flags/reset")
+      mockMvc.perform(post("/admin/settings/feature-flags/reset")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.success", is(true)))
@@ -375,7 +375,7 @@ class SettingsAdminControllerTest {
       doNothing().when(settingsService).deleteSetting("custom.setting");
 
       // When & Then
-      mockMvc.perform(delete("/api/admin/settings/key/custom.setting")
+      mockMvc.perform(delete("/admin/settings/key/custom.setting")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNoContent());
 
@@ -386,7 +386,7 @@ class SettingsAdminControllerTest {
     @DisplayName("Should not allow deleting system settings")
     void shouldNotAllowDeletingSystemSettings() throws Exception {
       // When & Then
-      mockMvc.perform(delete("/api/admin/settings/key/feature.share.enabled")
+      mockMvc.perform(delete("/admin/settings/key/feature.share.enabled")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isBadRequest())
           .andExpect(jsonPath("$.error", is("Cannot delete system settings. Use reset instead.")));
@@ -396,7 +396,7 @@ class SettingsAdminControllerTest {
     @DisplayName("Should not allow deleting security settings")
     void shouldNotAllowDeletingSecuritySettings() throws Exception {
       // When & Then
-      mockMvc.perform(delete("/api/admin/settings/key/security.maxRequestsPerMinute")
+      mockMvc.perform(delete("/admin/settings/key/security.maxRequestsPerMinute")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isBadRequest())
           .andExpect(jsonPath("$.error", is("Cannot delete system settings. Use reset instead.")));
@@ -414,7 +414,7 @@ class SettingsAdminControllerTest {
       when(settingsService.isFeatureEnabled("share")).thenReturn(true);
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/feature-enabled")
+      mockMvc.perform(get("/admin/settings/feature-enabled")
           .param("feature", "share")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
@@ -428,7 +428,7 @@ class SettingsAdminControllerTest {
       when(settingsService.isFeatureEnabled("osmIntegration")).thenReturn(false);
 
       // When & Then
-      mockMvc.perform(get("/api/admin/settings/feature-enabled")
+      mockMvc.perform(get("/admin/settings/feature-enabled")
           .param("feature", "osmIntegration")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())

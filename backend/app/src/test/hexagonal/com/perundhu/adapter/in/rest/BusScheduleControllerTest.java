@@ -140,7 +140,7 @@ public class BusScheduleControllerTest {
 
         @Test
         void testGetAllLocations() throws Exception {
-                mockMvc.perform(get("/api/v1/bus-schedules/locations")
+                mockMvc.perform(get("/v1/bus-schedules/locations")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$[0].id").value(1))
@@ -151,7 +151,7 @@ public class BusScheduleControllerTest {
 
         @Test
         void testGetAllBuses() throws Exception {
-                mockMvc.perform(get("/api/v1/bus-schedules")
+                mockMvc.perform(get("/v1/bus-schedules")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$[0].id").value(1))
@@ -161,7 +161,7 @@ public class BusScheduleControllerTest {
 
         @Test
         void testGetBusById() throws Exception {
-                mockMvc.perform(get("/api/v1/bus-schedules/1")
+                mockMvc.perform(get("/v1/bus-schedules/1")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.id").value(1))
@@ -171,7 +171,7 @@ public class BusScheduleControllerTest {
 
         @Test
         void testGetBusStops() throws Exception {
-                mockMvc.perform(get("/api/v1/bus-schedules/1/stops")
+                mockMvc.perform(get("/v1/bus-schedules/1/stops")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$[0].name").value("Stop 1"))

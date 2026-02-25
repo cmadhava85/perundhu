@@ -59,7 +59,7 @@ class ReviewControllerTest {
         @Test
         @DisplayName("Should return feature status")
         void testGetFeatureStatus() throws Exception {
-                mockMvc.perform(get("/api/reviews/feature-status"))
+                mockMvc.perform(get("/reviews/feature-status"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.enabled").value(true))
                                 .andExpect(jsonPath("$.requireLogin").value(true))
@@ -96,7 +96,7 @@ class ReviewControllerTest {
                                 """;
 
                 // Act & Assert
-                mockMvc.perform(post("/api/reviews")
+                mockMvc.perform(post("/reviews")
                                 .header("X-User-Id", "user123")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestBody))
@@ -120,7 +120,7 @@ class ReviewControllerTest {
                                 """;
 
                 // Act & Assert
-                mockMvc.perform(post("/api/reviews")
+                mockMvc.perform(post("/reviews")
                                 .header("X-User-Id", "user123")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestBody))
@@ -143,7 +143,7 @@ class ReviewControllerTest {
                                 """;
 
                 // Act & Assert
-                mockMvc.perform(post("/api/reviews")
+                mockMvc.perform(post("/reviews")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestBody))
                                 .andExpect(status().isUnauthorized())
@@ -162,7 +162,7 @@ class ReviewControllerTest {
                                 """;
 
                 // Act & Assert
-                mockMvc.perform(post("/api/reviews")
+                mockMvc.perform(post("/reviews")
                                 .header("X-User-Id", "user123")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestBody))
@@ -182,7 +182,7 @@ class ReviewControllerTest {
                 when(reviewService.getApprovedReviewsForBus(1L)).thenReturn(reviews);
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/bus/1"))
+                mockMvc.perform(get("/reviews/bus/1"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.length()").value(2))
                                 .andExpect(jsonPath("$[0].rating").value(5))
@@ -196,7 +196,7 @@ class ReviewControllerTest {
                 when(reviewService.getApprovedReviewsForBus(999L)).thenReturn(Arrays.asList());
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/bus/999"))
+                mockMvc.perform(get("/reviews/bus/999"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.length()").value(0));
         }
@@ -211,7 +211,7 @@ class ReviewControllerTest {
                 when(reviewService.getRatingSummary(1L)).thenReturn(summary);
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/bus/1/summary"))
+                mockMvc.perform(get("/reviews/bus/1/summary"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.averageRating").value(4.5))
                                 .andExpect(jsonPath("$.reviewCount").value(10))
@@ -227,7 +227,7 @@ class ReviewControllerTest {
                 when(reviewService.hasUserReviewedBus(1L, "user123")).thenReturn(true);
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/bus/1/has-reviewed")
+                mockMvc.perform(get("/reviews/bus/1/has-reviewed")
                                 .header("X-User-Id", "user123"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.hasReviewed").value(true));
@@ -239,7 +239,7 @@ class ReviewControllerTest {
                 ReflectionTestUtils.setField(reviewController, "requireLogin", true);
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/bus/1/has-reviewed"))
+                mockMvc.perform(get("/reviews/bus/1/has-reviewed"))
                                 .andExpect(status().isUnauthorized())
                                 .andExpect(jsonPath("$.message").value("Please log in to check review status"));
         }
@@ -257,7 +257,7 @@ class ReviewControllerTest {
                 when(reviewService.getReviewsByUser("user123")).thenReturn(reviews);
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/my-reviews")
+                mockMvc.perform(get("/reviews/my-reviews")
                                 .header("X-User-Id", "user123"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.length()").value(2));
@@ -267,7 +267,7 @@ class ReviewControllerTest {
         @DisplayName("Should require authentication for my-reviews")
         void testGetMyReviews_Unauthorized() throws Exception {
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/my-reviews"))
+                mockMvc.perform(get("/reviews/my-reviews"))
                                 .andExpect(status().isUnauthorized());
         }
 
@@ -280,7 +280,7 @@ class ReviewControllerTest {
                 doNothing().when(reviewService).deleteReview(1L, "user123");
 
                 // Act & Assert
-                mockMvc.perform(delete("/api/reviews/1")
+                mockMvc.perform(delete("/reviews/1")
                                 .header("X-User-Id", "user123"))
                                 .andExpect(status().isNoContent());
 
@@ -295,7 +295,7 @@ class ReviewControllerTest {
                                 .when(reviewService).deleteReview(1L, "otherUser");
 
                 // Act & Assert
-                mockMvc.perform(delete("/api/reviews/1")
+                mockMvc.perform(delete("/reviews/1")
                                 .header("X-User-Id", "otherUser"))
                                 .andExpect(status().isForbidden());
         }
@@ -313,7 +313,7 @@ class ReviewControllerTest {
                 when(reviewService.getPendingReviews()).thenReturn(pendingReviews);
 
                 // Act & Assert
-                mockMvc.perform(get("/api/reviews/admin/pending"))
+                mockMvc.perform(get("/reviews/admin/pending"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.length()").value(2))
                                 .andExpect(jsonPath("$[0].status").value("PENDING"));
@@ -331,7 +331,7 @@ class ReviewControllerTest {
                 when(reviewService.approveReview(1L)).thenReturn(approvedReview);
 
                 // Act & Assert
-                mockMvc.perform(put("/api/reviews/admin/1/approve"))
+                mockMvc.perform(put("/reviews/admin/1/approve"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.status").value("APPROVED"));
         }
@@ -348,7 +348,7 @@ class ReviewControllerTest {
                 when(reviewService.rejectReview(1L)).thenReturn(rejectedReview);
 
                 // Act & Assert
-                mockMvc.perform(put("/api/reviews/admin/1/reject"))
+                mockMvc.perform(put("/reviews/admin/1/reject"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.status").value("REJECTED"));
         }
@@ -361,7 +361,7 @@ class ReviewControllerTest {
                                 .thenThrow(new IllegalArgumentException("Review not found"));
 
                 // Act & Assert
-                mockMvc.perform(put("/api/reviews/admin/999/approve"))
+                mockMvc.perform(put("/reviews/admin/999/approve"))
                                 .andExpect(status().isNotFound());
         }
 }

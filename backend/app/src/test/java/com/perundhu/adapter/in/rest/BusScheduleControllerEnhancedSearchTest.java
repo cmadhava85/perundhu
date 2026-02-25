@@ -94,7 +94,7 @@ class BusScheduleControllerEnhancedSearchTest {
                 when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
                                 .thenReturn(testContinuingBuses);
 
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocationId", "1")
                                 .param("toLocationId", "2")
                                 .param("includeContinuing", "true")
@@ -113,7 +113,7 @@ class BusScheduleControllerEnhancedSearchTest {
                 when(busScheduleService.findBusesPassingThroughLocations(1L, 2L, "en"))
                                 .thenReturn(testViaBuses);
 
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocationId", "1")
                                 .param("toLocationId", "2")
                                 .param("includeContinuing", "false")
@@ -125,7 +125,7 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Test
         void testEnhancedSearch_SameFromAndToLocation_BadRequest() throws Exception {
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocationId", "1")
                                 .param("toLocationId", "1")
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -141,7 +141,7 @@ class BusScheduleControllerEnhancedSearchTest {
                 when(busScheduleService.findBusesContinuingBeyondDestination(anyLong(), anyLong()))
                                 .thenReturn(Collections.emptyList());
 
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocationId", "999")
                                 .param("toLocationId", "998")
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -154,7 +154,7 @@ class BusScheduleControllerEnhancedSearchTest {
                 when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong(), any()))
                                 .thenThrow(new RuntimeException("Database error"));
 
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocationId", "1")
                                 .param("toLocationId", "2")
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -166,7 +166,7 @@ class BusScheduleControllerEnhancedSearchTest {
                 when(busScheduleService.searchRoutes("Chennai", "Bangalore", 0, 20))
                                 .thenReturn(testDirectBuses);
 
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocation", "Chennai")
                                 .param("toLocation", "Bangalore")
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -184,7 +184,7 @@ class BusScheduleControllerEnhancedSearchTest {
                 when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
                                 .thenReturn(Collections.emptyList());
 
-                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                mockMvc.perform(get("/v1/bus-schedules/search")
                                 .param("fromLocationId", "1")
                                 .param("toLocationId", "2")
                                 .param("size", "1")
