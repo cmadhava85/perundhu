@@ -92,15 +92,15 @@ public class SecurityConfig {
 
     http
         // Only match admin endpoints
-        .securityMatcher("/api/admin/**", "/api/v1/admin/**")
+        .securityMatcher("/admin/**", "/v1/admin/**")
         // Configure security context repository to use request attributes
         .securityContext(context -> context.securityContextRepository(securityContextRepository))
         .csrf(csrf -> csrf
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
             .ignoringRequestMatchers(
-                "/api/admin/**", // All admin endpoints (Protected by Basic Auth)
-                "/api/v1/admin/**")) // Admin v1 endpoints
+                "/admin/**", // All admin endpoints (Protected by Basic Auth)
+                "/v1/admin/**")) // Admin v1 endpoints
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // Disable anonymous authentication - admin endpoints require explicit auth
@@ -112,7 +112,7 @@ public class SecurityConfig {
         .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
             // Admin auth endpoints are public (for login)
-            .requestMatchers("/api/admin/auth/**").permitAll()
+            .requestMatchers("/admin/auth/**").permitAll()
             // All other admin endpoints require authentication (role check via
             // @PreAuthorize in controllers)
             .anyRequest().authenticated());
@@ -136,20 +136,20 @@ public class SecurityConfig {
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
             .ignoringRequestMatchers(
-                "/api/v1/analytics/**", // Analytics can be without CSRF (stateless API)
-                "/api/v1/contributions/analyze-image", // Image analysis is stateless
-                "/api/v1/contributions/paste/validate", // Validation endpoint (read-only)
-                "/api/v1/contributions/paste", // Paste contributions (public write with built-in security)
-                "/api/v1/contributions/images", // Image contributions (public write with built-in security)
-                "/api/v1/contributions/voice/transcribe", // Voice transcription (read-only, no persistence)
-                "/api/v1/contributions/routes", // Anonymous route contributions (public write with built-in security)
-                "/api/v1/contributions/routes/stops", // Anonymous stop contributions (public write)
-                "/api/v1/contributions/buses/**", // Anonymous bus contributions (public write)
-                "/api/v1/contributions/stops/**", // Anonymous stop contributions (public write)
-                "/api/v1/duplicates/**", // Duplicate check is stateless (read-only validation)
-                "/api/v1/route-issues", // Public route issue submission (includes CSRF via reCAPTCHA)
-                "/api/v1/route-issues/**", // Route issue endpoints with wildcard
-                "/api/admin/auth/**" // Admin auth endpoints (login/logout with built-in security)
+                "/v1/analytics/**", // Analytics can be without CSRF (stateless API)
+                "/v1/contributions/analyze-image", // Image analysis is stateless
+                "/v1/contributions/paste/validate", // Validation endpoint (read-only)
+                "/v1/contributions/paste", // Paste contributions (public write with built-in security)
+                "/v1/contributions/images", // Image contributions (public write with built-in security)
+                "/v1/contributions/voice/transcribe", // Voice transcription (read-only, no persistence)
+                "/v1/contributions/routes", // Anonymous route contributions (public write with built-in security)
+                "/v1/contributions/routes/stops", // Anonymous stop contributions (public write)
+                "/v1/contributions/buses/**", // Anonymous bus contributions (public write)
+                "/v1/contributions/stops/**", // Anonymous stop contributions (public write)
+                "/v1/duplicates/**", // Duplicate check is stateless (read-only validation)
+                "/v1/route-issues", // Public route issue submission (includes CSRF via reCAPTCHA)
+                "/v1/route-issues/**", // Route issue endpoints with wildcard
+                "/admin/auth/**" // Admin auth endpoints (login/logout with built-in security)
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -161,24 +161,25 @@ public class SecurityConfig {
         .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
             // Public endpoints
-            .requestMatchers("/api/v1/bus-schedules/**").permitAll()
-            .requestMatchers("/api/v1/analytics/**").permitAll()
-            .requestMatchers("/api/v1/contributions/analyze-image").permitAll()
-            .requestMatchers("/api/v1/contributions/routes").permitAll() // Allow anonymous route contributions
-            .requestMatchers("/api/v1/contributions/routes/stops").permitAll() // Allow anonymous stop contributions to
-                                                                               // existing routes
-            .requestMatchers("/api/v1/contributions/buses/**").permitAll() // Allow anonymous bus contributions
-            .requestMatchers("/api/v1/contributions/stops/**").permitAll() // Allow anonymous stop contributions
-            .requestMatchers("/api/v1/buses/**").permitAll()
-            .requestMatchers("/api/v1/stops/**").permitAll()
-            .requestMatchers("/api/v1/locations/**").permitAll()
-            .requestMatchers("/api/images/**").permitAll() // Allow public access to images
+            .requestMatchers("/v1/csrf/**").permitAll() // CSRF endpoint (must be public)
+            .requestMatchers("/v1/bus-schedules/**").permitAll()
+            .requestMatchers("/v1/analytics/**").permitAll()
+            .requestMatchers("/v1/contributions/analyze-image").permitAll()
+            .requestMatchers("/v1/contributions/routes").permitAll() // Allow anonymous route contributions
+            .requestMatchers("/v1/contributions/routes/stops").permitAll() // Allow anonymous stop contributions to
+                                                                           // existing routes
+            .requestMatchers("/v1/contributions/buses/**").permitAll() // Allow anonymous bus contributions
+            .requestMatchers("/v1/contributions/stops/**").permitAll() // Allow anonymous stop contributions
+            .requestMatchers("/v1/buses/**").permitAll()
+            .requestMatchers("/v1/stops/**").permitAll()
+            .requestMatchers("/v1/locations/**").permitAll()
+            .requestMatchers("/images/**").permitAll() // Allow public access to images
             .requestMatchers("/actuator/health").permitAll()
             // Protected endpoints - user management
-            .requestMatchers("/api/v1/contributions/manage/**").authenticated()
+            .requestMatchers("/v1/contributions/manage/**").authenticated()
             // Route issues endpoints - public for reporting, admin handled by separate
             // filter chain
-            .requestMatchers("/api/v1/route-issues/report").permitAll()
+            .requestMatchers("/v1/route-issues/report").permitAll()
             // Allow all other requests for development
             .anyRequest().permitAll());
 

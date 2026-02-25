@@ -38,7 +38,7 @@ import lombok.RequiredArgsConstructor;
  * operations.
  */
 @RestController
-@RequestMapping("/api/v1/admin/bus-database")
+@RequestMapping("/v1/admin/bus-database")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class BusDatabaseAdminController {

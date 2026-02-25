@@ -23,7 +23,7 @@ import com.perundhu.infrastructure.dto.UserTrackingSessionDTO;
  * REST API Controller for user tracking sessions
  */
 @RestController
-@RequestMapping("/api/v1/user-tracking-sessions")
+@RequestMapping("/v1/user-tracking-sessions")
 public class UserTrackingSessionController {
 
     private static final Logger log = LoggerFactory.getLogger(UserTrackingSessionController.class);

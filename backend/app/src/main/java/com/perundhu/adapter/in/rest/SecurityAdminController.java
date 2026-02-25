@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Provides real-time security statistics and management capabilities
  */
 @RestController
-@RequestMapping("/api/admin/security")
+@RequestMapping("/admin/security")
 @PreAuthorize("hasRole('ADMIN')")
 public class SecurityAdminController {
 

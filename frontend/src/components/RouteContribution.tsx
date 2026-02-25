@@ -247,7 +247,8 @@ export const RouteContribution: React.FC = () => {
       formData.append('transcribedText', transcribedText);
       formData.append('language', 'auto');
       
-      const response = await fetch('/api/v1/contributions/voice', {
+      const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${API_URL}/v1/contributions/voice`, {
         method: 'POST',
         body: formData,
       });

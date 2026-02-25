@@ -5,7 +5,7 @@
 
 CREATE TABLE route_validation_alerts (
     id CHAR(36) PRIMARY KEY COMMENT 'UUID primary key',
-    contribution_id VARCHAR(50) NOT NULL COMMENT 'ID of the flagged route contribution',
+    contribution_id VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'ID of the flagged route contribution',
     validation_type VARCHAR(50) NOT NULL COMMENT 'Type: JOURNEY_DURATION, STOP_SEQUENCE, SEGMENT_SPEED',
     confidence_score INT NOT NULL COMMENT 'Confidence score 0-100 that issue exists',
     expected_range VARCHAR(500) COMMENT 'Expected range for the metric',
@@ -23,9 +23,6 @@ CREATE TABLE route_validation_alerts (
     INDEX idx_status_created (status, created_at DESC),
     INDEX idx_validation_type (validation_type),
     INDEX idx_confidence_score (confidence_score),
-    INDEX idx_reviewed_by (reviewed_by),
-    
-    CONSTRAINT fk_validation_alerts_contributions FOREIGN KEY (contribution_id) 
-        REFERENCES route_contributions(id) ON DELETE CASCADE
+    INDEX idx_reviewed_by (reviewed_by)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci 
   COMMENT='Stores route validation alerts flagged by GraphHopper routing validation engine';

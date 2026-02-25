@@ -44,7 +44,7 @@ resource "google_cloud_run_service" "backend" {
 
         env {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "preprod"
+          value = var.environment # Uses "production" or "preprod" based on environment
         }
 
         env {
@@ -141,17 +141,19 @@ resource "google_cloud_run_service" "backend" {
           value = "INFO"
         }
 
-        # COST OPTIMIZATION: Reduced pool size for preprod
-        # Virtual threads + small pool = efficient resource usage
-        env {
-          name  = "HIKARI_MAX_POOL_SIZE"
-          value = "5"
-        }
-
-        env {
-          name  = "HIKARI_MIN_IDLE"
-          value = "1"
-        }
+        # COST OPTIMIZATION: HikariCP pool size managed via application properties
+        # Production: max=10, min_idle=2 (application-production.properties)
+        # Preprod: max=5, min_idle=1 (can override here if needed)
+        # Do NOT set here to avoid conflicts with application.properties
+        # env {
+        #   name  = "HIKARI_MAX_POOL_SIZE"
+        #   value = "5"
+        # }
+        #
+        # env {
+        #   name  = "HIKARI_MIN_IDLE"
+        #   value = "1"
+        # }
 
         # Health check
         liveness_probe {

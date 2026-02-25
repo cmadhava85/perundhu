@@ -18,9 +18,9 @@ cd "${PROJECT_ROOT}"
 
 # Configuration
 export GCP_PROJECT_ID="astute-strategy-406601"
-export GCP_REGION="asia-south1"
+export GCP_REGION="us-central1"
 export ARTIFACT_REGISTRY="${GCP_REGION}-docker.pkg.dev"
-export FRONTEND_IMAGE="${ARTIFACT_REGISTRY}/${GCP_PROJECT_ID}/perundhu/frontend:preprod-latest"
+export FRONTEND_IMAGE="${ARTIFACT_REGISTRY}/${GCP_PROJECT_ID}/perundhu-preprod-us/frontend:preprod-latest"
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════╗"

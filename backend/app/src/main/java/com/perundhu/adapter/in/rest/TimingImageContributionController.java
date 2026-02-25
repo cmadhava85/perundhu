@@ -25,7 +25,7 @@ import java.util.HashMap;
  * Handles upload and retrieval of bus timing board images
  */
 @RestController
-@RequestMapping("/api/v1/contributions/timing-images")
+@RequestMapping("/v1/contributions/timing-images")
 @RequiredArgsConstructor
 @Slf4j
 

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
  * - Total count for UI pagination controls
  */
 @RestController
-@RequestMapping("/api/v1/example-pagination")
+@RequestMapping("/v1/example-pagination")
 @Tag(name = "Pagination Example", description = "Example endpoints demonstrating pagination best practices")
 public class PaginationExampleController {
 

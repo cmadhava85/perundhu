@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Controller for handling bus tracking features using crowd-sourced data
  */
 @RestController
-@RequestMapping("/api/v1/bus-tracking")
+@RequestMapping("/v1/bus-tracking")
 
 @Tag(name = "Bus Tracking", description = "Crowd-sourced bus location tracking and real-time updates")
 public class BusTrackingController {

@@ -1,5 +1,13 @@
 -- Add unique indexes to prevent duplicate inserts from bulk uploads
 
+-- First, clean up duplicate locations (keep the one with the smallest ID)
+DELETE l1 FROM locations l1
+INNER JOIN locations l2 
+WHERE l1.name = l2.name 
+  AND l1.district = l2.district 
+  AND l1.state = l2.state
+  AND l1.id > l2.id;
+
 -- Create procedure to safely create unique indexes
 DROP PROCEDURE IF EXISTS create_unique_index_safe;
 

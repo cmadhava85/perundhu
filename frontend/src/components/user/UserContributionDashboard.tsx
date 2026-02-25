@@ -44,7 +44,8 @@ const UserContributionDashboard: React.FC = () => {
   const fetchUserContributions = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/v1/contributions/status', {
+      const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${API_URL}/v1/contributions/status`, {
         headers: {
           'Authorization': `Bearer ${AuthService.getToken()}`,
           'Content-Type': 'application/json'

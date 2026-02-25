@@ -13,7 +13,7 @@ DB_PASS=$(gcloud secrets versions access latest --secret="db-password" 2>/dev/nu
 # Check if Cloud SQL proxy is running
 if ! lsof -i :3307 2>/dev/null | grep -q LISTEN; then
     echo "❌ Cloud SQL Proxy is not running on port 3307"
-    echo "Start it with: ./cloud_sql_proxy -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql=tcp:3307 &"
+    echo "Start it with: ./cloud_sql_proxy -instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql-us=tcp:3307 &"
     exit 1
 fi
 

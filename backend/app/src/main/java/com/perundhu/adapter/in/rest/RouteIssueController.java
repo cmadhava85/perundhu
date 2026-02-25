@@ -34,7 +34,7 @@ import java.util.*;
  * Admin endpoints (require ADMIN role): /admin/**
  */
 @RestController
-@RequestMapping("/api/v1/route-issues")
+@RequestMapping("/v1/route-issues")
 @RequiredArgsConstructor
 @Slf4j
 public class RouteIssueController {
@@ -59,7 +59,7 @@ public class RouteIssueController {
       String clientIp = getClientIpAddress(httpRequest);
       RecaptchaService.VerificationResult verificationResult = recaptchaService.verify(
           recaptchaToken, "report_issue", clientIp);
-      
+
       if (!verificationResult.isSuccess()) {
         log.warn("reCAPTCHA verification failed for route issue report: {}", verificationResult.getErrorMessage());
         return ResponseEntity.status(403).body(Map.of(

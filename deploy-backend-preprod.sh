@@ -9,12 +9,12 @@ set -e
 
 # Configuration
 PROJECT_ID="astute-strategy-406601"
-REGION="asia-south1"
+REGION="us-central1"
 SERVICE_NAME="perundhu-backend-preprod"
-IMAGE_REPO="asia-south1-docker.pkg.dev"
+IMAGE_REPO="us-central1-docker.pkg.dev"
 IMAGE_TAG="preprod-latest"
-IMAGE="${IMAGE_REPO}/${PROJECT_ID}/perundhu/backend:${IMAGE_TAG}"
-DB_INSTANCE="astute-strategy-406601:asia-south1:perundhu-preprod-mysql"
+IMAGE="${IMAGE_REPO}/${PROJECT_ID}/perundhu-preprod-us/backend:${IMAGE_TAG}"
+DB_INSTANCE="astute-strategy-406601:us-central1:perundhu-preprod-mysql-us"
 DB_USER="perundhu_user"
 
 echo "╔════════════════════════════════════════════════════════════════════════╗"

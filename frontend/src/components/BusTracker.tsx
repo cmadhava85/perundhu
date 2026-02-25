@@ -6,6 +6,8 @@ import { useAuth } from '../hooks/useAuth';
 import { getOrCreateDeviceId } from '../utils/deviceId';
 import '../styles/BusTracker.css';
 
+const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
+
 interface BusTrackerProps {
   buses: Bus[];
   stops: Record<number, Stop[]>;
@@ -136,7 +138,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
   ) => {
     try {
       // Report location with reporter ID (user ID or device ID)
-      await fetch('/api/v1/bus-tracking/report', {
+      await fetch(`${API_URL}/v1/bus-tracking/report`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

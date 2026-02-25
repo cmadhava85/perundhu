@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * Provides endpoints for submitting feedback with optional file attachments.
  */
 @RestController
-@RequestMapping("/api/feedback")
+@RequestMapping("/feedback")
 @Slf4j
 @RequiredArgsConstructor
 public class FeedbackController {
@@ -82,7 +82,8 @@ public class FeedbackController {
             if (screenshot != null && !screenshot.isEmpty()) {
                 if (screenshot.getSize() > maxFileSize) {
                     return ResponseEntity.badRequest()
-                            .body(Map.of("error", "File size exceeds maximum allowed (" + (maxFileSize / 1024 / 1024) + "MB)"));
+                            .body(Map.of("error",
+                                    "File size exceeds maximum allowed (" + (maxFileSize / 1024 / 1024) + "MB)"));
                 }
 
                 // Validate file type
@@ -100,7 +101,7 @@ public class FeedbackController {
                             contentType,
                             screenshot.getSize(),
                             screenshot.getInputStream());
-                    
+
                     // Store with a feedback-specific user ID prefix
                     String screenshotPath = fileStorageService.storeImageFile(
                             fileUpload,

@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/contributions-security")
+@RequestMapping("/v1/contributions-security")
 public class ContributionSecurityController {
 
   @Autowired

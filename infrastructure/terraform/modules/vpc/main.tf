@@ -39,19 +39,23 @@ resource "google_compute_router" "router" {
   network = google_compute_network.vpc_network.id
 }
 
-resource "google_compute_router_nat" "nat" {
-  name   = "${var.app_name}-${var.environment}-nat"
-  router = google_compute_router.router.name
-  region = var.region
-
-  nat_ip_allocate_option             = "AUTO_ONLY"
-  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-
-  log_config {
-    enable = true
-    filter = "ERRORS_ONLY"
-  }
-}
+# Cloud NAT - DISABLED FOR COST SAVINGS ($5-10/month)
+# Cloud Run services have direct internet access and don't require NAT
+# Only needed for VMs or GKE clusters in private subnets
+# To re-enable: uncomment the resource block below
+# resource "google_compute_router_nat" "nat" {
+#   name   = "${var.app_name}-${var.environment}-nat"
+#   router = google_compute_router.router.name
+#   region = var.region
+#
+#   nat_ip_allocate_option             = "AUTO_ONLY"
+#   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+#
+#   log_config {
+#     enable = true
+#     filter = "ERRORS_ONLY"
+#   }
+# }
 
 # VPC Connector for Cloud Run to access VPC resources
 # DISABLED FOR COST SAVINGS ($14/month) - Cloud Run will use public IP only

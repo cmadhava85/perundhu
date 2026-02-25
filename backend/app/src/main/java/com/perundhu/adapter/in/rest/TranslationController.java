@@ -18,7 +18,7 @@ import com.perundhu.domain.port.TranslationService;
  * REST API Controller for translations
  */
 @RestController
-@RequestMapping("/api/v1/translations")
+@RequestMapping("/v1/translations")
 public class TranslationController {
 
     private static final Logger log = LoggerFactory.getLogger(TranslationController.class);

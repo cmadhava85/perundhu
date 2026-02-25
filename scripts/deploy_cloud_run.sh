@@ -6,10 +6,10 @@
 set -e
 
 PROJECT_ID="perundhu-prod-001"
-REGION="asia-south1"
-REGISTRY="$REGION-docker.pkg.dev/$PROJECT_ID/perundhu-images"
-CLOUD_SQL_INSTANCE="$PROJECT_ID:$REGION:perundhu-production-mysql"
-VPC_CONNECTOR="projects/$PROJECT_ID/locations/$REGION/connectors/perundhu-connector"
+REGION="us-central1"
+REGISTRY="$REGION-docker.pkg.dev/$PROJECT_ID/perundhu-images-us"
+CLOUD_SQL_INSTANCE="$PROJECT_ID:$REGION:perundhu-production-mysql-us"
+VPC_CONNECTOR=""  # No VPC connector needed in us-central1
 
 cd /Users/mchand69/Documents/perundhu
 
@@ -60,8 +60,8 @@ gcloud run deploy perundhu-backend \
     --set-env-vars="SPRING_PROFILES_ACTIVE=production" \
     --set-env-vars="GOOGLE_CLOUD_PROJECT=$PROJECT_ID" \
     --set-secrets="SPRING_DATASOURCE_URL=production-db-url:latest" \
-    --set-secrets="SPRING_DATASOURCE_USERNAME=production-db-username:latest" \
-    --set-secrets="SPRING_DATASOURCE_PASSWORD=production-db-password:latest" \
+    --set-secrets="SPRING_DATASOURCE_USERNAME=db-username:latest" \
+    --set-secrets="SPRING_DATASOURCE_PASSWORD=db-password:latest" \
     --set-secrets="APP_JWT_SECRET=production-jwt-secret:latest" \
     --set-secrets="SECURITY_DATA_ENCRYPTION_KEY=production-data-encryption-key:latest" \
     --set-secrets="ADMIN_AUTH_USERNAME=admin-username:latest" \
@@ -139,8 +139,9 @@ echo "  2. Set up custom domain mapping"
 echo "  3. Run smoke tests"
 echo ""
 echo "Custom Domain Setup:"
-echo "  gcloud run domain-mappings create --service=perundhu-frontend --domain=perundhu.com --region=$REGION"
-echo "  gcloud run domain-mappings create --service=perundhu-backend --domain=api.perundhu.com --region=$REGION"
+echo "  # Using single domain with nginx proxy (see COST_OPTIMIZED_SINGLE_DOMAIN_SETUP.md)"
+echo "  gcloud beta run domain-mappings create --service=perundhu-frontend --domain=www.perundhu.com --region=$REGION"
+echo "  # API served via www.perundhu.com/api (nginx proxy to backend)"
 echo ""
 echo "View logs:"
 echo "  gcloud run services logs read perundhu-backend --region=$REGION --project=$PROJECT_ID"

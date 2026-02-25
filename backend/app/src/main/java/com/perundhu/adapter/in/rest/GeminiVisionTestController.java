@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  * These endpoints are for administrative testing purposes only.
  */
 @RestController
-@RequestMapping("/api/v1/admin/gemini")
+@RequestMapping("/v1/admin/gemini")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")

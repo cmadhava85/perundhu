@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 
+// Get API URL from environment variable
+const API_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
+
 /**
  * Hook to detect network status
  * Returns true when online, false when offline
@@ -57,8 +60,8 @@ export function useNetworkStatusAdvanced() {
     const healthCheckInterval = setInterval(async () => {
       setIsChecking(true);
       try {
-        // Try to fetch a lightweight endpoint
-        const response = await fetch('/api/v1/health', { 
+        // Try to fetch a lightweight endpoint using configured API URL
+        const response = await fetch(`${API_URL}/v1/health`, { 
           method: 'HEAD',
           cache: 'no-store',
         });

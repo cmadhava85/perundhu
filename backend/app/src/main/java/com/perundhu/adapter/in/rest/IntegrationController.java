@@ -23,7 +23,7 @@ import java.util.Map;
  * main database
  */
 @RestController
-@RequestMapping("/api/admin/integration")
+@RequestMapping("/admin/integration")
 @RequiredArgsConstructor
 @Slf4j
 
@@ -106,7 +106,8 @@ public class IntegrationController {
       // Allow both APPROVED and INTEGRATION_FAILED (for retry)
       if (!"APPROVED".equals(contribution.getStatus()) && !"INTEGRATION_FAILED".equals(contribution.getStatus())) {
         result.put("error",
-            "Route contribution must be approved or in INTEGRATION_FAILED status to integrate. Current status: " + contribution.getStatus());
+            "Route contribution must be approved or in INTEGRATION_FAILED status to integrate. Current status: "
+                + contribution.getStatus());
         return ResponseEntity.badRequest().body(result);
       }
 

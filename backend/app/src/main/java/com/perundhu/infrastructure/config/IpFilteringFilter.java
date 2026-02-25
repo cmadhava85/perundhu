@@ -74,8 +74,16 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     String method = request.getMethod();
     String authHeader = request.getHeader("Authorization");
 
+    // Skip filtering for Cloud Run health check probes (IP 169.254.169.126 with no
+    // User-Agent)
+    if ("169.254.169.126".equals(clientIp) ||
+        (requestUri != null && (requestUri.equals("/actuator/health") || requestUri.startsWith("/actuator/health/")))) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
     // Skip filtering for admin auth endpoints (they have their own security)
-    if (requestUri != null && requestUri.startsWith("/api/admin/auth/")) {
+    if (requestUri != null && requestUri.startsWith("/admin/auth/")) {
       filterChain.doFilter(request, response);
       return;
     }
@@ -143,7 +151,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
   }
 
   private boolean isApiPath(String uri) {
-    return uri != null && uri.startsWith("/api/");
+    return uri != null && uri.startsWith("/v1/");
   }
 
   /**
@@ -156,10 +164,10 @@ public class IpFilteringFilter extends OncePerRequestFilter {
       return false;
     }
     // Validation endpoints that use POST but are read-only (no state changes)
-    return uri.equals("/api/v1/contributions/paste/validate") || // Paste validation (preview only)
-        uri.equals("/api/v1/contributions/analyze-image") || // Image analysis (no persistence)
-        uri.equals("/api/v1/contributions/voice/transcribe") || // Voice transcription (no persistence)
-        uri.startsWith("/api/v1/analytics/"); // Analytics queries (read-only aggregations)
+    return uri.equals("/v1/contributions/paste/validate") || // Paste validation (preview only)
+        uri.equals("/v1/contributions/analyze-image") || // Image analysis (no persistence)
+        uri.equals("/v1/contributions/voice/transcribe") || // Voice transcription (no persistence)
+        uri.startsWith("/v1/analytics/"); // Analytics queries (read-only aggregations)
   }
 
   /**
@@ -173,17 +181,17 @@ public class IpFilteringFilter extends OncePerRequestFilter {
       return false;
     }
     // User contribution endpoints (POST to submit data)
-    return uri.equals("/api/v1/contributions/routes") || // Submit route contributions
-        uri.equals("/api/v1/contributions/routes/stops") || // Submit stop contributions to routes
-        uri.equals("/api/v1/contributions/paste") || // Submit paste/text contributions
-                                                     // uri.equals("/api/v1/contributions/images") || // Submit image
-                                                     // contributions uri.equals("/api/v1/contributions/buses") || //
-                                                     // Submit bus contributions
-        uri.startsWith("/api/v1/contributions/buses/") || // Bus contribution sub-paths
-        uri.equals("/api/v1/contributions/stops") || // Submit stop contributions
-        uri.startsWith("/api/v1/contributions/stops/") || // Stop contribution sub-paths
-        uri.equals("/api/v1/route-issues/report") || // Report route issues
-        uri.startsWith("/api/v1/route-issues"); // Route issues management
+    return uri.equals("/v1/contributions/routes") || // Submit route contributions
+        uri.equals("/v1/contributions/routes/stops") || // Submit stop contributions to routes
+        uri.equals("/v1/contributions/paste") || // Submit paste/text contributions
+                                                 // uri.equals("/v1/contributions/images") || // Submit image
+                                                 // contributions uri.equals("/v1/contributions/buses") || //
+                                                 // Submit bus contributions
+        uri.startsWith("/v1/contributions/buses/") || // Bus contribution sub-paths
+        uri.equals("/v1/contributions/stops") || // Submit stop contributions
+        uri.startsWith("/v1/contributions/stops/") || // Stop contribution sub-paths
+        uri.equals("/v1/route-issues/report") || // Report route issues
+        uri.startsWith("/v1/route-issues"); // Route issues management
   }
 
   private boolean isAllowedOrigin(String origin) {
@@ -338,7 +346,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
   }
 
   private boolean isScrapingPattern(String requestUri, String userAgent) {
-    if (!requestUri.startsWith("/api/")) {
+    if (!requestUri.startsWith("/v1/")) {
       return false;
     }
 
@@ -380,7 +388,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
   private void trackRequest(String clientIp, String userAgent, String requestUri) {
     // Track legitimate requests for pattern analysis
-    if (requestUri.startsWith("/api/")) {
+    if (requestUri.startsWith("/v1/")) {
       // Simple tracking implementation
       log.debug("Legitimate request from {}: {}", clientIp, requestUri);
     }

@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * SECURITY: Requires ADMIN role for all operations.
  */
 @RestController
-@RequestMapping("/api/v1/admin/contributions/timing-images")
+@RequestMapping("/v1/admin/contributions/timing-images")
 @RequiredArgsConstructor
 @Slf4j
 @PreAuthorize("hasRole('ADMIN')")

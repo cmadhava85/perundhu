@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
  * repositories.
  */
 @RestController
-@RequestMapping("/api/v1/admin/buses")
+@RequestMapping("/v1/admin/buses")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class BusAdminController {

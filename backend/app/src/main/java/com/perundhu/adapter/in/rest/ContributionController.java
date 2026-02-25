@@ -50,7 +50,7 @@ import net.sourceforge.tess4j.TesseractException;
  * Follows strict hexagonal architecture by depending only on domain ports.
  */
 @RestController
-@RequestMapping("/api/v1/contributions")
+@RequestMapping("/v1/contributions")
 @RequiredArgsConstructor
 @Slf4j
 

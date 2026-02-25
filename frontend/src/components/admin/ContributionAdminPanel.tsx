@@ -17,6 +17,8 @@ import AuthService from '../../services/authService';
 import AdminService from '../../services/adminService';
 import './ContributionAdminPanel.css';
 
+const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
+
 interface AdminStats {
   totalContributions: number;
   pendingContributions: number;
@@ -51,7 +53,7 @@ const ContributionAdminPanel: React.FC = () => {
       if (AuthService.isAdmin() || AuthService.isModerator()) {
         try {
           setLoading(true);
-          const response = await fetch('/api/v1/admin/contributions', {
+          const response = await fetch(`${API_URL}/v1/admin/contributions`, {
             headers: {
               'Authorization': AdminService.getAuthHeader(),
               'Content-Type': 'application/json'
@@ -72,7 +74,7 @@ const ContributionAdminPanel: React.FC = () => {
 
         // Fetch stats
         try {
-          const statsResponse = await fetch('/api/v1/contributions/statistics', {
+          const statsResponse = await fetch(`${API_URL}/v1/contributions/statistics`, {
             headers: {
               'Authorization': AdminService.getAuthHeader(),
               'Content-Type': 'application/json'
@@ -99,7 +101,7 @@ const ContributionAdminPanel: React.FC = () => {
   const fetchContributions = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/v1/admin/contributions', {
+      const response = await fetch(`${API_URL}/v1/admin/contributions`, {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
           'Content-Type': 'application/json'
@@ -119,7 +121,7 @@ const ContributionAdminPanel: React.FC = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/v1/contributions/statistics', {
+      const response = await fetch(`${API_URL}/v1/contributions/statistics`, {
         headers: {
           'Authorization': AdminService.getAuthHeader(),
           'Content-Type': 'application/json'

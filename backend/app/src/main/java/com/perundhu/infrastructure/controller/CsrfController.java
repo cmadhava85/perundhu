@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Provides CSRF token for stateful operations
  */
 @RestController
-@RequestMapping("/api/v1/csrf")
+@RequestMapping("/v1/csrf")
 public class CsrfController {
 
   /**

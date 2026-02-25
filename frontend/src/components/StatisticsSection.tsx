@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { BusIcon, UsersIcon, CityIcon } from './icons';
 import '../styles/StatisticsSection.css';
 
+const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
+
 interface PlatformStatistics {
   totalBuses: number;
   routesCovered: number;
@@ -23,7 +25,7 @@ const StatisticsSection: React.FC = () => {
   useEffect(() => {
     const fetchStatistics = async () => {
       try {
-        const response = await fetch('/api/v1/bus-schedules/public-stats');
+        const response = await fetch(`${API_URL}/v1/bus-schedules/public-stats`);
         if (response.ok) {
           const data = await response.json();
           setStats({

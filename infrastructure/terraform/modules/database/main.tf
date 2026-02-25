@@ -75,13 +75,14 @@ resource "google_sql_database_instance" "mysql_instance" {
     }
   }
 
-  # Ignore differences from manually created instances to allow for graceful management
+  # Lifecycle configuration
+  # Note: backup_configuration removed from ignore_changes to allow Terraform to manage backups
   lifecycle {
     ignore_changes = [
-      settings[0].backup_configuration,
       settings[0].disk_type,
       settings[0].disk_size,
-      settings[0].activation_policy
+      settings[0].ip_configuration,
+      deletion_protection
     ]
   }
 }

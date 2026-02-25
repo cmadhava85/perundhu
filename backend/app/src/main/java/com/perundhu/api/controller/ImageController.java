@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * Controller for serving and managing user images
  */
 @RestController
-@RequestMapping("/api/images")
+@RequestMapping("/images")
 @Slf4j
 @RequiredArgsConstructor
 public class ImageController {
@@ -75,14 +75,14 @@ public class ImageController {
       // Filesystem not available, try database
       log.info("Image not in filesystem, trying database for: {}", fullImageUrl);
       Optional<ImageContribution> contribution = imageContributionOutputPort.findByImageUrl(fullImageUrl);
-      
+
       if (contribution.isPresent() && contribution.get().getImageData() != null) {
         byte[] imageData = contribution.get().getImageData();
         String contentType = contribution.get().getImageContentType();
         if (contentType == null) {
           contentType = "image/jpeg";
         }
-        
+
         log.debug("Serving image from database: {} bytes", imageData.length);
         ByteArrayResource resource = new ByteArrayResource(imageData);
         return ResponseEntity.ok()

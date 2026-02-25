@@ -1,6 +1,7 @@
 # Perundhu Production Environment Configuration
 # Generated for GCP Project: perundhu-prod-001
-# Region: asia-south1 (Mumbai - optimal for India)
+# Region: us-central1 (Iowa - optimal for Cloud Run domain mappings)
+# MIGRATED: Feb 2026 from asia-south1 to enable Cloud Run domain mappings
 # 
 # COST OPTIMIZATION ENABLED (Jan 2026)
 # ======================================
@@ -15,8 +16,8 @@
 # GCP Configuration
 # ============================================
 project_id = "perundhu-prod-001"
-region     = "asia-south1"
-zone       = "asia-south1-a"
+region     = "us-central1"
+zone       = "us-central1-a"
 
 # ============================================
 # Environment Configuration
@@ -27,37 +28,37 @@ app_name    = "perundhu"
 # ============================================
 # Cloud SQL IP Configuration
 # ============================================
-# Use public IP to avoid VPC Connector costs ($14/month savings)
-# With public IP, Cloud Run connects directly to Cloud SQL over the internet
-# Database allows only specific IPs via firewall rules
+# Using public IP for current setup
 use_public_ip = true
 
 # ============================================
 db_version              = "MYSQL_8_0"
-db_instance_tier        = "db-g1-small" # Shared-core for cost optimization (was db-n1-standard-1)
+db_instance_tier        = "db-f1-micro" # Matches actual deployed instance
 db_instance_name_suffix = ""
 
 database_name = "perundhu"
 database_user = "perundhu_user"
 
-# Database Storage (cost-optimized)
-db_disk_type             = "PD_HDD" # HDD for balance of cost and performance
-db_disk_size             = 20       # Reduced from 50GB for cost savings
-db_disk_autoresize_limit = 50       # Reduced from 100GB for cost savings
+# Database Storage (match actual deployment)
+db_disk_type             = "PD_HDD"
+db_disk_size             = 10       # Matches actual (was planning 20)
+db_disk_autoresize_limit = 100      # Reset to GCP default
 
-# Database Availability (production-grade)
-db_availability_type   = "ZONAL" # ZONAL is cost-effective; upgrade to REGIONAL if HA needed
-db_deletion_protection = true    # Prevent accidental deletion in production
+# Database Availability (match actual instance)
+db_availability_type   = "ZONAL"
+db_deletion_protection = false    # Matches actual deployed instance
 
-# Database Activation Policy (NEVER = stopped, saves ~$19/month)
-db_activation_policy = "NEVER" # ALWAYS = always running, NEVER = stopped
+# Database Activation Policy (ALWAYS = running for production)
+db_activation_policy = "ALWAYS" # ALWAYS = always running, NEVER = stopped
 
-# Database Backups (ENABLED in production)
-db_backup_enabled                 = true
+# Database Backups (ENABLED for production data protection)
+# Prevents data loss during Cloud SQL maintenance or failures
+# COST OPTIMIZED (Feb 2026): Reduced retention from 7 to 3 days, disabled binary logs
+db_backup_enabled                 = true    # ENABLED for production stability
 db_backup_start_time              = "02:00" # 2 AM IST for off-peak backup
-db_retained_backups_count         = 7       # Keep 7 backups for recovery
-db_transaction_log_retention_days = 7       # 7 days of transaction logs
-db_binary_log_enabled             = true    # Enable binary logging for backup consistency
+db_retained_backups_count         = 3       # Reduced from 7 to 3 for cost optimization
+db_transaction_log_retention_days = 3       # Reduced from 7 to 3 for cost optimization
+db_binary_log_enabled             = false   # Disabled - no read replica (saves $0.20-0.50/month)
 
 # Database Logging (production monitoring)
 db_slow_query_log_enabled = true  # Monitor slow queries for performance tuning
@@ -66,10 +67,13 @@ db_general_log_enabled    = false # Disabled to avoid performance impact (enable
 # ============================================
 # Cloud Run Configuration (Optimized for < $20/month)
 # ============================================
+# COST OPTIMIZED (Feb 2026): Reduced resources for backend
+# Backend: 1 CPU, 1Gi memory, 0-5 instances
+# Frontend: 1 CPU, 512Mi memory, 0-10 instances (not managed by Terraform)
 cloud_run_min_instances = 0       # Changed from 1 to scale to zero for cost savings
 cloud_run_max_instances = 5       # Reduced from 10 for cost optimization
-cloud_run_cpu_limit     = "1000m" # Reduced from 2000m for cost savings
-cloud_run_memory_limit  = "512Mi" # Reduced from 1Gi for cost optimization
+cloud_run_cpu_limit     = "1000m" # 1 CPU for backend
+cloud_run_memory_limit  = "1024Mi" # 1Gi for backend (reduced from 2Gi)
 
 # ============================================
 # VPC Configuration (Cost Optimized - VPC Connector DISABLED)
@@ -201,8 +205,8 @@ enable_custom_role = true
 # Container Image (CI/CD managed)
 # ============================================
 # This will be overridden by GitHub Actions during deployment
-# Format: asia-south1-docker.pkg.dev/perundhu-prod-001/perundhu/backend:VERSION
-container_image = "asia-south1-docker.pkg.dev/perundhu-prod-001/perundhu/backend:latest"
+# Format: us-central1-docker.pkg.dev/perundhu-prod-001/perundhu-images-us/backend:VERSION
+container_image = "us-central1-docker.pkg.dev/perundhu-prod-001/perundhu-images-us/backend:latest"
 
 # Domain Configuration (optional - manage via -var if needed)
 # domain_name = "api.perundhu.app"

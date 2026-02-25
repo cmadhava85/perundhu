@@ -57,13 +57,13 @@ fi
 echo ""
 echo "📍 Step 3: Creating VPC Connector..."
 
-if gcloud compute networks vpc-access connectors describe perundhu-connector --region=$REGION &>/dev/null; then
-    echo "✅ VPC Connector 'perundhu-connector' already exists"
+if gcloud compute networks vpc-access connectors describe perundhu-prod-vpc-conn --region=$REGION &>/dev/null; then
+    echo "✅ VPC Connector 'perundhu-prod-vpc-conn' already exists"
 else
     echo "   Creating VPC connector (this may take 2-3 minutes)..."
-    gcloud compute networks vpc-access connectors create perundhu-connector \
+    gcloud compute networks vpc-access connectors create perundhu-prod-vpc-conn \
         --region=$REGION \
-        --network=default \
+        --network=perundhu-production-vpc \
         --range=10.8.0.0/28 \
         --min-instances=2 \
         --max-instances=3 \
@@ -252,7 +252,7 @@ echo "==========================================="
 echo ""
 echo "Created/Verified:"
 echo "  • Artifact Registry: asia-south1-docker.pkg.dev/$PROJECT_ID/perundhu-images"
-echo "  • VPC Connector: perundhu-connector"
+echo "  • VPC Connector: perundhu-prod-vpc-conn"
 echo "  • Secrets: production-db-url, production-db-username, production-db-password, production-data-encryption-key"
 echo "  • APIs: Cloud Run, Cloud SQL, Secret Manager, Artifact Registry, VPC Access, Cloud Build, DNS"
 echo ""

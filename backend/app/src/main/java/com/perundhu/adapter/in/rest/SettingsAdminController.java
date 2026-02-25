@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
  * Only accessible by admin users.
  */
 @RestController
-@RequestMapping("/api/admin/settings")
+@RequestMapping("/admin/settings")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class SettingsAdminController {

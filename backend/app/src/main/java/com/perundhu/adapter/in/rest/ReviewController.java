@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * REST Controller for bus review operations.
  */
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 @RequiredArgsConstructor
 @Slf4j
 public class ReviewController {

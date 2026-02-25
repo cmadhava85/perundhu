@@ -119,7 +119,8 @@ export const ContactUs: React.FC = () => {
       }
 
       // Send feedback to backend
-      const response = await fetch('/api/feedback', {
+      const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${API_URL}/feedback`, {
         method: 'POST',
         body: formData,
       });

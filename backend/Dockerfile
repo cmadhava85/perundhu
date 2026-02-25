@@ -34,8 +34,8 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 # Set working directory
 WORKDIR /app
 
-# Copy JAR from builder stage
-COPY --from=builder /app/build/libs/*.jar app.jar
+# Copy JAR from builder stage (only the main app jar with dependencies)
+COPY --from=builder /app/build/libs/perundhu-backend.jar app.jar
 
 # Copy health check script
 COPY --from=builder /app/health-check.sh health-check.sh
@@ -58,7 +58,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
 # -Dio.grpc.netty.shaded.io.netty.transport.noNative=true disables native transport
 # -Dio.netty.noPreferDirect=true avoids direct buffer issues
 ENV JAVA_OPTS="-Xmx1536m -Xms512m -XX:+UseG1GC -XX:+UseStringDeduplication -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
-    SPRING_PROFILES_ACTIVE=preprod \
+    SPRING_PROFILES_ACTIVE=production \
     SERVER_PORT=8080
 
 # Run application (using shell form for variable expansion)

@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * Extracted from BusScheduleController for better separation of concerns.
  */
 @RestController
-@RequestMapping("/api/v1/locations")
+@RequestMapping("/v1/locations")
 
 @Tag(name = "Locations", description = "Location search and autocomplete operations")
 public class LocationController {
@@ -130,7 +130,8 @@ public class LocationController {
 
       log.info("No locations in database for '{}', falling back to OpenStreetMap", query);
       List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
-      log.info("Found {} locations from OpenStreetMap for query '{}' in language '{}'", osmResults.size(), query, language);
+      log.info("Found {} locations from OpenStreetMap for query '{}' in language '{}'", osmResults.size(), query,
+          language);
       return ResponseEntity.ok(osmResults);
 
     } catch (Exception e) {
@@ -182,7 +183,8 @@ public class LocationController {
 
   /**
    * Grouped location autocomplete - returns results grouped by city with variants
-   * Perfect for handling multiple location variants like "Salem", "Salem - New Bus Stand", "Salem - Old Bus Stand"
+   * Perfect for handling multiple location variants like "Salem", "Salem - New
+   * Bus Stand", "Salem - Old Bus Stand"
    */
   @Operation(summary = "Grouped location autocomplete", description = """
       Search for locations with results grouped by city/base name.
@@ -208,8 +210,8 @@ public class LocationController {
 
     try {
       List<LocationGroupDTO> groupedResults = busScheduleService.searchLocationsGrouped(query.trim(), language);
-      log.info("Grouped location search for '{}' returned {} groups (language: {})", 
-               query, groupedResults.size(), language);
+      log.info("Grouped location search for '{}' returned {} groups (language: {})",
+          query, groupedResults.size(), language);
       return ResponseEntity.ok(groupedResults);
     } catch (Exception e) {
       log.error("Error in grouped location autocomplete search for query: '{}'", query, e);
@@ -223,7 +225,8 @@ public class LocationController {
 
   /**
    * Search for neighborhoods and localities (e.g., Adyar, Besant Nagar, T. Nagar)
-   * This endpoint directly queries OpenStreetMap Nominatim API for neighborhood-level locations
+   * This endpoint directly queries OpenStreetMap Nominatim API for
+   * neighborhood-level locations
    * within Tamil Nadu. Perfect for city-specific neighborhoods and localities.
    */
   @Operation(summary = "Search neighborhoods and localities", description = """
@@ -241,7 +244,7 @@ public class LocationController {
       @Parameter(description = "Neighborhood/locality name (minimum 2 characters)", required = true) @RequestParam("q") String query,
       @Parameter(description = "City name to narrow search (e.g., Chennai, Madurai)", required = false) @RequestParam(required = false) String city,
       @Parameter(description = "Language code (en, ta)") @RequestParam(defaultValue = "en") String language) {
-    
+
     log.info("Neighborhood search: query='{}', city='{}', language='{}'", query, city, language);
 
     if (query == null || query.trim().length() < 2) {
@@ -283,7 +286,7 @@ public class LocationController {
   public ResponseEntity<List<LocationDTO>> searchComprehensive(
       @Parameter(description = "Search query", required = true) @RequestParam("q") String query,
       @Parameter(description = "Language code (en, ta)") @RequestParam(defaultValue = "en") String language) {
-    
+
     log.info("Comprehensive location search: query='{}', language='{}'", query, language);
 
     if (query == null || query.trim().length() < 2) {
@@ -295,17 +298,19 @@ public class LocationController {
       List<LocationDTO> locations = dbLocations.stream()
           .map(location -> LocationDTO.of(location.id().value(), location.name()))
           .toList();
-      
+
       // If no exact matches in database, search OSM for neighborhoods
       if (locations.isEmpty()) {
         log.info("No database locations found for '{}', searching OSM for neighborhoods", query);
         try {
-          // Call OSM with a timeout - if it fails, return empty to let frontend fallback to client-side Nominatim
+          // Call OSM with a timeout - if it fails, return empty to let frontend fallback
+          // to client-side Nominatim
           List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 20, language);
           log.info("Found {} OSM results (neighborhoods/localities) for '{}'", osmResults.size(), query);
           return ResponseEntity.ok(osmResults);
         } catch (Exception osmError) {
-          log.warn("OSM search failed for '{}', returning empty to trigger client-side fallback: {}", query, osmError.getMessage());
+          log.warn("OSM search failed for '{}', returning empty to trigger client-side fallback: {}", query,
+              osmError.getMessage());
           // Return empty list to trigger client-side Nominatim fallback
           return ResponseEntity.ok(new ArrayList<>());
         }
@@ -315,7 +320,7 @@ public class LocationController {
       List<LocationDTO> allResults = new ArrayList<>(locations);
       try {
         List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
-        
+
         // Add OSM results that don't duplicate database results
         for (LocationDTO osmResult : osmResults) {
           boolean isDuplicate = allResults.stream()

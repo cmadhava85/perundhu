@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * Controller for bus terminal resolution
  */
 @RestController
-@RequestMapping("/api/v1/terminals")
+@RequestMapping("/v1/terminals")
 @RequiredArgsConstructor
 @Slf4j
 public class TerminalController {
@@ -31,11 +31,11 @@ public class TerminalController {
     public ResponseEntity<Map<String, Object>> resolveTerminal(
             @RequestParam String source,
             @RequestParam String destination) {
-        
+
         log.info("Resolving terminal for route: {} -> {}", source, destination);
 
-        TerminalResolutionService.TerminalResolutionResult result = 
-                terminalResolutionService.resolveTerminal(source, destination);
+        TerminalResolutionService.TerminalResolutionResult result = terminalResolutionService.resolveTerminal(source,
+                destination);
 
         Map<String, Object> response = new HashMap<>();
         response.put("originalSource", result.getOriginalSource());

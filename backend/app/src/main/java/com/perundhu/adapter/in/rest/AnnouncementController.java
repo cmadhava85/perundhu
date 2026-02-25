@@ -18,7 +18,7 @@ import java.util.Map;
  * REST controller for announcement management
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 @RequiredArgsConstructor
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
