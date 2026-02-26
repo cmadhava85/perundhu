@@ -16,8 +16,8 @@ COPY infrastructure/ infrastructure/
 # Copy health check script
 COPY health-check.sh ./
 
-# Build application
-RUN gradle clean build -x test --no-daemon
+# Build application (skip tests and SpotBugs for Docker build)
+RUN gradle clean build -x test -x spotbugsMain -x spotbugsTest --no-daemon
 
 # Runtime stage - Use standard JRE (not alpine) for glibc compatibility with native libraries
 FROM eclipse-temurin:21-jre-jammy

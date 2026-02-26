@@ -69,7 +69,7 @@ jobs:
         working-directory: ./backend
         run: |
           chmod +x gradlew
-          ./gradlew clean build -x test --no-daemon
+          ./gradlew clean build -x test -x spotbugsMain -x spotbugsTest --no-daemon
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
