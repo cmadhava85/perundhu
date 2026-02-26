@@ -230,6 +230,20 @@ public class BusScheduleController {
                                     null, null, // Don't expose coordinates for privacy
                                     routeCount);
                         })
+                        // Deduplicate by case-insensitive name (keep location with highest route count)
+                        .collect(java.util.stream.Collectors.toMap(
+                                loc -> loc.getName().toLowerCase(), // Key: lowercase name for deduplication
+                                loc -> loc, // Value: the location itself
+                                (existing, replacement) -> {
+                                    // When duplicate found, keep the one with higher route count
+                                    int existingCount = existing.getRouteCount() != null ? existing.getRouteCount() : 0;
+                                    int replacementCount = replacement.getRouteCount() != null ? replacement.getRouteCount() : 0;
+                                    return replacementCount > existingCount ? replacement : existing;
+                                },
+                                java.util.LinkedHashMap::new // Preserve insertion order
+                        ))
+                        .values()
+                        .stream()
                         // Sort by route count descending (locations with more routes first)
                         .sorted((a, b) -> {
                             int countA = a.getRouteCount() != null ? a.getRouteCount() : 0;
