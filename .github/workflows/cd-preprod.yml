@@ -22,10 +22,11 @@ concurrency:
 
 env:
   PROJECT_ID: astute-strategy-406601
-  REGION: asia-south1
-  REGISTRY: asia-south1-docker.pkg.dev
-  SQL_INSTANCE: astute-strategy-406601:asia-south1:perundhu-preprod-mysql
-  SQL_INSTANCE_NAME: perundhu-preprod-mysql
+  REGION: us-central1
+  REGISTRY: us-central1-docker.pkg.dev
+  REPOSITORY: perundhu-preprod-us
+  SQL_INSTANCE: astute-strategy-406601:us-central1:perundhu-preprod-mysql-us
+  SQL_INSTANCE_NAME: perundhu-preprod-mysql-us
 
 jobs:
   check-ci:
@@ -85,8 +86,8 @@ jobs:
       - name: Build & Push Backend Image
         run: |
           TAG="$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)"
-          IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:${TAG}"
-          LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:preprod-latest"
+          IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/backend:${TAG}"
+          LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/backend:preprod-latest"
           
           # Build for linux/amd64 platform (Cloud Run requirement)
           docker build --platform=linux/amd64 -t $IMAGE -t $LATEST ./backend
@@ -120,8 +121,8 @@ jobs:
       - name: Build & Push Frontend Image
         run: |
           TAG="$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)"
-          IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/frontend:${TAG}"
-          LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/frontend:preprod-latest"
+          IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/frontend:${TAG}"
+          LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/frontend:preprod-latest"
           
           # Get Google Maps API key
           MAPS_KEY=$(gcloud secrets versions access latest --secret=google-maps-api-key 2>/dev/null || echo "")
@@ -381,7 +382,7 @@ jobs:
       - name: Deploy Backend
         run: |
           gcloud run deploy perundhu-backend-preprod \
-            --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:preprod-latest \
+            --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/backend:preprod-latest \
             --platform=managed \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
@@ -419,7 +420,7 @@ jobs:
       - name: Deploy Frontend
         run: |
           gcloud run deploy perundhu-frontend-preprod \
-            --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/frontend:preprod-latest \
+            --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/frontend:preprod-latest \
             --platform=managed \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
