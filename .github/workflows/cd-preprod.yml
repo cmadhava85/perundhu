@@ -32,6 +32,9 @@ jobs:
   check-ci:
     name: Check CI Status
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
     outputs:
       should_deploy: ${{ steps.check.outputs.result }}
     steps:
