@@ -45,7 +45,7 @@ public class OverpassGeocodingService {
 
   public OverpassGeocodingService() {
     this.httpClient = HttpClient.newBuilder()
-        .connectTimeout(Duration.ofSeconds(15))
+        .connectTimeout(Duration.ofSeconds(5))  // Reduced from 15s to 5s to prevent long delays
         .build();
     this.objectMapper = new ObjectMapper();
   }
@@ -188,7 +188,7 @@ public class OverpassGeocodingService {
           .uri(URI.create(OVERPASS_API_URL))
           .header("User-Agent", USER_AGENT)
           .header("Content-Type", "application/x-www-form-urlencoded")
-          .timeout(Duration.ofSeconds(15))
+          .timeout(Duration.ofSeconds(5))  // Reduced from 15s to 5s
           .POST(HttpRequest.BodyPublishers.ofString("data=" + URLEncoder.encode(overpassQuery, StandardCharsets.UTF_8)))
           .build();
 
@@ -245,7 +245,7 @@ public class OverpassGeocodingService {
         .header("User-Agent", USER_AGENT)
         .header("Content-Type", "application/x-www-form-urlencoded")
         .header("Accept", "application/json")
-        .timeout(Duration.ofSeconds(15))
+        .timeout(Duration.ofSeconds(5))  // Reduced from 15s to 5s
         .POST(HttpRequest.BodyPublishers.ofString("data=" + URLEncoder.encode(overpassQuery, StandardCharsets.UTF_8)))
         .build();
 
@@ -266,7 +266,7 @@ public class OverpassGeocodingService {
           .uri(URI.create(OVERPASS_API_URL))
           .header("User-Agent", USER_AGENT)
           .header("Content-Type", "application/x-www-form-urlencoded")
-          .timeout(Duration.ofSeconds(15))
+          .timeout(Duration.ofSeconds(5))  // Reduced from 15s to 5s
           .POST(HttpRequest.BodyPublishers.ofString("data=" + URLEncoder.encode(relaxedQuery, StandardCharsets.UTF_8)))
           .build();
       
@@ -414,7 +414,7 @@ public class OverpassGeocodingService {
         .uri(URI.create(OVERPASS_API_URL))
         .header("User-Agent", USER_AGENT)
         .header("Content-Type", "application/x-www-form-urlencoded")
-        .timeout(Duration.ofSeconds(15))
+        .timeout(Duration.ofSeconds(5))  // Reduced from 15s to 5s to prevent autocomplete delays
         .POST(HttpRequest.BodyPublishers.ofString("data=" + URLEncoder.encode(overpassQuery, StandardCharsets.UTF_8)))
         .build();
 

@@ -10,11 +10,11 @@ import sys
 import argparse
 from collections import defaultdict
 
-def get_db_password():
+def get_db_password(project_id='astute-strategy-406601'):
     """Get database password from Secret Manager"""
     import subprocess
     result = subprocess.run(
-        ['gcloud', 'secrets', 'versions', 'access', 'latest', '--secret=db-password'],
+        ['gcloud', 'secrets', 'versions', 'access', 'latest', '--secret=db-password', f'--project={project_id}'],
         capture_output=True,
         text=True
     )
@@ -22,21 +22,38 @@ def get_db_password():
         raise Exception(f"Failed to get password: {result.stderr}")
     return result.stdout.strip()
 
-def deduplicate_locations(skip_confirmation=False):
+def deduplicate_locations(skip_confirmation=False, environment='production'):
     """Find and remove duplicate locations, updating all references"""
     
-    print("🔍 Analyzing location duplicates in production database...")
+    # Environment configuration
+    env_config = {
+        'production': {
+            'project_id': 'perundhu-prod-001',
+            'db_name': 'perundhu'
+        },
+        'preprod': {
+            'project_id': 'astute-strategy-406601',
+            'db_name': 'perundhu'
+        }
+    }
+    
+    if environment not in env_config:
+        raise ValueError(f"Invalid environment: {environment}. Must be 'production' or 'preprod'")
+    
+    config = env_config[environment]
+    
+    print(f"🔍 Analyzing location duplicates in {environment} database...")
     
     print("\n🔑 Getting database password from Secret Manager...")
-    password = get_db_password()
+    password = get_db_password(config['project_id'])
     
-    print("🔌 Connecting to production database...")
+    print(f"🔌 Connecting to {environment} database...")
     connection = mysql.connector.connect(
         host='127.0.0.1',
-       port=3307,
+        port=3307,
         user='perundhu_user',
         password=password,
-        database='RECOVER_YOUR_DATA',
+        database=config['db_name'],
         auth_plugin='mysql_native_password'
     )
     
@@ -192,9 +209,11 @@ def deduplicate_locations(skip_confirmation=False):
         connection.close()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Deduplicate location entries in production database")
+    parser = argparse.ArgumentParser(description="Deduplicate location entries in database")
     parser.add_argument("--confirm", action="store_true", help="Skip confirmation prompt")
+    parser.add_argument("--env", choices=['production', 'preprod'], default='production', 
+                       help="Target environment (default: production)")
     args = parser.parse_args()
     
-    success = deduplicate_locations(skip_confirmation=args.confirm)
+    success = deduplicate_locations(skip_confirmation=args.confirm, environment=args.env)
     sys.exit(0 if success else 1)
