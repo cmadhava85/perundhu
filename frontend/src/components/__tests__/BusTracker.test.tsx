@@ -144,7 +144,7 @@ describe('BusTracker Component with Device ID', () => {
 
       await waitFor(() => {
         expect((global.fetch as unknown as jest.Mock)).toHaveBeenCalledWith(
-          '/v1/bus-tracking/report',
+          expect.stringContaining('/v1/bus-tracking/report'),
           expect.objectContaining({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -220,7 +220,7 @@ describe('BusTracker Component with Device ID', () => {
 
       await waitFor(() => {
         expect((global.fetch as unknown as jest.Mock)).toHaveBeenCalledWith(
-          '/v1/bus-tracking/report',
+          expect.stringContaining('/v1/bus-tracking/report'),
           expect.objectContaining({
             method: 'POST',
             body: expect.stringContaining('user_john@example.com')

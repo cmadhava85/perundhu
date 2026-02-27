@@ -6,6 +6,18 @@ import reviewService from '../../services/reviewService';
 // Mock review service
 vi.mock('../../services/reviewService');
 
+// Mock useAuth hook
+vi.mock('../../hooks/useAuth', () => ({
+  useAuth: () => ({
+    user: null,
+    isAuthenticated: false,
+    isLoading: false,
+    login: vi.fn(),
+    register: vi.fn(),
+    logout: vi.fn(),
+  }),
+}));
+
 // Mock feature flags context - return enabled by default
 vi.mock('../../contexts/FeatureFlagsContext', () => ({
   useFeatureFlags: () => ({

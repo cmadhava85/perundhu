@@ -30,11 +30,11 @@ export const normalizeLocationName = (locationName: string): string => {
 
   // Remove common bus terminus/stand suffixes (case-insensitive)
   // Pattern 1: " - <Bus Stand/Terminus Name>" e.g., " - MTC Terminus"
-  normalized = normalized.replace(/\s*-\s*(MTC|TNSTC|CMBT|DTC|SETC|KSRTC|KSDC)\s+(Terminus|Stand|Station|Bus Stand|Bus Terminus|Bus Station)?/gi, '');
+  normalized = normalized.replace(/\s*-\s*(MTC|TNSTC|CMBT|DTC|SETC|KSRTC|KSDC|BMTC)\s+(Terminus|Terminal|Stand|Station|Bus Stand|Bus Terminus|Bus Terminal|Bus Station)?/gi, '');
 
   // Pattern 2: " MTC Terminus", " Bus Stand", " Bus Stop", etc. at the end
-  normalized = normalized.replace(/\s+(MTC|TNSTC)\s+(Terminus|Stand|Station)?$/gi, '');
-  normalized = normalized.replace(/\s+(Bus\s+(Stand|Stop|Station|Terminus))$/gi, '');
+  normalized = normalized.replace(/\s+(MTC|TNSTC|BMTC)\s+(Terminus|Terminal|Stand|Station)?$/gi, '');
+  normalized = normalized.replace(/\s+(Bus\s+(Stand|Stop|Station|Terminus|Terminal))$/gi, '');
 
   // Pattern 3: Remove abbreviations like "(Koyambedu)" that are often added to clarify location
   // But keep the main location name
