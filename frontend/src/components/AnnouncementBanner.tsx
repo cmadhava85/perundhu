@@ -61,10 +61,12 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loading, setLoading] = useState(fetchFromAPI);
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
 
-  // Load announcements from API
+  // Load announcements from API - ONLY ONCE on mount
+  // Removed 'announcements' from dependencies to prevent re-fetch on every parent re-render
   useEffect(() => {
-    if (!fetchFromAPI) return;
+    if (!fetchFromAPI || hasLoadedOnce || loading) return;
 
     const loadAnnouncements = async () => {
       try {
@@ -76,16 +78,19 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
           type: (a.type.toLowerCase() as 'info' | 'warning' | 'success' | 'new-feature' | 'maintenance')
         }));
         setDisplayAnnouncements(converted);
+        setHasLoadedOnce(true);
       } catch (error) {
         console.warn('Failed to load announcements from API, using defaults:', error);
         setDisplayAnnouncements(announcements);
+        setHasLoadedOnce(true);
       } finally {
         setLoading(false);
       }
     };
 
     loadAnnouncements();
-  }, [fetchFromAPI, announcements]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchFromAPI]);
 
   // Load dismissed announcements from localStorage
   useEffect(() => {

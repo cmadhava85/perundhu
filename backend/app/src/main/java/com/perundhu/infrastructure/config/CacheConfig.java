@@ -43,6 +43,18 @@ public class CacheConfig {
         // Gemini Vision AI caches (cost optimization)
         public static final String GEMINI_OCR_CACHE = "geminiOcrCache";
         public static final String GEMINI_BATCH_CACHE = "geminiBatchCache";
+        
+        // Admin and operational caches
+        public static final String BUS_ADMIN_CACHE = "busAdminCache";
+        public static final String TERMINALS_CACHE = "terminalsCache";
+        public static final String ANNOUNCEMENTS_CACHE = "announcementsCache";
+        public static final String SETTINGS_CACHE = "settingsCache";
+        
+        // Bus tracking caches (real-time data with short TTLs)
+        public static final String LIVE_TRACKING_CACHE = "liveTrackingCache";
+        public static final String BUS_HISTORY_CACHE = "busHistoryCache";
+        public static final String BUS_ETA_CACHE = "busEtaCache";
+        public static final String BUS_REWARDS_CACHE = "busRewardsCache";
 
         /**
          * Custom cache manager with specific TTLs for different cache types.
@@ -81,7 +93,15 @@ public class CacheConfig {
                                 BUSES_CACHE,
                                 BUS_ROUTES_CACHE,
                                 GEMINI_OCR_CACHE,
-                                GEMINI_BATCH_CACHE));
+                                GEMINI_BATCH_CACHE,
+                                BUS_ADMIN_CACHE,
+                                TERMINALS_CACHE,
+                                ANNOUNCEMENTS_CACHE,
+                                SETTINGS_CACHE,
+                                LIVE_TRACKING_CACHE,
+                                BUS_HISTORY_CACHE,
+                                BUS_ETA_CACHE,
+                                BUS_REWARDS_CACHE));
 
                 cacheManager.setAllowNullValues(false);
                 return cacheManager;
@@ -158,8 +178,54 @@ public class CacheConfig {
                                         .expireAfterWrite(7, TimeUnit.DAYS)
                                         .maximumSize(1000)
                                         .recordStats();
-
-                        //              .recordStats();
+                        
+                        // Bus admin cache (5 min TTL for admin panel queries)
+                        case BUS_ADMIN_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                                        .maximumSize(1000)
+                                        .recordStats();
+                        
+                        // Terminals cache (60 min TTL - static/rarely changing data)
+                        case TERMINALS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(60, TimeUnit.MINUTES)
+                                        .maximumSize(100)
+                                        .recordStats();
+                        
+                        // Announcements cache (10 min TTL - moderately dynamic)
+                        case ANNOUNCEMENTS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(10, TimeUnit.MINUTES)
+                                        .maximumSize(50)
+                                        .recordStats();
+                        
+                        // Settings cache (10 min TTL - rarely changes, high read traffic)
+                        case SETTINGS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(10, TimeUnit.MINUTES)
+                                        .maximumSize(100)
+                                        .recordStats();
+                        
+                        // Live tracking cache (30s TTL - real-time bus locations)
+                        case LIVE_TRACKING_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(30, TimeUnit.SECONDS)
+                                        .maximumSize(100)
+                                        .recordStats();
+                        
+                        // Bus history cache (5 min TTL - historical location data)
+                        case BUS_HISTORY_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                                        .maximumSize(500)
+                                        .recordStats();
+                        
+                        // Bus ETA cache (1 min TTL - frequently changing estimates)
+                        case BUS_ETA_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(1, TimeUnit.MINUTES)
+                                        .maximumSize(1000)
+                                        .recordStats();
+                        
+                        // Bus rewards cache (5 min TTL - user reward points)
+                        case BUS_REWARDS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                                        .maximumSize(10000)
+                                        .recordStats();
 
                         // Default for all other caches
                         default -> Caffeine.newBuilder()

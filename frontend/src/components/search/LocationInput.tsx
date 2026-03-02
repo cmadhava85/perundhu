@@ -73,8 +73,17 @@ const LocationInput: React.FC<LocationInputProps> = ({
     
     // Trigger search when user types at least 3 characters
     if (newValue.length >= 3) {
-      onChange(null); // Clear selected location while typing
-      onSearch?.(newValue); // Trigger search
+      onSearch?.(newValue); // Trigger search for suggestions
+      // Create a free-form location object to allow search without selection
+      onChange({
+        id: 0, // Free-form entry has no ID
+        name: newValue,
+        translatedName: undefined,
+        state: undefined,
+        latitude: 0, // Default coordinates for free-form entries
+        longitude: 0,
+        source: 'user-input' // Mark as user-entered location
+      });
     } else if (newValue.length === 0) {
       onChange(null);
     }

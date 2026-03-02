@@ -34,7 +34,6 @@ import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.ConnectingRouteService;
-import com.perundhu.application.service.OverpassGeocodingService;
 import com.perundhu.application.util.MultiLegJourneyWrapper;
 import com.perundhu.domain.model.Location;
 import com.perundhu.infrastructure.exception.RateLimitException;
@@ -59,19 +58,16 @@ public class BusScheduleController {
     private static final Logger log = LoggerFactory.getLogger(BusScheduleController.class);
     private final BusScheduleService busScheduleService;
     private final ConnectingRouteService connectingRouteService;
-    private final OverpassGeocodingService geocodingService;
     private final RateLimiter globalRateLimiter;
     private final ConcurrentHashMap<String, RateLimiter> userRateLimiters;
 
     public BusScheduleController(
             BusScheduleService busScheduleService,
             ConnectingRouteService connectingRouteService,
-            OverpassGeocodingService geocodingService,
             RateLimiter globalRateLimiter,
             ConcurrentHashMap<String, RateLimiter> userRateLimiters) {
         this.busScheduleService = busScheduleService;
         this.connectingRouteService = connectingRouteService;
-        this.geocodingService = geocodingService;
         this.globalRateLimiter = globalRateLimiter;
         this.userRateLimiters = userRateLimiters;
     }
@@ -257,28 +253,9 @@ public class BusScheduleController {
                 return ResponseEntity.ok(result);
             }
 
-            // Fallback to Overpass API if no locations in database
-            log.info("No locations in database for '{}', falling back to Overpass API (language: {})", query,
-                    language);
-            try {
-                List<LocationDTO> overpassResults = geocodingService.searchTamilNaduLocations(query.trim(), 10,
-                        language);
-
-                if (!overpassResults.isEmpty()) {
-                    log.info("Found {} locations from Overpass API for query '{}' (language: {})",
-                            overpassResults.size(), query, language);
-                    return ResponseEntity.ok(overpassResults);
-                }
-            } catch (Exception overpassError) {
-                log.warn("Overpass search failed for '{}': {}, will return empty list to trigger client-side fallback",
-                        query, overpassError.getMessage());
-            }
-
-            // Return empty list if both database and Overpass fail/return nothing
-            // This allows frontend to fall back to instant suggestions or client-side
-            // Overpass
-            log.info("No results from database or Overpass for query '{}', returning empty for client-side fallback",
-                    query);
+            // Return empty list if nothing found in database
+            // This allows frontend to fall back to instant suggestions
+            log.info("No results from database for query '{}', returning empty list", query);
             return ResponseEntity.ok(new ArrayList<>());
 
         } catch (Exception e) {
@@ -710,33 +687,7 @@ public class BusScheduleController {
         }
     }
 
-    /**
-     * Manually trigger coordinate updates for locations missing them
-     * This endpoint uses Overpass API to fetch coordinates
-     */
-    @Operation(summary = "Update missing coordinates", description = "Manually trigger coordinate updates for locations missing them using Overpass API.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Coordinate update process completed"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
-    @PostMapping("/locations/update-coordinates")
-    public ResponseEntity<Map<String, Object>> updateMissingCoordinates() {
-        log.info("Manual trigger to update missing coordinates");
-        try {
-            geocodingService.updateMissingCoordinates();
 
-            Map<String, Object> response = Map.of(
-                    "status", "success",
-                    "message", "Coordinate update process completed",
-                    "timestamp", System.currentTimeMillis());
-
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error updating coordinates", e);
-            return ResponseEntity.internalServerError()
-                    .body(Map.of("status", "error", "message", e.getMessage()));
-        }
-    }
 
     /**
      * Discover intermediate bus stops between two locations using Overpass data

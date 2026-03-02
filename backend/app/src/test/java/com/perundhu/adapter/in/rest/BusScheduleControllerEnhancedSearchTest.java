@@ -31,7 +31,6 @@ import com.google.common.util.concurrent.RateLimiter;
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.ConnectingRouteService;
-import com.perundhu.application.service.OpenStreetMapGeocodingService;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -46,9 +45,6 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Mock
         private ConnectingRouteService connectingRouteService;
-
-        @Mock
-        private OpenStreetMapGeocodingService geocodingService;
 
         @Mock
         private RateLimiter globalRateLimiter;

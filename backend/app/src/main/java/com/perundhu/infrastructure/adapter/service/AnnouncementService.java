@@ -4,8 +4,12 @@ import com.perundhu.infrastructure.persistence.entity.AnnouncementJpaEntity;
 import com.perundhu.infrastructure.persistence.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.perundhu.infrastructure.config.CacheConfig.ANNOUNCEMENTS_CACHE;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +29,7 @@ public class AnnouncementService {
     /**
      * Create a new announcement
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public AnnouncementJpaEntity createAnnouncement(AnnouncementJpaEntity announcement) {
         log.info("Creating announcement with ID: {}", announcement.getUniqueId());
 
@@ -39,6 +44,7 @@ public class AnnouncementService {
     /**
      * Update an announcement
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public AnnouncementJpaEntity updateAnnouncement(Long id, AnnouncementJpaEntity announcement) {
         log.info("Updating announcement with ID: {}", id);
 
@@ -72,6 +78,7 @@ public class AnnouncementService {
     /**
      * Get announcement by ID
      */
+    @Cacheable(value = ANNOUNCEMENTS_CACHE, key = "'announcement-' + #id")
     public Optional<AnnouncementJpaEntity> getAnnouncement(Long id) {
         return announcementRepository.findById(id);
     }
@@ -79,6 +86,7 @@ public class AnnouncementService {
     /**
      * Get announcement by unique ID
      */
+    @Cacheable(value = ANNOUNCEMENTS_CACHE, key = "'unique-' + #uniqueId")
     public Optional<AnnouncementJpaEntity> getAnnouncementByUniqueId(String uniqueId) {
         return announcementRepository.findByUniqueId(uniqueId);
     }
@@ -86,6 +94,7 @@ public class AnnouncementService {
     /**
      * Get all active announcements (for public display)
      */
+    @Cacheable(value = ANNOUNCEMENTS_CACHE, key = "'active'")
     public List<AnnouncementJpaEntity> getActiveAnnouncements() {
         return announcementRepository.findActiveAnnouncements(LocalDateTime.now());
     }
@@ -93,6 +102,7 @@ public class AnnouncementService {
     /**
      * Get active announcements for target audience
      */
+    @Cacheable(value = ANNOUNCEMENTS_CACHE, key = "'audience-' + #targetAudience")
     public List<AnnouncementJpaEntity> getAnnouncementsByAudience(AnnouncementJpaEntity.TargetAudience targetAudience) {
         return announcementRepository.findByTargetAudience(targetAudience, LocalDateTime.now());
     }
@@ -115,6 +125,7 @@ public class AnnouncementService {
     /**
      * Get all announcements (admin view)
      */
+    @Cacheable(value = ANNOUNCEMENTS_CACHE, key = "'all'")
     public List<AnnouncementJpaEntity> getAllAnnouncements() {
         return announcementRepository.findAllByOrderByPriorityDescCreatedAtDesc();
     }
@@ -157,6 +168,7 @@ public class AnnouncementService {
     /**
      * Delete announcement
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public void deleteAnnouncement(Long id) {
         log.info("Deleting announcement with ID: {}", id);
         announcementRepository.deleteById(id);
@@ -165,6 +177,7 @@ public class AnnouncementService {
     /**
      * Publish announcement (set status to PUBLISHED and active)
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public AnnouncementJpaEntity publishAnnouncement(Long id, String publishedBy) {
         log.info("Publishing announcement with ID: {}", id);
 
@@ -181,6 +194,7 @@ public class AnnouncementService {
     /**
      * Unpublish announcement
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public AnnouncementJpaEntity unpublishAnnouncement(Long id, String unpublishedBy) {
         log.info("Unpublishing announcement with ID: {}", id);
 
@@ -206,6 +220,7 @@ public class AnnouncementService {
     /**
      * Track announcement view
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public void trackView(Long id) {
         announcementRepository.findById(id).ifPresent(announcement -> {
             announcement.setViewCount(announcement.getViewCount() + 1);
@@ -216,6 +231,7 @@ public class AnnouncementService {
     /**
      * Track announcement dismiss
      */
+    @CacheEvict(value = ANNOUNCEMENTS_CACHE, allEntries = true)
     public void trackDismiss(Long id) {
         announcementRepository.findById(id).ifPresent(announcement -> {
             announcement.setDismissCount(announcement.getDismissCount() + 1);

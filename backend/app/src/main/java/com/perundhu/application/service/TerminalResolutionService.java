@@ -1,7 +1,10 @@
 package com.perundhu.application.service;
 
 import com.perundhu.domain.model.BusTerminal;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import static com.perundhu.infrastructure.config.CacheConfig.TERMINALS_CACHE;
 
 import java.util.*;
 
@@ -22,7 +25,9 @@ public class TerminalResolutionService {
 
     /**
      * Resolve the correct terminal for a given source-destination pair
+     * Cached for 60 minutes - static terminal data
      */
+    @Cacheable(value = TERMINALS_CACHE, key = "'resolve-' + #source.toLowerCase() + '-' + #destination.toLowerCase()")
     public TerminalResolutionResult resolveTerminal(String source, String destination) {
         String normalizedSource = normalizeLocation(source);
         String normalizedDestination = normalizeLocation(destination);
@@ -172,7 +177,9 @@ public class TerminalResolutionService {
 
     /**
      * Get all Chennai terminals
+     * Cached for 60 minutes - static terminal list
      */
+    @Cacheable(value = TERMINALS_CACHE, key = "'chennai-terminals'")
     public List<BusTerminal> getChennaiTerminals() {
         return new ArrayList<>(terminals.values());
     }

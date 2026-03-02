@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,8 @@ import com.perundhu.infrastructure.persistence.entity.StopJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.StopJpaRepository;
+
+import static com.perundhu.infrastructure.config.CacheConfig.BUS_ADMIN_CACHE;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,8 +49,10 @@ public class BusDatabaseService {
 
   /**
    * Get paginated list of buses with optional search and filters
+   * Cached for 5 minutes to improve admin panel performance
    */
   @Transactional(readOnly = true)
+  @Cacheable(value = BUS_ADMIN_CACHE, key = "'buses-' + #search + '-' + #originFilter + '-' + #destinationFilter + '-' + #activeOnly + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
   public Page<BusListItem> getBuses(
       String search,
       String originFilter,
@@ -157,8 +163,10 @@ public class BusDatabaseService {
 
   /**
    * Get detailed stops for a specific bus
+   * Cached to avoid repeated queries for same bus
    */
   @Transactional(readOnly = true)
+  @Cacheable(value = BUS_ADMIN_CACHE, key = "'stops-' + #busId")
   public List<StopDetail> getStopsForBus(Long busId) {
     log.info("Fetching stops for bus ID: {}", busId);
 
@@ -171,8 +179,10 @@ public class BusDatabaseService {
 
   /**
    * Get bus details by ID
+   * Cached to improve performance when viewing same bus repeatedly
    */
   @Transactional(readOnly = true)
+  @Cacheable(value = BUS_ADMIN_CACHE, key = "'bus-' + #busId")
   public Optional<BusDetail> getBusById(Long busId) {
     log.info("Fetching bus details for ID: {}", busId);
 
@@ -185,8 +195,10 @@ public class BusDatabaseService {
 
   /**
    * Update bus timing
+   * Evicts all bus admin caches when data changes
    */
   @Transactional
+  @CacheEvict(value = BUS_ADMIN_CACHE, allEntries = true)
   public UpdateResult updateBusTiming(Long busId, String departureTime, String arrivalTime) {
     log.info("Updating timing for bus ID: {} - departure: {}, arrival: {}", busId, departureTime, arrivalTime);
 
@@ -227,8 +239,10 @@ public class BusDatabaseService {
 
   /**
    * Toggle bus active status
+   * Evicts all bus admin caches when status changes
    */
   @Transactional
+  @CacheEvict(value = BUS_ADMIN_CACHE, allEntries = true)
   public UpdateResult toggleBusActive(Long busId, boolean active) {
     log.info("Toggling active status for bus ID: {} to {}", busId, active);
 

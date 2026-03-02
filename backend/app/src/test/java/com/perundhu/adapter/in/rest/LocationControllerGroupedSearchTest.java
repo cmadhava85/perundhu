@@ -3,7 +3,6 @@ package com.perundhu.adapter.in.rest;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.LocationGroupDTO;
 import com.perundhu.application.service.BusScheduleService;
-import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -38,9 +37,6 @@ class LocationControllerGroupedSearchTest {
 
         @Mock
         private BusScheduleService busScheduleService;
-
-        @Mock
-        private OpenStreetMapGeocodingService geocodingService;
 
         @InjectMocks
         private LocationController locationController;

@@ -6,11 +6,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.SystemSetting;
 import com.perundhu.domain.port.SystemSettingPort;
+import com.perundhu.infrastructure.config.CacheConfig;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -124,6 +127,7 @@ public class SystemSettingsService {
   /**
    * Get all settings
    */
+  @Cacheable(value = CacheConfig.SETTINGS_CACHE, key = "'all'")
   @Transactional(readOnly = true)
   public List<SystemSetting> getAllSettings() {
     return settingPort.findAllOrderedByCategoryAndKey();
@@ -132,6 +136,7 @@ public class SystemSettingsService {
   /**
    * Get all settings as a map (key -> value)
    */
+  @Cacheable(value = CacheConfig.SETTINGS_CACHE, key = "'map'")
   @Transactional(readOnly = true)
   public Map<String, String> getAllSettingsAsMap() {
     return settingPort.findAll()
@@ -144,6 +149,7 @@ public class SystemSettingsService {
   /**
    * Get all feature flags as a map
    */
+  @Cacheable(value = CacheConfig.SETTINGS_CACHE, key = "'feature-flags'")
   @Transactional(readOnly = true)
   public Map<String, Boolean> getFeatureFlags() {
     return settingPort.findBySettingKeyStartingWith("feature.")
@@ -156,6 +162,7 @@ public class SystemSettingsService {
   /**
    * Get settings by category
    */
+  @Cacheable(value = CacheConfig.SETTINGS_CACHE, key = "'category-' + #category")
   @Transactional(readOnly = true)
   public List<SystemSetting> getSettingsByCategory(String category) {
     return settingPort.findByCategory(category);
@@ -164,6 +171,7 @@ public class SystemSettingsService {
   /**
    * Get a specific setting by key
    */
+  @Cacheable(value = CacheConfig.SETTINGS_CACHE, key = "'key-' + #key")
   @Transactional(readOnly = true)
   public Optional<SystemSetting> getSetting(String key) {
     return settingPort.findBySettingKey(key);
@@ -208,9 +216,10 @@ public class SystemSettingsService {
   /**
    * Update a setting value
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public SystemSetting updateSetting(String key, String value) {
-    log.info("Updating setting: {} = {}", key, value);
+    log.info("Updating setting: {} = {} (cache will be evicted)", key, value);
 
     SystemSetting existing = settingPort.findBySettingKey(key)
         .orElseThrow(() -> new IllegalArgumentException("Setting not found: " + key));
@@ -225,9 +234,10 @@ public class SystemSettingsService {
   /**
    * Update multiple settings at once
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public void updateSettings(Map<String, String> settings) {
-    log.info("Updating {} settings", settings.size());
+    log.info("Updating {} settings (cache will be evicted)", settings.size());
 
     settings.forEach((key, value) -> {
       String backendKey = convertFrontendKeyToBackendFormat(key);
@@ -242,9 +252,10 @@ public class SystemSettingsService {
   /**
    * Update feature flags from frontend format
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public void updateFeatureFlags(Map<String, Boolean> flags) {
-    log.info("Updating {} feature flags", flags.size());
+    log.info("Updating {} feature flags (cache will be evicted)", flags.size());
 
     flags.forEach((key, value) -> {
       String backendKey = convertFrontendKeyToBackendFormat(key);
@@ -259,9 +270,10 @@ public class SystemSettingsService {
   /**
    * Create a new setting
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public SystemSetting createSetting(String key, String value, String category, String description) {
-    log.info("Creating new setting: {} in category: {}", key, category);
+    log.info("Creating new setting: {} in category: {} (cache will be evicted)", key, category);
 
     if (settingPort.existsBySettingKey(key)) {
       throw new IllegalArgumentException("Setting already exists: " + key);
@@ -274,18 +286,20 @@ public class SystemSettingsService {
   /**
    * Delete a setting
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public void deleteSetting(String key) {
-    log.info("Deleting setting: {}", key);
+    log.info("Deleting setting: {} (cache will be evicted)", key);
     settingPort.deleteBySettingKey(key);
   }
 
   /**
    * Reset all settings to defaults
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public void resetToDefaults() {
-    log.info("Resetting all settings to defaults");
+    log.info("Resetting all settings to defaults (cache will be evicted)");
 
     DEFAULT_SETTINGS.forEach((key, defaultSetting) -> {
       settingPort.findBySettingKey(key).ifPresent(setting -> {
@@ -300,9 +314,10 @@ public class SystemSettingsService {
   /**
    * Reset feature flags to defaults only
    */
+  @CacheEvict(value = CacheConfig.SETTINGS_CACHE, allEntries = true)
   @Transactional
   public void resetFeatureFlagsToDefaults() {
-    log.info("Resetting feature flags to defaults");
+    log.info("Resetting feature flags to defaults (cache will be evicted)");
 
     DEFAULT_SETTINGS.entrySet().stream()
         .filter(entry -> entry.getKey().startsWith("feature."))
@@ -321,6 +336,7 @@ public class SystemSettingsService {
    * Accepts both frontend format (e.g., "enableShareRoute") and backend format
    * (e.g., "feature.share.enabled")
    */
+  @Cacheable(value = CacheConfig.SETTINGS_CACHE, key = "'feature-' + #featureKey")
   @Transactional(readOnly = true)
   public boolean isFeatureEnabled(String featureKey) {
     // If it's already a backend format key (starts with "feature."), use it

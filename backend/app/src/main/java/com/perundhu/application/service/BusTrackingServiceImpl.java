@@ -12,8 +12,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.perundhu.infrastructure.config.CacheConfig;
 
 import com.perundhu.application.dto.BusLocationDTO;
 import com.perundhu.application.dto.BusLocationReportDTO;
@@ -59,6 +64,10 @@ public class BusTrackingServiceImpl implements BusTrackingService {
     // Cache entry TTL (in minutes)
     private static final long TRACKER_TTL_MINUTES = 60;
 
+    @Caching(evict = {
+        @CacheEvict(value = CacheConfig.LIVE_TRACKING_CACHE, allEntries = true),
+        @CacheEvict(value = CacheConfig.BUS_ETA_CACHE, allEntries = true)
+    })
     public RewardPointsDTO processLocationReport(BusLocationReportDTO report) {
         log.info("Processing location report for bus {}: lat={}, lng={}",
                 report.busId(), report.latitude(), report.longitude());
@@ -99,6 +108,10 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return rewards;
     }
 
+    @Caching(evict = {
+        @CacheEvict(value = CacheConfig.LIVE_TRACKING_CACHE, allEntries = true),
+        @CacheEvict(value = CacheConfig.BUS_ETA_CACHE, allEntries = true)
+    })
     public void processDisembarkation(Long busId, LocalDateTime timestamp) {
         log.info("Processing disembarkation for bus {}", busId);
 
@@ -124,6 +137,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return currentBusLocations.getOrDefault(busId, createEmptyLocationResponse(busId));
     }
 
+    @Cacheable(value = CacheConfig.LIVE_TRACKING_CACHE, key = "'route-' + #fromLocationId + '-' + #toLocationId")
     public List<BusLocationDTO> getBusLocationsOnRoute(Long fromLocationId, Long toLocationId) {
         log.info("Getting bus locations for route: {} to {}", fromLocationId, toLocationId);
 
@@ -146,10 +160,12 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return result;
     }
 
+    @Cacheable(value = CacheConfig.BUS_REWARDS_CACHE, key = "#userId")
     public RewardPointsDTO getUserRewardPoints(String userId) {
         return userRewards.getOrDefault(userId, createEmptyRewardResponse(userId));
     }
 
+    @Cacheable(value = CacheConfig.LIVE_TRACKING_CACHE, key = "'all'")
     public Map<Long, BusLocationDTO> getActiveBusLocations() {
         log.info("Getting all active bus locations");
 
@@ -157,6 +173,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return new HashMap<>(currentBusLocations);
     }
 
+    @Cacheable(value = CacheConfig.BUS_HISTORY_CACHE, key = "#busId + '-' + #since.toString()")
     public List<BusLocationDTO> getBusLocationHistory(Long busId, LocalDateTime since) {
         log.info("Getting location history for bus {} since {}", busId, since);
 
@@ -172,6 +189,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return history;
     }
 
+    @Cacheable(value = CacheConfig.BUS_ETA_CACHE, key = "#busId + '-' + #stopId")
     public Map<String, Object> getEstimatedArrival(Long busId, Long stopId) {
         log.info("Getting estimated arrival for bus {} at stop {}", busId, stopId);
 
@@ -773,6 +791,10 @@ public class BusTrackingServiceImpl implements BusTrackingService {
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = CacheConfig.LIVE_TRACKING_CACHE, allEntries = true),
+        @CacheEvict(value = CacheConfig.BUS_ETA_CACHE, allEntries = true)
+    })
     public BusLocationDTO reportBusLocation(BusLocationRequest request) {
         log.info("Processing bus location report for bus {} from user {}",
                 request.getBusId(), request.getUserId());

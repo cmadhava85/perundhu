@@ -56,12 +56,8 @@ describe('LocationAutocompleteService', () => {
         { id: 2, name: 'Chennai Central', latitude: 13.0878, longitude: 80.2785, source: 'database' }
       ];
 
-      // Mock the comprehensive endpoint first
+      // Mock the database autocomplete endpoint
       vi.mocked(apiModule.api.get).mockImplementation((url: string) => {
-        if (url.includes('search-comprehensive')) {
-          return Promise.resolve({ data: mockDbResults });
-        }
-        // Fallback to database autocomplete
         if (url.includes('autocomplete')) {
           return Promise.resolve({ data: mockDbResults });
         }
@@ -72,8 +68,7 @@ describe('LocationAutocompleteService', () => {
 
       expect(result).toHaveLength(2);
       expect(result[0].name).toBe('Chennai');
-      // Source can be 'mixed' (comprehensive) or 'database' (autocomplete fallback)
-      expect(['database', 'mixed']).toContain(result[0].source);
+      expect(result[0].source).toBe('database');
     });
 
     test('should check local cities (instant suggestions) when database is empty', async () => {
@@ -133,12 +128,8 @@ describe('LocationAutocompleteService', () => {
         { id: 1, name: 'Madurai', latitude: 9.9252, longitude: 78.1198, source: 'database' }
       ];
 
-      // Mock the comprehensive endpoint to return database results
+      // Mock the database autocomplete endpoint
       vi.mocked(apiModule.api.get).mockImplementation((url: string) => {
-        if (url.includes('search-comprehensive')) {
-          return Promise.resolve({ data: mockDbResults });
-        }
-        // Fallback to database autocomplete
         if (url.includes('autocomplete')) {
           return Promise.resolve({ data: mockDbResults });
         }
@@ -215,9 +206,9 @@ describe('LocationAutocompleteService', () => {
       
       const callback = vi.fn();
       
-      // Mock both comprehensive and fallback endpoints
+      // Mock database autocomplete endpoint
       vi.mocked(apiModule.api.get).mockImplementation((url: string) => {
-        if (url.includes('search-comprehensive') || url.includes('autocomplete')) {
+        if (url.includes('autocomplete')) {
           return Promise.resolve({ data: [] });
         }
         return Promise.reject(new Error('Unknown endpoint'));

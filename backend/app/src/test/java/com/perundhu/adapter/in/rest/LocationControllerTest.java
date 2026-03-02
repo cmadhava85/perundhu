@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.service.BusScheduleService;
-import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.LocationId;
 
@@ -40,9 +39,6 @@ class LocationControllerTest {
 
     @Mock
     private BusScheduleService busScheduleService;
-
-    @Mock
-    private OpenStreetMapGeocodingService geocodingService;
 
     @InjectMocks
     private LocationController locationController;
@@ -143,47 +139,6 @@ class LocationControllerTest {
     }
 
     @Test
-    @DisplayName("Should pass language parameter to OSM fallback when location not found in database")
-    void testLanguageParameterIsPassedToOSMFallback() throws Exception {
-        // Arrange - location not in database, will use OSM fallback
-        when(busScheduleService.searchLocationsByName("XYZ123NonExistentLocation"))
-                .thenReturn(new ArrayList<>()); // Empty, triggers OSM fallback
-
-        List<LocationDTO> osmResults = List.of(
-                LocationDTO.of(null, "Some Location"));
-        when(geocodingService.searchTamilNaduLocations("XYZ123NonExistentLocation", 10, "ta"))
-                .thenReturn(osmResults);
-
-        // Act & Assert
-        mockMvc.perform(get("/v1/locations/autocomplete")
-                .param("q", "XYZ123NonExistentLocation")
-                .param("language", "ta"))
-                .andExpect(status().isOk());
-
-        // Verify OSM was called with language parameter
-        verify(geocodingService).searchTamilNaduLocations(
-                "XYZ123NonExistentLocation", 10, "ta");
-    }
-
-    @Test
-    @DisplayName("Should return comprehensive search results with language support")
-    void testComprehensiveSearchWithLanguageSupport() throws Exception {
-        // Arrange
-        Location location = new Location(LocationId.of(1L), "Chennai", null, 13.0, 80.0);
-        when(busScheduleService.searchLocationsByName("Chennai"))
-                .thenReturn(List.of(location));
-        when(busScheduleService.getLocationTranslation(1L, "ta"))
-                .thenReturn("சென்னை");
-
-        // Act & Assert
-        mockMvc.perform(get("/v1/locations/search-comprehensive")
-                .param("q", "Chennai")
-                .param("language", "ta"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(greaterThan(0)));
-    }
-
-    @Test
     @DisplayName("Should return default language as English when not specified")
     void testDefaultLanguageIsEnglish() throws Exception {
         // Arrange
@@ -204,22 +159,5 @@ class LocationControllerTest {
                 .param("q", "a")
                 .param("language", "en"))
                 .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("Should support neighborhood search with language parameter")
-    void testNeighborhoodSearchWithLanguageSupport() throws Exception {
-        // Arrange
-        when(geocodingService.searchTamilNaduLocations("Adyar", 15, "ta"))
-                .thenReturn(tamilResults);
-
-        // Act & Assert
-        mockMvc.perform(get("/v1/locations/neighborhoods")
-                .param("q", "Adyar")
-                .param("language", "ta"))
-                .andExpect(status().isOk());
-
-        // Verify language parameter was passed
-        verify(geocodingService).searchTamilNaduLocations("Adyar", 15, "ta");
     }
 }

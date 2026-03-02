@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import AnnouncementBanner from './AnnouncementBanner';
 import { getActiveAnnouncements } from '../config/announcements';
@@ -99,11 +99,15 @@ const Header: React.FC<HeaderProps> = ({
     };
   }, []);
   
+  // Memoize announcements to prevent creating new array on every render
+  // This prevents AnnouncementBanner from re-fetching API on every Header re-render
+  const memoizedAnnouncements = useMemo(() => getActiveAnnouncements(), []);
+  
   return (
     <>
       {/* Announcement Banner - Shows above header */}
       {showAnnouncements && !isAdmin && (
-        <AnnouncementBanner announcements={getActiveAnnouncements()} maxVisible={3} />
+        <AnnouncementBanner announcements={memoizedAnnouncements} maxVisible={3} />
       )}
       
       <header className={`app-header ${isScrolled ? 'scrolled' : ''} ${isCompact ? 'compact' : ''}`}>

@@ -121,9 +121,8 @@ export class LocationAutocompleteService {
   }
 
   /**
-   * Comprehensive search: Use new backend /search-comprehensive endpoint
-   * This now searches both database AND locations via Overpass API
-   * Falls back to old methods if the new endpoint fails
+   * Database-only search - simplified for better performance
+   * No external API calls - all data from local database
    * @param signal Optional AbortSignal to cancel the request
    */
   private async searchDatabaseAndOverpassParallel(
@@ -132,76 +131,28 @@ export class LocationAutocompleteService {
     language: string = 'en',
     signal?: AbortSignal
   ): Promise<LocationSuggestion[]> {
-    logger.debug(`🚀 Starting comprehensive search for "${query}" (language: ${language})`);
+    logger.debug(`🚀 Database search for "${query}" (language: ${language})`);
     
     try {
-      // Try new comprehensive endpoint first (backend does database + OSM search)
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-      
-      // Combine the timeout controller with the passed signal
-      const combinedSignal = signal || controller.signal;
-      
-      try {
-        const response = await api.get(
-          `/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
-          { signal: combinedSignal }
-        );
-        
-        clearTimeout(timeoutId);
-        const results = response.data || [];
-        
-        if (results.length > 0) {
-          logger.debug(`✅ Comprehensive search found ${results.length} results (database + neighborhoods)`);
-          return results.map((loc: LocationDTO) => ({
-            id: loc.id || -(Math.random() * 1000000),
-            name: loc.name,
-            translatedName: loc.translatedName,
-            latitude: loc.latitude,
-            longitude: loc.longitude,
-            source: loc.source || 'mixed'
-          }));
-        }
-      } catch (comprehensiveError) {
-        clearTimeout(timeoutId);
-        // Re-throw if it's an abort error
-        if (comprehensiveError instanceof Error && comprehensiveError.name === 'AbortError') {
-          throw comprehensiveError;
-        }
-        logger.error(`Comprehensive endpoint failed, falling back to legacy search`, comprehensiveError);
-      }
-      
-      // Fallback to legacy database-first search
-      logger.debug(`⚠️ Comprehensive endpoint unavailable, using legacy database-first search for "${query}"`);
-      
-      // Try database first
+      // Search database only - all Tamil Nadu locations are pre-loaded
       const databaseResults = await this.searchDatabase(query, language, signal);
       
       logger.debug(`📊 Database results: ${databaseResults.length}`);
       
-      // If database has results, use them and skip Nominatim
+      // If database has results, return them
       if (databaseResults.length > 0) {
         logger.debug(`✅ Using database results (${databaseResults.length})`);
         return databaseResults.map(loc => ({ ...loc, source: 'database' }));
       }
       
-      // Check instant suggestions (local cities list) before Nominatim
+      // Fallback to instant suggestions (local cities list) if database is empty
       const instantResults = GeocodingService.getInstantSuggestions(query, limit);
       if (instantResults.length > 0) {
         logger.debug(`⚡ Using instant suggestions (${instantResults.length})`);
         return this.convertToSuggestions(instantResults).map(loc => ({ ...loc, source: 'local' }));
       }
       
-      // Only call Nominatim if database and local are empty
-      logger.debug(`🌍 Calling Nominatim for neighborhoods of "${query}"`);
-      const nominatimResults = await this.searchNominatimFast(query, limit, language, signal);
-      
-      if (nominatimResults.length > 0) {
-        logger.debug(`🌍 Nominatim found ${nominatimResults.length} results`);
-        return nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }));
-      }
-      
-      logger.debug(`❌ No results found from any source`);
+      logger.debug(`❌ No results found for "${query}"`);
       return [];
       
     } catch (error) {
@@ -210,25 +161,14 @@ export class LocationAutocompleteService {
         throw error;
       }
       
-      logger.error('Comprehensive search failed:', error);
+      logger.error('Database search failed:', error);
       // Fallback to instant suggestions
       const instantResults = GeocodingService.getInstantSuggestions(query, 10);
       if (instantResults.length > 0) {
         return this.convertToSuggestions(instantResults).map(loc => ({ ...loc, source: 'local' }));
       }
       
-      try {
-        logger.debug(`🔄 Final fallback: Trying Nominatim for "${query}"`);
-        const nominatimFallback = await this.searchNominatimFast(query, 10, language, signal);
-        return nominatimFallback.map(loc => ({ ...loc, source: 'nominatim' }));
-      } catch (nominatimError) {
-        // Re-throw abort errors
-        if (nominatimError instanceof Error && nominatimError.name === 'AbortError') {
-          throw nominatimError;
-        }
-        logger.error('All search methods failed:', nominatimError);
-        return [];
-      }
+      return [];
     }
   }
   
@@ -656,115 +596,8 @@ export class LocationAutocompleteService {
     return districtName ? `${cityName}, ${districtName}` : cityName;
   }
 
-  /**
-   * Search for neighborhoods and localities within a city
-   * This uses the backend endpoint that queries OSM Nominatim API for neighborhood data
-   * @param query Neighborhood name (e.g., "Adyar", "Besant Nagar")
-   * @param city Optional city name to narrow the search
-   * @param language Language code for results
-   * @returns Promise with neighborhood suggestions
-   */
-  async searchNeighborhoods(
-    query: string,
-    city?: string,
-    language: string = 'en'
-  ): Promise<LocationSuggestion[]> {
-    if (query.length < 2) {
-      return [];
-    }
-
-    try {
-      logger.debug(`🏘️ Neighborhood search for "${query}" in city "${city || 'any'}" (language: ${language})`);
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-      const searchParams = new URLSearchParams({
-        q: query.trim(),
-        language: language
-      });
-
-      if (city) {
-        searchParams.append('city', city.trim());
-      }
-
-      const response = await api.get(`/v1/locations/neighborhoods?${searchParams}`, {
-        signal: controller.signal
-      });
-
-      clearTimeout(timeoutId);
-
-      const results = response.data || [];
-      logger.debug(`🏘️ Found ${results.length} neighborhoods for "${query}"`);
-
-      // Convert to LocationSuggestion format
-      return results.map((location: LocationDTO) => ({
-        id: location.id || -(Math.random() * 1000000),
-        name: location.name,
-        translatedName: location.translatedName,
-        latitude: location.latitude,
-        longitude: location.longitude,
-        source: 'nominatim-neighborhoods'
-      }));
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        logger.warn(`Neighborhood search timed out for "${query}"`);
-      } else {
-        logger.error(`Error searching neighborhoods for "${query}":`, error);
-      }
-      return [];
-    }
-  }
-
-  /**
-   * Search locations comprehensively (database + neighborhoods)
-   * Combines both database locations and OSM neighborhood results for better coverage
-   * @param query Search query
-   * @param language Language code
-   * @returns Promise with all matching locations and neighborhoods
-   */
-  async searchComprehensive(
-    query: string,
-    language: string = 'en'
-  ): Promise<LocationSuggestion[]> {
-    if (query.length < 2) {
-      return [];
-    }
-
-    try {
-      logger.debug(`🔍 Comprehensive search for "${query}" (language: ${language})`);
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-      const response = await api.get(
-        `/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
-        { signal: controller.signal }
-      );
-
-      clearTimeout(timeoutId);
-
-      const results = response.data || [];
-      logger.debug(`🔍 Comprehensive search found ${results.length} results for "${query}"`);
-
-      // Convert to LocationSuggestion format, preserving both database and OSM results
-      return results.map((location: LocationDTO) => ({
-        id: location.id || -(Math.random() * 1000000),
-        name: location.name,
-        translatedName: location.translatedName,
-        latitude: location.latitude,
-        longitude: location.longitude,
-        source: location.source || 'mixed'
-      }));
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        logger.warn(`Comprehensive search timed out for "${query}"`);
-      } else {
-        logger.error(`Error in comprehensive search for "${query}":`, error);
-      }
-      return [];
-    }
-  }
+  // Removed searchNeighborhoods() and searchComprehensive() methods
+  // All location data is now in the database - no external API calls needed
 
   /**
    * Clear any pending debounced requests and abort in-flight requests

@@ -49,15 +49,15 @@ const SmartSearchForm: React.FC<SmartSearchFormProps> = ({
   const validateForm = useCallback(() => {
     const errors: { [key: string]: string } = {};
 
-    if (!fromLocation) {
-      errors.from = t('search.errors.fromRequired', 'Please select a departure location');
+    if (!fromLocation || !fromLocation.name) {
+      errors.from = t('search.errors.fromRequired', 'Please enter a departure location');
     }
 
-    if (!toLocation) {
-      errors.to = t('search.errors.toRequired', 'Please select a destination location');
+    if (!toLocation || !toLocation.name) {
+      errors.to = t('search.errors.toRequired', 'Please enter a destination location');
     }
 
-    if (fromLocation && toLocation && fromLocation.id === toLocation.id) {
+    if (fromLocation && toLocation && fromLocation.name.toLowerCase() === toLocation.name.toLowerCase()) {
       errors.locations = t('search.errors.sameLocation', 'Departure and destination cannot be the same');
     }
 

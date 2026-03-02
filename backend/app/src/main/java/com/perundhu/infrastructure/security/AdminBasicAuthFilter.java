@@ -257,7 +257,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
      */
     private boolean isAdminEndpoint(String uri) {
         // Exclude auth endpoints - they handle their own authentication
-        if (uri.startsWith("/api/admin/auth/")) {
+        if (uri.startsWith("/api/admin/auth/") || uri.startsWith("/admin/auth/")) {
             return false;
         }
 

@@ -38,11 +38,14 @@ import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
 import com.perundhu.infrastructure.security.OriginValidationFilter;
 import com.perundhu.infrastructure.security.RateLimitingFilter;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Security configuration with proper JWT handling for both development and
  * production. Includes rate limiting, origin validation, and API key
  * protection.
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
@@ -262,8 +265,9 @@ public class SecurityConfig {
 
   @Bean
   public UserDetailsService userDetailsService(
-      @Value("${admin.auth.username:admin}") String adminUsername,
-      @Value("${admin.auth.password:admin123}") String adminPassword) {
+      @Value("${ADMIN_AUTH_USERNAME:${admin.auth.username:admin}}") String adminUsername,
+      @Value("${ADMIN_AUTH_PASSWORD:${admin.auth.password:admin123}}")String adminPassword) {
+    log.info("Configuring admin user: {} with password length: {}", adminUsername, adminPassword != null ? adminPassword.length() : 0);
     return new InMemoryUserDetailsManager(
         User.builder()
             .username(adminUsername)

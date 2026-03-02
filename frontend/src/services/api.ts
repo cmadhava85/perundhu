@@ -1042,49 +1042,23 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
   }
   
   try {
-    // First search in database
+    // Search in database only - no external API calls
     logger.debug(`searchLocations: Searching for "${query}" in database`);
     const response = await api.get('/v1/locations/search', {
       params: { 
         query,
-        limit,
-        source: 'database' // Explicitly request database search first
+        limit
       }
     });
     
     const dbResults = response.data;
     logger.debug(`searchLocations: Found ${dbResults.length} database results for "${query}"`);
     
-    // If we have enough results from DB, return them
-    if (dbResults.length >= limit) {
-      return dbResults;
-    }
-    
-    // If database has no results or insufficient results, check map API
-    try {
-      logger.debug(`searchLocations: Not enough database results, trying map API for "${query}"`);
-      const mapResponse = await api.get('/v1/locations/search', {
-        params: { 
-          query,
-          limit: limit - dbResults.length, // Only get what we still need
-          source: 'map' // Explicitly request map API search
-        }
-      });
-      
-      const mapResults = mapResponse.data;
-      logger.debug(`searchLocations: Found ${mapResults.length} map API results for "${query}"`);
-      
-      // Combine results, prioritizing database results
-      const combinedResults = [...dbResults, ...mapResults].slice(0, limit);
-      return combinedResults;
-    } catch (mapError) {
-      logger.warn(`Map API search failed, returning database results only: ${mapError instanceof Error ? mapError.message : String(mapError)}`);
-      return dbResults;
-    }
+    return dbResults;
   } catch (error) {
     logger.error('Error searching locations:', error);
     
-    // Try offline data as last resort
+    // Try offline data as fallback
     if (isOfflineMode) {
       try {
         const offlineLocations = (await getLocationsOffline()) as Location[];

@@ -158,7 +158,7 @@ jobs:
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
           --set-env-vars="SPRING_PROFILES_ACTIVE=staging,SPRING_FLYWAY_BASELINE_ON_MIGRATE=true,SPRING_FLYWAY_BASELINE_VERSION=57" \
-          --set-secrets="DB_PASSWORD=db-password:latest,JWT_SECRET=jwt-secret:latest" \
+          --set-secrets="DB_PASSWORD=db-password:latest,ADMIN_USERNAME=admin-username:latest,ADMIN_PASSWORD=admin-password:latest,GEMINI_API_KEY=gemini-api-key:latest,JWT_SECRET=jwt-secret:latest" \
           --memory 1Gi \
           --cpu 1 \
           --min-instances 0 \

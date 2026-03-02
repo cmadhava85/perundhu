@@ -30,7 +30,6 @@ import com.perundhu.application.dto.ConnectingRoutesByNameDTO;
 import com.perundhu.application.dto.ResolvedLocationInfo;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.ConnectingRouteService;
-import com.perundhu.application.service.OverpassGeocodingService;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,9 +42,6 @@ class BusScheduleControllerConnectingRoutesByNameTest {
 
     @Mock
     private ConnectingRouteService connectingRouteService;
-
-    @Mock
-    private OverpassGeocodingService geocodingService;
 
     @Mock
     private RateLimiter globalRateLimiter;

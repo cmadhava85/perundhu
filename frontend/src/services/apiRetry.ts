@@ -124,9 +124,23 @@ export function setupRetryInterceptor(
       );
     },
     retryCondition: (error: AxiosError) => {
-      // Network errors (no response)
+      // Skip retries for non-critical endpoints to reduce unnecessary API calls
+      const url = error.config?.url || '';
+      const nonCriticalEndpoints = [
+        '/announcements', // Announcements are nice-to-have, not critical
+        '/stats',         // Statistics can be stale
+        '/analytics',     // Analytics tracking is non-critical
+      ];
+      
+      if (nonCriticalEndpoints.some(endpoint => url.includes(endpoint))) {
+        logger.debug(`Skipping retry for non-critical endpoint: ${url}`);
+        return false;
+      }
+      
+      // Network errors (no response) - only retry GET requests
       if (!error.response) {
-        return axiosRetry.isNetworkOrIdempotentRequestError(error);
+        const isIdempotent = error.config?.method?.toUpperCase() === 'GET';
+        return isIdempotent && axiosRetry.isNetworkOrIdempotentRequestError(error);
       }
 
       // Retryable status codes
