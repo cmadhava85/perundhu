@@ -72,6 +72,8 @@ temp_chunks/
 backup_conflicting_files/
 tnstc_local_extraction/
 tnstc_timetable_results/
+scraped-data/
+**/scraped-data/
 
 # Test and demo files
 *_test.py
@@ -87,6 +89,20 @@ tamil_translations_*.sql
 deleted_duplicates_*.txt
 preprod_deleted_duplicates_*.txt
 mtc_batch*_*.json
+translation_progress*.json
+
+# Data CSV files (derived from JSON, not needed in Git)
+data/*.csv
+data/**/*.csv
+
+# Cache directories
+data/.overpass_cache/
+.cache/
+
+# Test coverage reports
+coverage/
+**/coverage/
+.nyc_output/
 
 # Old/obsolete scripts (archived)
 *_old.py
