@@ -18,6 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -268,11 +271,15 @@ public class RouteValidationAlertController {
     
     /**
      * Helper to get current admin ID from security context.
-     * In production, extract from JWT token principal.
+     * Extracts authenticated admin username from Spring Security context.
      */
     private String getCurrentAdminId() {
-        // TODO: Extract from SecurityContextHolder.getContext().getAuthentication()
-        return "admin-user";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && 
+            !(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        return "system";
     }
     
     // DTO Classes
