@@ -1,32 +1,24 @@
 package com.perundhu.adapter.in.rest.admin;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import com.perundhu.domain.model.AdminUser;
+import com.perundhu.domain.port.in.AdminUserManagementInputPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 /**
- * Admin User Management API
+ * Admin User Management REST API
+ * 
+ * Following hexagonal architecture - depends ONLY on InputPort interface
  * 
  * Provides CRUD operations for admin users without requiring redeployment.
  * All endpoints require ROLE_ADMIN authentication.
@@ -52,8 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminUserController {
 
-    private final DataSource dataSource;
-    private final PasswordEncoder passwordEncoder;
+    private final AdminUserManagementInputPort adminUserManagement;
 
     /**
      * List all admin users (excludes password hashes for security)
@@ -61,15 +52,15 @@ public class AdminUserController {
     @GetMapping
     public ResponseEntity<?> listUsers() {
         try {
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-            List<Map<String, Object>> users = jdbc.queryForList(
-                "SELECT id, username, email, full_name, enabled, roles, " +
-                "created_at, updated_at, last_login_at " +
-                "FROM admin_users ORDER BY username"
-            );
+            List<AdminUser> users = adminUserManagement.listAllUsers();
             
-            log.info("Listed {} admin users", users.size());
-            return ResponseEntity.ok(Map.of("users", users));
+            // Map to DTOs (exclude password hashes)
+            List<AdminUserDTO> dtos = users.stream()
+                    .map(this::toDTO)
+                    .toList();
+            
+            log.info("Listed {} admin users", dtos.size());
+            return ResponseEntity.ok(Map.of("users", dtos));
             
         } catch (Exception e) {
             log.error("Failed to list admin users", e);
@@ -84,20 +75,14 @@ public class AdminUserController {
     @GetMapping("/{username}")
     public ResponseEntity<?> getUser(@PathVariable String username) {
         try {
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-            List<Map<String, Object>> users = jdbc.queryForList(
-                "SELECT id, username, email, full_name, enabled, roles, " +
-                "created_at, updated_at, last_login_at " +
-                "FROM admin_users WHERE username = ?",
-                username
-            );
+            Optional<AdminUser> userOpt = adminUserManagement.getUserByUsername(username);
             
-            if (users.isEmpty()) {
+            if (userOpt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "User not found"));
             }
             
-            return ResponseEntity.ok(users.get(0));
+            return ResponseEntity.ok(toDTO(userOpt.get()));
             
         } catch (Exception e) {
             log.error("Failed to get user: {}", username, e);
@@ -118,45 +103,28 @@ public class AdminUserController {
                     .body(Map.of("error", "Username and password are required"));
             }
 
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-            
-            // Check if username already exists
-            Integer count = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM admin_users WHERE username = ?",
-                Integer.class,
-                request.username
-            );
-            
-            if (count != null && count > 0) {
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", "Username already exists"));
-            }
-
-            // Hash password with BCrypt
-            String passwordHash = passwordEncoder.encode(request.password);
-
-            // Insert new user
-            jdbc.update(
-                "INSERT INTO admin_users (username, password_hash, email, full_name, enabled, roles, created_by) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                request.username,
-                passwordHash,
-                request.email != null ? request.email : "admin@perundhu.com",
-                request.fullName != null ? request.fullName : request.username,
-                request.enabled != null ? request.enabled : true,
-                request.roles != null ? request.roles : "ROLE_ADMIN,ROLE_USER",
-                "ADMIN_API"
+            // Create user using application service
+            AdminUser created = adminUserManagement.createUser(
+                    request.username,
+                    request.password,
+                    request.email != null ? request.email : "admin@perundhu.com",
+                    request.fullName != null ? request.fullName : request.username,
+                    request.roles != null ? request.roles : "ROLE_ADMIN,ROLE_USER",
+                    "ADMIN_API"
             );
 
-            log.info("✅ Created admin user: {}", request.username);
-            auditLog(request.username, "USER_CREATED", "Created via API");
+            log.info("✅ Created admin user: {}", created.getUsername());
 
             return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Map.of(
                     "message", "User created successfully",
-                    "username", request.username
+                    "username", created.getUsername()
                 ));
             
+        } catch (IllegalArgumentException e) {
+            log.warn("Failed to create user: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             log.error("Failed to create user", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -172,64 +140,52 @@ public class AdminUserController {
             @PathVariable String username,
             @RequestBody UpdateUserRequest request) {
         try {
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+            // Update using application service
+            AdminUser updated;
             
-            // Check if user exists
-            Integer count = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM admin_users WHERE username = ?",
-                Integer.class,
-                username
-            );
-            
-            if (count == null || count == 0) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "User not found"));
-            }
-
-            // Build dynamic update query
-            StringBuilder sql = new StringBuilder("UPDATE admin_users SET updated_at = ?, updated_by = ?");
-            List<Object> params = new java.util.ArrayList<>();
-            params.add(new Timestamp(System.currentTimeMillis()));
-            params.add("ADMIN_API");
-
             if (request.password != null && !request.password.isBlank()) {
-                sql.append(", password_hash = ?");
-                params.add(passwordEncoder.encode(request.password));
+                // Password update
+                updated = adminUserManagement.updatePassword(username, request.password, "ADMIN_API");
+                
+                // Also update other fields if provided
+                if (request.email != null || request.fullName != null || 
+                    request.roles != null || request.enabled != null) {
+                    updated = adminUserManagement.updateUser(
+                            username,
+                            request.email,
+                            request.fullName,
+                            request.roles,
+                            request.enabled,
+                            "ADMIN_API"
+                    );
+                }
+            } else {
+                // Non-password update
+                updated = adminUserManagement.updateUser(
+                        username,
+                        request.email,
+                        request.fullName,
+                        request.roles,
+                        request.enabled,
+                        "ADMIN_API"
+                );
             }
-
-            if (request.email != null) {
-                sql.append(", email = ?");
-                params.add(request.email);
-            }
-
-            if (request.fullName != null) {
-                sql.append(", full_name = ?");
-                params.add(request.fullName);
-            }
-
-            if (request.enabled != null) {
-                sql.append(", enabled = ?");
-                params.add(request.enabled);
-            }
-
-            if (request.roles != null) {
-                sql.append(", roles = ?");
-                params.add(request.roles);
-            }
-
-            sql.append(" WHERE username = ?");
-            params.add(username);
-
-            jdbc.update(sql.toString(), params.toArray());
 
             log.info("✅ Updated admin user: {}", username);
-            auditLog(username, "USER_UPDATED", "Updated via API");
 
             return ResponseEntity.ok(Map.of(
                 "message", "User updated successfully",
-                "username", username
+                "username", updated.getUsername()
             ));
             
+        } catch (IllegalArgumentException e) {
+            log.warn("User not found: {}", username);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", e.getMessage()));
+        } catch (IllegalStateException e) {
+            log.warn("Cannot update user: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             log.error("Failed to update user: {}", username, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -243,34 +199,24 @@ public class AdminUserController {
     @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         try {
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-            
-            // Safety check: Don't delete last enabled admin user
-            Integer enabledCount = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM admin_users WHERE enabled = true",
-                Integer.class
-            );
-            
-            if (enabledCount != null && enabledCount <= 1) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "Cannot delete last enabled admin user"));
-            }
-
-            int deleted = jdbc.update("DELETE FROM admin_users WHERE username = ?", username);
-            
-            if (deleted == 0) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "User not found"));
-            }
+            // Delete using application service (includes safety check)
+            adminUserManagement.deleteUser(username, "ADMIN_API");
 
             log.info("✅ Deleted admin user: {}", username);
-            auditLog(username, "USER_DELETED", "Deleted via API");
 
             return ResponseEntity.ok(Map.of(
                 "message", "User deleted successfully",
                 "username", username
             ));
             
+        } catch (IllegalArgumentException e) {
+            log.warn("User not found: {}", username);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", e.getMessage()));
+        } catch (IllegalStateException e) {
+            log.warn("Cannot delete user: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             log.error("Failed to delete user: {}", username, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -289,45 +235,19 @@ public class AdminUserController {
                     .body(Map.of("error", "Username and password are required"));
             }
 
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-            
-            // Get user's password hash
-            List<Map<String, Object>> users = jdbc.queryForList(
-                "SELECT password_hash, enabled FROM admin_users WHERE username = ?",
-                request.username
+            // Validate using application service (includes audit logging)
+            boolean isValid = adminUserManagement.validateCredentials(
+                    request.username,
+                    request.password
             );
-            
-            if (users.isEmpty()) {
+
+            if (!isValid) {
                 return ResponseEntity.ok(Map.of(
                     "valid", false,
-                    "reason", "User not found"
+                    "reason", "Invalid credentials or account disabled"
                 ));
             }
 
-            Map<String, Object> user = users.get(0);
-            String storedHash = (String) user.get("password_hash");
-            Boolean enabled = (Boolean) user.get("enabled");
-
-            // Check password using BCrypt constant-time comparison
-            boolean passwordMatches = passwordEncoder.matches(request.password, storedHash);
-
-            if (!passwordMatches) {
-                auditLog(request.username, "CREDENTIAL_TEST_FAILED", "Invalid password");
-                return ResponseEntity.ok(Map.of(
-                    "valid", false,
-                    "reason", "Invalid password"
-                ));
-            }
-
-            if (Boolean.FALSE.equals(enabled)) {
-                auditLog(request.username, "CREDENTIAL_TEST_FAILED", "Account disabled");
-                return ResponseEntity.ok(Map.of(
-                    "valid", false,
-                    "reason", "Account is disabled"
-                ));
-            }
-
-            auditLog(request.username, "CREDENTIAL_TEST_SUCCESS", "Valid credentials");
             return ResponseEntity.ok(Map.of(
                 "valid", true,
                 "username", request.username,
@@ -342,22 +262,40 @@ public class AdminUserController {
     }
 
     /**
-     * Log admin authentication event to audit table
+     * Map domain model to DTO (exclude password hash)
      */
-    private void auditLog(String username, String eventType, String details) {
-        try {
-            JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-            jdbc.update(
-                "INSERT INTO admin_auth_events (username, event_type, details) VALUES (?, ?, ?)",
-                username, eventType, details
-            );
-        } catch (Exception e) {
-            log.error("Failed to log audit event", e);
-        }
+    private AdminUserDTO toDTO(AdminUser user) {
+        AdminUserDTO dto = new AdminUserDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setFullName(user.getFullName());
+        dto.setEnabled(user.isEnabled());
+        dto.setRoles(String.join(",", user.getRoles()));
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
+        dto.setLastLoginAt(user.getLastLoginAt());
+        return dto;
     }
 
     private boolean isBlank(String str) {
         return str == null || str.trim().isEmpty();
+    }
+
+    /**
+     * DTO for exposing admin user data (excludes password hash)
+     */
+    @Data
+    public static class AdminUserDTO {
+        private Long id;
+        private String username;
+        private String email;
+        private String fullName;
+        private boolean enabled;
+        private String roles;  // Comma-separated
+        private java.time.LocalDateTime createdAt;
+        private java.time.LocalDateTime updatedAt;
+        private java.time.LocalDateTime lastLoginAt;
     }
 
     @Data
