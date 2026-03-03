@@ -286,8 +286,8 @@ jobs:
         sleep 20
         
         for i in {1..5}; do
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/api/v1/bus-schedules || echo "000")
-          if [[ "$HTTP_CODE" == "200" || "$HTTP_CODE" == "404" ]]; then
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/actuator/health || echo "000")
+          if [[ "$HTTP_CODE" == "200" ]]; then
             echo "Backend is healthy (HTTP $HTTP_CODE)"
             break
           fi
