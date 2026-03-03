@@ -2,6 +2,8 @@ package com.perundhu.infrastructure.config;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +16,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +23,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -264,17 +265,43 @@ public class SecurityConfig {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
+  /**
+   * Database-backed UserDetailsService using JdbcUserDetailsManager.
+   * Replaces InMemoryUserDetailsManager for production-grade admin authentication.
+   * 
+   * Benefits:
+   * - No redeployment needed to change credentials
+   * - BCrypt password hashing (secure)
+   * - Multiple admin users supported
+   * - Credentials stored in admin_users table
+   * 
+   * Schema: V100__create_admin_users_table.sql
+   */
   @Bean
-  public UserDetailsService userDetailsService(
-      @Value("${ADMIN_AUTH_USERNAME:${admin.auth.username:admin}}") String adminUsername,
-      @Value("${ADMIN_AUTH_PASSWORD:${admin.auth.password:admin123}}")String adminPassword) {
-    log.info("Configuring admin user: {} with password length: {}", adminUsername, adminPassword != null ? adminPassword.length() : 0);
-    return new InMemoryUserDetailsManager(
-        User.builder()
-            .username(adminUsername)
-            .password("{noop}" + adminPassword) // {noop} means no encoding
-            .roles("ADMIN", "USER")
-            .build());
+  public UserDetailsService userDetailsService(DataSource dataSource) {
+    JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+    
+    // Custom queries for admin_users table
+    userDetailsManager.setUsersByUsernameQuery(
+        "SELECT username, password_hash as password, enabled " +
+        "FROM admin_users WHERE username = ?"
+    );
+    
+    userDetailsManager.setAuthoritiesByUsernameQuery(
+        "SELECT username, role as authority FROM ( " +
+        "  SELECT username, " +
+        "    TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(roles, ',', numbers.n), ',', -1)) as role " +
+        "  FROM admin_users " +
+        "  CROSS JOIN ( " +
+        "    SELECT 1 n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 " +
+        "  ) numbers " +
+        "  WHERE CHAR_LENGTH(roles) - CHAR_LENGTH(REPLACE(roles, ',', '')) >= numbers.n - 1 " +
+        ") roles " +
+        "WHERE username = ?"
+    );
+    
+    log.info("Configured database-backed UserDetailsService with admin_users table");
+    return userDetailsManager;
   }
 
   @Bean
@@ -285,6 +312,7 @@ public class SecurityConfig {
     authenticationProvider.setUserDetailsService(userDetailsService);
     authenticationProvider.setPasswordEncoder(passwordEncoder);
 
+    log.info("Configured AuthenticationManager with database-backed UserDetailsService");
     return new ProviderManager(authenticationProvider);
   }
 }
