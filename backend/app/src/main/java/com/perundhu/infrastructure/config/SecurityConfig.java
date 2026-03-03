@@ -262,7 +262,9 @@ public class SecurityConfig {
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    // Use BCryptPasswordEncoder directly since our database hashes don't have {bcrypt} prefix
+    // DelegatingPasswordEncoder would require {bcrypt} prefix in password_hash column
+    return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
   }
 
   /**

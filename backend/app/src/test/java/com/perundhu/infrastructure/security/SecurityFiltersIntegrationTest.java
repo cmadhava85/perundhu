@@ -128,10 +128,14 @@ class SecurityFiltersIntegrationTest {
 
         @BeforeEach
         void setUp() {
-            // AdminBasicAuthFilter requires SecurityContextRepository
+            // AdminBasicAuthFilter requires UserDetailsService, PasswordEncoder, and SecurityContextRepository
             SecurityContextRepository mockSecurityContextRepository = 
                 mock(SecurityContextRepository.class);
-            filter = new AdminBasicAuthFilter(mockSecurityContextRepository);
+            org.springframework.security.core.userdetails.UserDetailsService mockUserDetailsService = 
+                mock(org.springframework.security.core.userdetails.UserDetailsService.class);
+            org.springframework.security.crypto.password.PasswordEncoder mockPasswordEncoder = 
+                mock(org.springframework.security.crypto.password.PasswordEncoder.class);
+            filter = new AdminBasicAuthFilter(mockUserDetailsService, mockPasswordEncoder, mockSecurityContextRepository);
         }
 
         @Test

@@ -12,6 +12,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
@@ -26,23 +30,16 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * HTTP Basic Authentication filter for admin endpoints.
- * Username and password are read from configuration (GCP Secret Manager in
- * production).
+ * Uses database-backed UserDetailsService for credential validation.
  * 
  * This filter intercepts requests to /api/admin/** and /api/v1/admin/**
  * endpoints
- * and validates Basic Auth credentials.
+ * and validates Basic Auth credentials against admin_users table.
  */
 @Component
 @Slf4j
 @Order(1) // High priority to run early in the filter chain
 public class AdminBasicAuthFilter extends OncePerRequestFilter {
-
-    @Value("${admin.auth.username:admin}")
-    private String adminUsername;
-
-    @Value("${admin.auth.password:admin}")
-    private String adminPassword;
 
     @Value("${admin.auth.enabled:true}")
     private boolean authEnabled;
@@ -50,15 +47,26 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     @Value("${spring.profiles.active:default}")
     private String activeProfile;
 
+    // Database-backed user details service
+    private final UserDetailsService userDetailsService;
+    
+    // Password encoder for BCrypt password validation
+    private final PasswordEncoder passwordEncoder;
+
     // Use shared SecurityContextRepository - injected to match SecurityConfig
     private final SecurityContextRepository securityContextRepository;
 
-    public AdminBasicAuthFilter(@Lazy SecurityContextRepository securityContextRepository) {
+    public AdminBasicAuthFilter(
+            @Lazy UserDetailsService userDetailsService,
+            @Lazy PasswordEncoder passwordEncoder,
+            @Lazy SecurityContextRepository securityContextRepository) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
         this.securityContextRepository = securityContextRepository;
     }
 
     /**
-     * Validate admin credentials on startup to catch configuration issues early.
+     * Validate admin authentication configuration on startup.
      */
     @PostConstruct
     public void validateCredentialsOnStartup() {
@@ -67,70 +75,15 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
         log.info("=============================================================");
         log.info("Active Profile: {}", activeProfile);
         log.info("Admin Auth Enabled: {}", authEnabled);
-        log.info("Admin Username: {}", adminUsername != null ? maskValue(adminUsername) : "NOT SET");
-        log.info("Admin Password: {}", adminPassword != null ? maskValue(adminPassword) : "NOT SET");
+        log.info("Authentication Method: Database-backed (admin_users table)");
 
         if (!authEnabled) {
             log.warn("⚠️  ADMIN AUTHENTICATION IS DISABLED - All admin endpoints are unprotected!");
-            log.info("=============================================================");
-            return;
-        }
-
-        // Validate credentials are properly configured
-        boolean hasIssues = false;
-
-        if (adminUsername == null || adminUsername.isBlank()) {
-            log.error("❌ ADMIN USERNAME IS NOT SET - Admin authentication will fail!");
-            hasIssues = true;
-        } else if (adminUsername.contains(":latest")) {
-            log.error("❌ ADMIN USERNAME CONTAINS ':latest' - Secret not loaded from GCP Secret Manager!");
-            log.error("   Current value: {}", maskValue(adminUsername));
-            log.error("   Expected: Actual username value from secret");
-            log.error("   Fix: Move ADMIN_USERNAME from --set-env-vars to --update-secrets in CD pipeline");
-            hasIssues = true;
-        } else if (adminUsername.length() < 3) {
-            log.warn("⚠️  ADMIN USERNAME IS TOO SHORT (length: {}) - Recommended minimum: 3 characters",
-                    adminUsername.length());
-        }
-
-        if (adminPassword == null || adminPassword.isBlank()) {
-            log.error("❌ ADMIN PASSWORD IS NOT SET - Admin authentication will fail!");
-            hasIssues = true;
-        } else if (adminPassword.contains(":latest")) {
-            log.error("❌ ADMIN PASSWORD CONTAINS ':latest' - Secret not loaded from GCP Secret Manager!");
-            log.error("   Current value: {}", maskValue(adminPassword));
-            log.error("   Expected: Actual password value from secret");
-            log.error("   Fix: Move ADMIN_PASSWORD from --set-env-vars to --update-secrets in CD pipeline");
-            hasIssues = true;
-        } else if (adminPassword.length() < 8) {
-            log.warn("⚠️  ADMIN PASSWORD IS WEAK (length: {}) - Recommended minimum: 8 characters",
-                    adminPassword.length());
-        }
-
-        if (hasIssues) {
-            log.error("=============================================================");
-            log.error("❌ CRITICAL: ADMIN CREDENTIALS NOT PROPERLY CONFIGURED");
-            log.error("=============================================================");
-            if (activeProfile.contains("prod") || activeProfile.contains("preprod")) {
-                throw new IllegalStateException(
-                        "Admin credentials are not properly configured for " + activeProfile + " environment. " +
-                                "Check the CD pipeline configuration and ensure secrets are loaded from GCP Secret Manager.");
-            }
         } else {
-            log.info("✅ Admin credentials validated successfully");
+            log.info("✅ Admin authentication enabled with database-backed UserDetailsService");
         }
 
         log.info("=============================================================");
-    }
-
-    /**
-     * Mask sensitive values for logging - show first/last 2 chars only
-     */
-    private String maskValue(String value) {
-        if (value == null || value.length() <= 4) {
-            return "***";
-        }
-        return value.substring(0, 2) + "***" + value.substring(value.length() - 2);
     }
 
     @Override
@@ -158,13 +111,6 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
         if (!authEnabled) {
             log.debug("Admin authentication disabled, allowing request to: {}", requestUri);
             filterChain.doFilter(request, response);
-            return;
-        }
-
-        // Check if password is configured
-        if (adminPassword == null || adminPassword.isBlank()) {
-            log.warn("Admin password not configured! Denying access to: {}", requestUri);
-            sendUnauthorizedResponse(request, response, "Admin authentication not configured");
             return;
         }
 
@@ -298,33 +244,27 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Validate credentials using constant-time comparison
+     * Validate credentials against database using UserDetailsService
      */
     private boolean isValidCredentials(String username, String password) {
-        // Use constant-time comparison to prevent timing attacks
-        boolean usernameValid = constantTimeEquals(username, adminUsername);
-        boolean passwordValid = constantTimeEquals(password, adminPassword);
-        return usernameValid && passwordValid;
-    }
-
-    /**
-     * Constant-time string comparison to prevent timing attacks
-     */
-    private boolean constantTimeEquals(String a, String b) {
-        if (a == null || b == null) {
+        try {
+            // Load user from database
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            
+            // Validate password using BCrypt
+            boolean passwordMatches = passwordEncoder.matches(password, userDetails.getPassword());
+            
+            // Check if user is enabled
+            boolean isEnabled = userDetails.isEnabled();
+            
+            return passwordMatches && isEnabled;
+        } catch (UsernameNotFoundException e) {
+            log.debug("User not found in database: {}", username);
+            return false;
+        } catch (Exception e) {
+            log.error("Error validating credentials for user {}: {}", username, e.getMessage());
             return false;
         }
-
-        byte[] aBytes = a.getBytes(StandardCharsets.UTF_8);
-        byte[] bBytes = b.getBytes(StandardCharsets.UTF_8);
-
-        // XOR all bytes together to ensure constant-time comparison
-        int result = aBytes.length ^ bBytes.length;
-        for (int i = 0; i < Math.min(aBytes.length, bBytes.length); i++) {
-            result |= aBytes[i] ^ bBytes[i];
-        }
-
-        return result == 0;
     }
 
     /**
