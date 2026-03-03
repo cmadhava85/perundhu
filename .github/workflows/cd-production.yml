@@ -275,8 +275,8 @@ jobs:
     
     - name: Get service URLs
       run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        FRONTEND_URL=$(gcloud run services describe perundhu-frontend --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        BACKEND_URL=$(gcloud run services describe perundhu-production-backend --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-production-frontend --region ${{ env.GCP_REGION }} --format 'value(status.url)')
         echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
         echo "FRONTEND_URL=$FRONTEND_URL" >> $GITHUB_ENV
     
