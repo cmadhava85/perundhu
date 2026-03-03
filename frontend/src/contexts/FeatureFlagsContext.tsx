@@ -106,12 +106,12 @@ const defaultFlags: FeatureFlags = {
   busReviewsRequireLogin: false,
   busReviewsAutoApprove: true,
   
-  // Google AdSense Features (all disabled by default until setup)
-  enableAds: false,
-  enableAdBetweenSearchResults: false,
-  enableAdSidebarRight: false,
-  enableAdFooterSection: false,
-  enableAdAboveSearchForm: false,
+  // Google AdSense Features (read from environment)
+  enableAds: import.meta.env.VITE_ENABLE_ADS === 'true',
+  enableAdBetweenSearchResults: import.meta.env.VITE_ENABLE_ADS === 'true',
+  enableAdSidebarRight: import.meta.env.VITE_ENABLE_ADS === 'true',
+  enableAdFooterSection: import.meta.env.VITE_ENABLE_ADS === 'true',
+  enableAdAboveSearchForm: false, // Keep this disabled by default
 };
 
 const FeatureFlagsContext = createContext<FeatureFlagsContextType | undefined>(undefined);
