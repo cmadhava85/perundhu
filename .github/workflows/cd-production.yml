@@ -228,21 +228,21 @@ jobs:
         
         # Map perundhu.com to frontend (skip if already exists)
         gcloud run domain-mappings create \
-          --service=perundhu-frontend \
+          --service=perundhu-production-frontend \
           --domain=perundhu.com \
           --region=${{ env.GCP_REGION }} \
           --project=${{ env.GCP_PROJECT_ID }} 2>/dev/null || echo "Frontend domain mapping may already exist"
         
         # Map www.perundhu.com to frontend
         gcloud run domain-mappings create \
-          --service=perundhu-frontend \
+          --service=perundhu-production-frontend \
           --domain=www.perundhu.com \
           --region=${{ env.GCP_REGION }} \
           --project=${{ env.GCP_PROJECT_ID }} 2>/dev/null || echo "WWW domain mapping may already exist"
         
         # Map api.perundhu.com to backend
         gcloud run domain-mappings create \
-          --service=perundhu-backend \
+          --service=perundhu-production-backend \
           --domain=api.perundhu.com \
           --region=${{ env.GCP_REGION }} \
           --project=${{ env.GCP_PROJECT_ID }} 2>/dev/null || echo "API domain mapping may already exist"
