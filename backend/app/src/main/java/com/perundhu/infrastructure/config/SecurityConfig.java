@@ -95,7 +95,7 @@ public class SecurityConfig {
 
     http
         // Only match admin endpoints
-        .securityMatcher("/admin/**", "/v1/admin/**")
+        .securityMatcher("/admin/**", "/api/admin/**", "/v1/admin/**")
         // Configure security context repository to use request attributes
         .securityContext(context -> context.securityContextRepository(securityContextRepository))
         .csrf(csrf -> csrf
@@ -103,6 +103,7 @@ public class SecurityConfig {
             .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
             .ignoringRequestMatchers(
                 "/admin/**", // All admin endpoints (Protected by Basic Auth)
+                "/api/admin/**", // API admin endpoints
                 "/v1/admin/**")) // Admin v1 endpoints
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -115,7 +116,7 @@ public class SecurityConfig {
         .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
             // Admin auth endpoints are public (for login)
-            .requestMatchers("/admin/auth/**").permitAll()
+            .requestMatchers("/admin/auth/**", "/api/admin/auth/**").permitAll()
             // All other admin endpoints require authentication (role check via
             // @PreAuthorize in controllers)
             .anyRequest().authenticated());
