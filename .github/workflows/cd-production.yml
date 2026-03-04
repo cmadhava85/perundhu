@@ -185,6 +185,7 @@ jobs:
           -e FLYWAY_URL="jdbc:mysql://127.0.0.1:3307/perundhu?useSSL=false&allowPublicKeyRetrieval=true" \
           -e FLYWAY_USER="${DB_USERNAME}" \
           -e FLYWAY_PASSWORD="${DB_PASSWORD}" \
+          -e FLYWAY_OUT_OF_ORDER=true \
           flyway/flyway:10-alpine \
           repair migrate
 
