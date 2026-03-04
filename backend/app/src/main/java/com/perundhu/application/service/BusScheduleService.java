@@ -2,6 +2,7 @@ package com.perundhu.application.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.perundhu.application.dto.BusDTO;
@@ -91,6 +92,16 @@ public interface BusScheduleService {
      * @return List of stops for the specified bus
      */
     List<StopDTO> getStopsForBus(Long busId, String language);
+
+    /**
+     * Batch-load stops for multiple buses in a single DB query.
+     * Use this instead of calling getStopsForBus N times for search result pages.
+     *
+     * @param busIds       List of bus IDs whose stops to load
+     * @param languageCode Language code for translated stop names
+     * @return Map of busId → list of stops
+     */
+    Map<Long, List<StopDTO>> getStopsForBuses(List<Long> busIds, String languageCode);
 
     /**
      * Find bus stops with the given language code

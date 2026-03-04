@@ -121,35 +121,6 @@ export function useBusSearchEnhanced() {
     longitude: stop.longitude
   });
 
-  // Helper function to fetch stops for a single bus (reduces nesting)
-  const fetchBusStops = async (
-    bus: Bus, 
-    signal: AbortSignal
-  ): Promise<{ busId: number; stops: Stop[] } | null> => {
-    try {
-      const response = await api.get(
-        `/v1/bus-schedules/buses/${bus.id}/stops/basic`,
-        { 
-          signal,
-          params: { lang: i18n.language }
-        }
-      );
-      const stops = (response.data || []) as RawStopResponse[];
-      return {
-        busId: bus.id,
-        stops: stops.map((stop: RawStopResponse) => transformStop(stop, bus.id))
-      };
-    } catch (error: unknown) {
-      // Ignore aborted requests
-      const errorObj = error as { name?: string };
-      if (errorObj.name === 'AbortError' || errorObj.name === 'CanceledError') {
-        return null;
-      }
-      console.warn(`Failed to fetch stops for bus ${bus.id}:`, error);
-      return { busId: bus.id, stops: [] };
-    }
-  };
-
   // Track which bus IDs we've already fetched stops for (persists across renders)
   const fetchedBusIdsRef = React.useRef<Set<number>>(new Set());
   const currentLangRef = React.useRef<string>(i18n.language);
@@ -177,41 +148,39 @@ export function useBusSearchEnhanced() {
     let isMounted = true;
     const abortController = new AbortController();
 
-    // Fetch stops for NEW buses only with concurrent request limiting
+    // Single batch request for all new buses — replaces the N individual /buses/{id}/stops/basic calls
     const fetchAllStops = async () => {
-      // Limit concurrent API calls to prevent server overload (3 is safer for small infra)
-      const CONCURRENT_LIMIT = 3;
-      const batches: Bus[][] = [];
-      
-      for (let i = 0; i < busesToFetch.length; i += CONCURRENT_LIMIT) {
-        batches.push(busesToFetch.slice(i, i + CONCURRENT_LIMIT));
-      }
-      
-      // Process each batch sequentially, but requests within batch are parallel
-      for (const batch of batches) {
-        if (!isMounted) break; // Stop if component unmounted
-        
-        const promises = batch.map((bus: Bus) => 
-          fetchBusStops(bus, abortController.signal)
-        );
-        
-        const results = await Promise.all(promises);
-        
-        // Update map with results from this batch
-        if (isMounted) {
-          setStopsMap(prev => {
-            const updated = { ...prev };
-            for (const result of results) {
-              if (result) {
-                updated[result.busId] = result.stops;
-                fetchedBusIdsRef.current.add(result.busId);
-              }
-            }
-            return updated;
-          });
+      try {
+        const busIdsParam = busesToFetch.map(b => b.id).join(',');
+        const response = await api.get('/v1/bus-schedules/stops/basic/batch', {
+          params: { busIds: busIdsParam, lang: i18n.language },
+          signal: abortController.signal,
+        });
+
+        if (!isMounted) return;
+
+        const batchResult = response.data as Record<string, RawStopResponse[]>;
+        applyBatchStops(batchResult);
+      } catch (error: unknown) {
+        const errorObj = error as { name?: string };
+        if (errorObj.name === 'AbortError' || errorObj.name === 'CanceledError') {
+          return;
         }
+        console.warn('Failed to batch fetch bus stops:', error);
       }
     };
+
+    function applyBatchStops(batchResult: Record<string, RawStopResponse[]>) {
+      if (!isMounted) return;
+      // Pre-compute all entries before calling setStopsMap to reduce nesting depth
+      const newEntries: Record<number, Stop[]> = {};
+      for (const busIdStr of Object.keys(batchResult)) {
+        const busId = Number.parseInt(busIdStr, 10);
+        newEntries[busId] = (batchResult[busIdStr] ?? []).map(stop => transformStop(stop, busId));
+        fetchedBusIdsRef.current.add(busId);
+      }
+      setStopsMap(prev => ({ ...prev, ...newEntries }));
+    }
 
     fetchAllStops();
 

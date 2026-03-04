@@ -282,6 +282,60 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     }
 
     @Override
+    public Map<Long, List<StopDTO>> getStopsForBuses(List<Long> busIds, String languageCode) {
+        if (busIds == null || busIds.isEmpty()) {
+            return Map.of();
+        }
+        // Single batch DB query — avoids N individual queries
+        Map<Long, List<Stop>> grouped = stopRepository.findStopsByBusIdsGrouped(busIds);
+        Map<Long, String> translationMap = buildLocationTranslationMap(languageCode);
+
+        Map<Long, List<StopDTO>> result = new java.util.HashMap<>();
+        for (Map.Entry<Long, List<Stop>> entry : grouped.entrySet()) {
+            result.put(entry.getKey(),
+                    entry.getValue().stream()
+                            .map(stop -> convertStopToDtoWithTranslation(stop, translationMap))
+                            .toList());
+        }
+        return result;
+    }
+
+    private Map<Long, String> buildLocationTranslationMap(String languageCode) {
+        Map<Long, String> translationMap = new java.util.HashMap<>();
+        if (languageCode == null || languageCode.isEmpty()) {
+            return translationMap;
+        }
+        List<Translation> translations = translationRepository.findByEntityTypeAndLanguage(
+                ENTITY_TYPE_LOCATION, languageCode);
+        for (Translation t : translations) {
+            if (FIELD_NAME.equals(t.getFieldName())) {
+                translationMap.put(t.getEntityId(), t.getTranslatedValue());
+            }
+        }
+        return translationMap;
+    }
+
+    private StopDTO convertStopToDtoWithTranslation(Stop stop, Map<Long, String> translationMap) {
+        String translatedName = stop.name();
+        if (stop.location() != null && stop.location().id() != null) {
+            String tr = translationMap.get(stop.location().id().value());
+            if (tr != null && !tr.isEmpty()) {
+                translatedName = tr;
+            }
+        }
+        return new StopDTO(
+                stop.id().value(),
+                translatedName,
+                stop.location() != null ? stop.location().id().value() : null,
+                stop.arrivalTime(),
+                stop.departureTime(),
+                stop.sequence(),
+                Map.of(),
+                stop.location() != null ? stop.location().latitude() : null,
+                stop.location() != null ? stop.location().longitude() : null);
+    }
+
+    @Override
     public List<StopDTO> findBusStops(Long busId, String languageCode) {
         // This is essentially the same as getStopsForBus
         return getStopsForBus(busId, languageCode);

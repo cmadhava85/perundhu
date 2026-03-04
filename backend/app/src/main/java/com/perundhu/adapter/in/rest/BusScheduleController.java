@@ -654,6 +654,45 @@ public class BusScheduleController {
     }
 
     /**
+     * Batch-load basic stops for multiple buses in a single request.
+     * Eliminates the N+1 HTTP calls pattern from the search results page.
+     * Used by the frontend after loading a page of search results.
+     */
+    @Operation(summary = "Get basic stops for multiple buses",
+            description = "Batch endpoint: returns stops for up to 100 buses in a single request. "
+                        + "Use this instead of calling /buses/{id}/stops/basic for each bus.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Map of busId → stop list"),
+            @ApiResponse(responseCode = "400", description = "busIds missing or > 100", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @GetMapping("/stops/basic/batch")
+    public ResponseEntity<Map<Long, List<StopDTO>>> getBusStopsBatch(
+            @Parameter(description = "Comma-separated list of bus IDs (max 100)")
+            @RequestParam List<Long> busIds,
+            @Parameter(description = "Language code (en or ta)")
+            @RequestParam(name = "lang", defaultValue = "en") String language) {
+
+        if (busIds == null || busIds.isEmpty()) {
+            return ResponseEntity.ok(Map.of());
+        }
+        if (busIds.size() > 100) {
+            log.warn("Batch stops request exceeds 100 busIds: {}", busIds.size());
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            Map<Long, List<StopDTO>> result = busScheduleService.getStopsForBuses(busIds, language);
+            log.debug("Batch stops: {} buses, {} total stops", result.size(),
+                    result.values().stream().mapToInt(List::size).sum());
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error in batch stops for {} buses", busIds.size(), e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
      * Get basic stops for a specific bus - public access for search functionality
      */
     @Operation(summary = "Get basic bus stops", description = "Retrieves basic stop information for a specific bus. Public access for search functionality.")

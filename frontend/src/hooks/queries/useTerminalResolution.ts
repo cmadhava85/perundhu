@@ -31,15 +31,22 @@ export const useTerminalResolution = (source: string, destination: string, enabl
       return response.data;
     },
     enabled: enabled && !!source && !!destination,
+    staleTime: 5 * 60 * 1000,  // terminal mappings rarely change
+    gcTime: 10 * 60 * 1000,
+    refetchOnMount: false,
   });
 };
 
-export const useChennaiTerminals = () => {
+export const useChennaiTerminals = (enabled = false) => {
   return useQuery<TerminalInfo[]>({
     queryKey: ['chennaiTerminals'],
     queryFn: async () => {
       const response = await axios.get('/v1/terminals/chennai');
       return response.data;
     },
+    enabled,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    refetchOnMount: false,
   });
 };
