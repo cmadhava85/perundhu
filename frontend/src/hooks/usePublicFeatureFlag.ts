@@ -34,8 +34,8 @@ export function usePublicFeatureFlag(featureName: string): UsePublicFeatureFlagR
         return false; // Default to disabled if API fails
       }
     },
-    staleTime: 30 * 1000, // 30 seconds - shorter for dev (was 5 minutes)
-    gcTime: 2 * 60 * 1000, // 2 minutes (was 10 minutes)
+    staleTime: 5 * 60 * 1000, // 5 minutes — feature flags only change on deployment
+    gcTime: 10 * 60 * 1000, // 10 minutes
     retry: 1,
   });
 
@@ -60,33 +60,31 @@ export function usePublicFeatureFlags(flagNames: string[]): {
   error: Error | null;
 } {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['public-feature-flags', flagNames.sort().join(',')],
+    // Use the same cache key as FeatureFlagsContext.syncWithBackend so both share one HTTP request
+    queryKey: ['public-feature-flags', 'all'],
     queryFn: async (): Promise<Record<string, boolean>> => {
       try {
         // Fetch ALL flags in ONE request using bulk endpoint (much more efficient!)
         // This prevents N+1 API calls problem and rate limiting issues
-        const allFlags = await apiRequest<Record<string, boolean>>('GET', '/v1/settings/feature-flags');
-        
-        // Return only the requested flags with their values, default to false if missing
-        const result: Record<string, boolean> = {};
-        flagNames.forEach(name => {
-          result[name] = allFlags[name] ?? false;
-        });
-        
-        return result;
+        return await apiRequest<Record<string, boolean>>('GET', '/v1/settings/feature-flags');
       } catch (err) {
         console.warn('Failed to fetch feature flags:', err);
-        // Return all disabled as default
-        return Object.fromEntries(flagNames.map(name => [name, false]));
+        return {};
       }
     },
-    staleTime: 30 * 1000, // 30 seconds - shorter for dev (was 5 minutes)
-    gcTime: 2 * 60 * 1000, // 2 minutes (was 10 minutes)
+    staleTime: 5 * 60 * 1000, // 5 minutes — feature flags only change on deployment
+    gcTime: 10 * 60 * 1000, // 10 minutes
     retry: 1,
   });
 
+  // Filter down to only the requested flag names
+  const filteredData: Record<string, boolean> = {};
+  flagNames.forEach(name => {
+    filteredData[name] = (data ?? {})[name] ?? false;
+  });
+
   return {
-    flags: data ?? Object.fromEntries(flagNames.map(name => [name, false])),
+    flags: filteredData,
     isLoading,
     error: error as Error | null,
   };

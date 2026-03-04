@@ -93,7 +93,8 @@ const UserAnalyticsDashboard: React.FC<UserAnalyticsDashboardProps> = ({ userId 
     };
     
     fetchAnalyticsData();
-  }, [userId, t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]); // `t` intentionally omitted — UI translations don't affect which data is fetched
 
   const handleExport = async () => {
     try {

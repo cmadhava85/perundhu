@@ -101,7 +101,9 @@ const useLocationData = (language?: string) => {
       isMounted = false;
       abortController.abort();
     };
-  }, [i18n.language, language, fromLocation, toLocation]); // Added fromLocation and toLocation dependencies
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n.language, language]); // fromLocation/toLocation intentionally omitted — they are set INSIDE this effect;
+                                   // including them would cause an infinite re-fetch loop.
 
   // Clear error state
   const clearError = useCallback(() => {

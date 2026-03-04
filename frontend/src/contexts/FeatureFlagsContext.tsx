@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import AdminService from '../services/adminService';
 import { apiRequest } from '../services/api';
 
@@ -121,6 +122,7 @@ interface FeatureFlagsProviderProps {
 }
 
 export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ children }) => {
+  const queryClient = useQueryClient();
   const [flags, setFlags] = useState<FeatureFlags>(defaultFlags);
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -150,19 +152,20 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     return null;
   }, []);
 
-  // Sync with public feature flags endpoint
+  // Sync with public feature flags endpoint — uses React Query cache so the
+  // HTTP request is shared with usePublicFeatureFlags (avoids a duplicate call)
   const syncWithBackend = useCallback(async () => {
     setIsSyncing(true);
     setLastSyncError(null);
     
     try {
-      // Use bulk endpoint to get all feature flags in ONE call instead of 30+ individual calls
-      // This prevents rate limiting (429 errors) and improves performance
-      const backendFlags = await apiRequest<Record<string, boolean>>(
-        'GET', 
-        '/v1/settings/feature-flags',
-        undefined
-      );
+      // fetchQuery returns cached data if fresh, otherwise fetches — same key
+      // used by usePublicFeatureFlags, so both share the same cache entry
+      const backendFlags = await queryClient.fetchQuery<Record<string, boolean>>({
+        queryKey: ['public-feature-flags', 'all'],
+        queryFn: () => apiRequest<Record<string, boolean>>('GET', '/v1/settings/feature-flags', undefined),
+        staleTime: 5 * 60 * 1000,
+      });
 
       setIsBackendAvailable(true);
       
@@ -189,7 +192,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     } finally {
       setIsSyncing(false);
     }
-  }, [saveToLocalStorage, loadFromLocalStorage]);
+  }, [queryClient, saveToLocalStorage, loadFromLocalStorage]);
 
   // Save current flags to backend
   const saveToBackend = useCallback(async () => {

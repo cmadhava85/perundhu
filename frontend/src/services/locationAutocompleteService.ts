@@ -27,8 +27,8 @@ export interface LocationDTO {
  */
 export class LocationAutocompleteService {
   private static readonly MIN_QUERY_LENGTH = 3; // Check database after 3 characters as per requirement
-  private static readonly DEBOUNCE_DELAY = 100; // Reduced for faster response
-  private static readonly INSTANT_DEBOUNCE = 50; // Ultra-fast for instant suggestions
+  private static readonly DEBOUNCE_DELAY = 300; // Standard search debounce — avoids per-keystroke requests
+  private static readonly INSTANT_DEBOUNCE = 150; // Short queries: fast but still debounced
   
   private debounceTimeout: NodeJS.Timeout | null = null;
   private currentAbortController: AbortController | null = null; // Track active requests
