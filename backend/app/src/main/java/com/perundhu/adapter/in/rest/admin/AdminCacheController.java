@@ -27,7 +27,7 @@ import java.util.*;
  * All endpoints require ADMIN role.
  */
 @RestController
-@RequestMapping("/api/admin/cache")
+@RequestMapping("/admin/cache")
 @Tag(name = "Admin - Cache Management", description = "Manage application caches")
 @SecurityRequirement(name = "bearer")
 public class AdminCacheController {

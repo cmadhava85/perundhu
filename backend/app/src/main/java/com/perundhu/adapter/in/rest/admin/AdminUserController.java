@@ -39,7 +39,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/admin/users")
+@RequestMapping("/admin/users")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminUserController {

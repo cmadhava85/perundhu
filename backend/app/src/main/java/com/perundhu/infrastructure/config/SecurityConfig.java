@@ -154,7 +154,8 @@ public class SecurityConfig {
                 "/v1/duplicates/**", // Duplicate check is stateless (read-only validation)
                 "/v1/route-issues", // Public route issue submission (includes CSRF via reCAPTCHA)
                 "/v1/route-issues/**", // Route issue endpoints with wildcard
-                "/admin/auth/**" // Admin auth endpoints (login/logout with built-in security)
+                "/admin/auth/**", // Admin auth endpoints (login/logout with built-in security)
+                "/api/admin/auth/**" // Admin auth endpoints with /api prefix
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -33,9 +33,11 @@
   align-items: center;
 }
 
-/* Prevent page scroll when hovering over the card */
-.premium-contribution-page:has(.premium-contribution-card:hover) {
-  overflow-y: hidden;
+/* Prevent page scroll when hovering over the card - desktop only */
+@media (hover: hover) and (pointer: fine) {
+  .premium-contribution-page:has(.premium-contribution-card:hover) {
+    overflow-y: hidden;
+  }
 }
 
 @media (max-width: 640px) {
