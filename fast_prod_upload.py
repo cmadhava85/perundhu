@@ -163,6 +163,36 @@ def fast_upload_production():
             for bus_id, bus_num in cursor.fetchall():
                 bus_id_map[bus_num] = bus_id
             
+            # Collect stop names missing from locations table so we can insert them first
+            missing_stop_names = set()
+            for bus in buses:
+                for stop in bus.get('stops', []):
+                    raw_name = (stop.get('location') or stop.get('landmark') or stop.get('name') or '').strip()
+                    if raw_name and raw_name.lower() not in location_id_map:
+                        missing_stop_names.add(raw_name)
+
+            if missing_stop_names:
+                print(f"   ➕ Inserting {len(missing_stop_names):,} new locations from stop data...")
+                new_loc_values = []
+                for loc_name in missing_stop_names:
+                    safe_name = loc_name.replace("'", "''").replace("\\", "\\\\")
+                    new_loc_values.append(f"('{safe_name}', 0.0, 0.0, '', 'Tamil Nadu', NULL, 'City')")
+                for i in range(0, len(new_loc_values), 500):
+                    chunk = new_loc_values[i:i + 500]
+                    cursor.execute(f"""
+                        INSERT INTO locations (name, latitude, longitude, district, state, osm_id, type)
+                        VALUES {','.join(chunk)}
+                        ON DUPLICATE KEY UPDATE name = VALUES(name)
+                    """)
+                conn.commit()
+                # Refresh the map with newly inserted IDs
+                cursor.execute("SELECT id, name FROM locations WHERE name IN ({})".format(
+                    ','.join(f"'{n.replace(chr(39), chr(39)+chr(39))}'" for n in missing_stop_names)
+                ))
+                for loc_id, loc_name in cursor.fetchall():
+                    location_id_map[loc_name.lower()] = loc_id
+                print(f"   ✓ Added {len(missing_stop_names):,} locations")
+
             all_stops = []
             for bus in buses:
                 stops = bus.get('stops', [])
@@ -175,8 +205,10 @@ def fast_upload_production():
                 for stop_order, stop in enumerate(stops):
                     # JSON uses 'location' (or fallback 'landmark'/'name') as the stop identifier
                     raw_name = (stop.get('location') or stop.get('landmark') or stop.get('name') or '').strip().lower()
-                    stop_loc_id = location_id_map.get(raw_name, 'NULL')
-                    if stop_loc_id == 'NULL':
+                    if not raw_name:
+                        continue
+                    stop_loc_id = location_id_map.get(raw_name)
+                    if not stop_loc_id:
                         continue
                     
                     # JSON may use a single 'time' or separate arrival/departure fields
