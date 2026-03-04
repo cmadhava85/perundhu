@@ -78,7 +78,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCPSECRET }}
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
@@ -113,7 +113,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCPSECRET }}
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
@@ -165,7 +165,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCPSECRET }}
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
@@ -342,7 +342,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCPSECRET }}
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
@@ -387,6 +387,7 @@ jobs:
           gcloud run deploy perundhu-backend-preprod \
             --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/backend:preprod-latest \
             --platform=managed \
+            --project=${{ env.PROJECT_ID }} \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
             --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,FLYWAY_ENABLED=false,SPRING_FLYWAY_ENABLED=false" \
@@ -402,6 +403,7 @@ jobs:
         run: |
           gcloud run services update-traffic perundhu-backend-preprod \
             --to-latest \
+            --project=${{ env.PROJECT_ID }} \
             --region=${{ env.REGION }}
 
   deploy-frontend:
@@ -415,7 +417,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCPSECRET }}
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
@@ -425,6 +427,7 @@ jobs:
           gcloud run deploy perundhu-frontend-preprod \
             --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/frontend:preprod-latest \
             --platform=managed \
+            --project=${{ env.PROJECT_ID }} \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
             --port=8080 \
@@ -444,7 +447,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCPSECRET }}
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
