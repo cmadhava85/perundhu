@@ -36,29 +36,6 @@ const LiveBusTracker: React.FC<LiveBusTrackerProps> = ({
   // Generate a unique user ID for tracking
   const [userId] = useState(() => `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
 
-  // Auto-detect nearest stop from GPS
-  const findNearestStop = (userLat: number, userLng: number): Stop | null => {
-    if (!stops || stops.length === 0) return null;
-    
-    let nearestStop: Stop | null = null;
-    let minDistance = Infinity;
-    
-    stops.forEach(stop => {
-      // Check if stop has coordinates
-      if (stop.latitude && stop.longitude) {
-        const distance = Math.sqrt(
-          Math.pow(userLat - stop.latitude, 2) + 
-          Math.pow(userLng - stop.longitude, 2)
-        );
-        if (distance < minDistance) {
-          minDistance = distance;
-          nearestStop = stop;
-        }
-      }
-    });
-    
-    return nearestStop;
-  };
 
   const handleStartTracking = () => {
     setError(null);
@@ -67,12 +44,6 @@ const LiveBusTracker: React.FC<LiveBusTrackerProps> = ({
     // Get initial position and auto-detect stop
     getCurrentPositionCallback(
       (position) => {
-        console.log('Initial position:', position);
-        
-        // Auto-detect nearest stop
-        const nearestStop = findNearestStop(position.latitude, position.longitude);
-        console.log('Auto-detected nearest stop:', nearestStop?.name);
-        
         startLocationReporting(position);
         onStartTracking();
       },
@@ -129,7 +100,6 @@ const LiveBusTracker: React.FC<LiveBusTrackerProps> = ({
 
       // Use the simplified API that auto-detects stops
       const result = await reportBusLocationSimple(locationReport);
-      console.log('Location reported successfully:', result);
 
       // Update tracking data display
       setTrackingData({

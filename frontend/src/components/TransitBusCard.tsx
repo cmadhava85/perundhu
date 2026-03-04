@@ -266,8 +266,14 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
       2000
     );
     
-    // TODO: Trigger share modal
-    console.log('Sharing:', bus.busNumber);
+    const shareText = t('busCard.shareText', `Bus ${bus.busNumber} from ${bus.from} to ${bus.to} – Departure: ${bus.departureTime}`);
+    if (navigator.share) {
+      navigator.share({ text: shareText }).catch(() => {/* user cancelled */});
+    } else {
+      navigator.clipboard?.writeText(shareText).then(() => {
+        showToast(t('busCard.shareCopied', 'Route details copied to clipboard'), 'success', 3000);
+      });
+    }
   }, [bus, showToast, t]);
 
   const cardContent = (

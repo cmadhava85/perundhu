@@ -188,9 +188,6 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
 
   // Handle Add Stops - navigate to contribute page with bus pre-selected
   const handleAddStops = useCallback((bus: Bus) => {
-    console.log('SearchResults - handleAddStops called with bus:', bus);
-    console.log('SearchResults - fromLocation:', fromLocation);
-    console.log('SearchResults - toLocation:', toLocation);
     // Navigate to contribute page with bus info in state
     navigate('/contribute', { 
       state: { 

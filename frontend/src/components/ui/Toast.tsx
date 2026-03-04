@@ -59,6 +59,7 @@ const Toast: React.FC<ToastProps> = ({
               setIsLeaving(true);
               setTimeout(onClose, 300);
             }}
+            aria-label="Close"
             className="text-white hover:text-gray-200 transition-colors"
           >
             ✕

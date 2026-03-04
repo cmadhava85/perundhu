@@ -34,17 +34,6 @@ interface BusSearchResponse {
  * Transform backend BusDTO to frontend Bus object
  */
 function transformBusDTOToBus(busDTO: BusDTO, fromLocation?: Location | null, toLocation?: Location | null): Bus {
-  // Generate sample timing data if not provided
-  const sampleDepartureTimes = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
-  const departureTime = busDTO.departureTime || sampleDepartureTimes[busDTO.id % sampleDepartureTimes.length];
-  
-  // Calculate arrival time (add 6-10 hours based on bus ID for variety)
-  const depHour = parseInt(departureTime.split(':')[0]);
-  const depMinute = parseInt(departureTime.split(':')[1]);
-  const travelHours = 6 + (busDTO.id % 5);
-  const arrHour = (depHour + travelHours) % 24;
-  const arrivalTime = busDTO.arrivalTime || `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
-  
   const fromName = fromLocation?.name || 'Unknown';
   const toName = toLocation?.name || 'Unknown';
   
@@ -58,17 +47,14 @@ function transformBusDTOToBus(busDTO: BusDTO, fromLocation?: Location | null, to
     toLocationId: toLocation?.id,
     fromLocation: fromLocation || undefined,
     toLocation: toLocation || undefined,
-    departureTime: departureTime,
-    arrivalTime: arrivalTime,
+    departureTime: busDTO.departureTime || '',
+    arrivalTime: busDTO.arrivalTime || '',
     category: busDTO.type || 'Express Service',
     busType: busDTO.type || 'Express Service',
-    status: busDTO.id % 3 === 0 ? 'Delayed' : 'On Time',
-    duration: `${travelHours}h ${Math.floor(Math.random() * 60)}m`,
     name: busDTO.name,
     routeName: `${fromName} - ${toName}`,
     isLive: false,
-    availability: 'available' as const,
-    capacity: 40 + (busDTO.id % 20)
+    availability: 'available' as const
   };
 }
 

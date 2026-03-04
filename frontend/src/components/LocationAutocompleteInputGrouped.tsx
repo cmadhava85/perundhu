@@ -38,6 +38,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
+  const [searchError, setSearchError] = useState(false);
   const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   
   // Helper function to get the display name based on current language
@@ -83,6 +84,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
     if (inputValue.length >= 3) {
       setIsLoading(true);
       try {
+        setSearchError(false);
         if (useGrouped) {
           locationAutocompleteService.getDebouncedGroupedSuggestions(
             inputValue,
@@ -107,6 +109,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
         setIsLoading(false);
         setSuggestionGroups([]);
         setShowSuggestions(false);
+        setSearchError(true);
       }
     } else {
       setIsLoading(false);
@@ -208,6 +211,25 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
             fontSize: '14px'
           }}>
             🔄
+          </div>
+        )}
+        
+        {searchError && !isLoading && (
+          <div role="alert" style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            margin: '4px 0 0 0',
+            padding: '8px 12px',
+            background: '#fff3cd',
+            border: '1px solid #ffc107',
+            borderRadius: '8px',
+            fontSize: '12px',
+            color: '#856404',
+            zIndex: 1000
+          }}>
+            {i18n.t('search.suggestionsUnavailable', 'Search unavailable. Please try again.')}
           </div>
         )}
         

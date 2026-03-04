@@ -135,7 +135,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
     
     // Either bus number or route name is required
     if (!formData.busNumber?.trim() && !formData.route?.trim()) {
-      errors.busNumber = 'Either Bus Number or Route Name is required';
+      errors.busNumber = t('validation.busNumberOrRouteRequired', 'Either Bus Number or Route Name is required');
     }
     
     // Origin is required

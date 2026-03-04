@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import './ImageContributionList.css';
 import AdminService from '../../services/adminService';
 import RejectModal from './RejectModal';
@@ -101,9 +102,11 @@ const ImageContributionList: React.FC = () => {
     if (id === undefined) return;
     try {
       await AdminService.approveImageContribution(Number(id));
+      toast.success(t('admin.contributions.approveSuccess', 'Contribution approved'));
       fetchContributions(currentPage);
     } catch (error) {
       console.error('Failed to approve image contribution:', error);
+      toast.error(t('admin.contributions.approveError', 'Failed to approve contribution'));
     }
   };
 
@@ -114,9 +117,11 @@ const ImageContributionList: React.FC = () => {
       await AdminService.rejectImageContribution(Number(selectedContribution.id), reason);
       setRejectModalOpen(false);
       setSelectedContribution(null);
+      toast.success(t('admin.contributions.rejectSuccess', 'Contribution rejected'));
       fetchContributions(currentPage);
     } catch (error) {
       console.error('Failed to reject image contribution:', error);
+      toast.error(t('admin.contributions.rejectError', 'Failed to reject contribution'));
     }
   };
 
@@ -126,9 +131,11 @@ const ImageContributionList: React.FC = () => {
     if (window.confirm(t('admin.confirm.deleteContribution', 'Are you sure you want to delete this contribution?'))) {
       try {
         await AdminService.deleteImageContribution(Number(id));
+        toast.success(t('admin.contributions.deleteSuccess', 'Contribution deleted'));
         fetchContributions(currentPage);
       } catch (error) {
         console.error('Failed to delete image contribution:', error);
+        toast.error(t('admin.contributions.deleteError', 'Failed to delete contribution'));
       }
     }
   };
