@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Upload, Camera, FileImage, AlertCircle, CheckCircle, RefreshCw, Copy, CheckCircle2 } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing, ApiError } from '../services/api';
 import { getRecaptchaToken } from '../services/recaptchaService';
@@ -57,6 +57,17 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   
   // Use stable counter for image IDs to prevent re-renders
   const imageIdCounterRef = useRef(1);
+  
+  // Track all active polling intervals so they can be cleared on unmount
+  const activeIntervalsRef = useRef<Set<ReturnType<typeof setInterval>>>(new Set());
+  
+  // Clear all polling intervals when the component unmounts
+  useEffect(() => {
+    return () => {
+      activeIntervalsRef.current.forEach(id => clearInterval(id));
+      activeIntervalsRef.current.clear();
+    };
+  }, []);
   
   // RIA Enhancement State - removed unused viewMode and showFilters
   const [sortBy, setSortBy] = useState<SortOption>('date');
@@ -421,6 +432,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         // Check if processing is complete (not in PROCESSING or PENDING state)
         if (statusResponse.status && !['PROCESSING', 'PENDING'].includes(statusResponse.status)) {
           clearInterval(pollInterval);
+          activeIntervalsRef.current.delete(pollInterval);
           // Only call success callback when actually processed successfully
           if (statusResponse.status === 'PROCESSED' && successCallback) {
             successCallback(contributionId);
@@ -445,6 +457,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         // Show error to user after max retries
         if (retryCount >= MAX_RETRY_ATTEMPTS) {
           clearInterval(pollInterval);
+          activeIntervalsRef.current.delete(pollInterval);
           
           // Extract error message from ApiError
           let errorMessage = t('contribution.imageUpload.statusCheckFailed', 'Failed to check processing status');
@@ -470,9 +483,13 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       }
     }, POLLING_INTERVAL_MS);
 
+    // Register interval for cleanup on unmount
+    activeIntervalsRef.current.add(pollInterval);
+
     // Auto-stop polling after maximum duration to prevent indefinite polling
     setTimeout(() => {
       clearInterval(pollInterval);
+      activeIntervalsRef.current.delete(pollInterval);
     }, MAX_POLLING_DURATION_MS);
   };
 

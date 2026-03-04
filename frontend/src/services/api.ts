@@ -289,9 +289,9 @@ export const checkOnlineStatus = async (): Promise<boolean> => {
  * Get current bus locations for tracking
  * @returns Promise with the current bus locations
  */
-export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
+export const getCurrentBusLocations = async (signal?: AbortSignal): Promise<BusLocation[]> => {
   try {
-    const response = await api.get('/v1/bus-tracking/live');
+    const response = await api.get('/v1/bus-tracking/live', { signal });
     
     // The backend can return either Map<Long, BusLocationDTO> or BusLocation[]
     // Properly handle both formats to ensure consistent array response

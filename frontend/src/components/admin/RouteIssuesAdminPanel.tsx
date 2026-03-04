@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertCircle, CheckCircle, Clock, XCircle, AlertTriangle, Eye, ChevronDown, ChevronUp, MapPin, Bus, Info } from 'lucide-react';
 import './RouteIssuesAdminPanel.css';
@@ -100,6 +100,9 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const [actionLoading, setActionLoading] = useState<number | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  // AbortController ref for cancelling in-flight fetchIssues requests
+  const fetchAbortControllerRef = useRef<AbortController | null>(null);
+
   // Resolution modal state
   const [resolutionModal, setResolutionModal] = useState<{
     isOpen: boolean;
@@ -171,6 +174,12 @@ const RouteIssuesAdminPanel: React.FC = () => {
 
   // Fetch issues based on filters
   const fetchIssues = useCallback(async () => {
+    // Abort any in-flight request from a previous filter change
+    fetchAbortControllerRef.current?.abort();
+    const controller = new AbortController();
+    fetchAbortControllerRef.current = controller;
+    const { signal } = controller;
+
     try {
       setLoading(true);
       setError(null);
@@ -181,7 +190,8 @@ const RouteIssuesAdminPanel: React.FC = () => {
         const responses = await Promise.all(
           statuses.map(status => 
             fetch(`${API_BASE}/v1/route-issues/admin/by-status?status=${status}&page=0&size=100`, { 
-              headers: getAuthHeaders() 
+              headers: getAuthHeaders(),
+              signal
             })
           )
         );
@@ -199,7 +209,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
         // Fetch specific status
         const response = await fetch(
           `${API_BASE}/v1/route-issues/admin/by-status?status=${statusFilter}&page=0&size=100`,
-          { headers: getAuthHeaders() }
+          { headers: getAuthHeaders(), signal }
         );
         
         if (!response.ok) {
@@ -210,10 +220,13 @@ const RouteIssuesAdminPanel: React.FC = () => {
         setIssues(data.issues || []);
       }
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return;
       setError('Failed to load issues. Please try again.');
       console.error(err);
     } finally {
-      setLoading(false);
+      if (!signal.aborted) {
+        setLoading(false);
+      }
     }
   }, [statusFilter, getAuthHeaders]);
 

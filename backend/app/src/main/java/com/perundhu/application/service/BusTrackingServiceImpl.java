@@ -80,8 +80,11 @@ public class BusTrackingServiceImpl implements BusTrackingService {
             return createErrorRewardResponse(report.getUserId(), "Unknown bus ID");
         }
 
+        // Load bus stops once — reused by both route validation and location update
+        List<Stop> busStops = stopRepository.findByBusOrderByStopOrder(bus.get());
+
         // Check if the reported location is along the expected route
-        boolean isOnRoute = validateLocationOnRoute(report, bus.get());
+        boolean isOnRoute = validateLocationOnRoute(report, busStops);
 
         if (!isOnRoute) {
             log.warn("Reported location is not on the expected route for bus {}", report.getBusId());
@@ -95,7 +98,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         }
 
         // Update the current bus location with the new report
-        updateBusLocation(report, bus.get());
+        updateBusLocation(report, bus.get(), busStops);
 
         // Update the active tracker record for this user
         Map<String, LocalDateTime> trackersForBus = activeBusTrackers.computeIfAbsent(
@@ -297,10 +300,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
      * @param bus    The bus entity
      * @return true if the location is valid
      */
-    private boolean validateLocationOnRoute(BusLocationReportDTO report, Bus bus) {
-        // Get all stops for this bus
-        List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
-
+    private boolean validateLocationOnRoute(BusLocationReportDTO report, List<Stop> stops) {
         if (stops.isEmpty()) {
             // If no stops, we can't validate the route, assume it's valid
             return true;
@@ -342,7 +342,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
     /**
      * Update the current location of a bus with a new report
      */
-    private void updateBusLocation(BusLocationReportDTO report, Bus bus) {
+    private void updateBusLocation(BusLocationReportDTO report, Bus bus, List<Stop> stops) {
         // Get tracker count
         Map<String, LocalDateTime> trackersForBus = activeBusTrackers.get(report.getBusId());
         int reportCount = trackersForBus != null ? trackersForBus.size() : 1;
@@ -354,8 +354,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         String lastReportedStopName = null;
         String nextStopName = null;
         String estimatedArrivalTime = null;
-
-        List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
         if (!stops.isEmpty()) {
             Optional<Stop> nearestStop = findNearestStop(report.getLatitude(), report.getLongitude(), stops);
             if (nearestStop.isPresent()) {

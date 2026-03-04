@@ -59,16 +59,20 @@ export function useNetworkStatusAdvanced() {
     // Periodic health check every 30 seconds
     const healthCheckInterval = setInterval(async () => {
       setIsChecking(true);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10_000);
       try {
         // Try to fetch a lightweight endpoint using configured API URL
         const response = await fetch(`${API_URL}/v1/health`, { 
           method: 'HEAD',
           cache: 'no-store',
+          signal: controller.signal,
         });
         setIsOnline(response.ok);
       } catch {
         setIsOnline(false);
       } finally {
+        clearTimeout(timeoutId);
         setLastChecked(new Date());
         setIsChecking(false);
       }

@@ -40,6 +40,14 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Location> findAllByIds(List<Long> ids) {
+        return jpaRepository.findAllById(ids).stream()
+                .map(LocationJpaEntity::toDomainModel)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Location> findAll() {
         return jpaRepository.findAll().stream()
                 .map(LocationJpaEntity::toDomainModel)

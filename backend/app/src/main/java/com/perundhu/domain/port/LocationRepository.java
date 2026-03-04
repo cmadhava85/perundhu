@@ -50,11 +50,13 @@ public interface LocationRepository {
     List<Location> findCommonConnections(Long fromLocationId, Long toLocationId);
 
     /**
-     * Find locations by their ID values
-     * 
-     * @param id The ID of the location
-     * @return Optional containing the location if found
+     * Find locations by a list of IDs in a single batch query.
+     *
+     * @param ids The list of ID values to look up
+     * @return List of matching locations (order not guaranteed)
      */
+    List<Location> findAllByIds(List<Long> ids);
+
     Optional<Location> findById(Long id);
 
     /**

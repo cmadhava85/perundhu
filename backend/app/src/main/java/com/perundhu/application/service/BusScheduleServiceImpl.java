@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import com.perundhu.infrastructure.config.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.application.dto.BusDTO;
@@ -56,6 +59,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     private final BusStandRepository busStandRepository;
     private final RouteContributionRepository routeContributionRepository;
     private final UserTrackingSessionRepository userTrackingSessionRepository;
+    private final CacheManager cacheManager;
 
     // Constructor injection instead of field injection
     public BusScheduleServiceImpl(
@@ -65,7 +69,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             TranslationRepository translationRepository,
             BusStandRepository busStandRepository,
             RouteContributionRepository routeContributionRepository,
-            UserTrackingSessionRepository userTrackingSessionRepository) {
+            UserTrackingSessionRepository userTrackingSessionRepository,
+            CacheManager cacheManager) {
         this.busRepository = busRepository;
         this.locationRepository = locationRepository;
         this.stopRepository = stopRepository;
@@ -73,6 +78,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         this.busStandRepository = busStandRepository;
         this.routeContributionRepository = routeContributionRepository;
         this.userTrackingSessionRepository = userTrackingSessionRepository;
+        this.cacheManager = cacheManager;
     }
 
     @Override
@@ -285,41 +291,43 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     public List<BusScheduleDTO> findBusSchedules(Location fromLocation, Location toLocation, String languageCode) {
         List<Bus> buses = busRepository.findByFromAndToLocation(fromLocation, toLocation);
 
-        return buses.stream().map(bus -> {
-            // Initialize with original values
-            String translatedName = bus.name();
-            String fromLocationTranslatedName = fromLocation.name();
-            String toLocationTranslatedName = toLocation.name();
+        // Load from/to location translations once for all buses (they are the same for every row)
+        final String fromLocationTranslated;
+        final String toLocationTranslated;
+        if (languageCode != null && !languageCode.isEmpty()) {
+            String fromTr = fromLocation.name();
+            if (fromLocation.id() != null) {
+                fromTr = translationRepository
+                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                ENTITY_TYPE_LOCATION, fromLocation.id().value(), FIELD_NAME, languageCode)
+                        .map(t -> t.getTranslatedValue())
+                        .orElse(fromTr);
+            }
+            String toTr = toLocation.name();
+            if (toLocation.id() != null) {
+                toTr = translationRepository
+                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                ENTITY_TYPE_LOCATION, toLocation.id().value(), FIELD_NAME, languageCode)
+                        .map(t -> t.getTranslatedValue())
+                        .orElse(toTr);
+            }
+            fromLocationTranslated = fromTr;
+            toLocationTranslated = toTr;
+        } else {
+            fromLocationTranslated = fromLocation.name();
+            toLocationTranslated = toLocation.name();
+        }
 
-            // If language code is provided, try to get translations
+        return buses.stream().map(bus -> {
+            // For bus name, still do a per-bus translation lookup
+            String translatedName = bus.name();
             if (languageCode != null && !languageCode.isEmpty()) {
-                // For bus name
                 final String[] finalTranslatedName = { translatedName };
                 translationRepository
                         .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
                                 ENTITY_TYPE_BUS, bus.id().value(), FIELD_NAME, languageCode)
                         .ifPresent(translation -> finalTranslatedName[0] = translation.getTranslatedValue());
                 translatedName = finalTranslatedName[0];
-
-                // For from location name
-                final String[] finalFromLocationName = { fromLocationTranslatedName };
-                if (fromLocation.id() != null) {
-                    translationRepository
-                            .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
-                                    ENTITY_TYPE_LOCATION, fromLocation.id().value(), FIELD_NAME, languageCode)
-                            .ifPresent(translation -> finalFromLocationName[0] = translation.getTranslatedValue());
-                }
-                fromLocationTranslatedName = finalFromLocationName[0];
-
-                // For to location name
-                final String[] finalToLocationName = { toLocationTranslatedName };
-                if (toLocation.id() != null) {
-                    translationRepository
-                            .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
-                                    ENTITY_TYPE_LOCATION, toLocation.id().value(), FIELD_NAME, languageCode)
-                            .ifPresent(translation -> finalToLocationName[0] = translation.getTranslatedValue());
-                }
-                toLocationTranslatedName = finalToLocationName[0];
             }
 
             return new BusScheduleDTO(
@@ -328,9 +336,9 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                     translatedName, // 3. String translatedName
                     bus.number(), // 4. String busNumber
                     fromLocation.name(), // 5. String fromLocation
-                    fromLocationTranslatedName, // 6. String fromLocationTranslated
+                    fromLocationTranslated, // 6. String fromLocationTranslated
                     toLocation.name(), // 7. String toLocation
-                    toLocationTranslatedName, // 8. String toLocationTranslated
+                    toLocationTranslated, // 8. String toLocationTranslated
                     bus.departureTime(), // 9. LocalTime departureTime
                     bus.arrivalTime() // 10. LocalTime arrivalTime
             );
@@ -415,6 +423,17 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             return List.of();
         }
 
+        // Manual cache lookup — @Cacheable can't intercept private self-calls
+        String cacheKey = "dupIds:" + locationId;
+        var cache = cacheManager.getCache(CacheConfig.LOCATIONS_CACHE);
+        if (cache != null) {
+            @SuppressWarnings("unchecked")
+            List<Long> cached = cache.get(cacheKey, List.class);
+            if (cached != null) {
+                return cached;
+            }
+        }
+
         // First, get the location name
         Optional<Location> locationOpt = locationRepository.findById(locationId);
         if (locationOpt.isEmpty()) {
@@ -430,9 +449,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         }
 
         // Return all IDs including the original
-        return sameNameLocations.stream()
+        List<Long> result = sameNameLocations.stream()
                 .map(loc -> loc.id().value())
                 .toList();
+        if (cache != null) {
+            cache.put(cacheKey, result);
+        }
+        return result;
     }
 
     /**
@@ -503,12 +526,19 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
             log.debug("Found {} Tamil translations matching '{}'", matchingTranslations.size(), trimmedQuery);
 
-            for (Translation translation : matchingTranslations) {
-                Optional<Location> location = locationRepository.findById(translation.getEntityId());
-                if (location.isPresent() && !results.contains(location.get())) {
-                    results.add(location.get());
-                    log.debug("Found location by Tamil search: {} -> {}",
-                            translation.getTranslatedValue(), location.get().getName());
+            // Batch-load all matching locations in a single query instead of N findById calls
+            List<Long> entityIds = matchingTranslations.stream()
+                    .map(Translation::getEntityId)
+                    .distinct()
+                    .toList();
+
+            if (!entityIds.isEmpty()) {
+                List<Location> tamilLocations = locationRepository.findAllByIds(entityIds);
+                for (Location location : tamilLocations) {
+                    if (!results.contains(location)) {
+                        results.add(location);
+                        log.debug("Found location by Tamil search: {}", location.getName());
+                    }
                 }
             }
         }

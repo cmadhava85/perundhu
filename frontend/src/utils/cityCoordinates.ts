@@ -12,6 +12,20 @@ export interface CityCoordinate {
   busStandName: string;
 }
 
+// Module-level cache: keyed by normalised city name, value is the cached promise.
+// Using a Map<string, Promise> means concurrent callers for the same name share
+// one in-flight HTTP request (promise deduplication).
+const geocodeCache = new Map<string, Promise<{ latitude: number; longitude: number; busStandName: string } | null>>();
+
+// Simple rate-limiter: enforce at most 1 Nominatim request per second.
+let _lastGeoRequestTime = 0;
+function _waitForGeocodeRateLimit(): Promise<void> {
+  const now = Date.now();
+  const wait = Math.max(0, 1000 - (now - _lastGeoRequestTime));
+  _lastGeoRequestTime = now + wait;
+  return wait > 0 ? new Promise(resolve => setTimeout(resolve, wait)) : Promise.resolve();
+}
+
 export const CITY_BUS_STANDS: Record<string, CityCoordinate> = {
   // Tamil Nadu Major Cities
   'chennai': {
@@ -362,45 +376,66 @@ export function extractCityFromStopName(stopName: string): string {
 
 /**
  * Geocode a city name using Nominatim OpenStreetMap API
+ * Results are cached per city name and requests are rate-limited to 1 req/sec.
  * @param cityName - Name of the city to geocode
  * @returns Promise with coordinates or null if not found
  */
-export async function geocodeCity(cityName: string): Promise<{ latitude: number; longitude: number; busStandName: string } | null> {
-  if (!cityName) return null;
-  
-  try {
-    // Use Nominatim API for geocoding
-    const searchQuery = encodeURIComponent(`${cityName}, Tamil Nadu, India`);
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}&limit=1&countrycodes=in`,
-      {
-        headers: {
-          'User-Agent': 'Perundhu Bus Tracker (contact: admin@perundhu.com)'
+export function geocodeCity(cityName: string): Promise<{ latitude: number; longitude: number; busStandName: string } | null> {
+  if (!cityName) return Promise.resolve(null);
+
+  const cacheKey = cityName.trim().toLowerCase();
+  const cached = geocodeCache.get(cacheKey);
+  if (cached !== undefined) return cached;
+
+  const request = (async () => {
+    await _waitForGeocodeRateLimit();
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10_000);
+    try {
+      const searchQuery = encodeURIComponent(`${cityName}, Tamil Nadu, India`);
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}&limit=1&countrycodes=in`,
+        {
+          headers: {
+            'User-Agent': 'Perundhu Bus Tracker (contact: admin@perundhu.com)'
+          },
+          signal: controller.signal
         }
+      );
+      
+      if (!response.ok) {
+        console.warn('Geocoding API request failed:', response.status);
+        return null;
       }
-    );
-    
-    if (!response.ok) {
-      console.warn('Geocoding API request failed:', response.status);
+      
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        const result = data[0];
+        return {
+          latitude: Number.parseFloat(result.lat),
+          longitude: Number.parseFloat(result.lon),
+          busStandName: `${cityName} (Geocoded Location)`
+        };
+      }
+      
       return null;
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.warn('Geocoding request timed out for:', cityName);
+      } else {
+        console.error('Error geocoding city:', cityName, error);
+      }
+      geocodeCache.delete(cacheKey); // Don't cache failures so they can be retried
+      return null;
+    } finally {
+      clearTimeout(timeoutId);
     }
-    
-    const data = await response.json();
-    
-    if (data && data.length > 0) {
-      const result = data[0];
-      return {
-        latitude: parseFloat(result.lat),
-        longitude: parseFloat(result.lon),
-        busStandName: `${cityName} (Geocoded Location)`
-      };
-    }
-    
-    return null;
-  } catch (error) {
-    console.error('Error geocoding city:', cityName, error);
-    return null;
-  }
+  })();
+
+  geocodeCache.set(cacheKey, request);
+  return request;
 }
 
 /**

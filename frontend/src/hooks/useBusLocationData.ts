@@ -26,10 +26,12 @@ export const useBusLocationData = (
   const loadBusLocations = useCallback(async () => {
     if (!isMountedRef.current) return;
     
+    // Cancel any previous in-flight request
+    const controller = new AbortController();
     try {
       setIsLoading(true);
       // Get all current bus locations
-      const locations = await getCurrentBusLocations();
+      const locations = await getCurrentBusLocations(controller.signal);
       
       // Only update state if component is still mounted
       if (!isMountedRef.current) return;
@@ -45,6 +47,7 @@ export const useBusLocationData = (
       setBusLocations(filteredLocations);
       setError(null);
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return;
       // Only update error state if still mounted
       if (!isMountedRef.current) return;
       console.error('Error loading bus locations:', err);
@@ -101,7 +104,7 @@ export const useBusLocationData = (
     toLocation.id, 
     toLocation.name, 
     showLiveTracking,
-    buses, // Add buses to dependency array
+    buses?.length ?? 0, // Use length instead of array ref to avoid restarting on stable data
     refreshInterval,
     loadBusLocations
   ]);
