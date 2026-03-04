@@ -22,6 +22,7 @@ import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.BusRepository;
+import com.perundhu.domain.port.GeocodingPort;
 import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.LocationValidationService;
@@ -100,6 +101,7 @@ public class ContributionProcessingService {
     private final LocationTranslationService locationTranslationService;
     private final DataQualityValidationService dataQualityValidationService;
     private final DuplicateDetectionService duplicateDetectionService;
+    private final GeocodingPort geocodingPort;
 
     /**
      * Scheduled job to process pending route contributions
@@ -805,10 +807,27 @@ public class ContributionProcessingService {
             return matched;
         }
 
-        // No existing location found - create new one with English name and Tamil
-        // translation
+        // No existing location found - geocode via Nominatim before creating
         log.info("Creating new location: {} (original input: {}, lat: {}, lon: {})",
                 normalizedName, originalName, latitude, longitude);
+
+        // If coordinates are missing, look them up via Nominatim
+        Double resolvedLat = latitude;
+        Double resolvedLng = longitude;
+        if (resolvedLat == null || resolvedLng == null || (resolvedLat == 0.0 && resolvedLng == 0.0)) {
+            try {
+                Optional<GeocodingPort.GeocodingResult> geoResult = geocodingPort.searchTamilNadu(normalizedName);
+                if (geoResult.isPresent()) {
+                    resolvedLat = geoResult.get().getLatitude();
+                    resolvedLng = geoResult.get().getLongitude();
+                    log.info("Geocoded '{}' -> ({}, {})", normalizedName, resolvedLat, resolvedLng);
+                } else {
+                    log.warn("Could not geocode '{}' - storing with null coordinates", normalizedName);
+                }
+            } catch (Exception e) {
+                log.warn("Geocoding failed for '{}': {} - storing with null coordinates", normalizedName, e.getMessage());
+            }
+        }
 
         // Determine Tamil name to store
         String tamilName = null;
@@ -820,11 +839,12 @@ public class ContributionProcessingService {
             tamilName = translatedTamil.orElse(null);
         }
 
-        // Create location with English name
+        // Create location with English name and resolved coordinates
         Location newLocation = locationTranslationService.createLocationWithTranslation(
-                normalizedName, latitude, longitude, tamilName);
+                normalizedName, resolvedLat, resolvedLng, tamilName);
 
-        log.info("Created new location: {} with Tamil translation: {}", normalizedName, tamilName);
+        log.info("Created new location: {} with Tamil translation: {} at ({}, {})",
+                normalizedName, tamilName, resolvedLat, resolvedLng);
         return newLocation;
     }
 
