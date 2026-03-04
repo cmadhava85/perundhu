@@ -158,10 +158,25 @@ def fast_upload_production():
         buses_with_stops = sum(1 for b in buses if b.get('stops'))
         if buses_with_stops > 0:
             print(f"\n🛑 Uploading stops ({buses_with_stops:,} buses have stop data)...")
-            # Get bus IDs
-            cursor.execute("SELECT id, bus_number FROM buses")
-            for bus_id, bus_num in cursor.fetchall():
-                bus_id_map[bus_num] = bus_id
+            # Key by (bus_number, departure_time, from_location_id) so that when the same
+            # bus_number runs multiple times a day (or in both directions), each instance
+            # gets its own correct stop rows — not just the last one in the dict.
+            cursor.execute("""
+                SELECT b.id, b.bus_number, b.departure_time, b.from_location_id
+                FROM buses b
+            """)
+            for bus_id, bus_num, dep_time, from_loc_id in cursor.fetchall():
+                # departure_time comes back as a timedelta from MySQL; convert to HH:MM string
+                if hasattr(dep_time, 'seconds'):
+                    total = int(dep_time.total_seconds())
+                    dep_str = f"{total // 3600:02d}:{(total % 3600) // 60:02d}"
+                else:
+                    dep_str = str(dep_time)[:5] if dep_time else ''
+                composite_key = (bus_num, dep_str, from_loc_id)
+                bus_id_map[composite_key] = bus_id
+                # Also keep a bus_number-only fallback for buses with no duplicate
+                if bus_num not in bus_id_map:
+                    bus_id_map[bus_num] = bus_id
             
             # Collect stop names missing from locations table so we can insert them first
             # Use 'landmark' first — it holds the actual stop/terminal name.
@@ -199,7 +214,13 @@ def fast_upload_production():
             for bus in buses:
                 stops = bus.get('stops', [])
                 bus_num = bus.get('bus_number', '')
-                bus_db_id = bus_id_map.get(bus_num)
+                dep_time = bus.get('departure_time', '')
+                from_loc = bus.get('origin', bus.get('from_location', '')).strip().lower()
+                from_loc_id = location_id_map.get(from_loc)
+
+                # Try exact composite key first; fall back to bus_number-only
+                composite_key = (bus_num, dep_time, from_loc_id)
+                bus_db_id = bus_id_map.get(composite_key) or bus_id_map.get(bus_num)
                 
                 if not bus_db_id:
                     continue
