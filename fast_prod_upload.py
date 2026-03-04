@@ -153,10 +153,11 @@ def fast_upload_production():
         conn.commit()
         print(f"   ✅ Inserted {buses_inserted:,} buses")
         
-        # Upload stops if present
+        # Upload stops (stops are stored per-bus in JSON, not as a top-level key)
         stops_inserted = 0
-        if buses_data.get('stops'):
-            print(f"\n🛑 Uploading stops...")
+        buses_with_stops = sum(1 for b in buses if b.get('stops'))
+        if buses_with_stops > 0:
+            print(f"\n🛑 Uploading stops ({buses_with_stops:,} buses have stop data)...")
             # Get bus IDs
             cursor.execute("SELECT id, bus_number FROM buses")
             for bus_id, bus_num in cursor.fetchall():
@@ -171,18 +172,21 @@ def fast_upload_production():
                 if not bus_db_id:
                     continue
                 
-                for stop in stops:
-                    stop_name = stop.get('name', '').strip().lower()
-                    stop_loc_id = location_id_map.get(stop_name, 'NULL')
+                for stop_order, stop in enumerate(stops):
+                    # JSON uses 'location' (or fallback 'landmark'/'name') as the stop identifier
+                    raw_name = (stop.get('location') or stop.get('landmark') or stop.get('name') or '').strip().lower()
+                    stop_loc_id = location_id_map.get(raw_name, 'NULL')
                     if stop_loc_id == 'NULL':
                         continue
                     
+                    # JSON may use a single 'time' or separate arrival/departure fields
+                    t = stop.get('time') or stop.get('arrival_time')
                     all_stops.append({
                         'bus_id': bus_db_id,
                         'location_id': stop_loc_id,
-                        'stop_order': stop.get('stop_order', 0),
-                        'arrival_time': stop.get('arrival_time'),
-                        'departure_time': stop.get('departure_time')
+                        'stop_order': stop.get('stop_order', stop_order),
+                        'arrival_time': t,
+                        'departure_time': stop.get('departure_time', t)
                     })
             
             if all_stops:

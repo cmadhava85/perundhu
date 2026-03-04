@@ -514,8 +514,8 @@
   z-index: 10;
   scrollbar-width: thin;
   scrollbar-color: rgba(16, 185, 129, 0.4) rgba(16, 185, 129, 0.1);
-  /* Ensure wheel events are captured by this container */
-  touch-action: pan-x pinch-zoom;
+  /* Allow vertical touch scrolling on mobile */
+  touch-action: pan-y;
 }
 
 /* Webkit scrollbar styling for Chrome, Safari, Edge */
@@ -542,6 +542,9 @@
     padding: 1rem;
     margin: 0.5rem;
     border-radius: 16px;
+    max-height: none;
+    overflow-y: visible;
+    touch-action: pan-y;
   }
 }
 
