@@ -72,6 +72,13 @@ public class StubUserTrackingSessionRepositoryAdapter implements UserTrackingSes
         .toList();
   }
 
+  @Override
+  public long countDistinctSessionsAfter(java.time.LocalDateTime since) {
+    return sessions.values().stream()
+        .filter(s -> s.startTime() != null && !s.startTime().isBefore(since))
+        .count();
+  }
+
   /**
    * Clear all sessions - useful for test cleanup
    */

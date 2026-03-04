@@ -68,4 +68,10 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
                 .map(UserTrackingSessionEntity::toDomainModel)
                 .toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countDistinctSessionsAfter(java.time.LocalDateTime since) {
+        return repository.countSessionsAfter(since);
+    }
 }

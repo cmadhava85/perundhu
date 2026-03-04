@@ -84,4 +84,10 @@ public interface UserTrackingSessionJpaRepository extends JpaRepository<UserTrac
   @Query("SELECT uts FROM UserTrackingSessionEntity uts WHERE " +
       "uts.endTime IS NULL AND uts.startTime < :cutoffTime")
   List<UserTrackingSessionEntity> findStaleActiveSessions(@Param("cutoffTime") LocalDateTime cutoffTime);
+
+  /**
+   * Count sessions that started after the given time.
+   */
+  @Query("SELECT COUNT(uts) FROM UserTrackingSessionEntity uts WHERE uts.startTime >= :since")
+  long countSessionsAfter(@Param("since") LocalDateTime since);
 }

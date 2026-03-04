@@ -66,4 +66,7 @@ public interface RouteContributionJpaRepository extends JpaRepository<RouteContr
      */
     boolean existsByBusNumberAndFromLocationNameAndToLocationName(
             String busNumber, String fromLocationName, String toLocationName);
+
+    @org.springframework.data.jpa.repository.Query("SELECT COUNT(DISTINCT rc.userId) FROM RouteContributionJpaEntity rc WHERE rc.userId IS NOT NULL")
+    long countDistinctContributors();
 }

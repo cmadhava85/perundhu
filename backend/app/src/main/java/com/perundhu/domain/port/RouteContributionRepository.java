@@ -83,6 +83,13 @@ public interface RouteContributionRepository {
     long count();
 
     /**
+     * Count the number of distinct users who have submitted at least one contribution.
+     *
+     * @return number of unique contributors
+     */
+    long countDistinctContributors();
+
+    /**
      * Count route contributions with a specific status
      * 
      * @param status The status to count (e.g., "PENDING", "APPROVED", "REJECTED")

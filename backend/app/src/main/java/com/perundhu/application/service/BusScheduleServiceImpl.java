@@ -32,8 +32,10 @@ import com.perundhu.domain.model.Translation;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.BusStandRepository;
 import com.perundhu.domain.port.LocationRepository;
+import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.port.TranslationRepository;
+import com.perundhu.domain.port.UserTrackingSessionRepository;
 
 @Service
 @Transactional(readOnly = true) // Default to read-only for all methods (optimize read queries)
@@ -52,6 +54,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     private final StopRepository stopRepository;
     private final TranslationRepository translationRepository;
     private final BusStandRepository busStandRepository;
+    private final RouteContributionRepository routeContributionRepository;
+    private final UserTrackingSessionRepository userTrackingSessionRepository;
 
     // Constructor injection instead of field injection
     public BusScheduleServiceImpl(
@@ -59,12 +63,16 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             LocationRepository locationRepository,
             StopRepository stopRepository,
             TranslationRepository translationRepository,
-            BusStandRepository busStandRepository) {
+            BusStandRepository busStandRepository,
+            RouteContributionRepository routeContributionRepository,
+            UserTrackingSessionRepository userTrackingSessionRepository) {
         this.busRepository = busRepository;
         this.locationRepository = locationRepository;
         this.stopRepository = stopRepository;
         this.translationRepository = translationRepository;
         this.busStandRepository = busStandRepository;
+        this.routeContributionRepository = routeContributionRepository;
+        this.userTrackingSessionRepository = userTrackingSessionRepository;
     }
 
     @Override
@@ -1049,15 +1057,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             stats.put("routesCovered", cityCount);
             stats.put("cityCount", cityCount); // For backward compatibility
 
-            // For contributor count, we use a reasonable estimate based on contributions
-            // This could be enhanced with actual user contribution tracking
-            // For now, estimate based on route and image contributions
-            long contributorCount = Math.max(100, totalBuses / 10); // Estimate: 1 contributor per 10 routes
+            // Real count of distinct users who have ever submitted a contribution
+            long contributorCount = routeContributionRepository.countDistinctContributors();
             stats.put("contributorCount", contributorCount);
 
-            // Daily users - estimate based on tracking sessions in the last 24 hours
-            // This could be enhanced with actual session analytics
-            long dailyUsers = Math.min(45000, Math.max(5000, totalBuses * 30)); // Estimate: 30 users per route
+            // Real count of distinct sessions started in the last 24 hours
+            java.time.LocalDateTime since = java.time.LocalDateTime.now().minusHours(24);
+            long dailyUsers = userTrackingSessionRepository.countDistinctSessionsAfter(since);
             stats.put("dailyUsers", dailyUsers);
 
             log.info("Public stats: totalBuses={}, cities={}, contributors={}, dailyUsers={}",

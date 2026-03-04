@@ -113,6 +113,11 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     }
 
     @Override
+    public long countDistinctContributors() {
+        return repository.countDistinctContributors();
+    }
+
+    @Override
     public boolean existsByBusNumberAndFromLocationNameAndToLocationName(String busNumber, String fromLocationName,
             String toLocationName) {
         // Use optimized EXISTS query - returns immediately on first match

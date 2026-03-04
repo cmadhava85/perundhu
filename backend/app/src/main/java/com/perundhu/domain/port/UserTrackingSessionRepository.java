@@ -13,4 +13,13 @@ public interface UserTrackingSessionRepository {
     void deleteById(Long id);
 
     List<UserTrackingSession> findByUserId(String userId);
+
+    /**
+     * Count distinct sessions that started after the given time.
+     * Used for real daily-user stats on the public stats endpoint.
+     *
+     * @param since lower bound (exclusive) for session start time
+     * @return count of distinct sessions
+     */
+    long countDistinctSessionsAfter(java.time.LocalDateTime since);
 }
