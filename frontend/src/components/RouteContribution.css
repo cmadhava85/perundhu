@@ -1911,33 +1911,86 @@
   
   /* Compact status messages on mobile */
   .premium-status {
-    margin: 1.5rem 0.5rem 1rem;
-    padding: 1.75rem 1.25rem 1.5rem;
+    margin: 0.75rem 0 0.5rem;
+    padding: 0.875rem 1rem 1rem;
+    border-radius: 12px;
   }
-  
+
+  /* Hide the floating circle badge — use inline layout instead */
   .premium-status.success::before,
   .premium-status.error::before,
   .premium-status.submitting::before,
   .premium-status.error.duplicate::before {
-    width: 48px;
-    height: 48px;
-    top: -20px;
-    font-size: 26px;
+    display: none;
   }
-  
+
+  .status-content {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
   .status-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.625rem;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
-  
+
+  /* Inline icon before title text via content prefix on the wrapper */
+  .premium-status.error .status-title::before {
+    content: '✕';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .premium-status.success .status-title::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .premium-status.submitting .status-title::before {
+    content: '⏳';
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
   .status-message {
-    font-size: 0.95rem;
-    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.45;
   }
-  
+
+  .success-actions,
+  .error-actions {
+    width: 100%;
+  }
+
   .action-btn {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: center;
   }
 }
 
