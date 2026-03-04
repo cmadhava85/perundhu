@@ -164,10 +164,12 @@ def fast_upload_production():
                 bus_id_map[bus_num] = bus_id
             
             # Collect stop names missing from locations table so we can insert them first
+            # Use 'landmark' first — it holds the actual stop/terminal name.
+            # 'location' is the route zone/city and is often repeated across many stops.
             missing_stop_names = set()
             for bus in buses:
                 for stop in bus.get('stops', []):
-                    raw_name = (stop.get('location') or stop.get('landmark') or stop.get('name') or '').strip()
+                    raw_name = (stop.get('landmark') or stop.get('location') or stop.get('name') or '').strip()
                     if raw_name and raw_name.lower() not in location_id_map:
                         missing_stop_names.add(raw_name)
 
@@ -203,11 +205,12 @@ def fast_upload_production():
                     continue
                 
                 for stop_order, stop in enumerate(stops):
-                    # JSON uses 'location' (or fallback 'landmark'/'name') as the stop identifier
-                    raw_name = (stop.get('location') or stop.get('landmark') or stop.get('name') or '').strip().lower()
+                    # Use 'landmark' first — it holds the actual stop/terminal name.
+                    # 'location' is the route zone/city and stays the same across many sequential stops.
+                    raw_name = (stop.get('landmark') or stop.get('location') or stop.get('name') or '').strip()
                     if not raw_name:
                         continue
-                    stop_loc_id = location_id_map.get(raw_name)
+                    stop_loc_id = location_id_map.get(raw_name.lower())
                     if not stop_loc_id:
                         continue
                     
@@ -215,6 +218,7 @@ def fast_upload_production():
                     t = stop.get('time') or stop.get('arrival_time')
                     all_stops.append({
                         'bus_id': bus_db_id,
+                        'name': raw_name,
                         'location_id': stop_loc_id,
                         'stop_order': stop.get('stop_order', stop_order),
                         'arrival_time': t,
@@ -228,11 +232,17 @@ def fast_upload_production():
                     for stop in batch:
                         arr = f"'{stop['arrival_time']}'" if stop['arrival_time'] else 'NULL'
                         dep = f"'{stop['departure_time']}'" if stop['departure_time'] else 'NULL'
-                        values.append(f"({stop['bus_id']}, {stop['location_id']}, {stop['stop_order']}, {arr}, {dep})")
+                        safe_name = stop['name'].replace("'", "''").replace("\\", "\\\\")
+                        values.append(f"({stop['bus_id']}, '{safe_name}', {stop['location_id']}, {stop['stop_order']}, {arr}, {dep})")
                     
                     sql = f"""
-                        INSERT INTO stops (bus_id, location_id, stop_order, arrival_time, departure_time)
+                        INSERT INTO stops (bus_id, name, location_id, stop_order, arrival_time, departure_time)
                         VALUES {','.join(values)}
+                        ON DUPLICATE KEY UPDATE
+                            name = VALUES(name),
+                            location_id = VALUES(location_id),
+                            arrival_time = VALUES(arrival_time),
+                            departure_time = VALUES(departure_time)
                     """
                     cursor.execute(sql)
                     stops_inserted += len(values)
