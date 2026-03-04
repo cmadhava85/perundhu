@@ -186,7 +186,7 @@ jobs:
           -e FLYWAY_USER="${DB_USERNAME}" \
           -e FLYWAY_PASSWORD="${DB_PASSWORD}" \
           flyway/flyway:10-alpine \
-          migrate
+          repair migrate
 
     - name: Stop Cloud SQL Auth Proxy
       if: always()

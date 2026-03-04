@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
 INSERT INTO admin_users (username, password_hash, email, full_name, enabled, roles, created_by)
 VALUES (
     'perundhu_admin',
-    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhCu', -- BCrypt('Admin123!@#Change')
+    '$2a$10$R0Q5VXD4CuF.0r.AhpaBw.sqisbri7GOjCKjQohnj6tKUze7FBvMu', -- BCrypt('Admin123!@#Change')
     'admin@perundhu.com',
     'Perundhu Administrator',
     TRUE,
