@@ -222,6 +222,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     }
 
     @Override
+    @Cacheable(value = "stopsCache", key = "#busId + ':' + #languageCode")
     public List<StopDTO> getStopsForBus(Long busId, String languageCode) {
         long startTime = System.currentTimeMillis();
         Optional<Bus> busOptional = busRepository.findById(new BusId(busId));

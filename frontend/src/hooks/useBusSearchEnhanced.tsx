@@ -179,8 +179,8 @@ export function useBusSearchEnhanced() {
 
     // Fetch stops for NEW buses only with concurrent request limiting
     const fetchAllStops = async () => {
-      // Limit concurrent API calls to prevent server overload
-      const CONCURRENT_LIMIT = 5;
+      // Limit concurrent API calls to prevent server overload (3 is safer for small infra)
+      const CONCURRENT_LIMIT = 3;
       const batches: Bus[][] = [];
       
       for (let i = 0; i < busesToFetch.length; i += CONCURRENT_LIMIT) {
@@ -225,31 +225,22 @@ export function useBusSearchEnhanced() {
   // Backward compatible search function
   const searchBuses = React.useCallback(
     async (from: Location, to: Location) => {
-      // Search triggered
-      
-      // Mark that search has been initiated
-      setHasSearched(true);
-      
-      // Use functional updates to avoid stale closure
-      let shouldRefetch = false;
-      setFromLocation(prevFrom => {
-        setToLocation(prevTo => {
-          // Check if locations unchanged - need to refetch
-          if (prevFrom?.id === from.id && prevTo?.id === to.id) {
-            shouldRefetch = true;
-          }
-          return to;
-        });
-        return from;
+      const isSame = fromLocation?.id === from.id && toLocation?.id === to.id;
+
+      // Batch all state updates atomically in a single render to avoid
+      // triggering the stops-fetch effect multiple times
+      React.startTransition(() => {
+        setHasSearched(true);
+        setFromLocation(from);
+        setToLocation(to);
       });
-      
+
       // Force refetch if locations are already set (user clicked search again)
-      if (shouldRefetch) {
-        // Locations unchanged, forcing refetch
+      if (isSame) {
         await busSearchQuery.refetch();
       }
     },
-    [busSearchQuery]
+    [fromLocation, toLocation, busSearchQuery]
   );
 
   const resetResults = React.useCallback(() => {

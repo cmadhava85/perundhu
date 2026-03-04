@@ -173,6 +173,12 @@ public class CacheConfig {
                                         .maximumSize(2000)
                                         .recordStats();
 
+                        // Stops cache (30 min TTL — stop data rarely changes, high read traffic)
+                        case STOPS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(30, TimeUnit.MINUTES)
+                                        .maximumSize(5000) // ~1 entry per bus
+                                        .recordStats();
+
                         // Gemini Vision AI caches (7 days TTL for OCR results)
                         case GEMINI_OCR_CACHE, GEMINI_BATCH_CACHE -> Caffeine.newBuilder()
                                         .expireAfterWrite(7, TimeUnit.DAYS)
