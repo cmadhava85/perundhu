@@ -88,7 +88,7 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
           width: `${dim.w}px`,
           height: `${dim.h}px`
         }}
-        data-ad-client={process.env.REACT_APP_GOOGLE_AD_CLIENT || 'ca-pub-xxxxxxxxxxxxxxxx'}
+        data-ad-client={import.meta.env.VITE_GOOGLE_AD_CLIENT || 'ca-pub-xxxxxxxxxxxxxxxx'}
         data-ad-slot={adSlot}
         data-ad-format={adFormat === 'horizontal' ? 'horizontal' : 'rectangle'}
         data-full-width-responsive="false"
