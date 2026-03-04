@@ -131,35 +131,6 @@ export const RouteContribution: React.FC = () => {
     setErrorType('general');
   }, [contributionMethod]);
 
-  // Handle mouse wheel scrolling on the card
-  useEffect(() => {
-    const cardElement = document.querySelector('.premium-contribution-card');
-    
-    const handleWheel = (e: WheelEvent) => {
-      if (!cardElement) return;
-      
-      const isAtTop = cardElement.scrollTop === 0;
-      const isAtBottom = cardElement.scrollTop + cardElement.clientHeight >= cardElement.scrollHeight;
-      
-      // Only prevent page scroll if card can still scroll
-      if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
-        // At edge, allow page scroll
-        return;
-      }
-      
-      // Card can scroll, prevent page scroll
-      e.preventDefault();
-      cardElement.scrollTop += e.deltaY;
-    };
-    
-    const cardEl = document.querySelector('.premium-contribution-card') as HTMLElement;
-    if (cardEl) {
-      cardEl.addEventListener('wheel', handleWheel, { passive: false });
-      return () => cardEl.removeEventListener('wheel', handleWheel);
-    }
-    return () => {}; // Return empty cleanup if no cardEl
-  }, []);
-
   interface ContributionData {
     busName?: string;
     busNumber?: string;
