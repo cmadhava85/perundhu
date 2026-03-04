@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Geocode placeholder locations (lat=0, lng=0) using Overpass API (OpenStreetMap).
+Geocode placeholder locations (lat=0, lng=0) using Nominatim (OpenStreetMap).
 
-Run AFTER fast_prod_upload.py. Queries Overpass for each location name,
-first within Tamil Nadu, then all India as fallback.
+Run AFTER fast_prod_upload.py. Queries Nominatim for each location name,
+restricted to India, Tamil Nadu preferred.
 
 Usage:
     ./cloud_sql_proxy --port=3307 "perundhu-prod-001:us-central1:perundhu-db" &
@@ -18,48 +18,37 @@ import urllib.request
 
 import mysql.connector
 
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
-RATE_LIMIT_SEC = 1.5  # Overpass fair-use: ~1 req/sec
+NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+RATE_LIMIT_SEC = 1.1  # Nominatim policy: max 1 req/sec
 MAX_RETRIES = 3
 
 
-def query_overpass(name: str):
-    """Return (lat, lng) for a place name, searching Tamil Nadu first then India."""
-    searches = [
-        'area["name"="Tamil Nadu"]["admin_level"="4"]->.searcharea;',
-        'area["name"="India"]["admin_level"="2"]->.searcharea;',
+def query_nominatim(name: str):
+    """Return (lat, lng) for a name, searching Tamil Nadu then all India."""
+    # Try with 'Tamil Nadu, India' suffix first, then just 'India'
+    queries = [
+        f"{name}, Tamil Nadu, India",
+        f"{name}, India",
     ]
-    safe_name = name.replace('"', '\\"').replace("\\", "\\\\")
-    for area_filter in searches:
-        query = f"""
-[out:json][timeout:15];
-{area_filter}
-(
-  node["place"]["name"~"^{safe_name}$","i"](area.searcharea);
-  way["place"]["name"~"^{safe_name}$","i"](area.searcharea);
-  relation["place"]["name"~"^{safe_name}$","i"](area.searcharea);
-);
-out center 1;
-"""
+    for q in queries:
+        params = urllib.parse.urlencode({
+            "q": q,
+            "format": "json",
+            "limit": 1,
+            "countrycodes": "in",
+        })
+        req = urllib.request.Request(
+            f"{NOMINATIM_URL}?{params}",
+            headers={"User-Agent": "perundhu-geocoder/1.0 (admin@perundhu.com)"},
+        )
         for attempt in range(1, MAX_RETRIES + 1):
-            encoded = urllib.parse.urlencode({"data": query}).encode()
-            req = urllib.request.Request(
-                OVERPASS_URL,
-                data=encoded,
-                headers={"User-Agent": "perundhu-geocoder/1.0 (admin@perundhu.com)"},
-            )
             try:
-                with urllib.request.urlopen(req, timeout=20) as resp:
-                    result = json.loads(resp.read())
-                elements = result.get("elements", [])
-                if elements:
-                    el = elements[0]
-                    if el["type"] == "node":
-                        return round(el["lat"], 6), round(el["lon"], 6)
-                    if "center" in el:
-                        return round(el["center"]["lat"], 6), round(el["center"]["lon"], 6)
-                # No results in this search area — try the next one
-                break
+                with urllib.request.urlopen(req, timeout=15) as resp:
+                    results = json.loads(resp.read())
+                if results:
+                    r = results[0]
+                    return round(float(r["lat"]), 6), round(float(r["lon"]), 6)
+                break  # no results — try next query suffix
             except urllib.error.HTTPError as e:
                 if e.code == 429:
                     wait = 30 * attempt
@@ -68,9 +57,10 @@ out center 1;
                 else:
                     print(f"\n   ⚠️  HTTP {e.code} for '{name}'", flush=True)
                     break
-            except Exception as e:
-                print(f"\n   ⚠️  Error for '{name}': {e}", flush=True)
+            except Exception as exc:
+                print(f"\n   ⚠️  Error for '{name}': {exc}", flush=True)
                 break
+        time.sleep(RATE_LIMIT_SEC)
     return None, None
 
 
@@ -108,8 +98,9 @@ def geocode_placeholder_locations():
     not_found = []
 
     for i, (loc_id, name) in enumerate(rows, 1):
-        print(f"[{i:>{len(str(total))}/{total}}] {name:<40}", end=" ... ", flush=True)
-        lat, lng = query_overpass(name)
+        width = len(str(total))
+        print(f"[{i:{width}}/{total}] {name:<40}", end=" ... ", flush=True)
+        lat, lng = query_nominatim(name)
 
         if lat is not None and lng is not None:
             cursor.execute(

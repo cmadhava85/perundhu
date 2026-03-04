@@ -165,21 +165,6 @@
   font-size: 0.75rem;
 }
 
-.error-code-label {
-  color: #64748b;
-  font-weight: 500;
-}
-
-.error-code-value {
-  background: rgba(239, 68, 68, 0.06);
-  color: #dc2626;
-  padding: 0.15rem 0.3rem;
-  border-radius: 3px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-weight: 600;
-  font-size: 0.7rem;
-}
-
 /* Compact Action Buttons */
 .error-actions {
   display: flex;
@@ -760,8 +745,3 @@
   }
 }
 
-/* Legacy support - keep existing classes for backward compatibility */
-.error-display {
-  @apply bg-red-50 border-l-4 border-red-500 p-4 rounded-md my-4
-  dark:bg-red-900/20 dark:border-red-700;
-}

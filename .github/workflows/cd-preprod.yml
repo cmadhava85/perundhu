@@ -391,7 +391,7 @@ jobs:
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
             --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,FLYWAY_ENABLED=false,SPRING_FLYWAY_ENABLED=false" \
-            --update-secrets="DB_USERNAME=projects/${{ env.PROJECT_ID }}/secrets/db-username:latest,DB_PASSWORD=projects/${{ env.PROJECT_ID }}/secrets/db-password:latest,ADMIN_USERNAME=projects/${{ env.PROJECT_ID }}/secrets/admin-username:latest,ADMIN_PASSWORD=projects/${{ env.PROJECT_ID }}/secrets/admin-password:latest,GEMINI_API_KEY=projects/${{ env.PROJECT_ID }}/secrets/gemini-api-key:latest,PUBLIC_API_KEY=projects/${{ env.PROJECT_ID }}/secrets/PUBLIC_API_KEY:latest" \
+            --update-secrets="DB_USERNAME=db-username:latest,DB_PASSWORD=db-password:latest,ADMIN_USERNAME=admin-username:latest,ADMIN_PASSWORD=admin-password:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
             --add-cloudsql-instances=${{ env.SQL_INSTANCE }} \
             --memory=2Gi \
             --cpu=2 \
