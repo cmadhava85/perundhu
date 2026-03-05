@@ -245,6 +245,11 @@ jobs:
           --cpu-throttling \
           --execution-environment gen2 \
           --labels="version=${VERSION_LABEL},env=production"
+        # Ensure 100% traffic goes to the latest revision (overrides any pinned traffic)
+        gcloud run services update-traffic perundhu-production-backend \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --to-latest
     
     - name: Deploy Frontend to Production
       run: |
