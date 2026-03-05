@@ -126,16 +126,12 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const [issueDetails, setIssueDetails] = useState<IssueDetails | null>(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
 
-  // Helper to get auth headers - Use Basic auth for admin endpoints
+  // Helper to get auth headers - Use the same session credentials as AdminService
   const getAuthHeaders = useCallback(() => {
-    // Admin credentials - in production these should come from a secure source
-    const username = localStorage.getItem('adminUsername') || 'admin';
-    const password = localStorage.getItem('adminPassword') || 'admin123';
-    const credentials = btoa(`${username}:${password}`);
-    
+    const credentials = sessionStorage.getItem('admin_auth_credentials');
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Basic ${credentials}`
+      'Authorization': credentials ? `Basic ${credentials}` : ''
     };
   }, []);
 

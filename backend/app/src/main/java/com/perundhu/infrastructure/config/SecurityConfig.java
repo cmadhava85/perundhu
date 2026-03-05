@@ -96,7 +96,7 @@ public class SecurityConfig {
 
     http
         // Only match admin endpoints
-        .securityMatcher("/admin/**", "/api/admin/**", "/v1/admin/**")
+        .securityMatcher("/admin/**", "/api/admin/**", "/v1/admin/**", "/v1/route-issues/admin/**")
         // Configure security context repository to use request attributes
         .securityContext(context -> context.securityContextRepository(securityContextRepository))
         .csrf(csrf -> csrf
@@ -105,7 +105,8 @@ public class SecurityConfig {
             .ignoringRequestMatchers(
                 "/admin/**", // All admin endpoints (Protected by Basic Auth)
                 "/api/admin/**", // API admin endpoints
-                "/v1/admin/**")) // Admin v1 endpoints
+                "/v1/admin/**", // Admin v1 endpoints
+                "/v1/route-issues/admin/**")) // Route issue admin endpoints
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // Disable anonymous authentication - admin endpoints require explicit auth

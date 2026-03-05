@@ -272,4 +272,16 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          */
         @Query("SELECT COUNT(DISTINCT s.bus.id) FROM StopJpaEntity s WHERE s.location.id = :locationId")
         long countByStopsLocationId(@Param("locationId") Long locationId);
+
+        /**
+         * Get distinct origin location names (avoids loading full entities for filter dropdowns)
+         */
+        @Query("SELECT DISTINCT b.fromLocation.name FROM BusJpaEntity b WHERE b.fromLocation IS NOT NULL AND b.fromLocation.name IS NOT NULL ORDER BY b.fromLocation.name")
+        List<String> findDistinctOriginNames();
+
+        /**
+         * Get distinct destination location names (avoids loading full entities for filter dropdowns)
+         */
+        @Query("SELECT DISTINCT b.toLocation.name FROM BusJpaEntity b WHERE b.toLocation IS NOT NULL AND b.toLocation.name IS NOT NULL ORDER BY b.toLocation.name")
+        List<String> findDistinctDestinationNames();
 }

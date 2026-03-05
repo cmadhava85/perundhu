@@ -63,9 +63,9 @@ public class BusDatabaseService {
     log.info("Fetching buses - search: {}, origin: {}, destination: {}, activeOnly: {}, page: {}",
         search, originFilter, destinationFilter, activeOnly, pageable.getPageNumber());
 
-    // Get all buses and filter in memory (for now - can optimize with custom
-    // queries later)
-    List<BusJpaEntity> allBuses = busJpaRepository.findAll();
+    // Use JOIN FETCH to load all buses with their locations in a single query
+    // (avoids N+1: lazy fromLocation/toLocation would issue one SELECT per bus)
+    List<BusJpaEntity> allBuses = busJpaRepository.findAllWithLocations();
 
     // Apply filters
     List<BusJpaEntity> filteredBuses = allBuses.stream()
@@ -405,12 +405,8 @@ public class BusDatabaseService {
    */
   @Transactional(readOnly = true)
   public List<String> getUniqueOrigins() {
-    return busJpaRepository.findAll().stream()
-        .filter(bus -> bus.getFromLocation() != null && bus.getFromLocation().getName() != null)
-        .map(bus -> bus.getFromLocation().getName())
-        .distinct()
-        .sorted()
-        .toList();
+    // Single DB query returning only names — no entity loading needed
+    return busJpaRepository.findDistinctOriginNames();
   }
 
   /**
@@ -418,12 +414,8 @@ public class BusDatabaseService {
    */
   @Transactional(readOnly = true)
   public List<String> getUniqueDestinations() {
-    return busJpaRepository.findAll().stream()
-        .filter(bus -> bus.getToLocation() != null && bus.getToLocation().getName() != null)
-        .map(bus -> bus.getToLocation().getName())
-        .distinct()
-        .sorted()
-        .toList();
+    // Single DB query returning only names — no entity loading needed
+    return busJpaRepository.findDistinctDestinationNames();
   }
 
   /**
