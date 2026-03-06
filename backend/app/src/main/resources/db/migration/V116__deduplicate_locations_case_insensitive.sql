@@ -29,51 +29,71 @@
 -- ================================================================
 -- We use a temporary table so the mapping survives across statements.
 
--- Disable ONLY_FULL_GROUP_BY for this session so the GROUP BY + correlated
--- subquery pattern below is accepted by MySQL/MariaDB strict mode.
--- The session mode is restored in STEP 7.
-SET @saved_sql_mode = @@SESSION.sql_mode;
-SET SESSION sql_mode = REPLACE(REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY,', ''), ',ONLY_FULL_GROUP_BY', '');
-
 CREATE TEMPORARY TABLE IF NOT EXISTS location_dedup_map (
     duplicate_id  BIGINT NOT NULL PRIMARY KEY,
     canonical_id  BIGINT NOT NULL,
     INDEX idx_canonical (canonical_id)
 );
 
--- Populate: for each lower-cased name group elect the canonical row.
--- Canonical selection priority:
---   1. Highest "title case score" (each word starts with upper, rest lower)
---   2. Most bus routes referencing it (from_location_id + to_location_id)
---   3. Lowest id (stable, deterministic)
-INSERT IGNORE INTO location_dedup_map (duplicate_id, canonical_id)
+-- STEP 1a: Pre-aggregate bus route counts in a single O(buses) scan.
+-- The original approach ran a correlated subquery once per candidate
+-- location, causing O(locations × buses) ≈ 157 M row reads.
+-- This temp table reduces that to one pass (~32 K rows).
+CREATE TEMPORARY TABLE IF NOT EXISTS bus_route_counts (
+    location_id BIGINT NOT NULL PRIMARY KEY,
+    route_cnt   INT    NOT NULL DEFAULT 0
+);
+
+INSERT INTO bus_route_counts (location_id, route_cnt)
+SELECT location_id, COUNT(*) AS route_cnt
+FROM (
+    SELECT from_location_id AS location_id FROM buses WHERE from_location_id IS NOT NULL
+    UNION ALL
+    SELECT to_location_id   AS location_id FROM buses WHERE to_location_id   IS NOT NULL
+) r
+GROUP BY location_id;
+
+-- STEP 1b: For each duplicate name group elect the canonical winner.
+-- Strategy: PRIMARY KEY (name_key) + INSERT IGNORE keeps only the FIRST
+-- row inserted per group. ORDER BY ensures that first row is the correctly-
+-- ranked winner. No correlated subquery → no ONLY_FULL_GROUP_BY issue.
+CREATE TEMPORARY TABLE IF NOT EXISTS location_canonical (
+    name_key     VARCHAR(255) NOT NULL,
+    canonical_id BIGINT       NOT NULL,
+    PRIMARY KEY (name_key)
+);
+
+INSERT IGNORE INTO location_canonical (name_key, canonical_id)
 SELECT
-    dup.id              AS duplicate_id,
-    best.canonical_id   AS canonical_id
-FROM locations dup
+    LOWER(l.name) AS name_key,
+    l.id          AS canonical_id
+FROM locations l
 JOIN (
-    -- For each name-group pick the best row
-    SELECT
-        LOWER(l.name) AS name_key,
-        (
-            SELECT winner.id
-            FROM locations winner
-            WHERE LOWER(winner.name) = LOWER(l.name)
-            ORDER BY
-                -- Penalise ALL-CAPS; reward proper Title Case
-                (IF(winner.name = UPPER(winner.name) AND winner.name != LOWER(winner.name), -1000, 0)
-                 + IF(winner.name COLLATE utf8mb4_bin REGEXP '^([A-Z][a-z]+ ?)+$', 100, 0)) DESC,
-                -- Most routes (higher = more "real")
-                (SELECT COUNT(*) FROM buses b
-                 WHERE b.from_location_id = winner.id OR b.to_location_id = winner.id) DESC,
-                winner.id ASC
-            LIMIT 1
-        ) AS canonical_id
-    FROM locations l
-    GROUP BY LOWER(l.name)
-    HAVING COUNT(*) > 1   -- only groups with actual duplicates
-) best ON LOWER(dup.name) = best.name_key
-WHERE dup.id != best.canonical_id;
+    -- Inline derived table: only duplicate name groups
+    SELECT LOWER(name) AS dup_key
+    FROM locations
+    GROUP BY LOWER(name)
+    HAVING COUNT(*) > 1
+) dup_groups ON LOWER(l.name) = dup_groups.dup_key
+LEFT JOIN bus_route_counts brc ON brc.location_id = l.id
+ORDER BY
+    LOWER(l.name)                                                               ASC,
+    -- Penalise ALL-CAPS; reward proper Title Case
+    (IF(l.name = UPPER(l.name) AND l.name != LOWER(l.name), -1000, 0)
+     + IF(l.name COLLATE utf8mb4_bin REGEXP '^([A-Z][a-z]+ ?)+$', 100, 0))   DESC,
+    -- Most routes (higher = more "real")
+    COALESCE(brc.route_cnt, 0)                                                 DESC,
+    l.id                                                                        ASC;
+
+-- STEP 1c: Populate the dedup map — every non-canonical duplicate → its winner.
+INSERT IGNORE INTO location_dedup_map (duplicate_id, canonical_id)
+SELECT l.id, lc.canonical_id
+FROM locations l
+JOIN location_canonical lc ON LOWER(l.name) = lc.name_key
+WHERE l.id != lc.canonical_id;
+
+DROP TEMPORARY TABLE IF EXISTS bus_route_counts;
+DROP TEMPORARY TABLE IF EXISTS location_canonical;
 
 -- ================================================================
 -- STEP 2: Re-point all FK references to the canonical row
@@ -286,10 +306,9 @@ EXECUTE _stmt;
 DEALLOCATE PREPARE _stmt;
 
 -- ================================================================
--- STEP 7: Clean up temp tables and restore session settings
+-- STEP 7: Clean up temp tables
 -- ================================================================
 DROP TEMPORARY TABLE IF EXISTS location_dedup_map;
-SET SESSION sql_mode = @saved_sql_mode;
 
 -- ================================================================
 -- VERIFICATION
