@@ -171,6 +171,8 @@ WHERE id IN (SELECT duplicate_id FROM location_dedup_map);
 --   • connecting_routes.connection_point_id     (it is a connection point)
 --   • locations.parent_id                       (it is a parent CITY)
 
+-- Use LEFT JOIN IS NULL instead of NOT IN: index-friendly, avoids full
+-- subquery materialisation on every row (NOT IN is O(n*m) without indexes).
 CREATE TEMPORARY TABLE IF NOT EXISTS orphan_location_ids (
     id BIGINT NOT NULL PRIMARY KEY
 );
@@ -178,17 +180,16 @@ CREATE TEMPORARY TABLE IF NOT EXISTS orphan_location_ids (
 INSERT INTO orphan_location_ids (id)
 SELECT l.id
 FROM locations l
-WHERE l.id NOT IN (
-    SELECT b.from_location_id        FROM buses            b  WHERE b.from_location_id      IS NOT NULL
-    UNION
-    SELECT b.to_location_id          FROM buses            b  WHERE b.to_location_id        IS NOT NULL
-    UNION
-    SELECT s.location_id             FROM stops            s  WHERE s.location_id           IS NOT NULL
-    UNION
-    SELECT cr.connection_point_id    FROM connecting_routes cr WHERE cr.connection_point_id IS NOT NULL
-    UNION
-    SELECT l2.parent_id              FROM locations        l2 WHERE l2.parent_id            IS NOT NULL
-);
+LEFT JOIN buses             b_from ON b_from.from_location_id    = l.id
+LEFT JOIN buses             b_to   ON b_to.to_location_id        = l.id
+LEFT JOIN stops             s      ON s.location_id              = l.id
+LEFT JOIN connecting_routes cr     ON cr.connection_point_id     = l.id
+LEFT JOIN locations         lchild ON lchild.parent_id           = l.id
+WHERE b_from.from_location_id    IS NULL
+  AND b_to.to_location_id        IS NULL
+  AND s.location_id              IS NULL
+  AND cr.connection_point_id     IS NULL
+  AND lchild.parent_id           IS NULL;
 
 -- Remove aliases first (FK child must be deleted before the parent row)
 DELETE FROM location_aliases
@@ -237,33 +238,50 @@ PREPARE _stmt FROM @drop_old_idx;
 EXECUTE _stmt;
 DEALLOCATE PREPARE _stmt;
 
--- 6b. Add the generated lowercase column if it does not already exist.
-SET @add_col = IF(
-    NOT EXISTS (
-        SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_SCHEMA = DATABASE()
-          AND TABLE_NAME   = 'locations'
-          AND COLUMN_NAME  = 'name_lower'
-    ),
-    'ALTER TABLE locations ADD COLUMN name_lower VARCHAR(255) GENERATED ALWAYS AS (LOWER(name)) STORED COMMENT ''Lowercase generated column for case-insensitive unique constraint''',
-    'SELECT 1 -- column name_lower already exists, skip'
+-- 6b+6c. Add the generated lowercase column AND its unique index in a single
+-- ALTER TABLE so MySQL rebuilds the table only once instead of twice.
+-- Falls back gracefully: if column already exists, skip; if index already
+-- exists but column is missing, add column only; etc.
+SET @col_exists = (
+    SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME   = 'locations'
+      AND COLUMN_NAME  = 'name_lower'
 );
-PREPARE _stmt FROM @add_col;
+SET @idx_exists = (
+    SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME   = 'locations'
+      AND INDEX_NAME   = 'uq_locations_name_ci'
+);
+
+-- Case 1: neither column nor index exist → one ALTER TABLE does both (1 rebuild)
+SET @ddl_both = IF(
+    @col_exists = 0 AND @idx_exists = 0,
+    'ALTER TABLE locations ADD COLUMN name_lower VARCHAR(255) GENERATED ALWAYS AS (LOWER(name)) STORED COMMENT ''Lowercase generated column for case-insensitive unique constraint'', ADD UNIQUE INDEX uq_locations_name_ci (name_lower)',
+    'SELECT 1 -- skip combined add'
+);
+PREPARE _stmt FROM @ddl_both;
 EXECUTE _stmt;
 DEALLOCATE PREPARE _stmt;
 
--- 6c. Create the case-insensitive unique index if it does not already exist.
-SET @add_idx = IF(
-    NOT EXISTS (
-        SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS
-        WHERE TABLE_SCHEMA = DATABASE()
-          AND TABLE_NAME   = 'locations'
-          AND INDEX_NAME   = 'uq_locations_name_ci'
-    ),
-    'CREATE UNIQUE INDEX uq_locations_name_ci ON locations (name_lower)',
-    'SELECT 1 -- index uq_locations_name_ci already exists, skip'
+-- Case 2: column missing but index somehow exists (shouldn't happen, but safe)
+SET @ddl_col_only = IF(
+    @col_exists = 0 AND @idx_exists > 0,
+    'ALTER TABLE locations ADD COLUMN name_lower VARCHAR(255) GENERATED ALWAYS AS (LOWER(name)) STORED COMMENT ''Lowercase generated column for case-insensitive unique constraint''',
+    'SELECT 1 -- skip column-only add'
 );
-PREPARE _stmt FROM @add_idx;
+PREPARE _stmt FROM @ddl_col_only;
+EXECUTE _stmt;
+DEALLOCATE PREPARE _stmt;
+
+-- Case 3: column exists but index is missing (e.g. previous partial run)
+SET @ddl_idx_only = IF(
+    @col_exists > 0 AND @idx_exists = 0,
+    'CREATE UNIQUE INDEX uq_locations_name_ci ON locations (name_lower)',
+    'SELECT 1 -- skip index-only add'
+);
+PREPARE _stmt FROM @ddl_idx_only;
 EXECUTE _stmt;
 DEALLOCATE PREPARE _stmt;
 
