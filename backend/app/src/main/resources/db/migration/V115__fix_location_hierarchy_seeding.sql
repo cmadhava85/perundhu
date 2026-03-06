@@ -41,33 +41,41 @@ WHERE (city_row.location_type IS NULL OR city_row.location_type = 'CITY')
       ) AS city_candidates
   );
 
--- Link "City - Terminal" rows to their parent city.
--- When multiple plain city rows exist (duplicate imports), pick the best one:
--- prefer already-flagged CITY rows, then fall back to lowest id.
+-- Pre-compute terminal → parent mapping into a TEMPORARY TABLE.
+-- A JOIN-based UPDATE referencing the same target table inside a subquery
+-- at any depth triggers MariaDB Error 1093 even with derived-table wrappers.
+-- Using a separate temp table completely sidesteps this restriction.
+DROP TEMPORARY TABLE IF EXISTS tmp_terminal_parent_mapping;
+CREATE TEMPORARY TABLE tmp_terminal_parent_mapping AS
+SELECT
+    t.id AS terminal_id,
+    (
+        SELECT p.id
+        FROM locations p
+        WHERE p.name = SUBSTRING_INDEX(t.name, ' - ', 1)
+          AND p.id != t.id
+        ORDER BY
+            CASE WHEN p.location_type = 'CITY' THEN 0 ELSE 1 END,
+            p.id ASC
+        LIMIT 1
+    ) AS resolved_parent_id
+FROM locations t
+WHERE t.name LIKE '% - %'
+  AND SUBSTRING_INDEX(t.name, ' - ', 1) != ''
+  AND CHAR_LENGTH(SUBSTRING_INDEX(t.name, ' - ', 1)) > 2;
+
+-- Link "City - Terminal" rows to their parent city using the pre-computed mapping.
+-- When multiple plain city rows exist (duplicate imports), the temp table already
+-- picked the best one: prefer already-flagged CITY rows, then lowest id.
 UPDATE locations terminal_row
-JOIN (
-    SELECT
-        t.id AS terminal_id,
-        (
-            SELECT p.id
-            FROM locations p
-            WHERE p.name = SUBSTRING_INDEX(t.name, ' - ', 1)
-              AND p.id != t.id
-            ORDER BY
-                CASE WHEN p.location_type = 'CITY' THEN 0 ELSE 1 END,
-                p.id ASC
-            LIMIT 1
-        ) AS resolved_parent_id
-    FROM locations t
-    WHERE t.name LIKE '% - %'
-      AND SUBSTRING_INDEX(t.name, ' - ', 1) != ''
-      AND CHAR_LENGTH(SUBSTRING_INDEX(t.name, ' - ', 1)) > 2
-) mapping ON mapping.terminal_id = terminal_row.id
-SET terminal_row.parent_id    = mapping.resolved_parent_id,
+JOIN tmp_terminal_parent_mapping mapping ON mapping.terminal_id = terminal_row.id
+SET terminal_row.parent_id     = mapping.resolved_parent_id,
     terminal_row.location_type = 'TERMINAL'
 WHERE mapping.resolved_parent_id IS NOT NULL
   AND (terminal_row.parent_id IS NULL
     OR terminal_row.parent_id = mapping.resolved_parent_id);
+
+DROP TEMPORARY TABLE IF EXISTS tmp_terminal_parent_mapping;
 
 -- ================================================================
 -- STEP 2: Chennai-specific terminals that don't follow "Chennai - X"
@@ -141,12 +149,17 @@ WHERE id != @trichy_id
 -- STEP 4: Ensure every plain city-only row that has linked children
 --         is marked as CITY (catches any left unmarked by steps above)
 -- ================================================================
+-- Wrapped in a derived table alias to satisfy MariaDB Error 1093.
 UPDATE locations p
 SET p.location_type = 'CITY'
-WHERE EXISTS (
-    SELECT 1 FROM locations c WHERE c.parent_id = p.id
-)
-AND p.location_type IS NULL;
+WHERE p.location_type IS NULL
+  AND p.id IN (
+      SELECT id FROM (
+          SELECT DISTINCT c.parent_id AS id
+          FROM locations c
+          WHERE c.parent_id IS NOT NULL
+      ) AS parents_with_children
+  );
 
 -- ================================================================
 -- VERIFICATION — shows the linked hierarchy after migration runs
