@@ -9,6 +9,7 @@ import java.util.*;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.port.ContributionInputPort;
+import com.perundhu.domain.port.ContributionProcessingPort;
 import com.perundhu.domain.port.RouteContributionInputPort;
 import com.perundhu.domain.port.ImageContributionInputPort;
 import com.perundhu.domain.port.ContributionQueryPort;
@@ -33,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class ContributionApplicationService implements ContributionInputPort {
+public class ContributionApplicationService implements ContributionInputPort, ContributionProcessingPort {
 
   // New SOLID-compliant services
   private final RouteContributionInputPort routeContributionService;

@@ -115,14 +115,13 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       // Ignore localStorage errors
     }
     
-    // Cleanup debounce timers on unmount
+    // Cleanup debounce timers on unmount.
+    // Timer refs must be read at cleanup time (not mount) so the latest timer ID is cleared.
     return () => {
-      if (fromDebounceTimerRef.current) {
-        clearTimeout(fromDebounceTimerRef.current);
-      }
-      if (toDebounceTimerRef.current) {
-        clearTimeout(toDebounceTimerRef.current);
-      }
+      const fromTimer = fromDebounceTimerRef.current; // eslint-disable-line react-hooks/exhaustive-deps
+      const toTimer = toDebounceTimerRef.current; // eslint-disable-line react-hooks/exhaustive-deps
+      if (fromTimer) clearTimeout(fromTimer);
+      if (toTimer) clearTimeout(toTimer);
     };
   }, []);
 

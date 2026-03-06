@@ -9,16 +9,16 @@
 buildscript {
     repositories {
         // Use explicit Maven Central URL instead of deprecated mirror
-        maven { url 'https://repo1.maven.org/maven2' }
+        maven { url = 'https://repo1.maven.org/maven2' }
         mavenCentral()
         // Add Spring milestone repository to access prerelease versions
-        maven { url 'https://repo.spring.io/milestone' }
+        maven { url = 'https://repo.spring.io/milestone' }
         // Add Spring snapshot repository if needed for very latest builds
-        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url = 'https://repo.spring.io/snapshot' }
     }
     dependencies {
         classpath 'com.mysql:mysql-connector-j:9.1.0'
-        classpath 'org.flywaydb:flyway-mysql:11.1.0'
+        classpath 'org.flywaydb:flyway-mysql:11.20.3'
     }
 }
 
@@ -30,7 +30,7 @@ plugins {
     id 'java'
     // Add the versions plugin to check for dependency updates
     id 'com.github.ben-manes.versions' version '0.51.0'
-    id 'org.flywaydb.flyway' version '11.1.0'
+    id 'org.flywaydb.flyway' version '11.20.3'
     // Code quality plugins
     id 'jacoco'  // Test coverage
     id 'checkstyle'  // Code style checking
@@ -44,12 +44,12 @@ configurations {
 
 repositories {
     // Use explicit Maven Central URL instead of deprecated mirror
-    maven { url 'https://repo1.maven.org/maven2' }
+    maven { url = 'https://repo1.maven.org/maven2' }
     mavenCentral()
     // Add Spring milestone repository to access prerelease versions
-    maven { url 'https://repo.spring.io/milestone' }
+    maven { url = 'https://repo.spring.io/milestone' }
     // Add Spring snapshot repository if needed for very latest builds
-    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url = 'https://repo.spring.io/snapshot' }
 }
 
 // Configure source sets for hexagonal tests
@@ -189,12 +189,12 @@ dependencies {
     implementation 'com.h2database:h2:2.3.232'
     
     // Add Flyway for database migrations with Spring Boot compatible versions
-    implementation 'org.flywaydb:flyway-core:11.1.0'
+    implementation 'org.flywaydb:flyway-core:11.20.3'
     implementation 'org.flywaydb:flyway-mysql:11.1.0'
     
     // Add Flyway MySQL driver for Gradle plugin
     flywayMigration 'com.mysql:mysql-connector-j:9.1.0'
-    flywayMigration 'org.flywaydb:flyway-mysql:11.1.0'
+    flywayMigration 'org.flywaydb:flyway-mysql:11.20.3'
     
     // Testing dependencies - using Spring Boot managed versions for consistency
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

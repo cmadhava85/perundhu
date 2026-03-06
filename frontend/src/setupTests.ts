@@ -3,7 +3,27 @@
 // expect(element).toHaveTextContent(/react/i)
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { vi, afterEach, afterAll } from 'vitest';
+import { vi, afterEach, afterAll, beforeEach } from 'vitest';
+
+// Restore window.matchMedia implementation before each test.
+// mockReset (configured in vitest.config.ts) clears vi.fn() implementations between
+// tests, so we use Object.defineProperty to fully replace it each time.
+beforeEach(() => {
+  Object.defineProperty(globalThis, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: vi.fn((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    } as MediaQueryList)),
+  });
+});
 
 // Run GC after each test file completes
 afterAll(() => {
@@ -116,20 +136,7 @@ Object.defineProperty(window, 'performance', {
   writable: true,
 });
 
-// Mock window.matchMedia for ThemeContext
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: vi.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(), // deprecated
-    removeListener: vi.fn(), // deprecated
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  })),
-});
+// window.matchMedia is re-mocked before each test via beforeEach above.
 
 // Set up global mocks for Google Maps
 Object.defineProperty(window, 'google', {

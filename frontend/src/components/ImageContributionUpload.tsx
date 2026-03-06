@@ -63,9 +63,10 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   
   // Clear all polling intervals when the component unmounts
   useEffect(() => {
+    const intervals = activeIntervalsRef.current;
     return () => {
-      activeIntervalsRef.current.forEach(id => clearInterval(id));
-      activeIntervalsRef.current.clear();
+      intervals.forEach(id => clearInterval(id));
+      intervals.clear();
     };
   }, []);
   

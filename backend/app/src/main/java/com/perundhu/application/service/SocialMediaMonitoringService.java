@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.perundhu.domain.model.SocialMediaPlatform;
 import com.perundhu.domain.model.SocialMediaPost;
-import com.perundhu.domain.port.ContributionInputPort;
+import com.perundhu.domain.port.RouteContributionInputPort;
 import com.perundhu.domain.port.input.SocialMediaMonitoringInputPort;
 import com.perundhu.domain.port.output.FacebookApiOutputPort;
 import com.perundhu.domain.port.output.InstagramApiOutputPort;
@@ -41,7 +41,7 @@ public class SocialMediaMonitoringService implements SocialMediaMonitoringInputP
   private final InstagramApiOutputPort instagramApi;
   private final SocialMediaPostOutputPort postRepository;
   private final RouteTextParser routeTextParser;
-  private final ContributionInputPort contributionInputPort;
+  private final RouteContributionInputPort routeContributionInputPort;
 
   // Statistics tracking
   private long totalPostsMonitored = 0;
@@ -54,13 +54,13 @@ public class SocialMediaMonitoringService implements SocialMediaMonitoringInputP
       InstagramApiOutputPort instagramApi,
       SocialMediaPostOutputPort postRepository,
       RouteTextParser routeTextParser,
-      ContributionInputPort contributionInputPort) {
+      RouteContributionInputPort routeContributionInputPort) {
     this.twitterApi = twitterApi;
     this.facebookApi = facebookApi;
     this.instagramApi = instagramApi;
     this.postRepository = postRepository;
     this.routeTextParser = routeTextParser;
-    this.contributionInputPort = contributionInputPort;
+    this.routeContributionInputPort = routeContributionInputPort;
   }
 
   @Override
@@ -206,7 +206,7 @@ public class SocialMediaMonitoringService implements SocialMediaMonitoringInputP
 
         // Submit contribution (will go through approval workflow)
         String userId = "social_media_" + post.getPlatform().getCode() + "_" + post.getAuthorId();
-        contributionInputPort.submitRouteContribution(contributionData, userId);
+        routeContributionInputPort.submitRouteContribution(contributionData, userId);
 
         // Mark post as processed
         post.markAsProcessed(routeData.getConfidence());

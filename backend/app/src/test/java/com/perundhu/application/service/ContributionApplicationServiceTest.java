@@ -25,7 +25,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.port.ContributionInputPort;
 import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.InputValidationPort;
 import com.perundhu.domain.port.RouteContributionOutputPort;
@@ -36,6 +35,7 @@ import com.perundhu.domain.port.ContributionQueryPort;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Contribution Application Service Tests - Legacy Delegation Adapter")
+@SuppressWarnings("deprecation") // This test intentionally tests the legacy delegation class
 class ContributionApplicationServiceTest {
 
   @Mock

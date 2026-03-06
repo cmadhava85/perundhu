@@ -19,7 +19,7 @@ interface GoogleAdContainerProps {
 }
 
 const ADSENSE_SCRIPT_ID = 'google-adsense-script';
-const ADSENSE_CLIENT = 'ca-pub-9475468169056134';
+const ADSENSE_CLIENT = import.meta.env.VITE_GOOGLE_AD_CLIENT as string;
 
 /**
  * Dynamically injects the AdSense script the first time ads become enabled.
@@ -109,7 +109,7 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
           width: `${dim.w}px`,
           height: `${dim.h}px`
         }}
-        data-ad-client={import.meta.env.VITE_GOOGLE_AD_CLIENT || 'ca-pub-xxxxxxxxxxxxxxxx'}
+        data-ad-client={ADSENSE_CLIENT}
         data-ad-slot={adSlot}
         data-ad-format={adFormat === 'horizontal' ? 'horizontal' : 'rectangle'}
         data-full-width-responsive="false"

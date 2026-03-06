@@ -33,7 +33,10 @@ import com.perundhu.application.service.RouteTextParser;
 import com.perundhu.application.service.TextFormatNormalizer;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.port.ContributionInputPort;
+import com.perundhu.domain.port.RouteContributionInputPort;
+import com.perundhu.domain.port.ImageContributionInputPort;
+import com.perundhu.domain.port.ContributionQueryPort;
+import com.perundhu.domain.port.ContributionProcessingPort;
 import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.InputValidationPort;
 import com.perundhu.domain.port.SecurityMonitoringPort;
@@ -56,7 +59,10 @@ import net.sourceforge.tess4j.TesseractException;
 
 public class ContributionController {
 
-  private final ContributionInputPort contributionInputPort;
+  private final RouteContributionInputPort routeContributionInputPort;
+  private final ImageContributionInputPort imageContributionInputPort;
+  private final ContributionQueryPort contributionQueryPort;
+  private final ContributionProcessingPort contributionProcessingPort;
   private final SecurityMonitoringPort securityMonitoringPort;
   private final InputValidationPort inputValidationPort;
   private final AuthenticationService authenticationService;
@@ -165,7 +171,7 @@ public class ContributionController {
       }
 
       // Submit route contribution through input port
-      RouteContribution savedContribution = contributionInputPort
+      RouteContribution savedContribution = routeContributionInputPort
           .submitRouteContribution(validationResult.sanitizedValues(), userId);
 
       // Store hash to prevent duplicates within 24 hours
@@ -325,7 +331,7 @@ public class ContributionController {
           .build();
 
       // Save the contribution
-      RouteContribution savedContribution = contributionInputPort.submitRouteContribution(
+      RouteContribution savedContribution = routeContributionInputPort.submitRouteContribution(
           convertToContributionData(contribution), userId);
 
       log.info("Stops contribution submitted successfully. ID: {}, User: {}, Bus ID: {}, Stops count: {}",
@@ -757,7 +763,7 @@ public class ContributionController {
       }
 
       // Submit route contribution
-      RouteContribution savedContribution = contributionInputPort
+      RouteContribution savedContribution = routeContributionInputPort
           .submitRouteContribution(validationResult.sanitizedValues(), userId);
 
       // Log security event
@@ -1160,7 +1166,7 @@ public class ContributionController {
       }
 
       // Submit contribution (always goes to PENDING_VERIFICATION)
-      RouteContribution savedContribution = contributionInputPort
+      RouteContribution savedContribution = routeContributionInputPort
           .submitRouteContribution(validationResult.sanitizedValues(), userId);
 
       // Submit return route contribution if bidirectional
@@ -1213,7 +1219,7 @@ public class ContributionController {
               .validateContributionData(returnContributionData);
 
           if (returnValidationResult.valid()) {
-            returnContribution = contributionInputPort
+            returnContribution = routeContributionInputPort
                 .submitRouteContribution(returnValidationResult.sanitizedValues(), userId);
             log.info("Return route contribution submitted: {} -> {}, id={}",
                 returnRouteData.get("fromLocation"), returnRouteData.get("toLocation"),
@@ -1282,7 +1288,7 @@ public class ContributionController {
                 .validateContributionData(additionalContributionData);
 
             if (addValidationResult.valid()) {
-              RouteContribution addContribution = contributionInputPort
+              RouteContribution addContribution = routeContributionInputPort
                   .submitRouteContribution(addValidationResult.sanitizedValues(), userId);
               additionalContributionIds.add(addContribution.getId());
               log.info("Additional route contribution submitted: {} -> {}, id={}",
@@ -1710,7 +1716,7 @@ public class ContributionController {
       }
 
       // Get image contribution status
-      Optional<ImageContribution> optContribution = contributionInputPort.findById(contributionId);
+      Optional<ImageContribution> optContribution = imageContributionInputPort.findById(contributionId);
       if (optContribution.isEmpty()) {
         return ResponseEntity.notFound().build();
       }
@@ -1822,7 +1828,7 @@ public class ContributionController {
       }
 
       // Get user's contributions through input port
-      List<Map<String, Object>> contributions = contributionInputPort.getUserContributions(userId);
+      List<Map<String, Object>> contributions = contributionQueryPort.getUserContributions(userId);
 
       // Sanitize sensitive information before returning
       List<Map<String, Object>> sanitizedContributions = contributions.stream()
@@ -1854,7 +1860,7 @@ public class ContributionController {
       }
 
       // Get all contributions through input port
-      List<Map<String, Object>> contributions = contributionInputPort.getAllContributions();
+      List<Map<String, Object>> contributions = contributionQueryPort.getAllContributions();
 
       return ResponseEntity.ok(contributions);
 
@@ -1884,9 +1890,9 @@ public class ContributionController {
 
       // Approve through input port based on type
       if ("ROUTE".equals(type)) {
-        contributionInputPort.approveRouteContribution(contributionId, adminId);
+        routeContributionInputPort.approveRouteContribution(contributionId, adminId);
       } else if ("IMAGE".equals(type)) {
-        contributionInputPort.approveImageContribution(contributionId, adminId);
+        imageContributionInputPort.approveImageContribution(contributionId, adminId);
       } else {
         return ResponseEntity.badRequest()
             .body(createErrorResponse("Invalid contribution type"));
@@ -1926,9 +1932,9 @@ public class ContributionController {
 
       // Reject through input port based on type
       if ("ROUTE".equals(type)) {
-        contributionInputPort.rejectRouteContribution(contributionId, reason, adminId);
+        routeContributionInputPort.rejectRouteContribution(contributionId, reason, adminId);
       } else if ("IMAGE".equals(type)) {
-        contributionInputPort.rejectImageContribution(contributionId, reason, adminId);
+        imageContributionInputPort.rejectImageContribution(contributionId, reason, adminId);
       } else {
         return ResponseEntity.badRequest()
             .body(createErrorResponse("Invalid contribution type"));
@@ -1963,7 +1969,7 @@ public class ContributionController {
       }
 
       // Get statistics through input port
-      Map<String, Object> stats = contributionInputPort.getContributionStatistics();
+      Map<String, Object> stats = contributionProcessingPort.getContributionStatistics();
 
       return ResponseEntity.ok(stats);
 

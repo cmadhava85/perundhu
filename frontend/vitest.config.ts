@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react-swc' // Use SWC for 10x faster transforms
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  cacheDir: 'node_modules/.vitest',
   plugins: [react()],
   test: {
     environment: 'happy-dom', // 2-3x faster than jsdom
@@ -64,14 +65,11 @@ export default defineConfig({
         // Restart worker after every 10 test files to clear memory
         maxForks: 1,
         minForks: 1,
-        execArgv: ['--expose-gc', '--max-old-space-size=3584'],
+        execArgv: ['--expose-gc', '--max-old-space-size=6144'],
       }
     },
     
-    // Cache test results and transforms
-    cache: {
-      dir: 'node_modules/.vitest',
-    },
+    // Cache options (dir is set as top-level cacheDir per Vite convention)
     
     // Memory management
     // Force garbage collection between test files
