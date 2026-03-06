@@ -86,8 +86,9 @@ const Header: React.FC<HeaderProps> = ({
     });
     
     observer.observe(document.body, { 
-      childList: true, 
-      subtree: true,
+      // Watch only body-level attributes (overflow, class, data-modal-open) — NOT subtree.
+      // Subtree observation fires on every DOM mutation app-wide (hundreds/sec on list renders).
+      // Modal open/close sets body.style.overflow='hidden' or body.dataset.modalOpen — body attributes only.
       attributes: true,
       attributeFilter: ['class', 'data-modal-open', 'style']
     });

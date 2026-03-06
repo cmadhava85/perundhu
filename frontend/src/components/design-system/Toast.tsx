@@ -30,27 +30,27 @@ const ToastIcon: React.FC<{ type: ToastType }> = ({ type }) => {
   switch (type) {
     case 'success':
       return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="toast__icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="toast__icon">
           <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
           <path d="M8 12l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       );
     case 'error':
       return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="toast__icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="toast__icon">
           <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
           <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       );
     case 'warning':
       return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="toast__icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="toast__icon">
           <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       );
     case 'info':
       return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="toast__icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="toast__icon">
           <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
           <path d="M12 16v-4M12 8h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
@@ -82,7 +82,7 @@ const ToastItem: React.FC<{ toast: Toast; onRemove: (id: string) => void }> = ({
         aria-label="Close notification"
         type="button"
       >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
           <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </button>

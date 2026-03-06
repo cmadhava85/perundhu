@@ -1,17 +1,30 @@
 import { getEnv } from '../utils/environment';
 
-export interface FeatureFlags {
-  enableMap: boolean;
-  enableVoiceContribution: boolean;
-  enableImageContribution: boolean;
-  enableManualContribution: boolean;
-  enablePasteContribution: boolean;
-  enableRouteVerification: boolean;
-  enableAddStops: boolean;
-  enableReportIssue: boolean;
-}
+/**
+ * Build-time static feature flags read from environment variables.
+ *
+ * This is a subset of the runtime {@link FeatureFlags} interface defined in
+ * `contexts/FeatureFlagsContext.tsx`, which is the canonical source of truth
+ * for runtime feature-flag state (including admin-controlled overrides fetched
+ * from the backend). Prefer `useFeatureFlags()` / `useIsFeatureEnabled()` from
+ * that context in React components.
+ *
+ * These static flags are useful for tree-shaking and SSR environments where a
+ * React context is not available.
+ */
+export type StaticFeatureFlags = Pick<
+  import('../contexts/FeatureFlagsContext').FeatureFlags,
+  | 'enableMap'
+  | 'enableVoiceContribution'
+  | 'enableImageContribution'
+  | 'enableManualContribution'
+  | 'enablePasteContribution'
+  | 'enableRouteVerification'
+  | 'enableAddStops'
+  | 'enableReportIssue'
+>;
 
-export const featureFlags: FeatureFlags = {
+export const featureFlags: StaticFeatureFlags = {
   enableMap: getEnv('VITE_ENABLE_MAP') === 'true',
   
   /**
@@ -93,8 +106,10 @@ export const featureFlags: FeatureFlags = {
 };
 
 /**
- * Check if a feature is enabled
+ * Check if a static (build-time) feature flag is enabled.
+ * For runtime flags controlled by admin settings, use `useIsFeatureEnabled()`
+ * from `contexts/FeatureFlagsContext` instead.
  */
-export const isFeatureEnabled = (featureName: keyof FeatureFlags): boolean => {
+export const isFeatureEnabled = (featureName: keyof StaticFeatureFlags): boolean => {
   return featureFlags[featureName] ?? false;
 };

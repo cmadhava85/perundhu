@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 
 @Repository
-public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
+public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, JpaSpecificationExecutor<BusJpaEntity> {
 
         /**
          * Find all buses with locations eagerly fetched.
@@ -272,6 +273,18 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          */
         @Query("SELECT COUNT(DISTINCT s.bus.id) FROM StopJpaEntity s WHERE s.location.id = :locationId")
         long countByStopsLocationId(@Param("locationId") Long locationId);
+
+        /**
+         * Load buses by IDs with locations eagerly fetched.
+         * Use after findAll(spec, pageable) to avoid Hibernate in-memory pagination when JOIN FETCH is combined with Pageable.
+         */
+        @Query("""
+                        SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
+                        WHERE b.id IN :ids
+                        """)
+        List<BusJpaEntity> findByIdsWithLocations(@Param("ids") List<Long> ids);
 
         /**
          * Get distinct origin location names (avoids loading full entities for filter dropdowns)

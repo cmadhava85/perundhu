@@ -3,8 +3,16 @@ package com.perundhu.infrastructure.service;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +21,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,8 +57,9 @@ public class BusDatabaseService {
   private final LocationJpaRepository locationJpaRepository;
 
   /**
-   * Get paginated list of buses with optional search and filters
-   * Cached for 5 minutes to improve admin panel performance
+   * Get paginated list of buses with optional search and filters.
+   * Pushes WHERE + LIMIT/OFFSET to DB via Specification; JOIN FETCH only the page's rows.
+   * Cached for 5 minutes to improve admin panel performance.
    */
   @Transactional(readOnly = true)
   @Cacheable(value = BUS_ADMIN_CACHE, key = "'buses-' + #search + '-' + #originFilter + '-' + #destinationFilter + '-' + #activeOnly + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
@@ -63,80 +73,77 @@ public class BusDatabaseService {
     log.info("Fetching buses - search: {}, origin: {}, destination: {}, activeOnly: {}, page: {}",
         search, originFilter, destinationFilter, activeOnly, pageable.getPageNumber());
 
-    // Use JOIN FETCH to load all buses with their locations in a single query
-    // (avoids N+1: lazy fromLocation/toLocation would issue one SELECT per bus)
-    List<BusJpaEntity> allBuses = busJpaRepository.findAllWithLocations();
+    Specification<BusJpaEntity> spec = buildBusSpec(search, originFilter, destinationFilter, activeOnly);
 
-    // Apply filters
-    List<BusJpaEntity> filteredBuses = allBuses.stream()
-        .filter(bus -> {
-          // Active filter
-          if (activeOnly != null && activeOnly && (bus.getActive() == null || !bus.getActive())) {
-            return false;
-          }
+    // Step 1: DB-side WHERE + COUNT + LIMIT/OFFSET — returns only the IDs we care about.
+    // No JOIN FETCH here; accessing only .id avoids lazy-load triggers.
+    Page<BusJpaEntity> idPage = busJpaRepository.findAll(spec, pageable);
+    if (idPage.isEmpty()) {
+      return new PageImpl<>(List.of(), pageable, 0);
+    }
 
-          // Search filter (bus number, name, locations)
-          if (search != null && !search.isBlank()) {
-            String lowerSearch = search.toLowerCase().trim();
-            boolean matchesBusNumber = bus.getBusNumber() != null &&
-                bus.getBusNumber().toLowerCase().contains(lowerSearch);
-            boolean matchesName = bus.getName() != null &&
-                bus.getName().toLowerCase().contains(lowerSearch);
-            boolean matchesFrom = bus.getFromLocation() != null &&
-                bus.getFromLocation().getName() != null &&
-                bus.getFromLocation().getName().toLowerCase().contains(lowerSearch);
-            boolean matchesTo = bus.getToLocation() != null &&
-                bus.getToLocation().getName() != null &&
-                bus.getToLocation().getName().toLowerCase().contains(lowerSearch);
+    List<Long> pageIds = idPage.map(BusJpaEntity::getId).getContent();
 
-            if (!matchesBusNumber && !matchesName && !matchesFrom && !matchesTo) {
-              return false;
-            }
-          }
+    // Step 2: JOIN FETCH only the page's entities — single query, no N+1 on locations.
+    List<BusJpaEntity> buses = busJpaRepository.findByIdsWithLocations(pageIds);
 
-          // Origin filter
-          if (originFilter != null && !originFilter.isBlank()) {
-            if (bus.getFromLocation() == null ||
-                bus.getFromLocation().getName() == null ||
-                !bus.getFromLocation().getName().toLowerCase()
-                    .contains(originFilter.toLowerCase().trim())) {
-              return false;
-            }
-          }
-
-          // Destination filter
-          if (destinationFilter != null && !destinationFilter.isBlank()) {
-            if (bus.getToLocation() == null ||
-                bus.getToLocation().getName() == null ||
-                !bus.getToLocation().getName().toLowerCase()
-                    .contains(destinationFilter.toLowerCase().trim())) {
-              return false;
-            }
-          }
-
-          return true;
-        })
+    // Preserve the sort order from idPage (IN queries don't guarantee order).
+    Map<Long, BusJpaEntity> busById = buses.stream()
+        .collect(Collectors.toMap(BusJpaEntity::getId, Function.identity()));
+    List<BusJpaEntity> orderedBuses = pageIds.stream()
+        .map(busById::get)
+        .filter(b -> b != null)
         .toList();
 
-    // Get stop counts for each bus
-    List<Long> busIds = filteredBuses.stream().map(BusJpaEntity::getId).toList();
-    var stopCounts = getStopCounts(busIds);
+    // Step 3: Stop counts only for this page (small IN clause, not the whole filtered set).
+    Map<Long, Integer> stopCounts = getStopCounts(pageIds);
 
-    // Convert to list items
-    List<BusListItem> items = filteredBuses.stream()
+    List<BusListItem> items = orderedBuses.stream()
         .map(bus -> toBusListItem(bus, stopCounts.getOrDefault(bus.getId(), 0)))
         .toList();
 
-    // Apply pagination
-    int start = (int) pageable.getOffset();
-    int end = Math.min(start + pageable.getPageSize(), items.size());
+    return new PageImpl<>(items, pageable, idPage.getTotalElements());
+  }
 
-    if (start >= items.size()) {
-      return new PageImpl<>(List.of(), pageable, items.size());
-    }
+  private static Specification<BusJpaEntity> buildBusSpec(
+      String search, String originFilter, String destinationFilter, Boolean activeOnly) {
+    return (root, query, cb) -> {
+      List<Predicate> predicates = new ArrayList<>();
 
-    List<BusListItem> pageContent = items.subList(start, end);
-    return new PageImpl<>(pageContent, pageable, items.size());
+      if (activeOnly != null && activeOnly) {
+        predicates.add(cb.or(cb.isTrue(root.get("active")), cb.isNull(root.get("active"))));
+      }
+
+      // Use reusable joins so search and originFilter don't double-join the same table
+      Join<BusJpaEntity, LocationJpaEntity> fromJoin = root.join("fromLocation", JoinType.LEFT);
+      Join<BusJpaEntity, LocationJpaEntity> toJoin = root.join("toLocation", JoinType.LEFT);
+
+      if (originFilter != null && !originFilter.isBlank()) {
+        predicates.add(cb.like(cb.lower(fromJoin.get("name")),
+            "%" + originFilter.toLowerCase().trim() + "%"));
+      }
+
+      if (destinationFilter != null && !destinationFilter.isBlank()) {
+        predicates.add(cb.like(cb.lower(toJoin.get("name")),
+            "%" + destinationFilter.toLowerCase().trim() + "%"));
+      }
+
+      if (search != null && !search.isBlank()) {
+        String pattern = "%" + search.toLowerCase().trim() + "%";
+        predicates.add(cb.or(
+            cb.like(cb.lower(root.get("busNumber")), pattern),
+            cb.like(cb.lower(root.get("name")), pattern),
+            cb.like(cb.lower(fromJoin.get("name")), pattern),
+            cb.like(cb.lower(toJoin.get("name")), pattern)));
+      }
+
+      // Tell JPA this is a SELECT query (suppresses "query result type not selected" warning on count subqueries)
+      if (query != null) {
+        query.distinct(true);
+      }
+
+      return cb.and(predicates.toArray(new Predicate[0]));
+    };
   }
 
   /**

@@ -9,11 +9,13 @@ import Loading from './Loading';
 import ErrorDisplay from './ErrorDisplay';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import TransitSearchForm from './TransitSearchForm';
-import SearchResults from './SearchResults';
-import BusTracker from './BusTracker';
-import CombinedMapTracker from './CombinedMapTracker';
-import ConnectingRoutes from './ConnectingRoutes';
 import RouteContributionComponent from './RouteContribution';
+
+// Lazy-loaded route components — these pull in Leaflet/map chunks; only fetch when navigated to
+const SearchResults = React.lazy(() => import('./SearchResults'));
+const BusTracker = React.lazy(() => import('./BusTracker'));
+const CombinedMapTracker = React.lazy(() => import('./CombinedMapTracker'));
+const ConnectingRoutes = React.lazy(() => import('./ConnectingRoutes'));
 
 // Admin components
 import AdminLogin from './admin/AdminLogin';
@@ -128,55 +130,63 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
       
       <Route path="/search-results" element={
         <ErrorBoundary fallback={SearchErrorFallback}>
-          {fromLocation && toLocation ? (
-            <SearchResults 
-              buses={buses}
-              fromLocation={fromLocation}
-              toLocation={toLocation}
-              stops={stops}
-              stopsMap={stopsMap}
-              error={searchError}
-              connectingRoutes={connectingRoutes}
-              loading={busesLoading}
-              loadingMore={loadingMore}
-              hasNextPage={hasNextPage}
-              onLoadMore={fetchNextPage}
-              totalCount={totalCount}
-            />
-          ) : (
-            <LoadingSkeleton count={1} type="text" />
-          )}
+          <Suspense fallback={LazyLoadingFallback}>
+            {fromLocation && toLocation ? (
+              <SearchResults 
+                buses={buses}
+                fromLocation={fromLocation}
+                toLocation={toLocation}
+                stops={stops}
+                stopsMap={stopsMap}
+                error={searchError}
+                connectingRoutes={connectingRoutes}
+                loading={busesLoading}
+                loadingMore={loadingMore}
+                hasNextPage={hasNextPage}
+                onLoadMore={fetchNextPage}
+                totalCount={totalCount}
+              />
+            ) : (
+              <LoadingSkeleton count={1} type="text" />
+            )}
+          </Suspense>
         </ErrorBoundary>
       } />
       
       <Route path="/bus/:busId" element={
         <ErrorBoundary fallback={SearchErrorFallback}>
-          <BusTracker 
-            buses={buses} 
-            stops={stopsMap} 
-          />
+          <Suspense fallback={LazyLoadingFallback}>
+            <BusTracker 
+              buses={buses} 
+              stops={stopsMap} 
+            />
+          </Suspense>
         </ErrorBoundary>
       } />
       
       <Route path="/track/:busId" element={
         <ErrorBoundary fallback={MapErrorFallback}>
-          {fromLocation && toLocation ? (
-            <CombinedMapTracker 
-              fromLocation={fromLocation}
-              toLocation={toLocation}
-              buses={buses}
-            />
-          ) : (
-            <Loading message="Loading locations..." />
-          )}
+          <Suspense fallback={LazyLoadingFallback}>
+            {fromLocation && toLocation ? (
+              <CombinedMapTracker 
+                fromLocation={fromLocation}
+                toLocation={toLocation}
+                buses={buses}
+              />
+            ) : (
+              <Loading message="Loading locations..." />
+            )}
+          </Suspense>
         </ErrorBoundary>
       } />
       
       <Route path="/connecting-routes" element={
         <ErrorBoundary fallback={SearchErrorFallback}>
-          <ConnectingRoutes 
-            connectingRoutes={connectingRoutes}
-          />
+          <Suspense fallback={LazyLoadingFallback}>
+            <ConnectingRoutes 
+              connectingRoutes={connectingRoutes}
+            />
+          </Suspense>
         </ErrorBoundary>
       } />
       

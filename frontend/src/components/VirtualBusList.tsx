@@ -1,8 +1,81 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import type { Bus } from '../types';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
+
+interface BusRowData {
+  buses: Bus[];
+  selectedBusId: number | null | undefined;
+  onBusClick?: (bus: Bus) => void;
+}
+
+interface BusRowProps {
+  index: number;
+  style: React.CSSProperties;
+  data: BusRowData;
+}
+
+const BusRow = memo(({ index, style, data }: BusRowProps) => {
+  const bus = data.buses[index];
+  const isSelected = data.selectedBusId === bus.id;
+
+  return (
+    <div style={style}>
+      <button
+        type="button"
+        className={`transit-bus-card ${isSelected ? 'selected' : ''}`}
+        onClick={() => data.onBusClick?.(bus)}
+        aria-label={`Bus ${bus.number || bus.busNumber} from ${bus.fromLocation?.name} to ${bus.toLocation?.name}`}
+        aria-pressed={isSelected}
+      >
+        <div className="bus-card-header">
+          <div className="bus-info">
+            <h3 className="bus-name">{bus.name || bus.busName}</h3>
+            <span className="bus-number">{bus.number || bus.busNumber}</span>
+          </div>
+        </div>
+
+        <div className="timing-section">
+          <div className="time-display">
+            <div className="departure-info">
+              <span className="time-label">Departs</span>
+              <span className="time-value">{bus.departureTime.split(':').slice(0, 2).join(':')}</span>
+              <span className="location-name">{bus.fromLocation?.name}</span>
+            </div>
+
+            <div className="journey-info">
+              <div className="duration-badge">
+                <span className="duration-value">
+                  {calculateDuration(bus.departureTime, bus.arrivalTime)}
+                </span>
+              </div>
+              <div className="journey-line" />
+            </div>
+
+            <div className="arrival-info">
+              <span className="time-label">Arrives</span>
+              <span className="time-value">{bus.arrivalTime.split(':').slice(0, 2).join(':')}</span>
+              <span className="location-name">{bus.toLocation?.name}</span>
+            </div>
+          </div>
+        </div>
+
+        {bus.features && Object.keys(bus.features).length > 0 && (
+          <div className="bus-features">
+            {Object.entries(bus.features).map(([key, value]) => (
+              <span key={key} className="feature-badge">
+                {String(value)}
+              </span>
+            ))}
+          </div>
+        )}
+      </button>
+    </div>
+  );
+});
+
+BusRow.displayName = 'BusRow';
 
 interface VirtualBusListProps {
   buses: Bus[];
@@ -23,69 +96,11 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
 }) => {
   const itemHeight = 160; // Height of each bus card
 
-  const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => {
-    const bus = buses[index];
-    const isSelected = selectedBusId === bus.id;
-
-    return (
-      <div style={style}>
-        <div
-          className={`transit-bus-card ${isSelected ? 'selected' : ''}`}
-          onClick={() => onBusClick?.(bus)}
-          role="button"
-          tabIndex={0}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              onBusClick?.(bus);
-            }
-          }}
-          aria-label={`Bus ${bus.number || bus.busNumber} from ${bus.fromLocation?.name} to ${bus.toLocation?.name}`}
-        >
-          <div className="bus-card-header">
-            <div className="bus-info">
-              <h3 className="bus-name">{bus.name || bus.busName}</h3>
-              <span className="bus-number">{bus.number || bus.busNumber}</span>
-            </div>
-          </div>
-
-          <div className="timing-section">
-            <div className="time-display">
-              <div className="departure-info">
-                <span className="time-label">Departs</span>
-                <span className="time-value">{bus.departureTime.split(':').slice(0, 2).join(':')}</span>
-                <span className="location-name">{bus.fromLocation?.name}</span>
-              </div>
-
-              <div className="journey-info">
-                <div className="duration-badge">
-                  <span className="duration-value">
-                    {calculateDuration(bus.departureTime, bus.arrivalTime)}
-                  </span>
-                </div>
-                <div className="journey-line" />
-              </div>
-
-              <div className="arrival-info">
-                <span className="time-label">Arrives</span>
-                <span className="time-value">{bus.arrivalTime.split(':').slice(0, 2).join(':')}</span>
-                <span className="location-name">{bus.toLocation?.name}</span>
-              </div>
-            </div>
-          </div>
-
-          {bus.features && Object.keys(bus.features).length > 0 && (
-            <div className="bus-features">
-              {Object.entries(bus.features).map(([key, value]) => (
-                <span key={key} className="feature-badge">
-                  {String(value)}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
+  const rowData = useMemo<BusRowData>(() => ({
+    buses,
+    selectedBusId,
+    onBusClick,
+  }), [buses, selectedBusId, onBusClick]);
 
   if (buses.length === 0) {
     return (
@@ -102,8 +117,9 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
       itemSize={itemHeight}
       width="100%"
       overscanCount={3} // Render 3 extra items for smooth scrolling
+      itemData={rowData}
     >
-      {Row}
+      {BusRow}
     </List>
   );
 };

@@ -27,13 +27,6 @@ const spinKeyframes = `
   }
 `;
 
-// Inject animation into head
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = spinKeyframes;
-  document.head.appendChild(style);
-}
-
 // Using TransitBusList with new Transit design system
 
 interface SearchResultsProps {
@@ -126,7 +119,17 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
   const [reportIssueBus, setReportIssueBus] = useState<Bus | null>(null);
-  
+
+  // Inject spin animation styles on mount
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = spinKeyframes;
+    document.head.appendChild(style);
+    return () => {
+      style.remove();
+    };
+  }, []);
+
   // Show error toast
   useEffect(() => {
     if (error) {

@@ -21,30 +21,33 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
             background: '#fff',
             color: '#1f2937',
             borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
+            padding: '10px 12px',
+            fontSize: '14px',
+            maxWidth: '360px',
           },
           success: {
             duration: 3000,
             style: {
               background: '#10b981',
               color: '#fff',
+              padding: '10px 12px',
             },
-            icon: '✅',
           },
           error: {
             duration: 4000,
             style: {
               background: '#ef4444',
               color: '#fff',
+              padding: '10px 12px',
             },
-            icon: '❌',
           },
           loading: {
             style: {
               background: '#3b82f6',
               color: '#fff',
+              padding: '10px 12px',
             },
-            icon: '⏳',
           },
         }}
       />

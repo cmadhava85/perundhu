@@ -3,7 +3,7 @@ import './styles/transit-design-system.css';
 import './styles/transit-bus-card.css';
 import './styles/transit-realtime.css';
 import './styles/micro-interactions.css';
-import { useState, useEffect, useCallback, lazy } from 'react';
+import { useState, useEffect, useCallback, useRef, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, useNavigate, useLocation } from 'react-router-dom';
 import type { Location as BusLocation } from './types';
@@ -110,6 +110,16 @@ function AppContent() {
   const [fromLocation, setFromLocation] = useState(initialFromLocation);
   const [toLocation, setToLocation] = useState(initialToLocation);
   const [_isSearching, setIsSearching] = useState(false);
+
+  // Refs for stable access in URL-restore effect without triggering re-runs or stale closures
+  const fromLocationRef = useRef(fromLocation);
+  fromLocationRef.current = fromLocation;
+  const toLocationRef = useRef(toLocation);
+  toLocationRef.current = toLocation;
+  const busesRef = useRef(buses);
+  busesRef.current = buses;
+  const searchBusesRef = useRef(searchBuses);
+  searchBusesRef.current = searchBuses;
   
   // Sync with the hook's default locations when they're set
   useEffect(() => {
@@ -159,24 +169,23 @@ function AppContent() {
       
       if (from && to) {
         // Only update locations if they differ
-        if (fromLocation?.id !== from.id) {
+        if (fromLocationRef.current?.id !== from.id) {
           setFromLocation(from);
         }
-        if (toLocation?.id !== to.id) {
+        if (toLocationRef.current?.id !== to.id) {
           setToLocation(to);
         }
         
         // Only trigger search once when on search-results page with no results
         if (location.pathname === '/search-results' && 
-            buses.length === 0 && 
+            busesRef.current.length === 0 && 
             !busesLoading && 
             !searchTriggered) {
           setSearchTriggered(true);
-          searchBuses(from, to);
+          searchBusesRef.current(from, to);
         }
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, locations, busesLoading, searchTriggered]);
 
   // Reset searchTriggered when navigating away from search-results
@@ -201,15 +210,10 @@ function AppContent() {
 
   // Handler for the "Find Buses" button click
   const handleSearch = useCallback(async (fromLoc?: BusLocation, toLoc?: BusLocation) => {
-    console.log('handleSearch called with:', { fromLoc, toLoc, fromLocation, toLocation });
     const searchFrom = fromLoc || fromLocation;
     const searchTo = toLoc || toLocation;
-    
-    console.log('handleSearch - searchFrom:', searchFrom);
-    console.log('handleSearch - searchTo:', searchTo);
-    
+
     if (!searchFrom || !searchTo) {
-      console.log('handleSearch - Early return: missing locations');
       return;
     }
 
@@ -217,9 +221,7 @@ function AppContent() {
     resetResults();
 
     try {
-      console.log('handleSearch - calling searchBuses');
       await searchBuses(searchFrom, searchTo);
-      console.log('handleSearch - navigating to results page');
       navigate(`/search-results?from=${searchFrom.id}&to=${searchTo.id}`);
     } catch (error) {
       console.error('Error searching buses:', error);

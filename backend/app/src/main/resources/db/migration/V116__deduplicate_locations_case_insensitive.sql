@@ -42,8 +42,8 @@ CREATE TEMPORARY TABLE IF NOT EXISTS location_dedup_map (
 --   3. Lowest id (stable, deterministic)
 INSERT IGNORE INTO location_dedup_map (duplicate_id, canonical_id)
 SELECT
-    dup.id   AS duplicate_id,
-    best.id  AS canonical_id
+    dup.id              AS duplicate_id,
+    best.canonical_id   AS canonical_id
 FROM locations dup
 JOIN (
     -- For each name-group pick the best row

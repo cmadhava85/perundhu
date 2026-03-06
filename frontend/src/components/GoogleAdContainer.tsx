@@ -18,6 +18,24 @@ interface GoogleAdContainerProps {
   height?: number;
 }
 
+const ADSENSE_SCRIPT_ID = 'google-adsense-script';
+const ADSENSE_CLIENT = 'ca-pub-9475468169056134';
+
+/**
+ * Dynamically injects the AdSense script the first time ads become enabled.
+ * Called inside GoogleAdContainer so the 70 KB 3rd-party script is never
+ * fetched on page load when ads are disabled.
+ */
+function loadAdSenseScript() {
+  if (document.getElementById(ADSENSE_SCRIPT_ID)) return;
+  const script = document.createElement('script');
+  script.id = ADSENSE_SCRIPT_ID;
+  script.async = true;
+  script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
+  script.crossOrigin = 'anonymous';
+  document.head.appendChild(script);
+}
+
 /**
  * Google AdSense Container Component
  * 
@@ -45,6 +63,9 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
 
   useEffect(() => {
     if (!shouldShowAd) return;
+
+    // Ensure AdSense script is loaded (only injected once; no-op if already present)
+    loadAdSenseScript();
 
     // Push ad to Google AdSense only if enabled
     try {

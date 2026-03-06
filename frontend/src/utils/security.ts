@@ -30,31 +30,43 @@ export function disableTextSelection(): void {
 }
 
 /**
- * Prevent keyboard shortcuts used for inspection
+ * Prevent DevTools keyboard shortcuts in production only.
+ * Does not block shortcuts in form fields to avoid disrupting user input.
  */
 export function disableKeyboardShortcuts(): void {
-  const blockedKeys = ['F12', 'F11', 'F3'];
+  // Only applies in production — never block developer workflow in dev/test
+  try {
+    const env = (import.meta as { env?: { MODE?: string } }).env;
+    if (env?.MODE !== 'production') return;
+  } catch {
+    return; // Not a Vite environment; skip
+  }
 
   document.addEventListener('keydown', (event) => {
+    // Never interfere when the user is typing in a form field
+    const target = event.target as HTMLElement;
+    const isFormField =
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.tagName === 'SELECT' ||
+      target.contentEditable === 'true';
+    if (isFormField) return;
+
     let shouldBlock = false;
-    
-    // Block F12 and other function keys
-    if (blockedKeys.includes(event.key)) {
+
+    // F12 — DevTools toggle
+    if (event.key === 'F12') {
       shouldBlock = true;
     }
 
-    // Block Ctrl/Cmd combinations
+    // Ctrl/Cmd+Shift+I — Elements inspector
+    // Ctrl/Cmd+Shift+J — Console
     if ((event.ctrlKey || event.metaKey) && event.shiftKey) {
-      if (['I', 'C', 'J'].includes(event.key.toUpperCase())) {
+      if (['I', 'J'].includes(event.key.toUpperCase())) {
         shouldBlock = true;
       }
     }
 
-    // Block Ctrl+I for inspect
-    if ((event.ctrlKey || event.metaKey) && event.key === 'I') {
-      shouldBlock = true;
-    }
-    
     if (shouldBlock) {
       event.preventDefault();
     }
