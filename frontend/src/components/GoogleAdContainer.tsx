@@ -67,11 +67,10 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
     // Ensure AdSense script is loaded (only injected once; no-op if already present)
     loadAdSenseScript();
 
-    // Push ad to Google AdSense only if enabled
+    // Push ad to Google AdSense - standard pattern that queues the push
+    // even if the script hasn't finished loading yet
     try {
-      if (window.adsbygoogle && window.adsbygoogle.length >= 0) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      }
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (error) {
       console.warn('AdSense not loaded or error occurred:', error);
     }
