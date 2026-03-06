@@ -85,6 +85,18 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     // Periodic cleanup of old entries
     cleanupOldEntries();
 
+    // Safety valve: if the store is still oversized after cleanup (e.g. under a
+    // distributed IP-spoofing attack), reject new callers rather than letting
+    // heap grow without bound. Known IPs already in the map are still served.
+    if (!rateLimitStore.containsKey(limitKey) && rateLimitStore.size() >= MAX_RATE_LIMIT_ENTRIES) {
+      log.warn("Rate limit store at capacity ({}), rejecting new IP: {}", MAX_RATE_LIMIT_ENTRIES, clientIp);
+      response.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
+      response.setContentType("application/json");
+      response.getWriter().write(
+          "{\"error\":\"Service temporarily unavailable\",\"message\":\"Server is under high load. Please try again later.\"}");
+      return;
+    }
+
     // Check rate limit
     RateLimitEntry entry = rateLimitStore.computeIfAbsent(limitKey, k -> new RateLimitEntry());
 

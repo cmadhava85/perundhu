@@ -109,19 +109,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         log.debug("Fetched {} locations in {}ms", locations.size(), System.currentTimeMillis() - startTime);
 
         // Batch load all translations for locations in one query to avoid N+1
-        Map<Long, String> translationMap = new java.util.HashMap<>();
-        if (languageCode != null && !languageCode.isEmpty()) {
-            long transStart = System.currentTimeMillis();
-            List<Translation> translations = translationRepository.findByEntityTypeAndLanguage(ENTITY_TYPE_LOCATION,
-                    languageCode);
-            for (Translation t : translations) {
-                if (FIELD_NAME.equals(t.getFieldName())) {
-                    translationMap.put(t.getEntityId(), t.getTranslatedValue());
-                }
-            }
-            log.debug("Batch loaded {} translations in {}ms", translations.size(),
-                    System.currentTimeMillis() - transStart);
-        }
+        Map<Long, String> translationMap = buildLocationTranslationMap(languageCode);
 
         return locations.stream().map(location -> {
             String translatedName = location.name();
@@ -242,19 +230,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         log.debug("Loaded {} stops for bus {} in {}ms", stops.size(), busId, System.currentTimeMillis() - startTime);
 
         // Batch load translations for all location IDs to avoid N+1 queries
-        Map<Long, String> translationMap = new java.util.HashMap<>();
-        if (languageCode != null && !languageCode.isEmpty()) {
-            long transStart = System.currentTimeMillis();
-            List<Translation> translations = translationRepository.findByEntityTypeAndLanguage(ENTITY_TYPE_LOCATION,
-                    languageCode);
-            for (Translation t : translations) {
-                if (FIELD_NAME.equals(t.getFieldName())) {
-                    translationMap.put(t.getEntityId(), t.getTranslatedValue());
-                }
-            }
-            log.debug("Batch loaded {} translations in {}ms", translations.size(),
-                    System.currentTimeMillis() - transStart);
-        }
+        Map<Long, String> translationMap = buildLocationTranslationMap(languageCode);
 
         return stops.stream().map(stop -> {
             String translatedName = stop.name();

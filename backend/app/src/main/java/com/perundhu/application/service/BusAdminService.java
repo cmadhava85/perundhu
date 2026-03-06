@@ -8,10 +8,13 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.infrastructure.config.CacheConfig;
 import com.perundhu.domain.port.BusRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -51,6 +54,11 @@ public class BusAdminService {
    * @return Result of the update operation
    */
   @Transactional
+  @Caching(evict = {
+      @CacheEvict(value = CacheConfig.ALL_BUSES_CACHE, allEntries = true),
+      @CacheEvict(value = CacheConfig.BUS_SEARCH_CACHE, allEntries = true),
+      @CacheEvict(value = CacheConfig.STOPS_CACHE, allEntries = true)
+  })
   public UpdateResult updateBusTiming(Long id, String departureTime, String arrivalTime) {
     log.info("Updating bus timing for ID: {} with departure={}, arrival={}", id, departureTime, arrivalTime);
 
@@ -112,6 +120,10 @@ public class BusAdminService {
    * @return true if bus was deactivated, false if not found
    */
   @Transactional
+  @Caching(evict = {
+      @CacheEvict(value = CacheConfig.ALL_BUSES_CACHE, allEntries = true),
+      @CacheEvict(value = CacheConfig.BUS_SEARCH_CACHE, allEntries = true)
+  })
   public boolean deactivateBus(Long id) {
     Optional<Bus> optBus = busRepository.findById(id);
     if (optBus.isEmpty()) {

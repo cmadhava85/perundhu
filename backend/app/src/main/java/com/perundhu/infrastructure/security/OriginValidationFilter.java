@@ -115,6 +115,9 @@ public class OriginValidationFilter extends OncePerRequestFilter {
     response.setHeader("X-Content-Type-Options", "nosniff");
     response.setHeader("X-Frame-Options", "DENY");
     response.setHeader("X-XSS-Protection", "1; mode=block");
+    // HSTS: enforce HTTPS for 1 year, include subdomains
+    response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
 
     filterChain.doFilter(request, response);
   }

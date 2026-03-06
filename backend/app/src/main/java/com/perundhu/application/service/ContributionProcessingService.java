@@ -108,8 +108,11 @@ public class ContributionProcessingService {
      * Only validates contributions - manual admin approval required unless
      * auto-approve is enabled
      */
+    // NOTE: @Transactional intentionally NOT on this method — the batch loop calls
+    // validateRouteContribution / integrateApprovedContribution which each open their
+    // own short-lived transactions. A single @Transactional here would hold one DB
+    // connection for the entire batch, exhausting the connection pool under load.
     @Scheduled(cron = "0 0 * * * *") // Run once every hour
-    @Transactional
     public void processRouteContributions() {
         log.info("Starting scheduled processing of route contributions (auto-approve: {})", autoApproveEnabled);
 
@@ -157,8 +160,8 @@ public class ContributionProcessingService {
     /**
      * Scheduled job to process pending image contributions
      */
+    // NOTE: @Transactional intentionally NOT on this method — see processRouteContributions().
     @Scheduled(cron = "0 30 * * * *") // Run once every hour at 30 minutes past
-    @Transactional
     public void processImageContributions() {
         log.info("Starting scheduled processing of image contributions");
 
@@ -1315,12 +1318,14 @@ public class ContributionProcessingService {
     /**
      * Batch integrate multiple route contributions with performance optimizations.
      * Uses location caching to avoid repeated database lookups.
-     * Runs in a single transaction for better performance.
-     * 
+     * NOT annotated with @Transactional: the loop calls integrateWithCache() per item,
+     * which may trigger geocoding HTTP calls (Nominatim). Holding a single DB connection
+     * for the entire batch duration (including network I/O) would exhaust the connection
+     * pool under load. Each per-item save/integrate carries its own transaction boundary.
+     *
      * @param contributions List of route contributions to integrate
      * @return BatchIntegrationResult with counts and error details
      */
-    @Transactional
     public BatchIntegrationResult integrateApprovedContributionsBatch(List<RouteContribution> contributions) {
         log.info("Starting batch integration of {} route contributions", contributions.size());
         long startTime = System.currentTimeMillis();

@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +53,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     @Lazy
     private final ContributionProcessingService contributionProcessingService;
 
-    // Thread pool for async processing
-    private final ExecutorService asyncExecutor = Executors.newFixedThreadPool(5);
+    // Thread pool for async processing — uses virtual threads to align with app-wide strategy
+    private final ExecutorService asyncExecutor = Executors.newVirtualThreadPerTaskExecutor();
 
     /**
      * Process an uploaded bus schedule image
