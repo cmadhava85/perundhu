@@ -26,6 +26,7 @@ import {
   AlertOctagon,
   Upload
 } from 'lucide-react';
+import { isProduction } from '../../utils/environment';
 import './AdminSettingsPanel.css';
 import AdSettingsPanel from './AdSettingsPanel';
 
@@ -180,6 +181,7 @@ const AdminSettingsPanel: React.FC = () => {
               {t('admin.settings.saveToServer', 'Save to Server')}
             </button>
           )}
+          {!isProduction() && (
           <button 
             className="sync-preprod-button"
             onClick={handleSyncToPreprod}
@@ -189,6 +191,7 @@ const AdminSettingsPanel: React.FC = () => {
             {isSyncingToPreprod ? <Loader2 size={16} className="spin" /> : <Upload size={16} />}
             {t('admin.settings.syncToPreprod', 'Sync to Preprod')}
           </button>
+          )}
           <button 
             className="reset-button"
             onClick={() => setShowResetConfirm(true)}

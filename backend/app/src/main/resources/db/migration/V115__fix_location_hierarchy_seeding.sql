@@ -24,17 +24,21 @@
 -- Thoothukudi, Tirunelveli, Vellore, Erode and any others added later.
 
 -- Mark city rows (any location that is the direct parent of a "City - X" terminal)
+-- Wrapped in a derived table alias to satisfy MariaDB's restriction on updating
+-- a table that appears in its own subquery's FROM clause (Error 1093).
 UPDATE locations city_row
 SET city_row.location_type = 'CITY'
 WHERE (city_row.location_type IS NULL OR city_row.location_type = 'CITY')
   AND city_row.id IN (
-      SELECT parent_candidate.id
-      FROM locations terminal_row
-      JOIN locations parent_candidate
-        ON parent_candidate.name = SUBSTRING_INDEX(terminal_row.name, ' - ', 1)
-      WHERE terminal_row.name LIKE '% - %'
-        AND SUBSTRING_INDEX(terminal_row.name, ' - ', 1) != ''
-        AND CHAR_LENGTH(SUBSTRING_INDEX(terminal_row.name, ' - ', 1)) > 2
+      SELECT id FROM (
+          SELECT parent_candidate.id
+          FROM locations terminal_row
+          JOIN locations parent_candidate
+            ON parent_candidate.name = SUBSTRING_INDEX(terminal_row.name, ' - ', 1)
+          WHERE terminal_row.name LIKE '% - %'
+            AND SUBSTRING_INDEX(terminal_row.name, ' - ', 1) != ''
+            AND CHAR_LENGTH(SUBSTRING_INDEX(terminal_row.name, ' - ', 1)) > 2
+      ) AS city_candidates
   );
 
 -- Link "City - Terminal" rows to their parent city.
