@@ -7,6 +7,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,6 +43,11 @@ public class CacheWarmupService {
    * Warm up caches after application is fully ready
    * This runs asynchronously to avoid blocking startup
    */
+  // @Async: runs on asyncExecutor so it does not block the startup event thread.
+  // Without this, warmupCaches() held a DB connection on the main thread while
+  // RouteGraphCacheService was also loading all buses/stops asynchronously,
+  // causing concurrent pool pressure that triggered HikariCP leak warnings.
+  @Async("asyncExecutor")
   @EventListener(ApplicationReadyEvent.class)
   public void warmupCaches() {
     log.info("🔥 Starting cache warm-up...");

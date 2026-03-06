@@ -9,12 +9,15 @@ import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Stop;
@@ -39,6 +42,11 @@ public class RouteGraphCacheService {
   private final StopRepository stopRepository;
   private final ExecutorService virtualThreadExecutor;
 
+  // Self-reference through Spring proxy so @Cacheable and @Transactional apply on warmup calls
+  @Autowired
+  @Lazy
+  private RouteGraphCacheService self;
+
   public RouteGraphCacheService(
       BusRepository busRepository,
       StopRepository stopRepository,
@@ -54,7 +62,10 @@ public class RouteGraphCacheService {
    * Before: Single-threaded, ~5000ms for 1000 buses
    * After: Parallel with virtual threads, ~500-800ms
    */
+  // @Transactional(readOnly=true): both findAll() + findStopsByBusIdsGrouped() share ONE
+  // connection instead of each acquiring their own, halving peak connection usage during warmup.
   @Cacheable(value = "routeGraphCache", key = "'global'")
+  @Transactional(readOnly = true)
   public RouteGraphData buildRouteGraph() {
     long startTime = System.currentTimeMillis();
     log.info("Building route graph with Java 21 optimizations...");
@@ -154,7 +165,11 @@ public class RouteGraphCacheService {
    * Async cache warming with virtual threads
    * Called on application startup
    */
-  @EventListener(ContextRefreshedEvent.class)
+  // ApplicationReadyEvent fires exactly ONCE when the app is fully started.
+  // ContextRefreshedEvent fires multiple times (once per context refresh, e.g. child/parent
+  // context), which caused multiple concurrent buildRouteGraph() executions that exhausted
+  // the HikariCP connection pool and triggered the "Apparent connection leak" warnings.
+  @EventListener(ApplicationReadyEvent.class)
   public void warmCacheOnStartup() {
     log.info("Starting cache warming on application startup...");
     warmCacheAsync();
@@ -164,21 +179,20 @@ public class RouteGraphCacheService {
    * Async cache warming method
    * Uses virtual threads for non-blocking operation
    */
+  // @Async puts this on the asyncExecutor thread — no need for an inner CompletableFuture.runAsync().
+  // Using self.buildRouteGraph() (through the Spring proxy) ensures @Cacheable stores the result
+  // and @Transactional(readOnly=true) applies, so both DB queries share ONE connection.
   @Async("asyncExecutor")
   public CompletableFuture<Void> warmCacheAsync() {
-    return CompletableFuture.runAsync(() -> {
-      long startTime = System.currentTimeMillis();
-      log.info("Cache warming started...");
-
-      try {
-        RouteGraphData data = buildRouteGraph();
-        long duration = System.currentTimeMillis() - startTime;
-        log.info("✓ Cache warming completed in {}ms", duration);
-
-      } catch (Exception e) {
-        log.error("Cache warming failed", e);
-      }
-    }, virtualThreadExecutor);
+    long startTime = System.currentTimeMillis();
+    log.info("Cache warming started...");
+    try {
+      self.buildRouteGraph();
+      log.info("✓ Cache warming completed in {}ms", System.currentTimeMillis() - startTime);
+    } catch (Exception e) {
+      log.error("Cache warming failed", e);
+    }
+    return CompletableFuture.completedFuture(null);
   }
 
   /**
