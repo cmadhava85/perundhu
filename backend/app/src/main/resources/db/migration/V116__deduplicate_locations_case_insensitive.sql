@@ -29,6 +29,12 @@
 -- ================================================================
 -- We use a temporary table so the mapping survives across statements.
 
+-- Disable ONLY_FULL_GROUP_BY for this session so the GROUP BY + correlated
+-- subquery pattern below is accepted by MySQL/MariaDB strict mode.
+-- The session mode is restored in STEP 7.
+SET @saved_sql_mode = @@SESSION.sql_mode;
+SET SESSION sql_mode = REPLACE(REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY,', ''), ',ONLY_FULL_GROUP_BY', '');
+
 CREATE TEMPORARY TABLE IF NOT EXISTS location_dedup_map (
     duplicate_id  BIGINT NOT NULL PRIMARY KEY,
     canonical_id  BIGINT NOT NULL,
@@ -48,28 +54,18 @@ FROM locations dup
 JOIN (
     -- For each name-group pick the best row
     SELECT
-        LOWER(l.name)                             AS name_key,
+        LOWER(l.name) AS name_key,
         (
             SELECT winner.id
             FROM locations winner
             WHERE LOWER(winner.name) = LOWER(l.name)
             ORDER BY
-                -- Title-case score: count words that start upper + rest lower
-                (
-                    LENGTH(winner.name)
-                    - LENGTH(REPLACE(winner.name, ' ', ''))
-                    -- Approximate: reward mixed case by penalising all-upper
-                    - IF(winner.name = UPPER(winner.name) AND winner.name != LOWER(winner.name), 1000, 0)
-                    -- Reward proper Title Case (binary collation trick)
-                    + IF(winner.name COLLATE utf8mb4_bin REGEXP '^([A-Z][a-z]+ ?)+$', 100, 0)
-                ) DESC,
+                -- Penalise ALL-CAPS; reward proper Title Case
+                (IF(winner.name = UPPER(winner.name) AND winner.name != LOWER(winner.name), -1000, 0)
+                 + IF(winner.name COLLATE utf8mb4_bin REGEXP '^([A-Z][a-z]+ ?)+$', 100, 0)) DESC,
                 -- Most routes (higher = more "real")
-                (
-                    SELECT COUNT(*)
-                    FROM buses b
-                    WHERE b.from_location_id = winner.id
-                       OR b.to_location_id   = winner.id
-                ) DESC,
+                (SELECT COUNT(*) FROM buses b
+                 WHERE b.from_location_id = winner.id OR b.to_location_id = winner.id) DESC,
                 winner.id ASC
             LIMIT 1
         ) AS canonical_id
@@ -222,58 +218,60 @@ JOIN (
 -- ================================================================
 -- STEP 6: Add a case-insensitive unique index to prevent recurrence
 -- ================================================================
--- MySQL does case-insensitive unique checks on utf8mb4_unicode_ci columns
--- by default. If the collation is utf8mb4_bin we need an explicit
--- functional index. We use a stored procedure for idempotency.
+-- Uses PREPARE/EXECUTE for conditional DDL so Flyway (which uses JDBC
+-- and does NOT support the MySQL CLI-only DELIMITER command) can run
+-- this script without any stored procedure.
 
-DROP PROCEDURE IF EXISTS add_locations_unique_name_index;
-
-DELIMITER //
-CREATE PROCEDURE add_locations_unique_name_index()
-BEGIN
-    -- Drop the old case-sensitive unique index on (name, district, state) from V108
-    -- if it exists — it allowed 'Sivakasi' and 'SIVAKASI' to co-exist.
-    -- We replace it with a case-insensitive one on name_lower below.
-    IF EXISTS (
+-- 6a. Drop the old case-sensitive unique index from V108 if it exists.
+SET @drop_old_idx = IF(
+    EXISTS (
         SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS
         WHERE TABLE_SCHEMA = DATABASE()
           AND TABLE_NAME   = 'locations'
           AND INDEX_NAME   = 'uq_locations_name_district_state'
-    ) THEN
-        ALTER TABLE locations DROP INDEX uq_locations_name_district_state;
-    END IF;
+    ),
+    'ALTER TABLE locations DROP INDEX uq_locations_name_district_state',
+    'SELECT 1 -- index uq_locations_name_district_state not present, skip'
+);
+PREPARE _stmt FROM @drop_old_idx;
+EXECUTE _stmt;
+DEALLOCATE PREPARE _stmt;
 
-    -- Add a generated lowercase column (idempotent) then unique-index it.
-    IF NOT EXISTS (
+-- 6b. Add the generated lowercase column if it does not already exist.
+SET @add_col = IF(
+    NOT EXISTS (
         SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
         WHERE TABLE_SCHEMA = DATABASE()
           AND TABLE_NAME   = 'locations'
           AND COLUMN_NAME  = 'name_lower'
-    ) THEN
-        ALTER TABLE locations
-            ADD COLUMN name_lower VARCHAR(255)
-                GENERATED ALWAYS AS (LOWER(name)) STORED
-                COMMENT 'Lowercase generated column for case-insensitive unique constraint';
-    END IF;
+    ),
+    'ALTER TABLE locations ADD COLUMN name_lower VARCHAR(255) GENERATED ALWAYS AS (LOWER(name)) STORED COMMENT ''Lowercase generated column for case-insensitive unique constraint''',
+    'SELECT 1 -- column name_lower already exists, skip'
+);
+PREPARE _stmt FROM @add_col;
+EXECUTE _stmt;
+DEALLOCATE PREPARE _stmt;
 
-    IF NOT EXISTS (
+-- 6c. Create the case-insensitive unique index if it does not already exist.
+SET @add_idx = IF(
+    NOT EXISTS (
         SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS
         WHERE TABLE_SCHEMA = DATABASE()
           AND TABLE_NAME   = 'locations'
           AND INDEX_NAME   = 'uq_locations_name_ci'
-    ) THEN
-        CREATE UNIQUE INDEX uq_locations_name_ci ON locations (name_lower);
-    END IF;
-END //
-DELIMITER ;
-
-CALL add_locations_unique_name_index();
-DROP PROCEDURE IF EXISTS add_locations_unique_name_index;
+    ),
+    'CREATE UNIQUE INDEX uq_locations_name_ci ON locations (name_lower)',
+    'SELECT 1 -- index uq_locations_name_ci already exists, skip'
+);
+PREPARE _stmt FROM @add_idx;
+EXECUTE _stmt;
+DEALLOCATE PREPARE _stmt;
 
 -- ================================================================
--- STEP 7: Clean up temp table
+-- STEP 7: Clean up temp tables and restore session settings
 -- ================================================================
 DROP TEMPORARY TABLE IF EXISTS location_dedup_map;
+SET SESSION sql_mode = @saved_sql_mode;
 
 -- ================================================================
 -- VERIFICATION
