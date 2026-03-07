@@ -1,7 +1,7 @@
 # Cloud Run service for backend application
 
 resource "google_cloud_run_service" "backend" {
-  name     = "${var.app_name}-${var.environment}-backend"
+  name     = var.backend_service_name != "" ? var.backend_service_name : "${var.app_name}-${var.environment}-backend"
   location = var.region
 
   template {
@@ -307,6 +307,13 @@ resource "google_cloud_run_service" "backend" {
   traffic {
     percent         = 100
     latest_revision = true
+  }
+
+  lifecycle {
+    ignore_changes = [
+      template,   # CI/CD pipeline manages image, env vars, and annotations
+      metadata,   # gcloud CLI adds client-name/version annotations
+    ]
   }
 }
 
