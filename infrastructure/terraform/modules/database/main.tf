@@ -82,6 +82,7 @@ resource "google_sql_database_instance" "mysql_instance" {
       settings[0].disk_type,
       settings[0].disk_size,
       settings[0].ip_configuration,
+      settings[0].activation_policy, # Managed manually via gcloud sql instances patch
       deletion_protection
     ]
   }
@@ -108,8 +109,9 @@ resource "google_sql_user" "users" {
 
   # Ignore changes to password since we manage it via Secret Manager and sync script
   # This prevents Terraform from trying to recreate the user with each apply
+  # Ignore host changes since the existing user was created with empty host (no change needed)
   lifecycle {
-    ignore_changes = [password]
+    ignore_changes = [password, host]
   }
 }
 
