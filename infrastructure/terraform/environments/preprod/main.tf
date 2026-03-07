@@ -188,6 +188,7 @@ module "cloud_run" {
   region                = var.region
   environment           = var.environment
   app_name              = var.app_name
+  backend_service_name  = var.backend_service_name
   service_account_email = module.iam.backend_service_account_email
   vpc_connector_name    = module.vpc.vpc_connector_name
   db_connection_name    = module.database.db_connection_name

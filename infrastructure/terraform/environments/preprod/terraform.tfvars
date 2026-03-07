@@ -84,11 +84,10 @@ public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
 # VPC Connector DISABLED for cost savings (saves $14/month)
-# Cloud Run will use public IP to connect to Cloud SQL
-# Note: Database must allow public connections for this to work
-vpc_connector_min_instances = 2 # Kept for reference only (connector disabled)
-vpc_connector_max_instances = 3 # Kept for reference only (connector disabled)
-vpc_connector_machine_type  = "e2-micro" # Kept for reference only (connector disabled)
+# Cloud Run uses public IP to connect to Cloud SQL
+vpc_connector_min_instances = 2
+vpc_connector_max_instances = 3
+vpc_connector_machine_type  = "e2-micro"
 
 # ============================================
 # Storage Configuration

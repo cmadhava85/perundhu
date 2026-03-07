@@ -175,3 +175,9 @@ variable "recaptcha_site_key_secret_name" {
   type        = string
   default     = "recaptcha-site-key"
 }
+
+variable "backend_service_name" {
+  description = "Override for the backend Cloud Run service name. Defaults to '{app_name}-{environment}-backend' if empty."
+  type        = string
+  default     = ""
+}

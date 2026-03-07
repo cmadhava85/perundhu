@@ -429,3 +429,31 @@ variable "sql_autostop_function_source_path" {
   type        = string
   default     = ""
 }
+
+# ============================================
+# Read Replica Configuration
+# ============================================
+
+variable "create_read_replica" {
+  description = "Whether to create a Cloud SQL read replica"
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_tier" {
+  description = "Machine tier for the Cloud SQL read replica"
+  type        = string
+  default     = "db-f1-micro"
+}
+
+variable "read_replica_zone" {
+  description = "Zone for the Cloud SQL read replica"
+  type        = string
+  default     = "us-central1-b"
+}
+
+variable "backend_service_name" {
+  description = "Override for the backend Cloud Run service name"
+  type        = string
+  default     = ""
+}
