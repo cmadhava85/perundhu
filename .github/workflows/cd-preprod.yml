@@ -347,6 +347,15 @@ jobs:
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Start Cloud SQL Instance
+        run: |
+          echo "▶️  Starting Cloud SQL instance for deployment..."
+          gcloud sql instances patch ${{ env.SQL_INSTANCE_NAME }} \
+            --activation-policy=ALWAYS \
+            --project=${{ env.PROJECT_ID }} \
+            --quiet || echo "⚠️  Could not start SQL instance"
+          echo "⏳ Waiting for Cloud SQL instance to be RUNNABLE..."
+
       - name: Wait for Cloud SQL Instance to Start
         run: |
           echo "⏳ Waiting for Cloud SQL instance to be RUNNABLE..."
@@ -467,4 +476,55 @@ jobs:
           
           # Test frontend
           curl -f "${FRONTEND_URL}" || echo "Frontend check failed"
+
+      - name: Cleanup Old Artifact Registry Images
+        run: |
+          # Keep only images from the last 3 days to reduce storage costs (~$12/month)
+          CUTOFF=$(date -u -d '3 days ago' '+%Y-%m-%dT%H:%M:%SZ')
+          echo "🗑️  Deleting Artifact Registry images older than 3 days (before ${CUTOFF})..."
+          for IMG in backend frontend; do
+            echo "  Processing ${IMG}..."
+            gcloud artifacts docker images list \
+              "${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${IMG}" \
+              --include-tags \
+              --filter="createTime<'${CUTOFF}'" \
+              --format="value(version)" \
+              --project=${{ env.PROJECT_ID }} 2>/dev/null | \
+            while IFS= read -r digest; do
+              [[ -n "$digest" ]] && \
+                gcloud artifacts docker images delete \
+                  "${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${IMG}@${digest}" \
+                  --delete-tags --quiet 2>/dev/null && \
+                echo "    Deleted: ${IMG}@${digest}" || true
+            done
+          done
+          echo "✅ Artifact Registry cleanup complete"
+
+      - name: Delete Orphaned VPC Connector
+        run: |
+          # VPC Access Connectors run 2x e2-micro VMs billed under Compute Engine (~$14/month)
+          # The connector was disabled in Terraform but may still exist as orphaned resource
+          echo "🔍 Checking for orphaned VPC Access Connectors..."
+          for REGION_CHECK in us-central1; do
+            if gcloud compute networks vpc-access connectors describe perundhu-preprod-vpc-conn \
+              --region=${REGION_CHECK} --project=${{ env.PROJECT_ID }} --quiet 2>/dev/null; then
+              echo "Found connector in ${REGION_CHECK} — deleting..."
+              gcloud compute networks vpc-access connectors delete perundhu-preprod-vpc-conn \
+                --region=${REGION_CHECK} --project=${{ env.PROJECT_ID }} --quiet && \
+                echo "✅ Deleted VPC connector in ${REGION_CHECK} (saves ~$14/month)" || \
+                echo "⚠️  Could not delete connector in ${REGION_CHECK}"
+            else
+              echo "No connector found in ${REGION_CHECK}"
+            fi
+          done
+
+      - name: Stop Cloud SQL After Deployment
+        if: always()
+        run: |
+          echo "💰 Stopping Cloud SQL instance to save costs (~$40/month when idle)..."
+          gcloud sql instances patch ${{ env.SQL_INSTANCE_NAME }} \
+            --activation-policy=NEVER \
+            --project=${{ env.PROJECT_ID }} \
+            --quiet || echo "⚠️  Could not stop SQL instance (may already be stopped)"
+          echo "✅ Cloud SQL instance stopped. It will auto-start on next deployment."
 # Trigger CD pipeline to run migrations

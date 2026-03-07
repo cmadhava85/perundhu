@@ -1,6 +1,6 @@
 # Perundhu PreProd Environment Configuration
 # Generated for GCP Project: astute-strategy-406601
-# Region: asia-south1 (Mumbai - optimal for India)
+# Region: us-central1 (migrated from asia-south1)
 # 
 # COST OPTIMIZATION ENABLED (Jan 2026)
 # ======================================
@@ -14,8 +14,8 @@
 # GCP Configuration
 # ============================================
 project_id = "astute-strategy-406601"
-region     = "asia-south1"
-zone       = "asia-south1-a"
+region     = "us-central1"
+zone       = "us-central1-a"
 
 # ============================================
 # Environment Configuration
@@ -27,16 +27,16 @@ app_name    = "perundhu"
 # Database Configuration
 # ============================================
 db_version              = "MYSQL_8_0"
-db_instance_tier        = "db-f1-micro" # Cost-optimized for dev
-db_instance_name_suffix = ""
+db_instance_tier        = "db-f1-micro" # Cost-optimized for dev (minimum tier)
+db_instance_name_suffix = "-us"         # Matches existing GCP instance name
 
 database_name = "perundhu"
 database_user = "perundhu_user"
 
 # Database Storage (cost-optimized for development)
 db_disk_type             = "PD_HDD" # HDD is cheaper, suitable for dev
-db_disk_size             = 10       # Minimum size to save costs
-db_disk_autoresize_limit = 20       # Auto-grow up to 20GB
+db_disk_size             = 10       # Minimum (10GB is Cloud SQL minimum)
+db_disk_autoresize_limit = 15       # Cap auto-grow at 15GB for cost control
 
 # Database Availability (cost-optimized)
 db_availability_type = "ZONAL" # Cheaper than REGIONAL
@@ -65,7 +65,7 @@ use_public_ip = false
 # Disabled by default - enable for testing read/write splitting
 create_read_replica = false
 read_replica_tier   = "db-f1-micro"
-read_replica_zone   = "asia-south1-b"
+read_replica_zone   = "us-central1-b"
 
 # ============================================
 # Cloud Run Configuration (Optimized for < $10/month)
@@ -222,4 +222,4 @@ notification_email = "alerts@perundhu.com"
 # domain_name = "preprod.perundhu.app"
 
 # Container Image (optional - managed by CI/CD, can override via -var if needed)
-# container_image = "asia-south1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:preprod-latest"
+# container_image = "us-central1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:preprod-latest"

@@ -6,7 +6,7 @@ variable "project_id" {
 variable "region" {
   description = "GCP region for Cloud Function and Cloud Scheduler"
   type        = string
-  default     = "asia-south1"
+  default     = "us-central1"
 }
 
 variable "sql_instance_name" {

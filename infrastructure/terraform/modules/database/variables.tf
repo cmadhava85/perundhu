@@ -186,5 +186,5 @@ variable "read_replica_tier" {
 variable "read_replica_zone" {
   description = "Zone for read replica (should be different from primary for HA)"
   type        = string
-  default     = "asia-south1-b"
+  default     = "us-central1-b"
 }

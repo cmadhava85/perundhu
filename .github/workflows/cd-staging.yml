@@ -17,8 +17,8 @@ on:
 
 env:
   GCP_PROJECT_ID: astute-strategy-406601
-  GCP_REGION: asia-south1
-  ARTIFACT_REGISTRY: asia-south1-docker.pkg.dev
+  GCP_REGION: us-central1
+  ARTIFACT_REGISTRY: us-central1-docker.pkg.dev
   NODE_VERSION: '18'
   JAVA_VERSION: '21'
 

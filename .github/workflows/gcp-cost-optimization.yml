@@ -21,10 +21,10 @@ on:
 
 env:
   GCP_PROJECT_ID: astute-strategy-406601
-  REGION: asia-south1
+  REGION: us-central1
   BACKEND_SERVICE: perundhu-backend-preprod
   FRONTEND_SERVICE: perundhu-frontend-preprod
-  CLOUD_SQL_INSTANCES: "perundhu-preprod-mysql perundhu-preprod-mysql-asia"
+  CLOUD_SQL_INSTANCES: "perundhu-preprod-mysql-us"
 
 jobs:
   manage-services:

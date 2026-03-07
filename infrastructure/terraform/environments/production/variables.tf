@@ -12,13 +12,13 @@ variable "project_id" {
 variable "region" {
   description = "The GCP region"
   type        = string
-  default     = "asia-south1"
+  default     = "us-central1"
 }
 
 variable "zone" {
   description = "The GCP zone"
   type        = string
-  default     = "asia-south1-a"
+  default     = "us-central1-a"
 }
 
 variable "environment" {
@@ -286,7 +286,7 @@ variable "read_replica_tier" {
 variable "read_replica_zone" {
   description = "Zone for read replica (different from primary for HA)"
   type        = string
-  default     = "asia-south1-b"
+  default     = "us-central1-b"
 }
 
 # ============================================
@@ -420,5 +420,5 @@ variable "enable_custom_role" {
 variable "container_image" {
   description = "Container image for Cloud Run (backend image)"
   type        = string
-  default     = "asia-south1-docker.pkg.dev/perundhu-prod-001/perundhu/backend:latest"
+  default     = "us-central1-docker.pkg.dev/perundhu-prod-001/perundhu/backend:latest"
 }
