@@ -895,7 +895,10 @@ public class BusScheduleController {
                         route.totalLegs(),
                         route.journeyId(),
                         route.intermediateLocationId(),
-                        route.intermediateLocationName()))
+                        route.intermediateLocationName(),
+                        // Via-bus metadata - preserve from original
+                        route.isViaBus(),
+                        route.viaThroughLocationName()))
                 .toList();
     }
 

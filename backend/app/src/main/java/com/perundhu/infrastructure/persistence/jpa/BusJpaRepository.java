@@ -297,4 +297,7 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, Jpa
          */
         @Query("SELECT DISTINCT b.toLocation.name FROM BusJpaEntity b WHERE b.toLocation IS NOT NULL AND b.toLocation.name IS NOT NULL ORDER BY b.toLocation.name")
         List<String> findDistinctDestinationNames();
+
+        /** Count buses whose busNumber starts with the given prefix */
+        long countByBusNumberStartingWith(String prefix);
 }

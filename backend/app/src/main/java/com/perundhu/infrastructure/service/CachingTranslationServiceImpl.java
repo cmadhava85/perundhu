@@ -92,13 +92,12 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
     }
 
     @Override
+    @Cacheable(value = "translations", key = "'all:' + #languageCode")
     public Map<String, Map<String, String>> getAllTranslations(String languageCode) {
         String langCode = isTestMode ? languageCode : new LanguageCode(languageCode).getCode();
         Map<String, Map<String, String>> result = new HashMap<>();
         // Use findAll and filter/group in memory
-        translationRepository.findAll()
-                .stream()
-                .filter(translation -> langCode.equals(translation.getLanguageCode()))
+        translationRepository.findByLanguageCode(langCode)
                 .forEach(translation -> {
                     String entityType = translation.getEntityType();
                     result.computeIfAbsent(entityType, k -> new HashMap<>())
@@ -111,9 +110,7 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
     public Map<String, String> getTranslationsForNamespace(String language, String namespace) {
         String langCode = isTestMode ? language : new LanguageCode(language).getCode();
         Map<String, String> translations = new HashMap<>();
-        translationRepository.findAll()
-                .stream()
-                .filter(t -> langCode.equals(t.getLanguageCode()) && namespace.equals(t.getEntityType()))
+        translationRepository.findByEntityTypeAndLanguageCode(namespace, langCode)
                 .forEach(t -> translations.put(t.getFieldName(), t.getTranslatedValue()));
         return translations;
     }
@@ -124,9 +121,7 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
         Map<String, Map<String, String>> result = new HashMap<>();
         namespaces.forEach(namespace -> {
             Map<String, String> translations = new HashMap<>();
-            translationRepository.findAll()
-                    .stream()
-                    .filter(t -> langCode.equals(t.getLanguageCode()) && namespace.equals(t.getEntityType()))
+            translationRepository.findByEntityTypeAndLanguageCode(namespace, langCode)
                     .forEach(t -> translations.put(t.getFieldName(), t.getTranslatedValue()));
             result.put(namespace, translations);
         });

@@ -4,10 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.infrastructure.persistence.entity.UserTrackingSessionEntity;
 
@@ -34,6 +38,12 @@ public interface UserTrackingSessionJpaRepository extends JpaRepository<UserTrac
    */
   @Query("SELECT uts FROM UserTrackingSessionEntity uts WHERE uts.endTime IS NULL")
   List<UserTrackingSessionEntity> findActiveSessions();
+
+  /**
+   * Find active tracking sessions (no end time) with pagination
+   */
+  @Query("SELECT uts FROM UserTrackingSessionEntity uts WHERE uts.endTime IS NULL")
+  Page<UserTrackingSessionEntity> findActiveSessions(Pageable pageable);
 
   /**
    * Find tracking sessions within a time range
@@ -74,6 +84,8 @@ public interface UserTrackingSessionJpaRepository extends JpaRepository<UserTrac
   /**
    * Delete old completed sessions before a certain date
    */
+  @Modifying
+  @Transactional
   @Query("DELETE FROM UserTrackingSessionEntity uts WHERE " +
       "uts.endTime IS NOT NULL AND uts.endTime < :cutoffDate")
   void deleteCompletedSessionsBefore(@Param("cutoffDate") LocalDateTime cutoffDate);

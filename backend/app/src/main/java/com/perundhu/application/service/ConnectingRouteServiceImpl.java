@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
-import java.util.UUID;
+// UUID import removed — replaced by deterministic buildRouteId()
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,6 +136,23 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         fromLocationIds.size() * toLocationIds.size());
 
     log.info("Found {} potential paths", allPaths.size());
+
+    // Auto-escalation: if no paths found with current maxTransfers, retry with +1
+    // (up to a hard cap of 3 transfers to avoid runaway searches)
+    if (allPaths.isEmpty() && maxTransfers < 3) {
+      int escalatedTransfers = maxTransfers + 1;
+      log.info("No paths found with {} transfers, auto-escalating to {} transfers",
+          maxTransfers, escalatedTransfers);
+      for (Long fromId : fromLocationIds) {
+        for (Long toId : toLocationIds) {
+          if (!fromId.equals(toId)) {
+            List<RoutePath> paths = findPaths(graph, fromId, toId, escalatedTransfers);
+            allPaths.addAll(paths);
+          }
+        }
+      }
+      log.info("Auto-escalation found {} additional paths", allPaths.size());
+    }
 
     // Convert paths to DTOs and filter by departure time if specified
     List<ConnectingRouteDTO> routes = allPaths.stream()
@@ -482,6 +499,10 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       if (segment.fromStop().location().id().value().equals(locationId)) {
         return true;
       }
+      // Also check the toStop to prevent cycles via segment end-points
+      if (segment.toStop().location().id().value().equals(locationId)) {
+        return true;
+      }
     }
     return false;
   }
@@ -600,7 +621,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       }
 
       return new ConnectingRouteDTO(
-          UUID.randomUUID().toString(),
+          buildRouteId(fromLocation.id().value(), toLocation.id().value(), legs),
           fromLocation.id().value(),
           toLocation.id().value(),
           convertLocationToDTO(fromLocation),
@@ -614,6 +635,20 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       log.error("Error converting path to DTO", e);
       return null;
     }
+  }
+
+  /**
+   * Build a stable, deterministic route ID from the from/to location IDs and the
+   * bus IDs used in each leg. Same route always gets the same ID across calls,
+   * which makes caching and client-side deduplication reliable.
+   */
+  private String buildRouteId(Long fromId, Long toId, List<LegDTO> legs) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(fromId).append('-').append(toId);
+    for (LegDTO leg : legs) {
+      sb.append('-').append(leg.busId());
+    }
+    return sb.toString();
   }
 
   /**

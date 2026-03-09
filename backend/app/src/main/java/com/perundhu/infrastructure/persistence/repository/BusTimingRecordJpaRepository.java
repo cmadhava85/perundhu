@@ -26,4 +26,11 @@ public interface BusTimingRecordJpaRepository extends JpaRepository<BusTimingRec
 
     boolean existsByFromLocationIdAndToLocationIdAndDepartureTimeAndTimingType(
             Long fromLocationId, Long toLocationId, LocalTime departureTime, TimingType timingType);
+
+    /** Pending records — not yet integrated into buses table */
+    List<BusTimingRecordEntity> findByBusIdIsNull();
+
+    /** Pending records for a specific route (case-insensitive) */
+    List<BusTimingRecordEntity> findByBusIdIsNullAndFromLocationNameIgnoreCaseAndToLocationNameIgnoreCase(
+            String fromLocationName, String toLocationName);
 }

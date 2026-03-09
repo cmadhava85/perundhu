@@ -29,6 +29,18 @@ public class RouteContributionPortAdapter implements RouteContributionPort {
 
   @Override
   @Transactional(readOnly = true)
+  public List<RouteContribution> findAllRouteContributionsPaged(int page, int size) {
+    return routeContributionRepository.findAllPaged(page, size);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public long countAllRouteContributions() {
+    return routeContributionRepository.count();
+  }
+
+  @Override
+  @Transactional(readOnly = true)
   public List<RouteContribution> findRouteContributionsByStatus(String status) {
     return routeContributionRepository.findByStatus(status);
   }

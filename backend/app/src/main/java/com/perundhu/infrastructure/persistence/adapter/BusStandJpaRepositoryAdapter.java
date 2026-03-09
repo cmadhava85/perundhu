@@ -2,7 +2,6 @@ package com.perundhu.infrastructure.persistence.adapter;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -127,9 +126,7 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
 
   @Override
   public List<BusStand> findAll() {
-    // Find all locations that have the "City - BusStandName" pattern
-    return locationRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null && loc.getName().contains(" - "))
+    return locationRepository.findAllBusStands().stream()
         .map(this::locationToBusStand)
         .toList();
   }
@@ -146,13 +143,7 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
       return List.of();
     }
 
-    String searchPattern = cityName.trim() + " - ";
-    log.debug("Searching for bus stands with pattern: '{}'", searchPattern);
-
-    // Find locations that start with "CityName - "
-    return locationRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null &&
-            loc.getName().toLowerCase().startsWith(cityName.trim().toLowerCase() + " - "))
+    return locationRepository.findBusStandsByCityPrefix(cityName.trim()).stream()
         .map(this::locationToBusStand)
         .toList();
   }
@@ -163,11 +154,7 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
       return List.of();
     }
 
-    String term = searchTerm.trim().toLowerCase();
-    return locationRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null &&
-            loc.getName().contains(" - ") &&
-            loc.getName().toLowerCase().contains(term))
+    return locationRepository.findBusStandsContaining(searchTerm.trim()).stream()
         .map(this::locationToBusStand)
         .toList();
   }
@@ -194,14 +181,7 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
       return false;
     }
 
-    String term = searchTerm.trim().toLowerCase();
-
-    // Check if there are multiple locations with pattern "CityName - *"
-    long count = locationRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null &&
-            loc.getName().toLowerCase().startsWith(term + " - "))
-        .count();
-
+    long count = locationRepository.countBusStandsByCityPrefix(searchTerm.trim());
     log.debug("City '{}' has {} bus stands", searchTerm, count);
     return count > 1;
   }
@@ -212,11 +192,7 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
       return 0;
     }
 
-    String term = cityName.trim().toLowerCase();
-    return (int) locationRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null &&
-            loc.getName().toLowerCase().startsWith(term + " - "))
-        .count();
+    return (int) locationRepository.countBusStandsByCityPrefix(cityName.trim());
   }
 
   @Override
@@ -235,14 +211,6 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
    * Get list of cities that have multiple bus stands
    */
   public List<String> getCitiesWithMultipleStands() {
-    // Group locations by city name and filter those with count > 1
-    return locationRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null && loc.getName().contains(" - "))
-        .map(loc -> extractCityName(loc.getName()))
-        .collect(Collectors.groupingBy(city -> city, Collectors.counting()))
-        .entrySet().stream()
-        .filter(e -> e.getValue() > 1)
-        .map(e -> e.getKey())
-        .toList();
+    return locationRepository.findCitiesWithMultipleBusStands();
   }
 }

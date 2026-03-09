@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,9 @@ public class RouteGraphCacheService {
   private final BusRepository busRepository;
   private final StopRepository stopRepository;
   private final ExecutorService virtualThreadExecutor;
+
+  // Guard so warmup only runs once even if ApplicationReadyEvent somehow fires twice
+  private final AtomicBoolean warmupTriggered = new AtomicBoolean(false);
 
   // Self-reference through Spring proxy so @Cacheable and @Transactional apply on warmup calls
   @Autowired
@@ -171,6 +175,10 @@ public class RouteGraphCacheService {
   // the HikariCP connection pool and triggered the "Apparent connection leak" warnings.
   @EventListener(ApplicationReadyEvent.class)
   public void warmCacheOnStartup() {
+    if (!warmupTriggered.compareAndSet(false, true)) {
+      log.info("Cache warmup already triggered, skipping...");
+      return;
+    }
     log.info("Starting cache warming on application startup...");
     warmCacheAsync();
   }

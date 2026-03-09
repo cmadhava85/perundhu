@@ -257,11 +257,11 @@ public class TimingImageContributionController {
 
       Map<String, Object> stats = new HashMap<>();
 
-      // Get counts by status
-      stats.put("pending", timingImageRepository.findByStatus(TimingImageStatus.PENDING).size());
-      stats.put("approved", timingImageRepository.findByStatus(TimingImageStatus.APPROVED).size());
-      stats.put("rejected", timingImageRepository.findByStatus(TimingImageStatus.REJECTED).size());
-      stats.put("processing", timingImageRepository.findByStatus(TimingImageStatus.PROCESSING).size());
+      // Get counts by status using COUNT queries (avoids loading all entities)
+      stats.put("pending", timingImageRepository.countByStatus(TimingImageStatus.PENDING));
+      stats.put("approved", timingImageRepository.countByStatus(TimingImageStatus.APPROVED));
+      stats.put("rejected", timingImageRepository.countByStatus(TimingImageStatus.REJECTED));
+      stats.put("processing", timingImageRepository.countByStatus(TimingImageStatus.PROCESSING));
 
       return ResponseEntity.ok(stats);
 

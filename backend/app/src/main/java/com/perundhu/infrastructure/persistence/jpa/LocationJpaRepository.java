@@ -123,4 +123,44 @@ public interface LocationJpaRepository extends JpaRepository<LocationJpaEntity, 
                         "UNION " +
                         "SELECT sibling.id FROM LocationJpaEntity l JOIN l.parent parent JOIN parent.children sibling WHERE l.id = :locationId AND parent IS NOT NULL")
         List<Long> findLocationIdsForHierarchicalSearch(@Param("locationId") Long locationId);
+
+        // ============================================================
+        // Bus-stand specific queries (locations with "City - Stand" pattern)
+        // These replace in-memory filtering on findAll() in BusStandJpaRepositoryAdapter.
+        // ============================================================
+
+        /**
+         * Find all bus-stand locations — those whose name contains " - " (e.g. "Madurai - Mattuthavani").
+         */
+        @Query("SELECT l FROM LocationJpaEntity l WHERE l.name LIKE '% - %' ORDER BY l.name")
+        List<LocationJpaEntity> findAllBusStands();
+
+        /**
+         * Find bus-stand locations whose name starts with cityPrefix + " - ".
+         * Case-insensitive so "madurai" matches "Madurai - Arapalayam".
+         */
+        @Query("SELECT l FROM LocationJpaEntity l WHERE LOWER(l.name) LIKE LOWER(CONCAT(:cityPrefix, ' - %')) ORDER BY l.name")
+        List<LocationJpaEntity> findBusStandsByCityPrefix(@Param("cityPrefix") String cityPrefix);
+
+        /**
+         * Find bus-stand locations that contain both " - " and the given search term (case-insensitive).
+         */
+        @Query("SELECT l FROM LocationJpaEntity l WHERE l.name LIKE '% - %' AND LOWER(l.name) LIKE LOWER(CONCAT('%', :term, '%')) ORDER BY l.name")
+        List<LocationJpaEntity> findBusStandsContaining(@Param("term") String term);
+
+        /**
+         * Count bus-stand locations for a given city prefix (for isCityWithMultipleStands / countByCityName).
+         */
+        @Query("SELECT COUNT(l) FROM LocationJpaEntity l WHERE LOWER(l.name) LIKE LOWER(CONCAT(:cityPrefix, ' - %'))")
+        long countBusStandsByCityPrefix(@Param("cityPrefix") String cityPrefix);
+
+        /**
+         * Return city names that have more than one bus-stand location.
+         * SUBSTRING_INDEX extracts the city part from "City - Stand" names.
+         */
+        @Query(value = "SELECT SUBSTRING_INDEX(name, ' - ', 1) AS city " +
+                        "FROM locations WHERE name LIKE '% - %' " +
+                        "GROUP BY SUBSTRING_INDEX(name, ' - ', 1) " +
+                        "HAVING COUNT(*) > 1 ORDER BY city", nativeQuery = true)
+        List<String> findCitiesWithMultipleBusStands();
 }

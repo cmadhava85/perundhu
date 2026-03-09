@@ -243,18 +243,14 @@ public class AnnouncementService {
      * Get announcement statistics
      */
     public AnnouncementStats getStatistics() {
-        List<AnnouncementJpaEntity> all = announcementRepository.findAll();
-        List<AnnouncementJpaEntity> active = getActiveAnnouncements();
-        List<AnnouncementJpaEntity> expired = getExpiredAnnouncements();
-        List<AnnouncementJpaEntity> upcoming = getUpcomingAnnouncements();
-
+        LocalDateTime now = LocalDateTime.now();
         return new AnnouncementStats(
-                (long) all.size(),
-                (long) active.size(),
-                (long) expired.size(),
-                (long) upcoming.size(),
-                all.stream().mapToLong(a -> a.getViewCount() != null ? a.getViewCount() : 0L).sum(),
-                all.stream().mapToLong(a -> a.getDismissCount() != null ? a.getDismissCount() : 0L).sum());
+                announcementRepository.count(),
+                announcementRepository.countActiveAnnouncements(now),
+                announcementRepository.countExpiredAnnouncements(now),
+                announcementRepository.countUpcomingAnnouncements(now),
+                announcementRepository.sumViewCount(),
+                announcementRepository.sumDismissCount());
     }
 
     /**

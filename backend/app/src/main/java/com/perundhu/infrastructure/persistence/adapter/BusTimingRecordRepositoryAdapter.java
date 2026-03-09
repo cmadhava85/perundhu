@@ -85,6 +85,22 @@ public class BusTimingRecordRepositoryAdapter implements BusTimingRecordReposito
         .toList();
   }
 
+  @Override
+  public List<BusTimingRecord> findPendingRecords() {
+    return jpaRepository.findByBusIdIsNull().stream()
+        .map(this::mapToDomain)
+        .toList();
+  }
+
+  @Override
+  public List<BusTimingRecord> findPendingRecordsByRoute(String fromLocationName, String toLocationName) {
+    return jpaRepository
+        .findByBusIdIsNullAndFromLocationNameIgnoreCaseAndToLocationNameIgnoreCase(fromLocationName, toLocationName)
+        .stream()
+        .map(this::mapToDomain)
+        .toList();
+  }
+
   // ============ Mapping Methods ============
 
   private BusTimingRecord mapToDomain(BusTimingRecordEntity entity) {

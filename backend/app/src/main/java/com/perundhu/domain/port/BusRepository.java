@@ -152,6 +152,15 @@ public interface BusRepository {
         long count();
 
         /**
+         * Count buses whose bus number starts with the given prefix.
+         * Used to generate unique sequential bus numbers (e.g. "GEN-CHE-MAD-001").
+         *
+         * @param prefix The prefix to match against
+         * @return The count of matching buses
+         */
+        long countByBusNumberStartingWith(String prefix);
+
+        /**
          * Count the number of bus routes that serve a given location
          * (either as origin, destination, or intermediate stop).
          * 

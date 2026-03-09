@@ -434,9 +434,9 @@ public class BusDatabaseService {
       return List.of();
     }
 
-    String lowerQuery = query.toLowerCase().trim();
-    return locationJpaRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null && loc.getName().toLowerCase().contains(lowerQuery))
+    String trimmedQuery = query.trim();
+    // Push filtering to the DB — do not load ALL locations into memory
+    return locationJpaRepository.findByNameContainingIgnoreCase(trimmedQuery).stream()
         .limit(20)
         .map(loc -> new LocationSuggestion(loc.getId(), loc.getName(), loc.getDistrict()))
         .toList();
@@ -445,13 +445,10 @@ public class BusDatabaseService {
   // Helper methods
 
   private LocationJpaEntity findOrCreateLocation(String locationName) {
-    // Try to find existing location
-    List<LocationJpaEntity> existing = locationJpaRepository.findAll().stream()
-        .filter(loc -> loc.getName() != null && loc.getName().equalsIgnoreCase(locationName.trim()))
-        .toList();
-
-    if (!existing.isEmpty()) {
-      return existing.get(0);
+    // Push the equality check to the DB — do not load ALL locations into memory
+    var found = locationJpaRepository.findFirstByNameEqualsIgnoreCase(locationName.trim());
+    if (found.isPresent()) {
+      return found.get();
     }
 
     // Create new location

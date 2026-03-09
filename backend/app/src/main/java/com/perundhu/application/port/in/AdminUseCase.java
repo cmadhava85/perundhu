@@ -18,6 +18,22 @@ public interface AdminUseCase {
   List<RouteContribution> getAllRouteContributions();
 
   /**
+   * Get all route contributions with pagination
+   *
+   * @param page zero-based page index
+   * @param size page size
+   * @return Paginated list of route contributions
+   */
+  List<RouteContribution> getAllRouteContributionsPaged(int page, int size);
+
+  /**
+   * Count all route contributions
+   *
+   * @return Total count of route contributions
+   */
+  long countAllRouteContributions();
+
+  /**
    * Get pending route contributions
    * 
    * @return List of pending route contributions

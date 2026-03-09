@@ -376,10 +376,8 @@ public class ContributionProcessingService {
         String fromPrefix = fromLocation.substring(0, Math.min(3, fromLocation.length())).toUpperCase();
         String toPrefix = toLocation.substring(0, Math.min(3, toLocation.length())).toUpperCase();
 
-        // Get count of existing routes to generate unique number
-        long count = busRepository.findAll().stream()
-                .filter(bus -> bus.getBusNumber().startsWith("GEN-" + fromPrefix + "-" + toPrefix))
-                .count();
+        // Count existing routes with the same prefix to generate a unique number
+        long count = busRepository.countByBusNumberStartingWith("GEN-" + fromPrefix + "-" + toPrefix);
 
         return String.format("GEN-%s-%s-%03d", fromPrefix, toPrefix, count + 1);
     }

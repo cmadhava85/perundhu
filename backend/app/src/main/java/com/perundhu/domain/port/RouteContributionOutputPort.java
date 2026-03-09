@@ -27,6 +27,15 @@ public interface RouteContributionOutputPort {
   List<RouteContribution> findAll();
 
   /**
+   * Find all route contributions with pagination
+   *
+   * @param page zero-based page index
+   * @param size page size
+   * @return Paginated list of contributions
+   */
+  List<RouteContribution> findAllPaged(int page, int size);
+
+  /**
    * Find route contributions by user ID
    */
   List<RouteContribution> findByUserId(String userId);

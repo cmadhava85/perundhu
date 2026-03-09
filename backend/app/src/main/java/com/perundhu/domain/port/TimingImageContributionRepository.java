@@ -55,4 +55,9 @@ public interface TimingImageContributionRepository {
    * Find all contributions
    */
   List<TimingImageContribution> findAll();
+
+  /**
+   * Count contributions by status
+   */
+  long countByStatus(TimingImageStatus status);
 }

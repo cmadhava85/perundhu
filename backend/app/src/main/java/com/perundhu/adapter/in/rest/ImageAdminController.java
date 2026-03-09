@@ -48,21 +48,32 @@ public class ImageAdminController {
     private final ImageContributionOutputPort imageContributionOutputPort;
 
     /**
-     * Get all image contributions
-     * 
-     * @return List of all image contributions (without binary data)
+     * Get all image contributions with pagination
+     *
+     * @param page page number (default 0)
+     * @param size page size (default 50)
+     * @return Paginated list of all image contributions
      */
     @GetMapping
-    public ResponseEntity<List<ImageContributionSummaryDTO>> getAllImageContributions() {
-        log.info("Request to get all image contributions");
-        List<ImageContribution> contributions = adminUseCase.getAllImageContributions();
-        
+    public ResponseEntity<Map<String, Object>> getAllImageContributions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+        log.info("Request to get all image contributions - page: {}, size: {}", page, size);
+        List<ImageContribution> contributions = adminUseCase.getImageContributionsPaged(page, size);
+        long total = adminUseCase.countAllImageContributions();
+
         List<ImageContributionSummaryDTO> dtos = contributions.stream()
             .map(this::convertToSummaryDTO)
             .collect(Collectors.toList());
-        
-        log.info("Returning {} image contributions", dtos.size());
-        return ResponseEntity.ok(dtos);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", dtos);
+        response.put("total", total);
+        response.put("page", page);
+        response.put("size", size);
+        response.put("totalPages", (int) Math.ceil((double) total / size));
+        log.info("Returning {} image contributions (total: {})", dtos.size(), total);
+        return ResponseEntity.ok(response);
     }
 
     /**

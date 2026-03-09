@@ -76,6 +76,9 @@ export interface Bus {
   duration?: string;
   rating?: number;
   features?: Record<string, string>; // Bus features like AC, WiFi, etc.
+  // Via-bus: set when this bus passes through the searched destination (not its terminus)
+  isViaBus?: boolean;
+  viaThroughLocationName?: string;
 }
 
 export interface Stop {

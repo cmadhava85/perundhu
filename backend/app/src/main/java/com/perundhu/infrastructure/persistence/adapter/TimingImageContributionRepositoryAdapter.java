@@ -88,6 +88,11 @@ public class TimingImageContributionRepositoryAdapter implements TimingImageCont
         .toList();
   }
 
+  @Override
+  public long countByStatus(TimingImageStatus status) {
+    return jpaRepository.countByStatus(mapStatusToEntity(status));
+  }
+
   // ============ Mapping Methods ============
 
   private TimingImageContribution mapToDomain(TimingImageContributionEntity entity) {

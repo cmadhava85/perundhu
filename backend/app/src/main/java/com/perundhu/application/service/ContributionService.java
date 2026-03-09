@@ -213,15 +213,15 @@ public class ContributionService {
     }
 
     /**
-     * Get all contribution status data
+     * Get all contribution status data with pagination
      */
-    public List<Map<String, Object>> getAllContributionStatus() {
-        logger.info("Retrieving all contribution status");
+    public List<Map<String, Object>> getAllContributionStatus(int page, int size) {
+        logger.info("Retrieving all contribution status - page: {}, size: {}", page, size);
 
         List<Map<String, Object>> allContributions = new ArrayList<>();
 
-        // Get all route contributions
-        List<RouteContribution> routeContributions = routeContributionOutputPort.findAll();
+        // Get route contributions for this page
+        List<RouteContribution> routeContributions = routeContributionOutputPort.findAllPaged(page, size);
         logger.debug("Found {} route contributions", routeContributions.size());
         for (RouteContribution contribution : routeContributions) {
             Map<String, Object> contributionMap = new HashMap<>();
@@ -233,8 +233,8 @@ public class ContributionService {
             allContributions.add(contributionMap);
         }
 
-        // Get all image contributions
-        List<ImageContribution> imageContributions = imageContributionOutputPort.findAll();
+        // Get image contributions for this page
+        List<ImageContribution> imageContributions = imageContributionOutputPort.findAllPaged(page, size);
         logger.debug("Found {} image contributions", imageContributions.size());
         for (ImageContribution contribution : imageContributions) {
             Map<String, Object> contributionMap = new HashMap<>();

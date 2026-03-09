@@ -1,5 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perundhu.application.port.in.AdminUseCase;
@@ -33,14 +35,26 @@ public class RouteAdminController {
     private final AdminUseCase adminUseCase;
 
     /**
-     * Get all route contributions
-     * 
-     * @return List of all route contributions
+     * Get all route contributions with pagination
+     *
+     * @param page page number (default 0)
+     * @param size page size (default 50)
+     * @return Paginated list of route contributions
      */
     @GetMapping
-    public ResponseEntity<List<RouteContribution>> getAllRouteContributions() {
-        log.info("Request to get all route contributions");
-        return ResponseEntity.ok(adminUseCase.getAllRouteContributions());
+    public ResponseEntity<Map<String, Object>> getAllRouteContributions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+        log.info("Request to get all route contributions - page: {}, size: {}", page, size);
+        List<RouteContribution> contributions = adminUseCase.getAllRouteContributionsPaged(page, size);
+        long total = adminUseCase.countAllRouteContributions();
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", contributions);
+        response.put("total", total);
+        response.put("page", page);
+        response.put("size", size);
+        response.put("totalPages", (int) Math.ceil((double) total / size));
+        return ResponseEntity.ok(response);
     }
 
     /**

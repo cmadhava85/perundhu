@@ -3,6 +3,7 @@ package com.perundhu.infrastructure.persistence.adapter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -91,6 +92,13 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     @Override
     public List<RouteContribution> findAll() {
         return repository.findAll().stream()
+                .map(this::mapToDomainModel)
+                .toList();
+    }
+
+    @Override
+    public List<RouteContribution> findAllPaged(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size)).getContent().stream()
                 .map(this::mapToDomainModel)
                 .toList();
     }

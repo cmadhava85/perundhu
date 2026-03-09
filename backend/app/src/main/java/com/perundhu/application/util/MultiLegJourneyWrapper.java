@@ -131,7 +131,10 @@ public class MultiLegJourneyWrapper {
                             journeyLegs.size(), // totalLegs
                             journeyId,
                             leg.fromLocationId(), // intermediateLocationId is the connection point for next leg
-                            leg.fromLocationName() // intermediateLocationName
+                            leg.fromLocationName(), // intermediateLocationName
+                            // Via-bus metadata - preserve from original
+                            leg.isViaBus(),
+                            leg.viaThroughLocationName()
                     );
 
                     // For all legs except the first, store the intermediate stop ID/name
@@ -158,9 +161,11 @@ public class MultiLegJourneyWrapper {
                                 legIdx + 1, // legNumber
                                 journeyLegs.size(), // totalLegs
                                 journeyId,
-                                journeyLegs.get(legIdx - 1).toLocationId(), // intermediateLocationId = previous leg's
-                                                                            // destination
-                                journeyLegs.get(legIdx - 1).toLocationName() // intermediateLocationName
+                                journeyLegs.get(legIdx - 1).toLocationId(), // intermediateLocationId = previous leg's destination
+                                journeyLegs.get(legIdx - 1).toLocationName(), // intermediateLocationName
+                                // Via-bus metadata - preserve from original
+                                taggedBus.isViaBus(),
+                                taggedBus.viaThroughLocationName()
                         );
                     }
 

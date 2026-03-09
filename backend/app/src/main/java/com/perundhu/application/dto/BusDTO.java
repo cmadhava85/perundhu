@@ -85,7 +85,15 @@ public record BusDTO(
                 Long intermediateLocationId,
                 
                 @Nullable
-                String intermediateLocationName) {
+                String intermediateLocationName,
+
+                // Via-bus metadata: set when this bus passes through the searched destination
+                // (i.e., the user searched A→B but this bus goes A→B→C)
+                @Nullable
+                Boolean isViaBus,
+
+                @Nullable
+                String viaThroughLocationName) {
         /**
          * Compact constructor for validation
          */
@@ -109,7 +117,7 @@ public record BusDTO(
                       String departureTime, String arrivalTime, Double rating, Map<String, String> features) {
                 this(id, number, name, operator, type, departureTime, arrivalTime, rating, features,
                      null, null, null, null, null, null, 50, true,
-                     null, null, null, null, null, null);
+                     null, null, null, null, null, null, null, null);
         }
 
         /**
@@ -149,7 +157,9 @@ public record BusDTO(
                                 bus.capacity(),
                                 bus.active(),
                                 // Multi-leg journey metadata (null by default)
-                                null, null, null, null, null, null);
+                                null, null, null, null, null,
+                                // Via-bus metadata (null by default)
+                                null, null, null);
         }
         
         /**
@@ -191,7 +201,9 @@ public record BusDTO(
                                 bus.capacity(),
                                 bus.active(),
                                 // Multi-leg journey metadata (null by default)
-                                null, null, null, null, null, null);
+                                null, null, null, null, null,
+                                // Via-bus metadata (null by default)
+                                null, null, null);
         }
 
         /**
@@ -200,6 +212,25 @@ public record BusDTO(
         public static BusDTO of(Long id, String number, String name, String operator, String type) {
                 return new BusDTO(id, number, name, operator, type, null, null, 4.0, Map.of(), 
                         null, null, null, null, null, null, 50, true,
-                        null, null, null, null, null, null);
+                        null, null, null, null, null, null, null, null);
+        }
+
+        /**
+         * Returns a copy of this BusDTO tagged as a via-bus (bus that passes through
+         * the searched destination rather than terminating there).
+         *
+         * @param throughLocationName the name of the location the bus passes through
+         *                            (i.e., the user's searched destination)
+         */
+        public BusDTO withViaBusTag(String throughLocationName) {
+                return new BusDTO(
+                        this.id(), this.number(), this.name(), this.operator(), this.type(),
+                        this.departureTime(), this.arrivalTime(), this.rating(), this.features(),
+                        this.fromLocationId(), this.fromLocationName(), this.fromLocationNameTranslated(),
+                        this.toLocationId(), this.toLocationName(), this.toLocationNameTranslated(),
+                        this.capacity(), this.active(),
+                        this.isMultiLegJourney(), this.legNumber(), this.totalLegs(),
+                        this.journeyId(), this.intermediateLocationId(), this.intermediateLocationName(),
+                        Boolean.TRUE, throughLocationName);
         }
 }

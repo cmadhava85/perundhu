@@ -86,4 +86,40 @@ public interface AnnouncementRepository extends JpaRepository<AnnouncementJpaEnt
      * Check if unique ID exists
      */
     boolean existsByUniqueId(String uniqueId);
+
+    /**
+     * Count active announcements within their schedule window
+     */
+    @Query("SELECT COUNT(a) FROM AnnouncementJpaEntity a WHERE " +
+           "a.isActive = true AND " +
+           "a.status = 'PUBLISHED' AND " +
+           "(a.startsAt IS NULL OR a.startsAt <= :now) AND " +
+           "(a.expiresAt IS NULL OR a.expiresAt >= :now)")
+    long countActiveAnnouncements(@Param("now") LocalDateTime now);
+
+    /**
+     * Count expired announcements
+     */
+    @Query("SELECT COUNT(a) FROM AnnouncementJpaEntity a WHERE " +
+           "a.expiresAt IS NOT NULL AND a.expiresAt < :now AND a.isActive = true")
+    long countExpiredAnnouncements(@Param("now") LocalDateTime now);
+
+    /**
+     * Count upcoming announcements
+     */
+    @Query("SELECT COUNT(a) FROM AnnouncementJpaEntity a WHERE " +
+           "a.startsAt IS NOT NULL AND a.startsAt > :now AND a.status = 'PUBLISHED'")
+    long countUpcomingAnnouncements(@Param("now") LocalDateTime now);
+
+    /**
+     * Sum of all view counts
+     */
+    @Query("SELECT COALESCE(SUM(a.viewCount), 0) FROM AnnouncementJpaEntity a")
+    long sumViewCount();
+
+    /**
+     * Sum of all dismiss counts
+     */
+    @Query("SELECT COALESCE(SUM(a.dismissCount), 0) FROM AnnouncementJpaEntity a")
+    long sumDismissCount();
 }

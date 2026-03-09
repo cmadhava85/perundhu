@@ -41,6 +41,11 @@ public class RouteContributionOutputPortImpl implements RouteContributionOutputP
   }
 
   @Override
+  public List<RouteContribution> findAllPaged(int page, int size) {
+    return repository.findAllPaged(page, size);
+  }
+
+  @Override
   public List<RouteContribution> findByUserId(String userId) {
     return repository.findByUserId(userId);
   }

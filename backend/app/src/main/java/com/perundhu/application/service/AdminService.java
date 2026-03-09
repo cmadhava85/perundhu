@@ -33,6 +33,18 @@ public class AdminService implements AdminUseCase {
   }
 
   @Override
+  public List<RouteContribution> getAllRouteContributionsPaged(int page, int size) {
+    log.debug("Getting all route contributions paged - page: {}, size: {}", page, size);
+    return routeContributionPort.findAllRouteContributionsPaged(page, size);
+  }
+
+  @Override
+  public long countAllRouteContributions() {
+    log.debug("Counting all route contributions");
+    return routeContributionPort.countAllRouteContributions();
+  }
+
+  @Override
   public List<RouteContribution> getPendingRouteContributions() {
     log.debug("Getting pending route contributions");
     List<RouteContribution> pending = routeContributionPort.findRouteContributionsByStatus("PENDING");

@@ -54,14 +54,7 @@ public class BusTimingRecordIntegrationService {
   public IntegrationResult integrateAllPendingRecords() {
     log.info("Starting integration of all pending BusTimingRecords into buses table");
 
-    List<BusTimingRecord> allRecords = busTimingRecordRepository.findAll();
-    log.info("Found {} total BusTimingRecords to check", allRecords.size());
-
-    // Filter to records that don't have a busId (not yet integrated)
-    List<BusTimingRecord> pendingRecords = allRecords.stream()
-        .filter(record -> record.getBusId() == null)
-        .toList();
-
+    List<BusTimingRecord> pendingRecords = busTimingRecordRepository.findPendingRecords();
     log.info("Found {} unintegrated BusTimingRecords", pendingRecords.size());
 
     return integrateRecords(pendingRecords);
@@ -74,14 +67,8 @@ public class BusTimingRecordIntegrationService {
   public IntegrationResult integrateRecordsForRoute(String fromLocationName, String toLocationName) {
     log.info("Integrating BusTimingRecords for route: {} -> {}", fromLocationName, toLocationName);
 
-    List<BusTimingRecord> allRecords = busTimingRecordRepository.findAll();
-
-    // Filter by route
-    List<BusTimingRecord> routeRecords = allRecords.stream()
-        .filter(record -> fromLocationName.equalsIgnoreCase(record.getFromLocationName())
-            && toLocationName.equalsIgnoreCase(record.getToLocationName()))
-        .filter(record -> record.getBusId() == null) // Not yet integrated
-        .toList();
+    List<BusTimingRecord> routeRecords = busTimingRecordRepository
+        .findPendingRecordsByRoute(fromLocationName, toLocationName);
 
     log.info("Found {} unintegrated records for route {} -> {}",
         routeRecords.size(), fromLocationName, toLocationName);

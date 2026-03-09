@@ -360,6 +360,25 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               className="flex-shrink-0"
             />
           )}
+
+          {/* Via-bus badge: shown when this bus passes through the searched destination */}
+          {bus.isViaBus && bus.viaThroughLocationName && (
+            <span style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '3px',
+              padding: '2px 8px',
+              borderRadius: '12px',
+              fontSize: '11px',
+              fontWeight: '600',
+              backgroundColor: '#FFF3CD',
+              color: '#856404',
+              border: '1px solid #FFE69C',
+              whiteSpace: 'nowrap',
+            }}>
+              🔀 Via {bus.viaThroughLocationName}
+            </span>
+          )}
           
           {/* Time Until Departure Badge */}
           {timeUntil && (

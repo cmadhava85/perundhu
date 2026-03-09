@@ -24,4 +24,6 @@ public interface TimingImageContributionJpaRepository extends JpaRepository<Timi
   List<TimingImageContributionEntity> findBySubmittedBy(String submittedBy);
 
   List<TimingImageContributionEntity> findByOriginLocation(String originLocation);
+
+  long countByStatus(TimingImageStatus status);
 }

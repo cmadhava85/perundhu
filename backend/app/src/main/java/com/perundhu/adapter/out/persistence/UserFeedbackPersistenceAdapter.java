@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.infrastructure.persistence.entity.UserFeedbackJpaEntity;
@@ -71,10 +72,9 @@ public class UserFeedbackPersistenceAdapter implements UserFeedbackOutputPort {
 
     @Override
     public List<UserFeedback> findRecentFeedback(int limit) {
-        return feedbackRepository.findAll()
+        return feedbackRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(0, limit))
+                .getContent()
                 .stream()
-                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
-                .limit(limit)
                 .map(this::mapToDomain)
                 .collect(Collectors.toList());
     }

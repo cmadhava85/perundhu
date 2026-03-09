@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.model.StopId;
-import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 
 import jakarta.persistence.Entity;
@@ -323,17 +322,6 @@ public class StopJpaEntity {
                     System.err.println("Error converting location: " + e.getMessage());
                     // Create a default location
                     locationModel = new Location(null, "Unknown Location", null, 0.0, 0.0);
-                }
-            }
-
-            // Create Bus domain model with careful null handling
-            Bus busModel = null;
-            if (bus != null) {
-                try {
-                    busModel = bus.toDomainModel();
-                } catch (Exception e) {
-                    // Log the error but don't fail the entire conversion
-                    System.err.println("Error converting bus: " + e.getMessage());
                 }
             }
 

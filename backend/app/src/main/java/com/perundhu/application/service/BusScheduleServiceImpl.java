@@ -400,8 +400,12 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         log.debug("Found {} buses passing through locations in {}ms", buses.size(),
                 System.currentTimeMillis() - startTime);
 
+        // Resolve the through-location name for labeling via-buses
+        String throughLocationName = locationRepository.findById(toLocationId)
+                .map(Location::getName).orElse(null);
+
         return buses.stream()
-                .map(BusDTO::fromDomain)
+                .map(bus -> BusDTO.fromDomain(bus).withViaBusTag(throughLocationName))
                 .toList();
     }
 
@@ -436,8 +440,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         String fromTranslation = getLocationTranslation(fromLocationId, languageCode);
         String toTranslation = getLocationTranslation(toLocationId, languageCode);
 
+        // Resolve the through-location name (English) for the via-bus label
+        String throughLocationName = locationRepository.findById(toLocationId)
+                .map(Location::getName).orElse(null);
+
         return buses.stream()
-                .map(bus -> BusDTO.fromDomainWithTranslations(bus, fromTranslation, toTranslation))
+                .map(bus -> BusDTO.fromDomainWithTranslations(bus, fromTranslation, toTranslation)
+                        .withViaBusTag(throughLocationName))
                 .toList();
     }
 
@@ -994,7 +1003,10 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 dto.totalLegs(),
                 dto.journeyId(),
                 dto.intermediateLocationId(),
-                dto.intermediateLocationName());
+                dto.intermediateLocationName(),
+                // Via-bus metadata - preserve from original dto
+                dto.isViaBus(),
+                dto.viaThroughLocationName());
     }
 
     /**

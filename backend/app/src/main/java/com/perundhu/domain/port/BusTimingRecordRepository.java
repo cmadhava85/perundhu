@@ -53,4 +53,14 @@ public interface BusTimingRecordRepository {
    * Find all timing records
    */
   List<BusTimingRecord> findAll();
+
+  /**
+   * Find all unintegrated timing records (busId is null)
+   */
+  List<BusTimingRecord> findPendingRecords();
+
+  /**
+   * Find unintegrated timing records for a specific route
+   */
+  List<BusTimingRecord> findPendingRecordsByRoute(String fromLocationName, String toLocationName);
 }

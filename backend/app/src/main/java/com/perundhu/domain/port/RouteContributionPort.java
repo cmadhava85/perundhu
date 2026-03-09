@@ -17,6 +17,22 @@ public interface RouteContributionPort {
   List<RouteContribution> findAllRouteContributions();
 
   /**
+   * Find all route contributions with pagination
+   *
+   * @param page zero-based page index
+   * @param size page size
+   * @return Paginated list of contributions
+   */
+  List<RouteContribution> findAllRouteContributionsPaged(int page, int size);
+
+  /**
+   * Count all route contributions
+   *
+   * @return Total number of route contributions
+   */
+  long countAllRouteContributions();
+
+  /**
    * Find route contributions by status
    * 
    * @param status The status to filter by

@@ -57,8 +57,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     @Override
     @Transactional(readOnly = true)
     public List<Location> findAllExcept(LocationId id) {
-        return jpaRepository.findAll().stream()
-                .filter(entity -> !entity.getId().equals(id.getValue()))
+        return jpaRepository.findByIdNot(id.getValue()).stream()
                 .map(LocationJpaEntity::toDomainModel)
                 .toList();
     }
