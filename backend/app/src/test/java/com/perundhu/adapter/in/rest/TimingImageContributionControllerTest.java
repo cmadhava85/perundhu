@@ -338,18 +338,10 @@ class TimingImageContributionControllerTest {
     @DisplayName("Should return contribution statistics")
     void shouldReturnContributionStatistics() throws Exception {
       // Given
-      when(timingImageRepository.findByStatus(TimingImageStatus.PENDING))
-          .thenReturn(Arrays.asList(
-              TimingImageContribution.builder().imageUrl("1").build(),
-              TimingImageContribution.builder().imageUrl("2").build()));
-      when(timingImageRepository.findByStatus(TimingImageStatus.APPROVED))
-          .thenReturn(Arrays.asList(
-              TimingImageContribution.builder().imageUrl("3").build()));
-      when(timingImageRepository.findByStatus(TimingImageStatus.REJECTED))
-          .thenReturn(Arrays.asList());
-      when(timingImageRepository.findByStatus(TimingImageStatus.PROCESSING))
-          .thenReturn(Arrays.asList(
-              TimingImageContribution.builder().imageUrl("4").build()));
+      when(timingImageRepository.countByStatus(TimingImageStatus.PENDING)).thenReturn(2L);
+      when(timingImageRepository.countByStatus(TimingImageStatus.APPROVED)).thenReturn(1L);
+      when(timingImageRepository.countByStatus(TimingImageStatus.REJECTED)).thenReturn(0L);
+      when(timingImageRepository.countByStatus(TimingImageStatus.PROCESSING)).thenReturn(1L);
 
       // When & Then
       mockMvc.perform(get("/v1/contributions/timing-images/stats")
@@ -433,7 +425,7 @@ class TimingImageContributionControllerTest {
     @DisplayName("Should handle internal server error in statistics")
     void shouldHandleInternalServerErrorInStatistics() throws Exception {
       // Given
-      when(timingImageRepository.findByStatus(any()))
+      when(timingImageRepository.countByStatus(any()))
           .thenThrow(new RuntimeException("Database error"));
 
       // When & Then
