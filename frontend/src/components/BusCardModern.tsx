@@ -208,10 +208,12 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
           <h3>{busTitle}</h3>
           <p className="bus-card-subtitle">Bus #{bus.busNumber || bus.number || 'N/A'} • {bus.category || 'Standard'}</p>
         </div>
-        <div className="bus-card-rating">
-          <span className="rating-stars">⭐{rating}</span>
-          <span className="rating-count">({reviews} reviews)</span>
-        </div>
+        {flags.enableBusReviews && (
+          <div className="bus-card-rating">
+            <span className="rating-stars">⭐{rating}</span>
+            <span className="rating-count">({reviews} reviews)</span>
+          </div>
+        )}
       </div>
 
       {/* Journey Timeline Section */}
