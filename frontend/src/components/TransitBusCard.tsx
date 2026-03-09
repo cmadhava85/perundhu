@@ -573,7 +573,8 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             isExpanded={stops.length > 0}
           />
 
-          {/* Map Placeholder */}
+          {/* Map Section - controlled by enableMap feature flag */}
+          {flags.enableMap && (
           <div style={{
             marginTop: 'var(--space-4)',
             borderRadius: 'var(--radius-md)',
@@ -608,6 +609,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               />
             )}
           </div>
+          )}
           
           {/* Bus Reviews Section */}
           {flags.enableBusReviews && (

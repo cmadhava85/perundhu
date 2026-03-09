@@ -3,7 +3,6 @@ package com.perundhu.adapter.in.rest;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.perundhu.application.service.ReviewService;
 import com.perundhu.application.service.ReviewService.RatingSummary;
+import com.perundhu.application.service.SystemSettingsService;
 import com.perundhu.domain.model.Review;
 
 import jakarta.validation.Valid;
@@ -39,15 +39,19 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final SystemSettingsService settingsService;
 
-    @Value("${perundhu.features.reviews.enabled:false}")
-    private boolean reviewsEnabled;
+    private boolean isReviewsEnabled() {
+        return settingsService.getBooleanSetting("feature.busReviews.enabled", false);
+    }
 
-    @Value("${perundhu.features.reviews.require-login:true}")
-    private boolean requireLogin;
+    private boolean isRequireLogin() {
+        return settingsService.getBooleanSetting("feature.busReviews.requireLogin", true);
+    }
 
-    @Value("${perundhu.features.reviews.auto-approve:true}")
-    private boolean autoApprove;
+    private boolean isAutoApprove() {
+        return settingsService.getBooleanSetting("feature.busReviews.autoApprove", false);
+    }
 
     /**
      * Check if reviews feature is enabled
@@ -55,9 +59,9 @@ public class ReviewController {
     @GetMapping("/feature-status")
     public ResponseEntity<FeatureStatusResponse> getFeatureStatus() {
         return ResponseEntity.ok(new FeatureStatusResponse(
-                reviewsEnabled,
-                requireLogin,
-                autoApprove));
+                isReviewsEnabled(),
+                isRequireLogin(),
+                isAutoApprove()));
     }
 
     /**
@@ -68,12 +72,12 @@ public class ReviewController {
             @Valid @RequestBody SubmitReviewRequest request,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
 
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
 
-        if (requireLogin && (userId == null || userId.isBlank())) {
+        if (isRequireLogin() && (userId == null || userId.isBlank())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Please log in to submit a review"));
         }
@@ -86,7 +90,7 @@ public class ReviewController {
                     request.comment(),
                     request.tags(),
                     request.travelDate(),
-                    autoApprove);
+                    isAutoApprove());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(review));
         } catch (IllegalStateException e) {
@@ -103,7 +107,7 @@ public class ReviewController {
      */
     @GetMapping("/bus/{busId}")
     public ResponseEntity<?> getReviewsForBus(@PathVariable Long busId) {
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
@@ -121,7 +125,7 @@ public class ReviewController {
      */
     @GetMapping("/bus/{busId}/summary")
     public ResponseEntity<?> getRatingSummary(@PathVariable Long busId) {
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
@@ -140,7 +144,7 @@ public class ReviewController {
     public ResponseEntity<?> getMyReviews(
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
 
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
@@ -166,7 +170,7 @@ public class ReviewController {
             @PathVariable Long busId,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
 
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
@@ -183,7 +187,7 @@ public class ReviewController {
             @PathVariable Long reviewId,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
 
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
@@ -214,7 +218,7 @@ public class ReviewController {
             @Valid @RequestBody EditReviewRequest request,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
 
-        if (!reviewsEnabled) {
+        if (!isReviewsEnabled()) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }

@@ -29,7 +29,7 @@ import { useBusSearchEnhanced } from './hooks/useBusSearchEnhanced';
 // Context providers
 import { ThemeProvider } from './context/ThemeContext';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
-import { FeatureFlagsProvider } from './contexts/FeatureFlagsContext';
+import { FeatureFlagsProvider, useIsFeatureEnabled } from './contexts/FeatureFlagsContext';
 import { ErrorProvider } from './contexts/ErrorContext';
 
 // Utils
@@ -290,6 +290,7 @@ function AppContent() {
   // Feature flags and settings
   const isAnalyticsEnabled = getFeatureFlag('ANALYTICS_ENABLED', true);
   const showAnalytics = isAnalyticsEnabled;
+  const mapEnabled = useIsFeatureEnabled('enableMap');
   const userId = 'user123';
 
   if (!isInitialized) {
@@ -300,7 +301,7 @@ function AppContent() {
     showTracking: true,
     showAnalytics: true,
     showRewards: true,
-    showMap: true,
+    showMap: mapEnabled,
     enableNotifications: true,
     useHighAccuracyLocation: true,
     darkMode: false,
