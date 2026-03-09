@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useDeferredValue } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TransitBusCard from './TransitBusCard';
@@ -66,6 +66,10 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   const [showFilters, setShowFilters] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  // Defer the search query so the text input stays responsive while the
+  // filteredAndSortedBuses useMemo re-runs in the background for large lists
+  const deferredSearchQuery = useDeferredValue(searchQuery);
+  const isFilterStale = deferredSearchQuery !== searchQuery;
   
   const [filters, setFilters] = useState<FilterOptions>({
     busTypes: [],
@@ -259,12 +263,12 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     return { nextBusId, fastestBusId };
   }, [buses]);
 
-  // Filter and sort buses
+  // Filter and sort buses — uses deferredSearchQuery so typing stays instant
   const filteredAndSortedBuses = useMemo(() => {
     const filtered = buses.filter(bus => {
       // Search filter
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
+      if (deferredSearchQuery) {
+        const query = deferredSearchQuery.toLowerCase();
         const busName = (bus.busName || '').toLowerCase();
         const busNumber = (bus.busNumber || '').toLowerCase();
         const category = (bus.category || '').toLowerCase();
@@ -307,7 +311,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     });
 
     return filtered;
-  }, [buses, searchQuery, filters, sortBy, sortDirection]);
+  }, [buses, deferredSearchQuery, filters, sortBy, sortDirection]);
 
   // Memoized callback for bus selection to prevent re-renders
   const handleBusSelect = useCallback((busId: number) => {
@@ -696,8 +700,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
           </div>
         )}
 
-        {/* Bus Cards List */}
-        <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
+        {/* Bus Cards List — opacity dims briefly while deferred filter catches up */}
+        <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4" style={{ opacity: isFilterStale ? 0.6 : 1, transition: 'opacity 0.15s' }}>
           {filteredAndSortedBuses.length > 0 ? (
             filteredAndSortedBuses.map((bus) => {
               const busStops = stopsMap[bus.id] || stops.filter(stop => stop.busId === bus.id);

@@ -108,7 +108,7 @@ public class TimingImageContributionEntity {
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
-  @OneToMany(mappedBy = "contribution", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "contribution", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   @Builder.Default
   private List<ExtractedBusTimingEntity> extractedTimings = new ArrayList<>();
 

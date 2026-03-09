@@ -106,7 +106,7 @@ export const SimpleImageForm: React.FC<SimpleImageFormProps> = ({ onSubmit }) =>
             
             {previewUrl && (
               <div className="image-preview">
-                <img src={previewUrl} alt="Preview" className="preview-image" />
+                <img src={previewUrl} alt="Preview" className="preview-image" loading="lazy" />
               </div>
             )}
             

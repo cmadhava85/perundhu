@@ -9,16 +9,16 @@ import Loading from './Loading';
 import ErrorDisplay from './ErrorDisplay';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import TransitSearchForm from './TransitSearchForm';
-import RouteContributionComponent from './RouteContribution';
 
 // Lazy-loaded route components — these pull in Leaflet/map chunks; only fetch when navigated to
 const SearchResults = React.lazy(() => import('./SearchResults'));
 const BusTracker = React.lazy(() => import('./BusTracker'));
 const CombinedMapTracker = React.lazy(() => import('./CombinedMapTracker'));
 const ConnectingRoutes = React.lazy(() => import('./ConnectingRoutes'));
+const RouteContributionComponent = React.lazy(() => import('./RouteContribution'));
 
-// Admin components
-import AdminLogin from './admin/AdminLogin';
+// Admin components — lazy loaded since most users never visit /admin
+const AdminLogin = React.lazy(() => import('./admin/AdminLogin'));
 import ProtectedAdminRoute from './admin/ProtectedAdminRoute';
 
 // Lazy loaded components (used less frequently)

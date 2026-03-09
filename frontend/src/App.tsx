@@ -103,7 +103,8 @@ function AppContent() {
     searchBuses,
     setSelectedBusId: _setSelectedBusId,
     resetResults,
-    LoadingComponent: _LoadingComponent
+    LoadingComponent: _LoadingComponent,
+    isSearchPending,
   } = useBusSearchEnhanced();
   
   // State for selected locations - use defaults from hook (KCBT Kilambakkam to Madurai - Mattuthavani)
@@ -387,7 +388,7 @@ function AppContent() {
           stopsMap={stopsMap}
           searchError={searchError}
           connectingRoutes={connectingRoutes}
-          busesLoading={busesLoading}
+          busesLoading={busesLoading || isSearchPending}
           loadingMore={loadingMore}
           hasNextPage={hasNextPage}
           fetchNextPage={fetchNextPage}

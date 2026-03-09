@@ -10,6 +10,7 @@ import type { Location, Stop, Bus } from '../types';
  * Provides backward compatibility with the existing useBusSearch API
  */
 export function useBusSearchEnhanced() {
+  const [isSearchPending, startTransition] = React.useTransition();
   const [fromLocation, setFromLocation] = React.useState<Location | null>(null);
   const [toLocation, setToLocation] = React.useState<Location | null>(null);
   const [selectedBusId, setSelectedBusId] = React.useState<number | null>(null);
@@ -198,7 +199,7 @@ export function useBusSearchEnhanced() {
 
       // Batch all state updates atomically in a single render to avoid
       // triggering the stops-fetch effect multiple times
-      React.startTransition(() => {
+      startTransition(() => {
         setHasSearched(true);
         setFromLocation(from);
         setToLocation(to);
@@ -243,6 +244,7 @@ export function useBusSearchEnhanced() {
     searchBuses,
     setSelectedBusId,
     resetResults,
+    isSearchPending,
     
     // Loading component for convenience
     LoadingComponent: () => <LoadingSkeleton count={3} type="bus-card" />,
