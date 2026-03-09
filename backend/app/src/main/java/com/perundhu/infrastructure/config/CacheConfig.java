@@ -203,9 +203,9 @@ public class CacheConfig {
                                         .maximumSize(50)
                                         .recordStats();
                         
-                        // Settings cache (10 min TTL - rarely changes, high read traffic)
+                        // Settings cache (30s TTL - short window limits stale reads across Cloud Run instances)
                         case SETTINGS_CACHE -> Caffeine.newBuilder()
-                                        .expireAfterWrite(10, TimeUnit.MINUTES)
+                                        .expireAfterWrite(30, TimeUnit.SECONDS)
                                         .maximumSize(100)
                                         .recordStats();
                         

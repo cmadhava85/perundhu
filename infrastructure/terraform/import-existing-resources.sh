@@ -6,8 +6,8 @@
 set -e
 
 PROJECT_ID="astute-strategy-406601"
-REGION="asia-south1"
-DB_REGION="asia-south1"
+REGION="us-central1"
+DB_REGION="us-central1"
 ENVIRONMENT="preprod"
 
 echo "=========================================="
@@ -32,7 +32,7 @@ echo "=========================================="
 echo ""
 
 # Import Cloud SQL instance
-SQL_INSTANCE="perundhu-preprod-mysql"
+SQL_INSTANCE="perundhu-preprod-mysql-us"
 echo "Importing Cloud SQL instance: $SQL_INSTANCE"
 terraform import 'module.database.google_sql_database_instance.mysql_instance' "$PROJECT_ID/$SQL_INSTANCE" || echo "Already imported or error"
 

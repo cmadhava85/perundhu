@@ -69,6 +69,20 @@ interface FeatureFlagsContextType {
 // Storage key for persisted settings
 const FEATURE_FLAGS_STORAGE_KEY = 'admin_feature_flags';
 
+// Exhaustive set of valid camelCase flag keys — used to strip any dot-notation
+// ghost keys that may have accumulated in localStorage or from backend fallthrough
+const VALID_FLAG_KEYS = new Set<string>([
+  'enableManualContribution', 'enableImageContribution', 'enableVoiceContribution',
+  'enablePasteContribution', 'enableRouteVerification', 'enableAddStops',
+  'enableReportIssue', 'enableShareRoute', 'enableMap', 'enableAutoApproval',
+  'enableGeminiAI', 'enableCache', 'enableMaintenanceMode', 'enableRateLimiting',
+  'maxRequestsPerMinute', 'requireEmailVerification', 'enableSocialMedia',
+  'enableCommunityRewards', 'enableBusinessPartners', 'enableOsmIntegration',
+  'enableRealTimeUpdates', 'enableBusReviews', 'busReviewsRequireLogin',
+  'busReviewsAutoApprove', 'enableAds', 'enableAdBetweenSearchResults',
+  'enableAdSidebarRight', 'enableAdFooterSection', 'enableAdAboveSearchForm',
+]);
+
 // Default feature flag values
 const defaultFlags: FeatureFlags = {
   // Contribution methods - some enabled by default
@@ -103,9 +117,9 @@ const defaultFlags: FeatureFlags = {
   enableRealTimeUpdates: true,
   
   // Bus Reviews Feature
-  enableBusReviews: true,
+  enableBusReviews: false,
   busReviewsRequireLogin: false,
-  busReviewsAutoApprove: true,
+  busReviewsAutoApprove: false,
   
   // Google AdSense Features (read from environment)
   enableAds: import.meta.env.VITE_ENABLE_ADS === 'true',
@@ -169,8 +183,13 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
 
       setIsBackendAvailable(true);
       
-      // Merge backend flags with defaults (backend takes priority)
-      const mergedFlags = { ...defaultFlags, ...backendFlags } as FeatureFlags;
+      // Only keep known camelCase keys — strips any dot-notation fallthrough keys
+      // (e.g. feature.ads.google-adsense.enabled) that the backend returns when
+      // a DB row has no entry in convertKeyToFrontendFormat
+      const knownBackendFlags = Object.fromEntries(
+        Object.entries(backendFlags).filter(([k]) => VALID_FLAG_KEYS.has(k))
+      );
+      const mergedFlags = { ...defaultFlags, ...knownBackendFlags } as FeatureFlags;
       setFlags(mergedFlags);
       saveToLocalStorage(mergedFlags);
       
@@ -205,10 +224,15 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     setLastSyncError(null);
     
     try {
-      // Convert FeatureFlags to Record<string, boolean>
+      // Only send known boolean flags — this:
+      // 1. Skips maxRequestsPerMinute (number) which would be coerced to true
+      // 2. Strips any dot-notation ghost keys that may have leaked into state,
+      //    preventing the same DB row being written twice with conflicting values
       const flagsRecord: Record<string, boolean> = {};
       Object.entries(flags).forEach(([key, value]) => {
-        flagsRecord[key] = value;
+        if (typeof value === 'boolean' && VALID_FLAG_KEYS.has(key)) {
+          flagsRecord[key] = value;
+        }
       });
       
       const result = await AdminService.updateFeatureFlags(flagsRecord);
@@ -219,6 +243,9 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
         const updatedFlags = { ...defaultFlags, ...result.flags } as FeatureFlags;
         setFlags(updatedFlags);
         saveToLocalStorage(updatedFlags);
+        // Invalidate the React Query cache so next syncWithBackend() fetches fresh
+        // data instead of returning the pre-save stale cached value
+        queryClient.setQueryData(['public-feature-flags', 'all'], result.flags);
       }
     } catch (error) {
       console.error('Failed to save feature flags to backend:', error);
@@ -226,7 +253,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     } finally {
       setIsSyncing(false);
     }
-  }, [flags, isBackendAvailable, saveToLocalStorage]);
+  }, [flags, isBackendAvailable, saveToLocalStorage, queryClient]);
 
   // Sync current flags to preprod environment
   const syncToPreprod = useCallback(async () => {

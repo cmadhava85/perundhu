@@ -66,6 +66,28 @@ public class SystemSettingsService {
         new SettingDefault("false", "features", "Enable OpenStreetMap integration"));
     DEFAULT_SETTINGS.put("feature.realTimeUpdates.enabled",
         new SettingDefault("false", "features", "Enable real-time updates"));
+    DEFAULT_SETTINGS.put("feature.map.enabled",
+        new SettingDefault("false", "features", "Enable map feature"));
+
+    // Bus Reviews settings
+    DEFAULT_SETTINGS.put("feature.busReviews.enabled",
+        new SettingDefault("true", "features", "Enable bus reviews"));
+    DEFAULT_SETTINGS.put("feature.busReviews.requireLogin",
+        new SettingDefault("false", "features", "Require login to submit bus reviews"));
+    DEFAULT_SETTINGS.put("feature.busReviews.autoApprove",
+        new SettingDefault("true", "features", "Auto-approve bus reviews"));
+
+    // Google AdSense settings
+    DEFAULT_SETTINGS.put("feature.ads.enabled",
+        new SettingDefault("true", "features", "Enable Google AdSense ads"));
+    DEFAULT_SETTINGS.put("feature.ads.betweenSearchResults.enabled",
+        new SettingDefault("true", "features", "Enable ad between search results"));
+    DEFAULT_SETTINGS.put("feature.ads.sidebarRight.enabled",
+        new SettingDefault("true", "features", "Enable sidebar right ad"));
+    DEFAULT_SETTINGS.put("feature.ads.footerSection.enabled",
+        new SettingDefault("true", "features", "Enable footer section ad"));
+    DEFAULT_SETTINGS.put("feature.ads.aboveSearchForm.enabled",
+        new SettingDefault("false", "features", "Enable ad above search form"));
 
     // Security settings
     DEFAULT_SETTINGS.put("security.rateLimiting.enabled",
@@ -154,6 +176,7 @@ public class SystemSettingsService {
   public Map<String, Boolean> getFeatureFlags() {
     return settingPort.findBySettingKeyStartingWith("feature.")
         .stream()
+        .filter(setting -> convertKeyToFrontendFormat(setting.getSettingKey()) != null)
         .collect(Collectors.toMap(
             setting -> convertKeyToFrontendFormat(setting.getSettingKey()),
             setting -> "true".equalsIgnoreCase(setting.getSettingValue())));
@@ -357,7 +380,8 @@ public class SystemSettingsService {
    * e.g., "feature.contribution.manual.enabled" -> "enableManualContribution"
    */
   private String convertKeyToFrontendFormat(String backendKey) {
-    // Map of backend keys to frontend keys
+    // Map of backend keys to frontend keys. Returns null for unmapped keys so
+    // callers can filter them out rather than leaking raw dot-notation keys.
     Map<String, String> keyMap = Map.ofEntries(
         // Feature flags
         Map.entry("feature.contribution.manual.enabled", "enableManualContribution"),
@@ -373,6 +397,15 @@ public class SystemSettingsService {
         Map.entry("feature.businessPartners.enabled", "enableBusinessPartners"),
         Map.entry("feature.osmIntegration.enabled", "enableOsmIntegration"),
         Map.entry("feature.realTimeUpdates.enabled", "enableRealTimeUpdates"),
+        Map.entry("feature.map.enabled", "enableMap"),
+        Map.entry("feature.busReviews.enabled", "enableBusReviews"),
+        Map.entry("feature.busReviews.requireLogin", "busReviewsRequireLogin"),
+        Map.entry("feature.busReviews.autoApprove", "busReviewsAutoApprove"),
+        Map.entry("feature.ads.enabled", "enableAds"),
+        Map.entry("feature.ads.betweenSearchResults.enabled", "enableAdBetweenSearchResults"),
+        Map.entry("feature.ads.sidebarRight.enabled", "enableAdSidebarRight"),
+        Map.entry("feature.ads.footerSection.enabled", "enableAdFooterSection"),
+        Map.entry("feature.ads.aboveSearchForm.enabled", "enableAdAboveSearchForm"),
         // Security settings
         Map.entry("security.rateLimiting.enabled", "enableRateLimiting"),
         Map.entry("security.maxRequestsPerMinute", "maxRequestsPerMinute"),
@@ -383,7 +416,7 @@ public class SystemSettingsService {
         Map.entry("system.cacheEnabled", "enableCache"),
         Map.entry("system.maintenanceMode", "enableMaintenanceMode"));
 
-    return keyMap.getOrDefault(backendKey, backendKey);
+    return keyMap.getOrDefault(backendKey, null);
   }
 
   /**
@@ -406,6 +439,15 @@ public class SystemSettingsService {
         Map.entry("enableBusinessPartners", "feature.businessPartners.enabled"),
         Map.entry("enableOsmIntegration", "feature.osmIntegration.enabled"),
         Map.entry("enableRealTimeUpdates", "feature.realTimeUpdates.enabled"),
+        Map.entry("enableMap", "feature.map.enabled"),
+        Map.entry("enableBusReviews", "feature.busReviews.enabled"),
+        Map.entry("busReviewsRequireLogin", "feature.busReviews.requireLogin"),
+        Map.entry("busReviewsAutoApprove", "feature.busReviews.autoApprove"),
+        Map.entry("enableAds", "feature.ads.enabled"),
+        Map.entry("enableAdBetweenSearchResults", "feature.ads.betweenSearchResults.enabled"),
+        Map.entry("enableAdSidebarRight", "feature.ads.sidebarRight.enabled"),
+        Map.entry("enableAdFooterSection", "feature.ads.footerSection.enabled"),
+        Map.entry("enableAdAboveSearchForm", "feature.ads.aboveSearchForm.enabled"),
         // Security settings
         Map.entry("enableRateLimiting", "security.rateLimiting.enabled"),
         Map.entry("maxRequestsPerMinute", "security.maxRequestsPerMinute"),
