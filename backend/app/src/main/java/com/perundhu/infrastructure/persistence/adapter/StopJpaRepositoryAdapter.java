@@ -103,13 +103,15 @@ public class StopJpaRepositoryAdapter implements StopRepository {
                 .toList();
     }
 
+    // Max IDs per IN clause — keeps individual query time well under 10s
+    private static final int STOP_BATCH_SIZE = 500;
+
     @Override
     public Map<Long, List<Stop>> findStopsByBusIdsGrouped(List<Long> busIds) {
         if (busIds == null || busIds.isEmpty()) {
             return Map.of();
         }
 
-        List<StopJpaEntity> entities = jpaRepository.findByBusIdsOrderByStopOrder(busIds);
         Map<Long, List<Stop>> result = new HashMap<>();
 
         // Initialize all bus IDs with empty lists
@@ -117,13 +119,19 @@ public class StopJpaRepositoryAdapter implements StopRepository {
             result.put(busId, new ArrayList<>());
         }
 
-        // Group stops by their bus ID
-        for (StopJpaEntity entity : entities) {
-            if (entity.getBus() != null && entity.getBus().getId() != null) {
-                Long busId = entity.getBus().getId();
-                List<Stop> stopsForBus = result.get(busId);
-                if (stopsForBus != null) {
-                    stopsForBus.add(entity.toDomainModel());
+        // Process in batches to avoid massive IN clauses (which caused 100+ second queries)
+        for (int i = 0; i < busIds.size(); i += STOP_BATCH_SIZE) {
+            List<Long> batch = busIds.subList(i, Math.min(i + STOP_BATCH_SIZE, busIds.size()));
+            List<StopJpaEntity> entities = jpaRepository.findByBusIdsOrderByStopOrder(batch);
+
+            // Group stops by their bus ID
+            for (StopJpaEntity entity : entities) {
+                if (entity.getBus() != null && entity.getBus().getId() != null) {
+                    Long busId = entity.getBus().getId();
+                    List<Stop> stopsForBus = result.get(busId);
+                    if (stopsForBus != null) {
+                        stopsForBus.add(entity.toDomainModel());
+                    }
                 }
             }
         }

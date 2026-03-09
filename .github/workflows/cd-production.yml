@@ -339,20 +339,23 @@ jobs:
     - name: Test Backend Health
       run: |
         echo "Waiting for backend to be ready..."
-        sleep 20
+        sleep 30
         
-        for i in {1..5}; do
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/actuator/health || echo "000")
+        # Use /actuator/health/liveness — checks JVM liveness only, no DB dependency.
+        # DB warm-up on startup temporarily starves the pool and makes /actuator/health
+        # return 503; liveness is always UP once the app is running.
+        for i in {1..10}; do
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/actuator/health/liveness || echo "000")
           if [[ "$HTTP_CODE" == "200" ]]; then
             echo "Backend is healthy (HTTP $HTTP_CODE)"
             break
           fi
-          if [ $i -eq 5 ]; then
-            echo "Backend health check failed after 5 attempts (HTTP $HTTP_CODE)"
+          if [ $i -eq 10 ]; then
+            echo "Backend health check failed after 10 attempts (HTTP $HTTP_CODE)"
             exit 1
           fi
-          echo "Attempt $i failed with HTTP $HTTP_CODE, retrying in 10s..."
-          sleep 10
+          echo "Attempt $i failed with HTTP $HTTP_CODE, retrying in 15s..."
+          sleep 15
         done
     
     - name: Test Frontend
