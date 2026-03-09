@@ -25,50 +25,33 @@ env:
   JAVA_VERSION: '21'
 
 jobs:
-  frontend-lint:
-    name: Frontend Lint & Type Check
+  # Merged lint + test into one job — saves one VM boot and one npm ci (~1-2 min)
+  frontend-checks:
+    name: Frontend Lint, Type Check & Tests
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
         cache-dependency-path: frontend/package-lock.json
-    
+
     - name: Install dependencies
       working-directory: ./frontend
       run: npm ci
-    
+
     - name: Run ESLint
       working-directory: ./frontend
       run: npm run lint --if-present || echo "No lint script found"
-    
+
     - name: TypeScript type check
       working-directory: ./frontend
       run: npx tsc --noEmit
 
-  frontend-test:
-    name: Frontend Unit Test
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
-    
-    - name: Install dependencies
-      working-directory: ./frontend
-      run: npm ci
-    
     - name: Run tests
       working-directory: ./frontend
       run: npm test --if-present || echo "No tests configured"
@@ -78,7 +61,7 @@ jobs:
   frontend-build:
     name: Frontend Build
     runs-on: ubuntu-latest
-    needs: [frontend-lint, frontend-test]
+    needs: [frontend-checks]
     
     steps:
     - uses: actions/checkout@v4
@@ -131,7 +114,23 @@ jobs:
         SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
         SPRING_DATASOURCE_USERNAME: sa
         SPRING_DATASOURCE_PASSWORD: ""
-    
+
+    # Build the deployable JAR once here and share it with CD — avoids a
+    # full clean rebuild in the CD build-backend job (~3-4 min saved per push)
+    - name: Build deployable JAR
+      if: success() && github.event_name == 'push'
+      working-directory: ./backend
+      run: ./gradlew bootJar -x test --no-daemon
+
+    - name: Upload Backend JAR artifact
+      if: success() && github.event_name == 'push'
+      uses: actions/upload-artifact@v4
+      with:
+        name: backend-jar-${{ github.sha }}
+        path: backend/build/libs/*.jar
+        retention-days: 1
+        if-no-files-found: warn
+
     # Only upload test results on failure to save storage
     - name: Upload test results on failure
       uses: actions/upload-artifact@v4
@@ -141,35 +140,9 @@ jobs:
         path: backend/build/reports/tests/
         retention-days: 1
 
-  backend-build:
-    name: Backend Build
-    runs-on: ubuntu-latest
-    needs: [backend-test]
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ env.JAVA_VERSION }}
-        distribution: 'temurin'
-        cache: 'gradle'
-    
-    - name: Grant execute permission for gradlew
-      working-directory: ./backend
-      run: chmod +x gradlew
-    
-    - name: Build with Gradle
-      working-directory: ./backend
-      run: ./gradlew build -x test
-    
-    # Skip artifact upload to save storage quota - JAR is rebuilt during CD
-    - name: Verify build output
-      working-directory: ./backend
-      run: |
-        echo "✅ Backend build successful"
-        ls -la build/libs/*.jar
+  # backend-build job removed — it compiled a JAR that was immediately discarded
+  # (the CD pipeline rebuilt from scratch anyway). The JAR is now built once in
+  # backend-test (above) and shared to CD via artifact upload.
 
   security-scan:
     name: Security Scan
@@ -182,18 +155,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    # Single Trivy scan producing SARIF output — previously ran twice
+    # (table format + SARIF format), wasting ~1-2 min per run
     - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@0.33.1
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        format: 'table'
-        exit-code: '0'
-        severity: 'CRITICAL,HIGH'
-    
-    # Only upload SARIF if code scanning is enabled (will fail silently if not)
-    - name: Run Trivy for SARIF
-      if: github.repository_owner == github.actor || github.event_name == 'pull_request'
       uses: aquasecurity/trivy-action@0.33.1
       with:
         scan-type: 'fs'
@@ -201,6 +165,7 @@ jobs:
         format: 'sarif'
         output: 'trivy-results.sarif'
         exit-code: '0'
+        severity: 'CRITICAL,HIGH'
     
     - name: Upload Trivy results to GitHub Security
       if: always() && hashFiles('trivy-results.sarif') != ''

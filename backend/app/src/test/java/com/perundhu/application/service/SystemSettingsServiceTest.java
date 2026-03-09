@@ -419,7 +419,7 @@ class SystemSettingsServiceTest {
       settingsService.resetToDefaults();
 
       // Then - verify that save was called for each default setting
-      verify(settingPort, times(20)).findBySettingKey(anyString());
+      verify(settingPort, times(29)).findBySettingKey(anyString());
     }
 
     @Test
@@ -434,8 +434,8 @@ class SystemSettingsServiceTest {
       // When
       settingsService.resetFeatureFlagsToDefaults();
 
-      // Then - verify only feature settings are queried (13 feature flags)
-      verify(settingPort, times(13)).findBySettingKey(anyString());
+      // Then - verify only feature settings are queried (22 feature flags)
+      verify(settingPort, times(22)).findBySettingKey(anyString());
     }
   }
 
@@ -529,8 +529,8 @@ class SystemSettingsServiceTest {
       // When
       settingsService.initializeDefaultSettings();
 
-      // Then - 20 default settings
-      verify(settingPort, times(20)).save(any(SystemSetting.class));
+      // Then - 29 default settings
+      verify(settingPort, times(29)).save(any(SystemSetting.class));
     }
   }
 

@@ -291,7 +291,7 @@ function AppContent() {
   const isAnalyticsEnabled = getFeatureFlag('ANALYTICS_ENABLED', true);
   const showAnalytics = isAnalyticsEnabled;
   const mapEnabled = useIsFeatureEnabled('enableMap');
-  const userId = 'user123';
+  const userId = localStorage.getItem('userId') || 'anonymous';
 
   if (!isInitialized) {
     return <Loading message={t('app.initializing', 'Initializing app...')} />;

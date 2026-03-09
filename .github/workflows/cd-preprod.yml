@@ -59,10 +59,25 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      actions: read  # needed to download artifacts from the triggering CI run
     steps:
       - uses: actions/checkout@v4
 
+      # Download the JAR built by CI — avoids a full clean rebuild (~3-4 min saved)
+      # Falls back to building locally when triggered manually (no CI artifact)
+      - name: Download Backend JAR from CI
+        id: download-jar
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar-${{ github.event.workflow_run.head_sha }}
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: backend/build/libs/
+        continue-on-error: true
+
       - name: Set up JDK 21
+        if: steps.download-jar.outcome != 'success'
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -70,10 +85,11 @@ jobs:
           cache: 'gradle'
 
       - name: Build Backend JAR
+        if: steps.download-jar.outcome != 'success'
         working-directory: ./backend
         run: |
           chmod +x gradlew
-          ./gradlew clean build -x test -x spotbugsMain -x spotbugsTest --no-daemon
+          ./gradlew clean bootJar -x test -x spotbugsMain -x spotbugsTest --no-daemon
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
@@ -417,7 +433,9 @@ jobs:
 
   deploy-frontend:
     name: Deploy Frontend
-    needs: [build-frontend, deploy-backend]
+    # Runs in parallel with deploy-backend — frontend image is self-contained
+    # and does not depend on the backend being deployed first (~3-4 min saved)
+    needs: [build-frontend]
     runs-on: ubuntu-latest
     permissions:
       contents: read

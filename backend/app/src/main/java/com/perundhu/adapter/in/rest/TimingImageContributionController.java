@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * REST Controller for user timing image contributions
@@ -30,6 +31,8 @@ import java.util.HashMap;
 @Slf4j
 
 public class TimingImageContributionController {
+
+  private static final String ANONYMOUS_ID_PREFIX = "anonymous_";
 
   private final TimingImageContributionRepository timingImageRepository;
   private final FileStorageService fileStorageService;
@@ -90,7 +93,7 @@ public class TimingImageContributionController {
       // Get current user
       String userId = authenticationService.getCurrentUserId();
       if (userId == null || userId.equals("anonymous")) {
-        userId = "anonymous_" + System.currentTimeMillis();
+        userId = ANONYMOUS_ID_PREFIX + UUID.randomUUID().toString().replace("-", "");
       }
 
       // Upload image to storage
@@ -195,7 +198,7 @@ public class TimingImageContributionController {
 
       // IDOR Protection: Verify the requesting user matches the userId parameter
       String currentUserId = authenticationService.getCurrentUserId();
-      if (currentUserId == null || (!currentUserId.equals(userId) && !userId.startsWith("anonymous_"))) {
+      if (currentUserId == null || !currentUserId.equals(userId)) {
         log.warn("IDOR attempt: User {} tried to access contributions of user {}", currentUserId, userId);
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
             .body(Map.of("error", "Access denied. You can only view your own contributions."));
@@ -228,7 +231,7 @@ public class TimingImageContributionController {
       // IDOR Protection: Verify the requesting user owns the contribution
       String currentUserId = authenticationService.getCurrentUserId();
       String ownerId = contribution.get().getUserId();
-      if (currentUserId == null || (!currentUserId.equals(ownerId) && !ownerId.startsWith("anonymous_"))) {
+      if (currentUserId == null || !currentUserId.equals(ownerId)) {
         log.warn("IDOR attempt: User {} tried to delete contribution {} owned by {}", currentUserId, id, ownerId);
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
             .body(Map.of("error", "Access denied. You can only delete your own contributions."));

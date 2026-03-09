@@ -116,7 +116,7 @@ public class RouteIssueController {
     try {
       // IDOR Protection: Verify the requesting user matches the reporterId parameter
       String currentUserId = authenticationService.getCurrentUserId();
-      if (currentUserId == null || (!currentUserId.equals(reporterId) && !reporterId.startsWith("anonymous_"))) {
+      if (currentUserId == null || !currentUserId.equals(reporterId)) {
         log.warn("IDOR attempt: User {} tried to access reports of user {}", currentUserId, reporterId);
         return ResponseEntity.status(403)
             .body(Map.of("error", "Access denied. You can only view your own reports."));

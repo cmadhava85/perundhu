@@ -178,7 +178,7 @@ public class BusTrackingController {
 
         // IDOR Protection: Verify the requesting user matches the userId parameter
         String currentUserId = authenticationService.getCurrentUserId();
-        if (currentUserId == null || (!currentUserId.equals(userId) && !userId.startsWith("anonymous_"))) {
+        if (currentUserId == null || !currentUserId.equals(userId)) {
             log.warn("IDOR attempt: User {} tried to access rewards for user {}", currentUserId, userId);
             return ResponseEntity.status(403)
                     .body(createErrorResponse("ACCESS_DENIED", "You can only view your own rewards",
