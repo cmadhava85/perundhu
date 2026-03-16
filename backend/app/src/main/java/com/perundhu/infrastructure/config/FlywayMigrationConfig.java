@@ -1,7 +1,5 @@
 package com.perundhu.infrastructure.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +10,7 @@ public class FlywayMigrationConfig {
 
     @Bean
     @Profile("!test")
-    public FlywayMigrationStrategy productionMigrationStrategy(DataSource dataSource) {
+    public FlywayMigrationStrategy productionMigrationStrategy() {
         return flyway -> {
             try {
                 // First try to repair the schema history table
