@@ -154,21 +154,6 @@ import {
   to = module.secrets.google_secret_manager_secret.db_password
 }
 
-import {
-  id = "projects/astute-strategy-406601/secrets/preprod-db-url"
-  to = module.secrets.google_secret_manager_secret.db_url[0]
-}
-
-import {
-  id = "projects/astute-strategy-406601/secrets/preprod-data-encryption-key"
-  to = module.secrets.google_secret_manager_secret.data_encryption_key[0]
-}
-
-import {
-  id = "projects/astute-strategy-406601/secrets/preprod-jwt-secret"
-  to = module.secrets.google_secret_manager_secret.jwt_secret[0]
-}
-
 # ── Cloud Run ─────────────────────────────────────────────────────────────────
 
 import {
