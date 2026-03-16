@@ -300,7 +300,7 @@ resource "google_cloud_run_service" "backend" {
           initial_delay_seconds = 0
           period_seconds        = 10
           timeout_seconds       = 5
-          failure_threshold     = 30
+          failure_threshold     = 90
         }
       }
     }
