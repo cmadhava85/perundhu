@@ -85,6 +85,18 @@ variable "cloud_run_memory_limit" {
   default     = "512Mi"
 }
 
+variable "cloud_run_concurrency" {
+  description = "Maximum concurrent requests per Cloud Run container instance"
+  type        = number
+  default     = 80
+}
+
+variable "cloud_run_timeout" {
+  description = "Request timeout in seconds for Cloud Run"
+  type        = number
+  default     = 60
+}
+
 variable "redis_host" {
   description = "Redis host (empty string to disable)"
   type        = string

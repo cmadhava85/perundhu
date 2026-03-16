@@ -75,8 +75,8 @@ db_general_log_enabled    = false # Disabled to avoid performance impact (enable
 cloud_run_min_instances = 0       # Scale to zero - saves ~$6.50/month; startup CPU boost handles cold starts
 cloud_run_max_instances = 5       # Autoscale up to 5 instances under load
 cloud_run_cpu_limit     = "1000m" # 1 CPU for backend
-cloud_run_memory_limit  = "1024Mi" # 1Gi for backend (reduced from 2Gi)
-
+cloud_run_memory_limit  = "1024Mi" # 1Gi for backend (reduced from 2Gi)cloud_run_concurrency   = 80      # Max concurrent requests per instance
+cloud_run_timeout       = 60      # Request timeout in seconds
 # ============================================
 # VPC Configuration (Cost Optimized - VPC Connector DISABLED)
 # ============================================

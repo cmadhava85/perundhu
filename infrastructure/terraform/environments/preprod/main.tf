@@ -210,10 +210,12 @@ module "cloud_run" {
   redis_port = var.redis_port
 
   # Cloud Run scaling and resource config from variables
-  min_instances = var.cloud_run_min_instances
-  max_instances = var.cloud_run_max_instances
-  cpu_limit     = var.cloud_run_cpu_limit
-  memory_limit  = var.cloud_run_memory_limit
+  min_instances         = var.cloud_run_min_instances
+  max_instances         = var.cloud_run_max_instances
+  cpu_limit             = var.cloud_run_cpu_limit
+  memory_limit          = var.cloud_run_memory_limit
+  container_concurrency = var.cloud_run_concurrency
+  timeout_seconds       = var.cloud_run_timeout
 
   depends_on = [module.vpc, module.database, module.storage, module.iam]
 }

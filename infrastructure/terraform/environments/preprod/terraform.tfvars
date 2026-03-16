@@ -74,6 +74,8 @@ cloud_run_min_instances  = 0       # Scale to zero for cost savings
 cloud_run_max_instances  = 2       # Reduced from 3 for cost savings
 cloud_run_cpu_limit      = "1000m" # 1 CPU
 cloud_run_memory_limit   = "512Mi" # Min required for Gen2 (256Mi not supported)
+cloud_run_concurrency    = 80      # Max concurrent requests per instance
+cloud_run_timeout        = 60      # Request timeout in seconds
 backend_service_name     = "perundhu-backend-preprod"  # Match existing GCP service name
 
 # ============================================

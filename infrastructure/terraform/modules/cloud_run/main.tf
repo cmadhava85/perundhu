@@ -25,10 +25,10 @@ resource "google_cloud_run_service" "backend" {
     }
 
     spec {
-      service_account_name = var.service_account_email
-      # Reduced from 300s. Most API calls complete in < 10s.
+      service_account_name  = var.service_account_email
+      container_concurrency = var.container_concurrency
       # Lower timeout reduces cost from hung/long requests billed against Cloud Run.
-      timeout_seconds      = 60
+      timeout_seconds       = var.timeout_seconds
 
       containers {
         image = var.container_image
@@ -313,8 +313,14 @@ resource "google_cloud_run_service" "backend" {
 
   lifecycle {
     ignore_changes = [
-      template,   # CI/CD pipeline manages image, env vars, and annotations
-      metadata,   # gcloud CLI adds client-name/version annotations
+      # CI/CD pipeline manages the container image — do not reset it on Terraform apply
+      template[0].spec[0].containers[0].image,
+      # gcloud adds client-name/version and revision name annotations on each deploy
+      template[0].metadata[0].annotations["run.googleapis.com/client-name"],
+      template[0].metadata[0].annotations["run.googleapis.com/client-version"],
+      template[0].metadata[0].name,
+      # gcloud adds service-level annotations (ingress, etc.) outside our control
+      metadata[0].annotations,
     ]
   }
 }

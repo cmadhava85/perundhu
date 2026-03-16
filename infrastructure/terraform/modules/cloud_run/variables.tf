@@ -43,7 +43,7 @@ variable "max_instances" {
 variable "min_instances" {
   description = "Minimum number of instances"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "cpu_limit" {
@@ -55,7 +55,7 @@ variable "cpu_limit" {
 variable "memory_limit" {
   description = "Memory limit"
   type        = string
-  default     = "2Gi"
+  default     = "512Mi"
 }
 
 variable "db_connection_name" {
@@ -76,6 +76,18 @@ variable "db_user" {
 variable "storage_bucket_name" {
   description = "Storage bucket name for images"
   type        = string
+}
+
+variable "container_concurrency" {
+  description = "Maximum number of concurrent requests per container instance"
+  type        = number
+  default     = 80
+}
+
+variable "timeout_seconds" {
+  description = "Request timeout in seconds"
+  type        = number
+  default     = 60
 }
 
 variable "redis_host" {
