@@ -134,12 +134,12 @@ import {
 }
 
 import {
-  id = "projects/astute-strategy-406601/instances/perundhu-preprod-mysql-us/users/perundhu_user"
+  id = "astute-strategy-406601/perundhu-preprod-mysql-us/%/perundhu_user"
   to = module.database.google_sql_user.users
 }
 
 import {
-  id = "projects/astute-strategy-406601/instances/perundhu-preprod-mysql-us/users/perundhu_user_readonly"
+  id = "astute-strategy-406601/perundhu-preprod-mysql-us/%/perundhu_user_readonly"
   to = module.database.google_sql_user.readonly_user
 }
 
