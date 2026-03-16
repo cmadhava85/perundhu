@@ -543,13 +543,6 @@ jobs:
             fi
           done
 
-      - name: Stop Cloud SQL After Deployment
-        if: always()
-        run: |
-          echo "💰 Stopping Cloud SQL instance to save costs (~$40/month when idle)..."
-          gcloud sql instances patch ${{ env.SQL_INSTANCE_NAME }} \
-            --activation-policy=NEVER \
-            --project=${{ env.PROJECT_ID }} \
-            --quiet || echo "⚠️  Could not stop SQL instance (may already be stopped)"
-          echo "✅ Cloud SQL instance stopped. It will auto-start on next deployment."
+      # Stop Cloud SQL removed: preprod DB must stay ALWAYS so Cloud Run can connect.
+      # db-f1-micro cost is ~$7/month — acceptable within budget.
 # Trigger CD pipeline to run migrations
