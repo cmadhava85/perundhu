@@ -122,6 +122,10 @@ resource "google_sql_user" "readonly_user" {
   instance = google_sql_database_instance.mysql_instance.name
   password = random_password.db_password.result
   host     = "%"  # REQUIRED: Prevents creation of malformed user entries
+
+  lifecycle {
+    ignore_changes = [password, host]
+  }
 }
 
 # Database for testing (optional)
