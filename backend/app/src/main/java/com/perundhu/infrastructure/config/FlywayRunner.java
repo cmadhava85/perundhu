@@ -74,7 +74,6 @@ public class FlywayRunner implements SmartLifecycle {
                     .connectRetries(connectRetries)
                     .load();
 
-            flyway.repair();
             flyway.migrate();
 
             log.info("Flyway migration completed successfully.");

@@ -425,7 +425,10 @@ jobs:
             --concurrency=80 \
             --timeout=60s \
             --cpu-throttling \
-            --execution-environment=gen2
+            --execution-environment=gen2 \
+            --startup-cpu-boost \
+            --startup-probe-period=10s \
+            --startup-probe-failure-threshold=12
 
       - name: Route Traffic to Latest
         run: |
