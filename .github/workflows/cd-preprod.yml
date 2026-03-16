@@ -418,11 +418,14 @@ jobs:
             --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,FLYWAY_ENABLED=false,SPRING_FLYWAY_ENABLED=false" \
             --update-secrets="DB_USERNAME=db-username:latest,DB_PASSWORD=db-password:latest,ADMIN_USERNAME=admin-username:latest,ADMIN_PASSWORD=admin-password:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
             --add-cloudsql-instances=${{ env.SQL_INSTANCE }} \
-            --memory=2Gi \
-            --cpu=2 \
+            --memory=512Mi \
+            --cpu=1 \
             --min-instances=0 \
-            --max-instances=3 \
-            --timeout=300s
+            --max-instances=2 \
+            --concurrency=80 \
+            --timeout=60s \
+            --cpu-throttling \
+            --execution-environment=gen2
 
       - name: Route Traffic to Latest
         run: |
