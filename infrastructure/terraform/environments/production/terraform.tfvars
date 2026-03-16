@@ -49,9 +49,9 @@ db_availability_type   = "ZONAL"
 db_deletion_protection = false    # Matches actual deployed instance
 
 # Database Activation Policy
-# ALWAYS: DB stays running — required for prod (Cloud Run min=1 must connect at startup)
+# ALWAYS: DB stays running — required for prod to serve live traffic.
 # Set to NEVER only when taking prod fully offline for extended maintenance.
-db_activation_policy = "ALWAYS" # Production DB must run alongside Cloud Run min=1
+db_activation_policy = "ALWAYS" # Production DB must be running to serve requests
 
 # Database Backups (ENABLED for production data protection)
 # Prevents data loss during Cloud SQL maintenance or failures
@@ -67,12 +67,12 @@ db_slow_query_log_enabled = true  # Monitor slow queries for performance tuning
 db_general_log_enabled    = false # Disabled to avoid performance impact (enable if needed for debugging)
 
 # ============================================
-# Cloud Run Configuration (Optimized for < $20/month)
+# Cloud Run Configuration
 # ============================================
-# COST OPTIMIZED (Feb 2026): Reduced resources for backend
-# Backend: 1 CPU, 1Gi memory, 0-5 instances
-# Frontend: 1 CPU, 512Mi memory, 0-10 instances (not managed by Terraform)
-cloud_run_min_instances = 1       # Min 1 for prod: avoids cold start, autoscales up for traffic
+# min_instances=0: Cloud Run scales to zero when idle (saves ~$6.50/month).
+# Startup CPU boost handles cold starts (~3-5s for this Java/Spring app).
+# Cloud SQL connects on first request — min=1 is not required for DB connectivity.
+cloud_run_min_instances = 0       # Scale to zero - saves ~$6.50/month; startup CPU boost handles cold starts
 cloud_run_max_instances = 5       # Autoscale up to 5 instances under load
 cloud_run_cpu_limit     = "1000m" # 1 CPU for backend
 cloud_run_memory_limit  = "1024Mi" # 1Gi for backend (reduced from 2Gi)
@@ -134,7 +134,7 @@ firewall_rules = {
     target_tags   = []
   }
   "allow-ssh" = {
-    enable    = true
+    enable    = false # Disabled - no VMs in this project; Cloud Run does not use SSH
     direction = "INGRESS"
     priority  = 1000
     allow_rules = [
@@ -196,12 +196,10 @@ cloudbuild_roles = [
   "roles/artifactregistry.writer"
 ]
 
-custom_role_permissions = [
-  "compute.instances.get",
-  "compute.instances.list"
-]
+custom_role_permissions = []
 
-enable_custom_role = true
+# Custom role disabled - compute.instances.get/list are not needed by Cloud Run apps
+enable_custom_role = false
 
 # ============================================
 # Container Image (CI/CD managed)

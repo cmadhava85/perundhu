@@ -131,7 +131,7 @@ firewall_rules = {
     target_tags   = []
   }
   "allow-ssh" = {
-    enable    = true
+    enable    = false # Disabled - no VMs in this project; Cloud Run does not use SSH
     direction = "INGRESS"
     priority  = 1000
     allow_rules = [
@@ -193,12 +193,10 @@ cloudbuild_roles = [
   "roles/artifactregistry.writer"
 ]
 
-custom_role_permissions = [
-  "compute.instances.get",
-  "compute.instances.list"
-]
+custom_role_permissions = []
 
-enable_custom_role = true
+# Custom role disabled - compute.instances.get/list are not needed by Cloud Run apps
+enable_custom_role = false
 
 # ============================================
 # SQL Auto-Stop Configuration (Cloud Function + Cloud Scheduler)
