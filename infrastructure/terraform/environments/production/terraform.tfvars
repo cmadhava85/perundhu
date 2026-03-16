@@ -75,7 +75,13 @@ db_general_log_enabled    = false # Disabled to avoid performance impact (enable
 cloud_run_min_instances = 0       # Scale to zero - saves ~$6.50/month; startup CPU boost handles cold starts
 cloud_run_max_instances = 5       # Autoscale up to 5 instances under load
 cloud_run_cpu_limit     = "1000m" # 1 CPU for backend
-cloud_run_memory_limit  = "512Mi" # 512Mi for backendcloud_run_concurrency   = 80      # Max concurrent requests per instance
+cloud_run_memory_limit  = "512Mi" # 512Mi for backend
+cloud_run_concurrency   = 80      # Max concurrent requests per instance
+
+# Read replica (disabled — saves cost; enable only for 100k+ scale testing)
+create_read_replica = false
+read_replica_tier   = "db-f1-micro"
+read_replica_zone   = "us-central1-b"
 cloud_run_timeout       = 60      # Request timeout in seconds
 # ============================================
 # VPC Configuration (Cost Optimized - VPC Connector DISABLED)

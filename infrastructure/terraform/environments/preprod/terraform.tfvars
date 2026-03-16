@@ -55,9 +55,8 @@ db_slow_query_log_enabled = false
 db_general_log_enabled    = false
 db_deletion_protection    = false
 
-# Use public IP for Cloud SQL (cost optimization by eliminating Cloud SQL Proxy)
-# Current instance uses private IP; set false to avoid replacement
-use_public_ip = false
+# Use public IP for Cloud SQL — VPC connector is disabled, so public IP is required
+use_public_ip = true
 
 # ============================================
 # Read Replica Configuration (Optional - for testing 100k scale)

@@ -7,6 +7,10 @@
 .terraform.lock.hcl
 crash.log
 crash.*.log
+# Local backend override and plan artifacts
+override.tf
+tfplan
+tfplan-*
 
 # Cloud Build logs
 build.log

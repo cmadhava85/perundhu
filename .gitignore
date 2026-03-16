@@ -57,6 +57,10 @@ archive/
 .terraform/
 *.tfvars
 !*.tfvars.example
+# Local backend override and plan artifacts (use GCS backend in CI)
+override.tf
+tfplan
+tfplan-*
 
 # Python virtual environments
 venv/
