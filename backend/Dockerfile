@@ -56,10 +56,11 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
 
 # Environment variables
 # Memory sizing: container-aware. Works for ALL environments automatically:
-# - Preprod (512Mi):   55% heap = ~281m + 96m metaspace + 64m code cache = ~441m, leaving ~71m for JVM native/OS
-# - Production (1024Mi): 55% heap = ~563m + 96m metaspace + 64m code cache = ~723m, leaving ~301m for JVM native/OS
-# MaxRAMPercentage reduced from 75 to 55: 75% was causing OOM (384m heap + 128m metaspace = 512m container limit with no room for JVM overhead).
-ENV JAVA_OPTS="-XX:MaxRAMPercentage=55.0 -XX:InitialRAMPercentage=25.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=64m -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
+# - Preprod (512Mi):   50% heap = ~256m + 128m metaspace + 64m code cache = ~448m, leaving ~64m for JVM native/OS
+# - Production (1024Mi): 50% heap = ~512m + 128m metaspace + 64m code cache = ~704m, leaving ~320m for JVM native/OS
+# MaxRAMPercentage=50: reduced from 75 to prevent Linux OOM (exit 137). Metaspace stays at 128m
+# because Cloud SQL socket factory class loading needs it (96m caused Metaspace OutOfMemoryError).
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=50.0 -XX:InitialRAMPercentage=25.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=64m -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
     SPRING_PROFILES_ACTIVE=production \
     SERVER_PORT=8080
 
