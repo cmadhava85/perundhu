@@ -305,24 +305,11 @@ jobs:
       working-directory: ${{ env.TF_ENV_DIR }}
       run: terraform init -input=false -lock=false
     
-    - name: Download Plan
-      uses: actions/download-artifact@v4
-      with:
-        name: terraform-plan-${{ github.event.inputs.environment }}
-        path: ${{ env.TF_ENV_DIR }}
-    
-    - name: Verify Plan File
+    - name: Terraform Plan & Apply
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
-        if [ ! -f tfplan ]; then
-          echo "ERROR: tfplan file not found in ${{ env.TF_ENV_DIR }}"
-          exit 1
-        fi
-        echo "✓ Plan file verified"
-
-    - name: Terraform Apply
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform apply -auto-approve tfplan
+        terraform plan -out=tfplan -input=false -lock=false
+        terraform apply -auto-approve tfplan
     
     - name: Terraform Output
       id: output
