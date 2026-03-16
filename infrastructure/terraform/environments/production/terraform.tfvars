@@ -34,7 +34,7 @@ use_public_ip = true
 # ============================================
 db_version              = "MYSQL_8_0"
 db_instance_tier        = "db-f1-micro" # Matches actual deployed instance
-db_instance_name_suffix = ""
+db_instance_name_suffix = "-us"         # Matches actual deployed instance name: perundhu-production-mysql-us
 
 database_name = "perundhu"
 database_user = "perundhu_user"
@@ -48,8 +48,10 @@ db_disk_autoresize_limit = 100      # Reset to GCP default
 db_availability_type   = "ZONAL"
 db_deletion_protection = false    # Matches actual deployed instance
 
-# Database Activation Policy (ALWAYS = running for production)
-db_activation_policy = "ALWAYS" # ALWAYS = always running, NEVER = stopped
+# Database Activation Policy
+# ALWAYS: DB stays running — required for prod (Cloud Run min=1 must connect at startup)
+# Set to NEVER only when taking prod fully offline for extended maintenance.
+db_activation_policy = "ALWAYS" # Production DB must run alongside Cloud Run min=1
 
 # Database Backups (ENABLED for production data protection)
 # Prevents data loss during Cloud SQL maintenance or failures
@@ -70,8 +72,8 @@ db_general_log_enabled    = false # Disabled to avoid performance impact (enable
 # COST OPTIMIZED (Feb 2026): Reduced resources for backend
 # Backend: 1 CPU, 1Gi memory, 0-5 instances
 # Frontend: 1 CPU, 512Mi memory, 0-10 instances (not managed by Terraform)
-cloud_run_min_instances = 0       # Changed from 1 to scale to zero for cost savings
-cloud_run_max_instances = 5       # Reduced from 10 for cost optimization
+cloud_run_min_instances = 1       # Min 1 for prod: avoids cold start, autoscales up for traffic
+cloud_run_max_instances = 5       # Autoscale up to 5 instances under load
 cloud_run_cpu_limit     = "1000m" # 1 CPU for backend
 cloud_run_memory_limit  = "1024Mi" # 1Gi for backend (reduced from 2Gi)
 

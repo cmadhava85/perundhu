@@ -26,7 +26,9 @@ resource "google_cloud_run_service" "backend" {
 
     spec {
       service_account_name = var.service_account_email
-      timeout_seconds      = 300
+      # Reduced from 300s. Most API calls complete in < 10s.
+      # Lower timeout reduces cost from hung/long requests billed against Cloud Run.
+      timeout_seconds      = 60
 
       containers {
         image = var.container_image
