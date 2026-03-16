@@ -314,7 +314,7 @@ jobs:
     - name: Ensure Cloud SQL instance is imported
       working-directory: ${{ env.TF_ENV_DIR }}
       env:
-        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql' || 'perundhu-production-mysql' }}
+        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql-us' || 'perundhu-production-mysql-us' }}
       run: |
         echo "Checking Terraform state for Cloud SQL instance..."
         if ! terraform state list | grep -q "module.database.google_sql_database_instance.mysql_instance"; then
@@ -329,7 +329,7 @@ jobs:
 
     - name: Ensure SQL instance is running
       env:
-        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql' || 'perundhu-production-mysql' }}
+        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql-us' || 'perundhu-production-mysql-us' }}
       run: |
         CURRENT=$(gcloud sql instances describe ${INSTANCE_NAME} --project ${PROJECT_ID} --format='value(settings.activationPolicy)' || echo "")
         echo "Current activationPolicy=${CURRENT}"
