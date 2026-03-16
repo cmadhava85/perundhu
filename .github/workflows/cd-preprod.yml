@@ -426,9 +426,8 @@ jobs:
             --timeout=60s \
             --cpu-throttling \
             --execution-environment=gen2 \
-            --startup-cpu-boost \
-            --startup-probe-period=10s \
-            --startup-probe-failure-threshold=12
+            --cpu-boost \
+            --startup-probe="periodSeconds=10,failureThreshold=30,httpGet.path=/actuator/health,httpGet.port=8080"
 
       - name: Route Traffic to Latest
         run: |
