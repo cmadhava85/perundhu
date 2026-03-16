@@ -55,13 +55,11 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
     CMD curl -f http://localhost:8080/actuator/health/liveness || exit 1
 
 # Environment variables
-# -Dio.grpc.netty.shaded.io.netty.transport.noNative=true disables native transport
-# -Dio.netty.noPreferDirect=true avoids direct buffer issues
 # Memory sizing: container-aware. Works for ALL environments automatically:
-# - Preprod (512Mi):   75% heap = ~384m, leaving ~128m for JVM overhead + OS
-# - Production (1024Mi): 75% heap = ~768m, leaving ~256m for JVM overhead + OS
-# Using MaxRAMPercentage instead of hardcoded -Xmx so the same image fits any container size.
-ENV JAVA_OPTS="-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxMetaspaceSize=128m -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
+# - Preprod (512Mi):   55% heap = ~281m + 96m metaspace + 64m code cache = ~441m, leaving ~71m for JVM native/OS
+# - Production (1024Mi): 55% heap = ~563m + 96m metaspace + 64m code cache = ~723m, leaving ~301m for JVM native/OS
+# MaxRAMPercentage reduced from 75 to 55: 75% was causing OOM (384m heap + 128m metaspace = 512m container limit with no room for JVM overhead).
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=55.0 -XX:InitialRAMPercentage=25.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=64m -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
     SPRING_PROFILES_ACTIVE=production \
     SERVER_PORT=8080
 
