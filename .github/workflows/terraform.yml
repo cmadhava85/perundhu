@@ -115,7 +115,7 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
-        credentials_json: ${{ secrets.GCPSECRET }}
+        credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
         create_credentials_file: true
         export_environment_variables: true
     
@@ -277,7 +277,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Authenticate to Google Cloud
+    - name: Authenticate to Google Cloud (preprod)
+      if: github.event.inputs.environment == 'preprod'
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
+        create_credentials_file: true
+        export_environment_variables: true
+    
+    - name: Authenticate to Google Cloud (production)
+      if: github.event.inputs.environment == 'production'
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
@@ -409,7 +418,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Authenticate to Google Cloud
+    - name: Authenticate to Google Cloud (preprod)
+      if: matrix.environment == 'preprod'
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
+        create_credentials_file: true
+        export_environment_variables: true
+    
+    - name: Authenticate to Google Cloud (production)
+      if: matrix.environment == 'production'
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
