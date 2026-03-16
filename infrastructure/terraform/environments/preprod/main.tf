@@ -191,9 +191,9 @@ module "cloud_run" {
   db_user               = module.database.db_user
   storage_bucket_name   = module.storage.images_bucket_name
 
-  # Flyway disabled in preprod (database migrations run in production first)
-  flyway_enabled        = false
-  spring_flyway_enabled = false
+  # Flyway enabled in preprod to run schema migrations on startup
+  flyway_enabled        = true
+  spring_flyway_enabled = true
   restart_trigger       = ""
 
   # Preprod uses simpler secret configuration (no admin panel, no recaptcha, no encryption)
