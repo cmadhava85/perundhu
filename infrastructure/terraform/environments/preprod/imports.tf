@@ -133,15 +133,7 @@ import {
   to = module.database.google_sql_database.test_database[0]
 }
 
-import {
-  id = "astute-strategy-406601/perundhu-preprod-mysql-us/%/perundhu_user"
-  to = module.database.google_sql_user.users
-}
 
-import {
-  id = "astute-strategy-406601/perundhu-preprod-mysql-us/%/perundhu_user_readonly"
-  to = module.database.google_sql_user.readonly_user
-}
 
 # ── Cloud Storage ─────────────────────────────────────────────────────────────
 
