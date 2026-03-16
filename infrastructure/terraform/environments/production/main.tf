@@ -23,15 +23,10 @@ terraform {
     }
   }
 
-  backend "local" {
-    path = "terraform.tfstate"
+  backend "gcs" {
+    bucket = "perundhu-prod-001-tf-state-1767644488"
+    prefix = "production/state"
   }
-  
-  # Original GCS backend (disabled due to VPC Service Controls)
-  # backend "gcs" {
-  #   bucket = "perundhu-prod-001-tf-state-1767644488"
-  #   prefix = "production/state"
-  # }
 }
 
 # Configure the Google Cloud Provider

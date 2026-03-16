@@ -136,7 +136,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false -reconfigure -lock=false
+      run: terraform init -input=false -lock=false
     
     - name: Terraform Plan
       id: plan
@@ -231,7 +231,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false -reconfigure -lock=false
+      run: terraform init -input=false -lock=false
     
     - name: Terraform Plan
       id: plan
@@ -303,7 +303,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false
+      run: terraform init -input=false -lock=false
     
     - name: Download Plan
       uses: actions/download-artifact@v4
@@ -319,37 +319,6 @@ jobs:
           exit 1
         fi
         echo "✓ Plan file verified"
-
-    - name: Ensure Cloud SQL instance is imported
-      working-directory: ${{ env.TF_ENV_DIR }}
-      env:
-        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql-us' || 'perundhu-production-mysql-us' }}
-      run: |
-        echo "Checking Terraform state for Cloud SQL instance..."
-        if ! terraform state list | grep -q "module.database.google_sql_database_instance.mysql_instance"; then
-          echo "Instance not in state; importing ${INSTANCE_NAME}..."
-          terraform import 'module.database.google_sql_database_instance.mysql_instance' ${PROJECT_ID}/${INSTANCE_NAME}
-          echo "Import completed. Re-planning to align state..."
-          terraform plan -no-color -out=tfplan -lock=false
-        else
-          echo "Instance already in state. Re-planning to ensure no create actions..."
-          terraform plan -no-color -out=tfplan -lock=false
-        fi
-
-    - name: Ensure SQL instance is running
-      env:
-        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql-us' || 'perundhu-production-mysql-us' }}
-      run: |
-        CURRENT=$(gcloud sql instances describe ${INSTANCE_NAME} --project ${PROJECT_ID} --format='value(settings.activationPolicy)' || echo "")
-        echo "Current activationPolicy=${CURRENT}"
-        if [ "$CURRENT" = "NEVER" ] || [ -z "$CURRENT" ]; then
-          echo "Patching activationPolicy to ALWAYS to allow updates..."
-          gcloud sql instances patch ${INSTANCE_NAME} --project ${PROJECT_ID} --activation-policy=ALWAYS --quiet || true
-        else
-          echo "Instance already running."
-        fi
-        echo "Re-planning after potential start..."
-        cd ${{ env.TF_ENV_DIR }} && terraform plan -no-color -out=tfplan -lock=false
 
     - name: Terraform Apply
       working-directory: ${{ env.TF_ENV_DIR }}

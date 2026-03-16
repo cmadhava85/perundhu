@@ -18,15 +18,10 @@ terraform {
     }
   }
 
-  backend "local" {
-    path = "terraform.tfstate"
+  backend "gcs" {
+    bucket = "astute-strategy-406601-tf-state"
+    prefix = "preprod/state"
   }
-  
-  # Original GCS backend (disabled due to VPC Service Controls)
-  # backend "gcs" {
-  #   bucket = "astute-strategy-406601-tf-state"
-  #   prefix = "preprod/state"
-  # }
 }
 
 # Configure the Google Cloud Provider
