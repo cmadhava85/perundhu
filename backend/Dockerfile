@@ -55,12 +55,13 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
     CMD curl -f http://localhost:8080/actuator/health/liveness || exit 1
 
 # Environment variables
-# Memory sizing: container-aware. Works for ALL environments automatically:
-# - Preprod (512Mi):   50% heap = ~256m + 128m metaspace + 64m code cache = ~448m, leaving ~64m for JVM native/OS
-# - Production (1024Mi): 50% heap = ~512m + 128m metaspace + 64m code cache = ~704m, leaving ~320m for JVM native/OS
-# MaxRAMPercentage=50: reduced from 75 to prevent Linux OOM (exit 137). Metaspace stays at 128m
-# because Cloud SQL socket factory class loading needs it (96m caused Metaspace OutOfMemoryError).
-ENV JAVA_OPTS="-XX:MaxRAMPercentage=50.0 -XX:InitialRAMPercentage=25.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=64m -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
+# Memory sizing optimized for 512Mi container (db-f1-micro budget):
+# - Heap: 35% of 512Mi = ~180Mi (reduced to make room for metaspace)
+# - Metaspace: 200Mi (increased from 128m due to OutOfMemoryError with Java 21 + JPA)
+# - CodeCache: 40Mi (reduced from 64m, still sufficient for tiered compilation)
+# - Native/threads/OS: ~92Mi remaining
+# TieredStopAtLevel=1: Faster startup (C1 compiler only), lower memory, acceptable for scale-to-zero
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=35.0 -XX:InitialRAMPercentage=20.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MetaspaceSize=200m -XX:MaxMetaspaceSize=200m -XX:ReservedCodeCacheSize=40m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
     SPRING_PROFILES_ACTIVE=production \
     SERVER_PORT=8080
 
