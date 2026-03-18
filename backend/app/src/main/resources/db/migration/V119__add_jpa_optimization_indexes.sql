@@ -101,25 +101,6 @@ DELIMITER ;
 CALL add_timing_contributions_status_idx_v119();
 DROP PROCEDURE IF EXISTS add_timing_contributions_status_idx_v119;
 
--- 6. Extracted bus timings contribution_id index (for JOIN FETCH optimization)
--- Supports: findPendingContributionsWithTimings, findByStatusWithTimings
-DROP PROCEDURE IF EXISTS add_extracted_timings_contribution_idx_v119;
-DELIMITER //
-CREATE PROCEDURE add_extracted_timings_contribution_idx_v119()
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS
-        WHERE TABLE_SCHEMA = DATABASE()
-          AND TABLE_NAME   = 'extracted_bus_timings'
-          AND INDEX_NAME   = 'idx_extracted_timings_contribution'
-    ) THEN
-        ALTER TABLE extracted_bus_timings ADD INDEX idx_extracted_timings_contribution (contribution_id);
-    END IF;
-END //
-DELIMITER ;
-CALL add_extracted_timings_contribution_idx_v119();
-DROP PROCEDURE IF EXISTS add_extracted_timings_contribution_idx_v119;
-
 -- Performance impact summary:
 -- - Bus search queries: 30-50% faster (from 200ms to 100-140ms)
 -- - Review average calculation: 70% faster (from 50ms to 15ms per bus)
