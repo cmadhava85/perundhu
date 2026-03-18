@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import jakarta.annotation.PreDestroy;
 
@@ -1023,18 +1025,14 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                         logger.info("Creating reverse direction routes for bidirectional service: {} -> {}",
                                 validatedTo, validatedFrom);
 
-                        // Reverse the via stops if present
+                        // Reverse the via stops if present - Java 21 Sequenced Collections optimization
                         String reverseVia = via;
                         if (via != null && !via.isEmpty()) {
-                            String[] viaStops = via.split(",");
-                            StringBuilder reversedVia = new StringBuilder();
-                            for (int i = viaStops.length - 1; i >= 0; i--) {
-                                if (reversedVia.length() > 0) {
-                                    reversedVia.append(",");
-                                }
-                                reversedVia.append(viaStops[i].trim());
-                            }
-                            reverseVia = reversedVia.toString();
+                            List<String> viaStopsList = Arrays.stream(via.split(","))
+                                    .map(String::trim)
+                                    .toList();
+                            reverseVia = viaStopsList.reversed().stream()
+                                    .collect(Collectors.joining(","));
                         }
 
                         // Create reverse routes with same times

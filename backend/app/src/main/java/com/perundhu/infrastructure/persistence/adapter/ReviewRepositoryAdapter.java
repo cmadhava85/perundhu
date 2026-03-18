@@ -48,7 +48,7 @@ public class ReviewRepositoryAdapter implements ReviewRepository {
         return jpaRepository.findByBusIdAndStatus(busId, ReviewStatus.APPROVED)
                 .stream()
                 .map(this::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
     
     @Override
@@ -56,7 +56,7 @@ public class ReviewRepositoryAdapter implements ReviewRepository {
         return jpaRepository.findByBusId(busId)
                 .stream()
                 .map(this::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
     
     @Override
@@ -64,7 +64,7 @@ public class ReviewRepositoryAdapter implements ReviewRepository {
         return jpaRepository.findByUserId(userId)
                 .stream()
                 .map(this::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
     
     @Override
@@ -72,7 +72,7 @@ public class ReviewRepositoryAdapter implements ReviewRepository {
         return jpaRepository.findByStatusOrderByCreatedAtDesc(ReviewStatus.PENDING)
                 .stream()
                 .map(this::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
     
     @Override
@@ -152,7 +152,7 @@ public class ReviewRepositoryAdapter implements ReviewRepository {
         return Arrays.stream(tagsJson.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
-                .collect(Collectors.toList());
+                .toList();
     }
     
     private String serializeTags(List<String> tags) {

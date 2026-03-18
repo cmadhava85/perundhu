@@ -61,7 +61,7 @@ public class TerminalController {
         List<TerminalInfoDTO> terminals = terminalResolutionService.getChennaiTerminals()
                 .stream()
                 .map(terminal -> TerminalInfoDTO.fromBusTerminal(terminal, null))
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(terminals);
     }

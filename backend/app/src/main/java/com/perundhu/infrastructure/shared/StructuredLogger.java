@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import com.perundhu.infrastructure.util.StringOptimizer;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -297,28 +299,21 @@ public class StructuredLogger {
     String traceId = MDC.get(TraceContext.TRACE_ID_KEY);
     String operation = MDC.get(TraceContext.OPERATION_KEY);
 
-    StringBuilder sb = new StringBuilder();
-    sb.append("[").append(module).append("]");
-    if (traceId != null) {
-      sb.append("[traceId=").append(traceId).append("]");
-    }
-    if (operation != null) {
-      sb.append("[op=").append(operation).append("]");
-    }
-    sb.append(" ").append(message);
-    return sb.toString();
+    // Optimized string building (production-ready alternative to String Templates)
+    return StringOptimizer.buildLogMessage(module, message, traceId, operation);
   }
 
   private String formatMessageWithData(String message, Map<String, Object> data) {
     StringBuilder sb = new StringBuilder(formatMessage(message));
     if (data != null && !data.isEmpty()) {
       sb.append(" |");
+      // Optimized data formatting
       data.forEach((key, value) -> {
-        sb.append(" ").append(key).append("=");
+        sb.append(' ').append(key).append('=');
         if (value == null) {
           sb.append("null");
         } else if (value instanceof String) {
-          sb.append("\"").append(value).append("\"");
+          sb.append('"').append(value).append('"');
         } else {
           sb.append(value);
         }

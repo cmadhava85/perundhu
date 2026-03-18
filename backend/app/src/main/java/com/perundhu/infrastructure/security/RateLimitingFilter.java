@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,26 +187,36 @@ public class RateLimitingFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Rate limit entry tracking requests within a time window
+   * Rate limit entry tracking requests within a time window.
+   * Lock-free implementation optimized for Java 21 virtual threads.
    */
   private static class RateLimitEntry {
     private final AtomicInteger count = new AtomicInteger(0);
-    private volatile long windowStart = System.currentTimeMillis();
+    private final AtomicLong windowStart = new AtomicLong(System.currentTimeMillis());
 
-    public synchronized boolean tryAcquire(int limit) {
+    public boolean tryAcquire(int limit) {
       long now = System.currentTimeMillis();
+      long currentWindowStart = windowStart.get();
 
-      // Reset window if it's been more than 1 minute
-      if (now - windowStart > 60_000) {
-        windowStart = now;
-        count.set(1);
-        return true;
+      // Reset window if it's been more than 1 minute (lock-free CAS)
+      if (now - currentWindowStart > 60_000) {
+        if (windowStart.compareAndSet(currentWindowStart, now)) {
+          count.set(1);
+          return true;
+        }
+        // Another thread reset the window, retry
+        return tryAcquire(limit);
       }
 
-      // Check if under limit
-      if (count.get() < limit) {
-        count.incrementAndGet();
-        return true;
+      // Check if under limit (optimistic approach)
+      int currentCount = count.get();
+      if (currentCount < limit) {
+        // Try to increment atomically
+        if (count.compareAndSet(currentCount, currentCount + 1)) {
+          return true;
+        }
+        // CAS failed, another thread incremented, retry
+        return tryAcquire(limit);
       }
 
       return false;
@@ -216,11 +227,11 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     }
 
     public long getWindowStart() {
-      return windowStart;
+      return windowStart.get();
     }
 
     public long getResetTime() {
-      return Instant.ofEpochMilli(windowStart + 60_000).getEpochSecond();
+      return Instant.ofEpochMilli(windowStart.get() + 60_000).getEpochSecond();
     }
   }
 }

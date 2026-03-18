@@ -119,8 +119,11 @@ public class BusScheduleController {
             buses = obfuscateBusDataIfNeeded(buses);
 
             return ResponseEntity.ok(buses);
+        } catch (org.springframework.dao.DataAccessException e) {
+            log.error("Database error fetching buses", e);
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
         } catch (Exception e) {
-            log.error("Error getting all buses", e);
+            log.error("Unexpected error getting all buses", e);
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -142,8 +145,14 @@ public class BusScheduleController {
             Optional<BusDTO> bus = busScheduleService.getBusById(busId);
             return bus.map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid bus ID: {}", busId, e);
+            return ResponseEntity.badRequest().build();
+        } catch (org.springframework.dao.DataAccessException e) {
+            log.error("Database error fetching bus: {}", busId, e);
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
         } catch (Exception e) {
-            log.error("Error getting bus by ID: {}", busId, e);
+            log.error("Unexpected error getting bus by ID: {}", busId, e);
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -164,8 +173,14 @@ public class BusScheduleController {
             List<LocationDTO> locations = busScheduleService.getAllLocations(language);
             log.info("Found {} locations", locations != null ? locations.size() : 0);
             return ResponseEntity.ok(locations);
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid language parameter: {}", language, e);
+            return ResponseEntity.badRequest().build();
+        } catch (org.springframework.dao.DataAccessException e) {
+            log.error("Database error fetching locations", e);
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
         } catch (Exception e) {
-            log.error("Error getting all locations", e);
+            log.error("Unexpected error getting all locations", e);
             return ResponseEntity.internalServerError().build();
         }
     }

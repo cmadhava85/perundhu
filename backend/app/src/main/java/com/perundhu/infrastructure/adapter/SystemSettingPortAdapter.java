@@ -29,7 +29,7 @@ public class SystemSettingPortAdapter implements SystemSettingPort {
     return jpaRepository.findAllOrderedByCategoryAndKey()
         .stream()
         .map(SystemSettingJpaEntity::toDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
@@ -37,7 +37,7 @@ public class SystemSettingPortAdapter implements SystemSettingPort {
     return jpaRepository.findAll()
         .stream()
         .map(SystemSettingJpaEntity::toDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
@@ -51,7 +51,7 @@ public class SystemSettingPortAdapter implements SystemSettingPort {
     return jpaRepository.findByCategory(category)
         .stream()
         .map(SystemSettingJpaEntity::toDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
@@ -59,7 +59,7 @@ public class SystemSettingPortAdapter implements SystemSettingPort {
     return jpaRepository.findBySettingKeyStartingWith(keyPrefix)
         .stream()
         .map(SystemSettingJpaEntity::toDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

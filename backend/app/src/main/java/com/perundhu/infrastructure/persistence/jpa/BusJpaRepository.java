@@ -30,8 +30,11 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, Jpa
 
         // ID-based methods (currently being used by BusJpaRepositoryAdapter)
         // Only return active buses for search results
+        // JOIN FETCH eliminates N+1 queries when accessing location properties
         @Query("""
                         SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
                         WHERE b.fromLocation.id = :fromLocationId
                           AND b.toLocation.id = :toLocationId
                           AND (b.active = true OR b.active IS NULL)
@@ -42,6 +45,8 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, Jpa
 
         @Query("""
                         SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
                         WHERE b.fromLocation.id = :fromLocationId
                           AND (b.active = true OR b.active IS NULL)
                         """)
@@ -49,6 +54,8 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, Jpa
 
         @Query("""
                         SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
                         WHERE (b.fromLocation.id = :fromLocationId OR b.toLocation.id = :toLocationId)
                           AND (b.active = true OR b.active IS NULL)
                         """)
@@ -60,6 +67,8 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, Jpa
         // Using explicit JPQL queries to avoid property reference issues
         @Query("""
                         SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
                         WHERE b.fromLocation = :fromLocation
                           AND b.toLocation = :toLocation
                         """)
@@ -69,6 +78,8 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long>, Jpa
 
         @Query("""
                         SELECT b FROM BusJpaEntity b
+                        LEFT JOIN FETCH b.fromLocation
+                        LEFT JOIN FETCH b.toLocation
                         WHERE b.fromLocation = :fromLocation
                         """)
         List<BusJpaEntity> findByFromLocation(@Param("fromLocation") LocationJpaEntity fromLocation);

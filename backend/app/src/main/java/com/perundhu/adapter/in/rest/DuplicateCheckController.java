@@ -2,7 +2,6 @@ package com.perundhu.adapter.in.rest;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +52,7 @@ public class DuplicateCheckController {
                 }
 
                 List<MatchedBusInfo> matchedBuses = matches.stream()
-                                .map(m -> new MatchedBusInfo(
+                                .<MatchedBusInfo>map(m -> new MatchedBusInfo(
                                                 m.matchedBus() != null ? m.matchedBus().getId().getValue() : null,
                                                 m.matchedBus() != null ? m.matchedBus().getBusNumber() : null,
                                                 m.matchedBus() != null && m.matchedBus().getFromLocation() != null
@@ -68,7 +67,7 @@ public class DuplicateCheckController {
                                                 m.matchType().name(),
                                                 m.details(),
                                                 m.confidenceScore()))
-                                .collect(Collectors.toList());
+                                .toList();
 
                 String message = matches.size() == 1
                                 ? "Similar route found. Is this the same bus?"

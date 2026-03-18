@@ -3,6 +3,8 @@ package com.perundhu.infrastructure.persistence.jpa;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -126,14 +128,21 @@ public interface LocationJpaRepository extends JpaRepository<LocationJpaEntity, 
 
         // ============================================================
         // Bus-stand specific queries (locations with "City - Stand" pattern)
-        // These replace in-memory filtering on findAll() in BusStandJpaRepositoryAdapter.
+        // OPTIMIZATION: Paginated queries prevent unbounded result sets on db-f1-micro.
         // ============================================================
 
         /**
          * Find all bus-stand locations — those whose name contains " - " (e.g. "Madurai - Mattuthavani").
+         * PAGINATED to prevent large result sets from spiking CPU on shared instance.
          */
         @Query("SELECT l FROM LocationJpaEntity l WHERE l.name LIKE '% - %' ORDER BY l.name")
-        List<LocationJpaEntity> findAllBusStands();
+        Page<LocationJpaEntity> findAllBusStands(Pageable pageable);
+
+        /**
+         * Non-paginated variant for internal use (use sparingly).
+         */
+        @Query("SELECT l FROM LocationJpaEntity l WHERE l.name LIKE '% - %' ORDER BY l.name")
+        List<LocationJpaEntity> findAllBusStandsUnpaged();
 
         /**
          * Find bus-stand locations whose name starts with cityPrefix + " - ".

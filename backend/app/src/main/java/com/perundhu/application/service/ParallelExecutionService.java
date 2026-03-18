@@ -1,10 +1,12 @@
 package com.perundhu.application.service;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,12 +57,28 @@ public class ParallelExecutionService {
   /**
    * Execute multiple independent operations in parallel and wait for all to
    * complete.
+   * Enhanced with timeout support and better error handling.
    * 
    * @param suppliers The operations to execute
    * @return List of results in the same order as suppliers
+   * @throws ParallelExecutionException if any operation fails
    */
   @SafeVarargs
   public final <T> List<T> executeAll(Supplier<T>... suppliers) {
+    return executeAllWithTimeout(Duration.ofMinutes(5), suppliers);
+  }
+
+  /**
+   * Execute multiple operations with timeout support.
+   * Production-ready alternative to Structured Concurrency (stable API).
+   * 
+   * @param timeout Maximum time to wait for all operations
+   * @param suppliers The operations to execute
+   * @return List of results in the same order as suppliers
+   * @throws ParallelExecutionException if timeout or any operation fails
+   */
+  @SafeVarargs
+  public final <T> List<T>executeAllWithTimeout(Duration timeout, Supplier<T>... suppliers) {
     long startTime = System.currentTimeMillis();
 
     // Create CompletableFutures for all operations
@@ -68,15 +86,33 @@ public class ParallelExecutionService {
         .map(supplier -> CompletableFuture.supplyAsync(supplier, virtualExecutorService))
         .toList();
 
-    // Wait for all to complete and collect results
-    List<T> results = futures.stream()
-        .map(CompletableFuture::join)
-        .collect(Collectors.toList());
+    try {
+      // Wait for all to complete with timeout (better than structured concurrency preview)
+      CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+          .orTimeout(timeout.toMillis(), TimeUnit.MILLISECONDS)
+          .join();
 
-    log.debug("Parallel execution of {} operations completed in {}ms",
-        suppliers.length, System.currentTimeMillis() - startTime);
+      // Collect results
+      List<T> results = futures.stream()
+          .map(CompletableFuture::join)
+          .toList();
 
-    return results;
+      log.debug("Parallel execution of {} operations completed in {}ms",
+          suppliers.length, System.currentTimeMillis() - startTime);
+
+      return results;
+      
+    } catch (Exception e) {
+      // Cancel all pending operations on failure
+      futures.forEach(f -> f.cancel(true));
+      
+      Throwable cause = e.getCause();
+      if (cause instanceof TimeoutException) {
+        throw new ParallelExecutionException(
+            "Parallel execution timed out after " + timeout.toMillis() + "ms", cause);
+      }
+      throw new ParallelExecutionException("Parallel execution failed", cause != null ? cause : e);
+    }
   }
 
   /**
@@ -151,7 +187,7 @@ public class ParallelExecutionService {
             return supplier.get();
           } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException("Interrupted while waiting for semaphore", e);
+            throw new ParallelExecutionException("Interrupted while waiting for semaphore", e);
           } finally {
             semaphore.release();
           }
@@ -160,7 +196,7 @@ public class ParallelExecutionService {
 
     List<T> results = futures.stream()
         .map(CompletableFuture::join)
-        .collect(Collectors.toList());
+        .toList();
 
     log.debug("Parallel execution of {} operations (max {} concurrent) completed in {}ms",
         suppliers.size(), maxConcurrent, System.currentTimeMillis() - startTime);
@@ -178,5 +214,15 @@ public class ParallelExecutionService {
    * Simple triple class for returning three typed results
    */
   public record Triple<A, B, C>(A first, B second, C third) {
+  }
+
+  /**
+   * Exception thrown when parallel execution fails.
+   * Production-ready error handling without Structured Concurrency preview.
+   */
+  public static class ParallelExecutionException extends RuntimeException {
+    public ParallelExecutionException(String message, Throwable cause) {
+      super(message, cause);
+    }
   }
 }

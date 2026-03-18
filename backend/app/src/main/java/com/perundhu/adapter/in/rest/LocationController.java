@@ -48,22 +48,46 @@ public class LocationController {
 
   /**
    * Get all locations with language support
+   * OPTIMIZED: Added limit parameter to prevent unbounded result sets on db-f1-micro
+   * @deprecated Use /autocomplete endpoint for better UX. This endpoint may return large payloads.
    */
-  @Operation(summary = "Get all locations", description = "Retrieves all locations in the system with optional language translation")
+  @Deprecated
+  @Operation(summary = "Get all locations", description = "Retrieves locations in the system with optional language translation. Limit parameter prevents large responses. Consider using /autocomplete endpoint instead.", deprecated = true)
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Locations retrieved successfully", content = @Content(schema = @Schema(implementation = LocationDTO.class))),
+      @ApiResponse(responseCode = "400", description = "Invalid limit parameter"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   public ResponseEntity<List<LocationDTO>> getAllLocations(
-      @Parameter(description = "Language code (en, ta)") @RequestParam(name = "lang", defaultValue = "en") String language) {
-    log.info("Getting all locations with language: {}", language);
+      @Parameter(description = "Language code (en, ta)") @RequestParam(name = "lang", defaultValue = "en") String language,
+      @Parameter(description = "Maximum number of locations to return (default: 1000, max: 5000)") @RequestParam(name = "limit", defaultValue = "1000") int limit) {
+    log.info("Getting locations with language: {}, limit: {}", language, limit);
+    
+    // Validate limit to prevent abuse
+    if (limit < 1 || limit > 5000) {
+      log.warn("Invalid limit parameter: {}", limit);
+      return ResponseEntity.badRequest().build();
+    }
+    
     try {
       List<LocationDTO> locations = busScheduleService.getAllLocations(language);
-      log.info("Found {} locations", locations != null ? locations.size() : 0);
-      return ResponseEntity.ok(locations);
+      
+      // Apply limit to prevent large responses that spike CPU
+      List<LocationDTO> limitedLocations = locations.size() <= limit 
+          ? locations 
+          : locations.subList(0, limit);
+      
+      log.info("Returning {} of {} locations", limitedLocations.size(), locations.size());
+      return ResponseEntity.ok(limitedLocations);
+    } catch (IllegalArgumentException e) {
+      log.warn("Invalid request parameter: {}", e.getMessage());
+      return ResponseEntity.badRequest().build();
+    } catch (org.springframework.dao.DataAccessException e) {
+      log.error("Database error fetching locations", e);
+      return ResponseEntity.status(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE).build();
     } catch (Exception e) {
-      log.error("Error getting all locations", e);
+      log.error("Unexpected error getting all locations", e);
       return ResponseEntity.internalServerError().build();
     }
   }
@@ -123,8 +147,14 @@ public class LocationController {
       // Users can still type their own locations in the frontend
       return ResponseEntity.ok(result);
 
+    } catch (IllegalArgumentException e) {
+      log.warn("Invalid autocomplete query: {}", e.getMessage());
+      return ResponseEntity.badRequest().build();
+    } catch (org.springframework.dao.DataAccessException e) {
+      log.error("Database error during autocomplete search for query: '{}'", query, e);
+      return ResponseEntity.status(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE).build();
     } catch (Exception e) {
-      log.error("Error in location autocomplete search for query: '{}'", query, e);
+      log.error("Unexpected error in location autocomplete search for query: '{}'", query, e);
       return ResponseEntity.internalServerError().build();
     }
   }
@@ -164,8 +194,11 @@ public class LocationController {
       }
 
       return ResponseEntity.ok(result);
+    } catch (org.springframework.dao.DataAccessException e) {
+      log.error("Database error getting locations with disambiguation", e);
+      return ResponseEntity.status(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE).build();
     } catch (Exception e) {
-      log.error("Error getting locations with disambiguation", e);
+      log.error("Unexpected error getting locations with disambiguation", e);
       return ResponseEntity.internalServerError().build();
     }
   }

@@ -63,6 +63,7 @@ public class ImageContributionService implements ImageContributionInputPort {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Optional<ImageContribution> findById(String contributionId) {
     return imageContributionOutputPort.findById(contributionId);
   }

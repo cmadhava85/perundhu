@@ -64,7 +64,7 @@ public class ImageAdminController {
 
         List<ImageContributionSummaryDTO> dtos = contributions.stream()
             .map(this::convertToSummaryDTO)
-            .collect(Collectors.toList());
+            .toList();
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", dtos);
@@ -96,7 +96,7 @@ public class ImageAdminController {
         
         List<ImageContributionSummaryDTO> dtos = contributions.parallelStream()
             .map(this::convertToSummaryDTO)
-            .collect(Collectors.toList());
+            .toList();
         
         long duration = System.currentTimeMillis() - startTime;
         log.info("Returning {} pending image contributions (total: {}) in {}ms", 

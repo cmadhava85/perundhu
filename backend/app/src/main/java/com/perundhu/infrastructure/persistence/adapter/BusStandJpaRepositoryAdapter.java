@@ -126,7 +126,8 @@ public class BusStandJpaRepositoryAdapter implements BusStandRepository {
 
   @Override
   public List<BusStand> findAll() {
-    return locationRepository.findAllBusStands().stream()
+    log.debug("Finding all bus stands (unpaged)");
+    return locationRepository.findAllBusStandsUnpaged().stream()
         .map(this::locationToBusStand)
         .toList();
   }

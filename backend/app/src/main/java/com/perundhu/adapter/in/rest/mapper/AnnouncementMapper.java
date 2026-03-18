@@ -96,7 +96,7 @@ public class AnnouncementMapper {
         }
         return entities.stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -108,6 +108,6 @@ public class AnnouncementMapper {
         }
         return dtos.stream()
                 .map(this::toEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

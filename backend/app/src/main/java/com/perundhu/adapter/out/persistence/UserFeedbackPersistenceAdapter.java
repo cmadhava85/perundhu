@@ -49,7 +49,7 @@ public class UserFeedbackPersistenceAdapter implements UserFeedbackOutputPort {
         return feedbackRepository.findByEmail(email)
                 .stream()
                 .map(this::mapToDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserFeedbackPersistenceAdapter implements UserFeedbackOutputPort {
         return feedbackRepository.findByCategory(category)
                 .stream()
                 .map(this::mapToDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class UserFeedbackPersistenceAdapter implements UserFeedbackOutputPort {
         return feedbackRepository.findByStatus(feedbackStatus)
                 .stream()
                 .map(this::mapToDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class UserFeedbackPersistenceAdapter implements UserFeedbackOutputPort {
                 .getContent()
                 .stream()
                 .map(this::mapToDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

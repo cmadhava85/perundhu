@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.springframework.stereotype.Component;
 
@@ -47,6 +48,7 @@ public class NominatimClient implements GeocodingPort {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final ConcurrentHashMap<String, NominatimResult> cache;
+    private final ReentrantLock rateLimiter = new ReentrantLock();
     private long lastRequestTime = 0;
 
     // Major cities in Tamil Nadu for query enhancement
@@ -199,15 +201,19 @@ public class NominatimClient implements GeocodingPort {
 
     /**
      * Enforce rate limiting for Nominatim API.
+     * Reentrant lock instead of synchronized for virtual thread compatibility.
      */
     private void enforceRateLimit() throws InterruptedException {
-        synchronized (this) {
+        rateLimiter.lockInterruptibly();
+        try {
             long now = System.currentTimeMillis();
             long elapsed = now - lastRequestTime;
             if (elapsed < RATE_LIMIT_MS) {
                 Thread.sleep(RATE_LIMIT_MS - elapsed);
             }
             lastRequestTime = System.currentTimeMillis();
+        } finally {
+            rateLimiter.unlock();
         }
     }
 
