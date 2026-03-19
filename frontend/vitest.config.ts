@@ -65,7 +65,7 @@ export default defineConfig({
         // Restart worker after every 10 test files to clear memory
         maxForks: 1,
         minForks: 1,
-        execArgv: ['--expose-gc', '--max-old-space-size=6144'],
+        execArgv: ['--expose-gc', '--max-old-space-size=3584'],
       }
     },
     

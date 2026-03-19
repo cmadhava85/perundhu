@@ -3,7 +3,7 @@
 # This addresses the known issue where all tests pass but worker crashes during cleanup
 
 # Run tests directly with vitest (not npm test to avoid recursion)
-OUTPUT=$(NODE_OPTIONS='--max-old-space-size=6144 --expose-gc' npx vitest run --no-coverage 2>&1)
+OUTPUT=$(NODE_OPTIONS='--max-old-space-size=3584 --expose-gc' npx vitest run --no-coverage 2>&1)
 EXIT_CODE=$?
 
 # Print the output

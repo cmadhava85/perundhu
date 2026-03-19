@@ -15,10 +15,9 @@ on:
         description: 'Stop Cloud SQL (keeps data, stops charges)'
         type: boolean
         default: true
-  # schedule:
-  #   # Optional: Auto-cleanup every night at 11 PM EST (4:00 AM UTC)
-  #   # Uncomment if you want automatic cleanup
-  #   - cron: '0 4 * * *'
+  schedule:
+    # Auto-cleanup every night at 8 PM EST (1:00 AM UTC)
+    - cron: '0 1 * * *'
 
 env:
   PROJECT_ID: astute-strategy-406601
