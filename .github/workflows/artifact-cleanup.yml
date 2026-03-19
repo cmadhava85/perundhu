@@ -1,0 +1,268 @@
+name: Artifact Registry - Cleanup Old Images
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to clean'
+        required: true
+        type: choice
+        options:
+          - preprod
+          - production
+          - both
+      keep_count:
+        description: 'Number of recent images to keep'
+        required: true
+        default: '7'
+        type: string
+      dry_run:
+        description: 'Dry run (show what would be deleted)'
+        type: boolean
+        default: true
+  schedule:
+    # Run weekly on Sunday at 2 AM EST (7:00 AM UTC)
+    - cron: '0 7 * * 0'
+
+env:
+  PREPROD_PROJECT: astute-strategy-406601
+  PROD_PROJECT: perundhu-prod-001
+  REGION: us-central1
+  REPO_NAME: perundhu
+
+jobs:
+  cleanup-preprod:
+    name: Cleanup PreProd Artifacts
+    if: github.event.inputs.environment == 'preprod' || github.event.inputs.environment == 'both' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate to GCP (PreProd)
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Get repository size (before)
+        id: size-before
+        run: |
+          SIZE_BYTES=$(gcloud artifacts repositories describe ${{ env.REPO_NAME }} \
+            --project=${{ env.PREPROD_PROJECT }} \
+            --location=${{ env.REGION }} \
+            --format="value(sizeBytes)" 2>/dev/null || echo "0")
+          
+          SIZE_GB=$(echo "scale=2; $SIZE_BYTES / 1024 / 1024 / 1024" | bc)
+          echo "size_gb=$SIZE_GB" >> $GITHUB_OUTPUT
+          
+          echo "📦 PreProd Artifact Registry Size: ${SIZE_GB} GB" >> $GITHUB_STEP_SUMMARY
+
+      - name: List all images
+        id: list-images
+        run: |
+          echo "🔍 Listing all images in preprod..." >> $GITHUB_STEP_SUMMARY
+          
+          gcloud artifacts docker images list \
+            ${{ env.REGION }}-docker.pkg.dev/${{ env.PREPROD_PROJECT }}/${{ env.REPO_NAME }} \
+            --include-tags \
+            --format="table(package,version,createTime,updateTime)" \
+            --sort-by="~createTime" >> $GITHUB_STEP_SUMMARY || echo "No images found" >> $GITHUB_STEP_SUMMARY
+
+      - name: Cleanup old images (preprod)
+        run: |
+          KEEP_COUNT=${{ github.event.inputs.keep_count || '7' }}
+          DRY_RUN=${{ github.event.inputs.dry_run || 'true' }}
+          
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🧹 Cleaning PreProd Artifacts"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Keep count: $KEEP_COUNT"
+          echo "Dry run: $DRY_RUN"
+          echo ""
+          
+          # Get all image digests, sorted by creation time (newest first)
+          IMAGES=$(gcloud artifacts docker images list \
+            ${{ env.REGION }}-docker.pkg.dev/${{ env.PREPROD_PROJECT }}/${{ env.REPO_NAME }} \
+            --format="value(IMAGE)" \
+            --sort-by="~createTime" 2>/dev/null || echo "")
+          
+          if [ -z "$IMAGES" ]; then
+            echo "ℹ️  No images found in repository"
+            exit 0
+          fi
+          
+          TOTAL_COUNT=$(echo "$IMAGES" | wc -l | tr -d ' ')
+          echo "Total images: $TOTAL_COUNT"
+          
+          if [ "$TOTAL_COUNT" -le "$KEEP_COUNT" ]; then
+            echo "✅ Image count ($TOTAL_COUNT) is within keep limit ($KEEP_COUNT)"
+            echo "Nothing to delete"
+            exit 0
+          fi
+          
+          DELETE_COUNT=$((TOTAL_COUNT - KEEP_COUNT))
+          echo "Images to delete: $DELETE_COUNT"
+          echo ""
+          
+          # Get images to delete (skip first KEEP_COUNT)
+          IMAGES_TO_DELETE=$(echo "$IMAGES" | tail -n +$((KEEP_COUNT + 1)))
+          
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "🔍 DRY RUN - Would delete these images:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "$IMAGES_TO_DELETE" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🗑️  Deleting old images..." >> $GITHUB_STEP_SUMMARY
+            DELETED=0
+            
+            while IFS= read -r IMAGE; do
+              echo "Deleting: $IMAGE"
+              
+              if gcloud artifacts docker images delete "$IMAGE" \
+                --project=${{ env.PREPROD_PROJECT }} \
+                --quiet 2>/dev/null; then
+                DELETED=$((DELETED + 1))
+                echo "  ✅ Deleted"
+              else
+                echo "  ⚠️  Failed to delete (may be in use or already deleted)"
+              fi
+            done <<< "$IMAGES_TO_DELETE"
+            
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Deleted $DELETED images" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Get repository size (after)
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          sleep 10  # Wait for cleanup to propagate
+          
+          SIZE_BYTES=$(gcloud artifacts repositories describe ${{ env.REPO_NAME }} \
+            --project=${{ env.PREPROD_PROJECT }} \
+            --location=${{ env.REGION }} \
+            --format="value(sizeBytes)" 2>/dev/null || echo "0")
+          
+          SIZE_GB=$(echo "scale=2; $SIZE_BYTES / 1024 / 1024 / 1024" | bc)
+          
+          BEFORE_SIZE=${{ steps.size-before.outputs.size_gb }}
+          SAVED=$(echo "scale=2; $BEFORE_SIZE - $SIZE_GB" | bc)
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Storage Summary:" >> $GITHUB_STEP_SUMMARY
+          echo "- Before: ${BEFORE_SIZE} GB" >> $GITHUB_STEP_SUMMARY
+          echo "- After: ${SIZE_GB} GB" >> $GITHUB_STEP_SUMMARY
+          echo "- Saved: ${SAVED} GB (~\$${SAVED}/month)" >> $GITHUB_STEP_SUMMARY
+
+  cleanup-production:
+    name: Cleanup Production Artifacts
+    if: github.event.inputs.environment == 'production' || github.event.inputs.environment == 'both'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate to GCP (Production)
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET_PRODUCTION }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Get repository size (before)
+        id: size-before
+        run: |
+          SIZE_BYTES=$(gcloud artifacts repositories describe ${{ env.REPO_NAME }} \
+            --project=${{ env.PROD_PROJECT }} \
+            --location=${{ env.REGION }} \
+            --format="value(sizeBytes)" 2>/dev/null || echo "0")
+          
+          SIZE_GB=$(echo "scale=2; $SIZE_BYTES / 1024 / 1024 / 1024" | bc)
+          echo "size_gb=$SIZE_GB" >> $GITHUB_OUTPUT
+          
+          echo "📦 Production Artifact Registry Size: ${SIZE_GB} GB" >> $GITHUB_STEP_SUMMARY
+
+      - name: Cleanup old images (production - keep 15)
+        run: |
+          # Production keeps more images for safety (15 instead of 7)
+          KEEP_COUNT=15
+          DRY_RUN=${{ github.event.inputs.dry_run || 'true' }}
+          
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🧹 Cleaning Production Artifacts"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Keep count: $KEEP_COUNT (production keeps more for safety)"
+          echo "Dry run: $DRY_RUN"
+          echo ""
+          
+          IMAGES=$(gcloud artifacts docker images list \
+            ${{ env.REGION }}-docker.pkg.dev/${{ env.PROD_PROJECT }}/${{ env.REPO_NAME }} \
+            --format="value(IMAGE)" \
+            --sort-by="~createTime" 2>/dev/null || echo "")
+          
+          if [ -z "$IMAGES" ]; then
+            echo "ℹ️  No images found in repository"
+            exit 0
+          fi
+          
+          TOTAL_COUNT=$(echo "$IMAGES" | wc -l | tr -d ' ')
+          echo "Total images: $TOTAL_COUNT"
+          
+          if [ "$TOTAL_COUNT" -le "$KEEP_COUNT" ]; then
+            echo "✅ Image count ($TOTAL_COUNT) is within keep limit ($KEEP_COUNT)"
+            exit 0
+          fi
+          
+          DELETE_COUNT=$((TOTAL_COUNT - KEEP_COUNT))
+          echo "Images to delete: $DELETE_COUNT"
+          
+          IMAGES_TO_DELETE=$(echo "$IMAGES" | tail -n +$((KEEP_COUNT + 1)))
+          
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "🔍 DRY RUN - Would delete these images:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "$IMAGES_TO_DELETE" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🗑️  Deleting old images..." >> $GITHUB_STEP_SUMMARY
+            DELETED=0
+            
+            while IFS= read -r IMAGE; do
+              echo "Deleting: $IMAGE"
+              
+              if gcloud artifacts docker images delete "$IMAGE" \
+                --project=${{ env.PROD_PROJECT }} \
+                --quiet 2>/dev/null; then
+                DELETED=$((DELETED + 1))
+                echo "  ✅ Deleted"
+              else
+                echo "  ⚠️  Failed"
+              fi
+            done <<< "$IMAGES_TO_DELETE"
+            
+            echo "✅ Deleted $DELETED images" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Get repository size (after)
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          sleep 10
+          
+          SIZE_BYTES=$(gcloud artifacts repositories describe ${{ env.REPO_NAME }} \
+            --project=${{ env.PROD_PROJECT }} \
+            --location=${{ env.REGION }} \
+            --format="value(sizeBytes)" 2>/dev/null || echo "0")
+          
+          SIZE_GB=$(echo "scale=2; $SIZE_BYTES / 1024 / 1024 / 1024" | bc)
+          BEFORE_SIZE=${{ steps.size-before.outputs.size_gb }}
+          SAVED=$(echo "scale=2; $BEFORE_SIZE - $SIZE_GB" | bc)
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Storage Summary:" >> $GITHUB_STEP_SUMMARY
+          echo "- Before: ${BEFORE_SIZE} GB" >> $GITHUB_STEP_SUMMARY
+          echo "- After: ${SIZE_GB} GB" >> $GITHUB_STEP_SUMMARY
+          echo "- Saved: ${SAVED} GB (~\$${SAVED}/month)" >> $GITHUB_STEP_SUMMARY
