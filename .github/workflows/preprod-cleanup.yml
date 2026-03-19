@@ -16,8 +16,9 @@ on:
         type: boolean
         default: true
   schedule:
-    # Auto-cleanup every night at 8 PM EST (1:00 AM UTC)
-    - cron: '0 1 * * *'
+    # Auto-cleanup every night at 11 PM IST (5:30 PM UTC)
+    # Runs daily to stop preprod services and prevent idle charges
+    - cron: '30 17 * * *'
 
 env:
   PROJECT_ID: astute-strategy-406601
