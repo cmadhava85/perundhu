@@ -1,7 +1,7 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Card, CardContent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import '../../styles/chart-card.css';
 
 interface PunctualityStat {
   category: string;
@@ -29,11 +29,11 @@ const PunctualityChart: React.FC<PunctualityChartProps> = ({ data }) => {
   ];
 
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
+    <div className="chart-card">
+      <div className="chart-content">
+        <h3 className="chart-title">
           {t('analytics.punctualityStats')}
-        </Typography>
+        </h3>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
@@ -53,8 +53,8 @@ const PunctualityChart: React.FC<PunctualityChartProps> = ({ data }) => {
             <Legend />
           </PieChart>
         </ResponsiveContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

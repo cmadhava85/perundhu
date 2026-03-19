@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Upload, CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
+import { Upload, CheckCircle, AlertCircle } from 'lucide-react';
 import '../styles/static-pages.css';
 
 /**
@@ -190,14 +190,14 @@ export const ContactUs: React.FC = () => {
             <form onSubmit={handleSubmitFeedback} className="feedback-form">
               {submitted && (
                 <div className="feedback-success">
-                  <CheckCircle sx={{ fontSize: 24 }} />
+                  <CheckCircle size={24} />
                   <p>{t('pages.contact.thankYou', 'Thank you for your feedback!')}</p>
                 </div>
               )}
               
               {error && (
                 <div className="feedback-error">
-                  <ErrorIcon sx={{ fontSize: 24 }} />
+                  <AlertCircle size={24} />
                   <p>{error}</p>
                 </div>
               )}
@@ -265,7 +265,7 @@ export const ContactUs: React.FC = () => {
                     onClick={() => fileInputRef.current?.click()}
                     disabled={submitting}
                   >
-                    <Upload sx={{ fontSize: 18 }} />
+                    <Upload size={18} />
                     {feedbackData.screenshot 
                       ? feedbackData.screenshot.name 
                       : t('pages.contact.chooseFile', 'Choose File')}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Location } from '../../types';
 import { searchLocations } from '../../services/locationService';
 import { formatLocationNameUniversal } from '../../services/geocodingService';
-import debounce from 'lodash/debounce';
+import { debounce } from '../../utils/debounce';
 
 interface LocationDropdownProps {
   id: string;

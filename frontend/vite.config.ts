@@ -73,8 +73,6 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           // Maps library chunk
           'maps-vendor': ['leaflet', 'react-leaflet'],
-          // UI framework chunk
-          'ui-vendor': ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
           // i18n chunk
           'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
           // PHASE 2 OPTIMIZATION: Separate charts and query vendors
@@ -139,8 +137,6 @@ export default defineConfig({
       'react',
       'react-dom',
       'react-router-dom',
-      '@mui/material',
-      '@mui/icons-material',
       'leaflet',
       'react-leaflet',
     ],
