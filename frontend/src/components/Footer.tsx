@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="footer-brand">
             <div className="footer-logo-container">
-              <span className="footer-logo-icon">🚌</span>
+              <img src="/favicon.svg" alt="Perundhu Logo" className="footer-logo-icon" />
               <div>
                 <h2 className="footer-logo">பேருந்து</h2>
                 <span className="footer-logo-sub">Perundhu</span>
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
               <a href="https://instagram.com/perundhu" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
                 <span className="social-icon"><InstagramIcon size={20} /></span>
               </a>
-              <a href="mailto:support@perundhu.in" className="social-link" aria-label="Email">
+              <a href="mailto:perundhu@gmail.com" className="social-link" aria-label="Email">
                 <span className="social-icon"><MailIcon size={20} /></span>
               </a>
             </div>

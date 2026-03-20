@@ -12,6 +12,9 @@ Disallow: /settings/
 Disallow: /auth/
 Allow: /
 
+# Sitemap location
+Sitemap: https://www.perundhu.com/sitemap.xml
+
 # Search engines - standard crawling
 User-agent: Googlebot
 User-agent: Bingbot

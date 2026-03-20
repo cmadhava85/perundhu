@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Perundhu (Demo)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0EA5E9;
+            --primary-dark: #0284C7;
+            --secondary: #10B981;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --bg: #F9FAFB;
+            --card-bg: white;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .route-display {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .route-arrow {
+            color: var(--primary);
+        }
+
+        .edit-btn {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .edit-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* Results header */
+        .results-header {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .results-count {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .results-count span {
+            color: var(--primary);
+        }
+
+        .sort-filter {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Bus cards container */
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* Bus card */
+        .bus-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .bus-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .bus-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .bus-info {
+            flex: 1;
+        }
+
+        .bus-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .bus-operator {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.ac {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .badge.express {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge.available {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* Journey details */
+        .journey-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .journey-point {
+            flex: 1;
+        }
+
+        .journey-time {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .journey-location {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .journey-line {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .duration {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--bg);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .line {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            position: relative;
+        }
+
+        .line::before,
+        .line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            top: -3px;
+        }
+
+        .line::before { left: 0; }
+        .line::after { right: 0; background: var(--secondary); }
+
+        /* Features */
+        .features {
+            display: flex;
+            gap: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .feature-icon {
+            color: var(--primary);
+        }
+
+        /* Action buttons */
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .journey-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .journey-line {
+                flex-direction: row;
+                width: 100%;
+            }
+
+            .line {
+                height: 60px;
+                width: 2px;
+            }
+
+            .features {
+                flex-wrap: wrap;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .sort-filter {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+        /* Pulse animation for live tracking */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="search-bar">
+                <div class="route-display">
+                    <span>📍 Chennai</span>
+                    <span class="route-arrow">→</span>
+                    <span>📍 Madurai</span>
+                </div>
+                <button class="edit-btn" onclick="window.location.href='demo-search.html'">
+                    ✏️ Edit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-header">
+        <div class="results-count">
+            Found <span>24 buses</span> for your route
+        </div>
+        <div class="sort-filter">
+            <button class="filter-btn">
+                <span>🔽</span>
+                <span>Sort by Time</span>
+            </button>
+            <button class="filter-btn">
+                <span>🎯</span>
+                <span>Filters</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="results-container">
+        <!-- Bus Card 1 - Live Tracking -->
+        <div class="bus-card">
+            <div class="bus-header">
+                <div class="bus-info">
+                    <div class="bus-number">124A - Chennai Express</div>
+                    <div class="bus-operator">
+                        <span>🚌</span>
+                        <span>TNSTC</span>
+                        <span class="live-indicator">
+                            <span class="live-dot"></span>
+                            <span>Live Tracking</span>
+                        </span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <span class="badge ac">AC</span>
+                    <span class="badge express">Express</span>
+                </div>
+            </div>
+
+            <div class="journey-details">
+                <div class="journey-point">
+                    <div class="journey-time">06:30 AM</div>
+                    <div class="journey-location">Chennai - CMBT</div>
+                </div>
+                <div class="journey-line">
+                    <div class="duration">7h 30m</div>
+                    <div class="line"></div>
+                </div>
+                <div class="journey-point">
+                    <div class="journey-time">02:00 PM</div>
+                    <div class="journey-location">Madurai - New Bus Stand</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">💺</span>
+                    <span>42 seats available</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">❄️</span>
+                    <span>AC with WiFi</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">⭐</span>
+                    <span>4.5 rating</span>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn btn-primary">
+                    <span>📍</span>
+                    <span>Track Live</span>
+                </button>
+                <button class="btn btn-secondary">
+                    <span>ℹ️</span>
+                    <span>Details</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bus Card 2 -->
+        <div class="bus-card">
+            <div class="bus-header">
+                <div class="bus-info">
+                    <div class="bus-number">256 - Madurai Fast</div>
+                    <div class="bus-operator">
+                        <span>🚌</span>
+                        <span>State Express</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <span class="badge express">Express</span>
+                    <span class="badge available">Available</span>
+                </div>
+            </div>
+
+            <div class="journey-details">
+                <div class="journey-point">
+                    <div class="journey-time">08:00 AM</div>
+                    <div class="journey-location">Chennai - Koyambedu</div>
+                </div>
+                <div class="journey-line">
+                    <div class="duration">8h 15m</div>
+                    <div class="line"></div>
+                </div>
+                <div class="journey-point">
+                    <div class="journey-time">04:15 PM</div>
+                    <div class="journey-location">Madurai - MGR Bus Stand</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">💺</span>
+                    <span>28 seats available</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🎫</span>
+                    <span>₹450 - ₹550</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">⭐</span>
+                    <span>4.2 rating</span>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn btn-primary">
+                    <span>📍</span>
+                    <span>View Route</span>
+                </button>
+                <button class="btn btn-secondary">
+                    <span>💬</span>
+                    <span>Reviews (45)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bus Card 3 -->
+        <div class="bus-card">
+            <div class="bus-header">
+                <div class="bus-info">
+                    <div class="bus-number">89B - Night Service</div>
+                    <div class="bus-operator">
+                        <span>🚌</span>
+                        <span>SETC</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <span class="badge ac">AC Sleeper</span>
+                </div>
+            </div>
+
+            <div class="journey-details">
+                <div class="journey-point">
+                    <div class="journey-time">10:30 PM</div>
+                    <div class="journey-location">Chennai - T Nagar</div>
+                </div>
+                <div class="journey-line">
+                    <div class="duration">9h 00m</div>
+                    <div class="line"></div>
+                </div>
+                <div class="journey-point">
+                    <div class="journey-time">07:30 AM</div>
+                    <div class="journey-location">Madurai - Periyar</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🛏️</span>
+                    <span>Sleeper with blankets</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🎫</span>
+                    <span>₹650 - ₹750</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">⭐</span>
+                    <span>4.7 rating</span>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn btn-primary">
+                    <span>🎯</span>
+                    <span>Book Seats</span>
+                </button>
+                <button class="btn btn-secondary">
+                    <span>📸</span>
+                    <span>Photos (12)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.5);
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

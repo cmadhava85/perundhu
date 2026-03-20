@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perundhu - Hybrid View Demo</title>
+    <style>
+        /* ============================================= */
+        /* RESET & BASE */
+        /* ============================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0EA5E9;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --danger: #EF4444;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --bg: #F9FAFB;
+            --white: #FFFFFF;
+            --border: #E5E7EB;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================= */
+        /* HEADER WITH VIEW TOGGLE */
+        /* ============================================= */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .route-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .route-info .arrow {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* VIEW TOGGLE SWITCH */
+        .view-toggle {
+            display: flex;
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toggle-btn:hover {
+            color: var(--text);
+        }
+
+        .toggle-btn.active {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .date-info {
+            font-size: 14px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .results-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ============================================= */
+        /* TIMELINE VIEW STYLES */
+        /* ============================================= */
+        .timeline-view {
+            display: block;
+        }
+
+        .timeline-view.hidden {
+            display: none;
+        }
+
+        .timeline-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 85px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            opacity: 0.2;
+        }
+
+        .bus-item-timeline {
+            position: relative;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .bus-item-timeline:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(4px);
+        }
+
+        .time-col {
+            min-width: 60px;
+            text-align: right;
+            position: relative;
+        }
+
+        .departure-time {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .departure-period {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: -28px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 2px var(--primary);
+            z-index: 2;
+        }
+
+        .bus-details-timeline {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .bus-header-timeline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .bus-number {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .bus-name {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* ============================================= */
+        /* PREMIUM VIEW STYLES (GLASSMORPHISM) */
+        /* ============================================= */
+        .premium-view {
+            display: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: calc(100vh - 120px);
+            padding: 20px;
+        }
+
+        .premium-view.active {
+            display: block;
+        }
+
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .bus-card-premium {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .bus-card-premium:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            flex: 1;
+        }
+
+        .card-bus-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .card-bus-name {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .card-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.ac {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .badge.express {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge.live {
+            background: #D1FAE5;
+            color: #065F46;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .journey-time {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(243, 244, 246, 0.8);
+            border-radius: 12px;
+        }
+
+        .time-block {
+            text-align: center;
+        }
+
+        .time-large {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .duration-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .duration-text {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .progress-line {
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+            width: 0%;
+        }
+
+        .card-features {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ============================================= */
+        /* NOW MARKER (Both views) */
+        /* ============================================= */
+        .now-marker {
+            margin: 24px 0;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .now-marker .icon {
+            font-size: 24px;
+        }
+
+        .now-marker .current-time {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* ============================================= */
+        /* VIEW COMPARISON BANNER */
+        /* ============================================= */
+        .comparison-banner {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 0 20px 20px 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .banner-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .banner-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .view-info {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .view-info h4 {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .view-info ul {
+            list-style: none;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .view-info li {
+            margin-bottom: 4px;
+        }
+
+        .view-info li::before {
+            content: "✓ ";
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* ============================================= */
+        /* RESPONSIVE */
+        /* ============================================= */
+        @media (max-width: 768px) {
+            .header {
+                padding: 12px 16px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+
+            .route-info {
+                font-size: 16px;
+            }
+
+            .view-toggle {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .toggle-btn {
+                flex: 1;
+                justify-content: center;
+                font-size: 12px;
+            }
+
+            .timeline-line {
+                left: 75px;
+            }
+
+            .bus-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-banner {
+                margin: 0 16px 16px 16px;
+            }
+
+            .banner-content {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with View Toggle -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="route-info">
+                    <span>Chennai</span>
+                    <span class="arrow">→</span>
+                    <span>Madurai</span>
+                </div>
+                
+                <!-- View Toggle Switch -->
+                <div class="view-toggle">
+                    <button class="toggle-btn active" onclick="switchView('timeline')" id="timelineToggle">
+                        ⚡ Simple View
+                    </button>
+                    <button class="toggle-btn" onclick="switchView('premium')" id="premiumToggle">
+                        ✨ Premium View
+                    </button>
+                </div>
+            </div>
+            <div class="date-info">
+                <span>📅 March 19, 2026</span>
+                <span class="results-count">24 buses</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Banner -->
+    <div class="comparison-banner">
+        <div class="banner-title">
+            <span>💡</span>
+            <span>Try Both Views - Pick Your Preference!</span>
+        </div>
+        <div class="banner-content">
+            <div class="view-info">
+                <h4>⚡ Simple View</h4>
+                <ul>
+                    <li>Faster loading (60KB)</li>
+                    <li>Easy time scanning</li>
+                    <li>Works on 2G/3G</li>
+                    <li>One-hand browsing</li>
+                </ul>
+            </div>
+            <div class="view-info">
+                <h4>✨ Premium View</h4>
+                <ul>
+                    <li>Beautiful glassmorphism</li>
+                    <li>Rich visual cards</li>
+                    <li>Modern aesthetics</li>
+                    <li>Grid layout</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIMELINE VIEW -->
+    <div class="timeline-view" id="timelineView">
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+
+            <!-- Bus 1 -->
+            <div class="bus-item-timeline">
+                <div class="time-col">
+                    <div class="departure-time">06:00</div>
+                    <div class="departure-period">AM</div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="bus-details-timeline">
+                    <div class="bus-header-timeline">
+                        <span class="bus-number">123A</span>
+                        <span class="bus-name">Chennai Express</span>
+                        <span class="badge ac">❄️ AC</span>
+                        <span class="badge express">⚡ Express</span>
+                    </div>
+                    <div class="feature-item">⏱️ 7h 30m • 💺 42 seats • ₹450</div>
+                </div>
+            </div>
+
+            <!-- Bus 2 -->
+            <div class="bus-item-timeline">
+                <div class="time-col">
+                    <div class="departure-time">06:30</div>
+                    <div class="departure-period">AM</div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="bus-details-timeline">
+                    <div class="bus-header-timeline">
+                        <span class="bus-number">124B</span>
+                        <span class="bus-name">Madurai Special</span>
+                    </div>
+                    <div class="feature-item">⏱️ 8h 15m • 💺 38 seats • ₹320</div>
+                </div>
+            </div>
+
+            <!-- NOW Marker -->
+            <div class="now-marker">
+                <span class="icon">⏰</span>
+                <div>
+                    <div class="current-time">Current Time: <span id="currentTime1">07:15 AM</span></div>
+                    <div style="font-size: 13px; color: #6B7280; margin-top: 2px;">Next bus departs in 15 minutes</div>
+                </div>
+            </div>
+
+            <!-- Bus 3 (Next) -->
+            <div class="bus-item-timeline" style="border: 2px solid #0EA5E9; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);">
+                <div class="time-col">
+                    <div class="departure-time">07:30</div>
+                    <div class="departure-period">AM</div>
+                    <div class="timeline-dot" style="width: 16px; height: 16px; background: #F59E0B; box-shadow: 0 0 0 3px #F59E0B;"></div>
+                </div>
+                <div class="bus-details-timeline">
+                    <div class="bus-header-timeline">
+                        <span class="bus-number">125C</span>
+                        <span class="bus-name">Premium Deluxe • 🚀 NEXT BUS</span>
+                        <span class="badge ac">❄️ AC</span>
+                        <span class="badge live">🔴 Live</span>
+                    </div>
+                    <div class="feature-item">⏱️ 7h 45m • 💺 48 seats • ₹480</div>
+                </div>
+            </div>
+
+            <!-- Bus 4 -->
+            <div class="bus-item-timeline">
+                <div class="time-col">
+                    <div class="departure-time">08:15</div>
+                    <div class="departure-period">AM</div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="bus-details-timeline">
+                    <div class="bus-header-timeline">
+                        <span class="bus-number">126D</span>
+                        <span class="bus-name">Fast Express</span>
+                        <span class="badge express">⚡ Express</span>
+                    </div>
+                    <div class="feature-item">⏱️ 8h 00m • 💺 35 seats • ₹380</div>
+                </div>
+            </div>
+
+            <!-- Bus 5 -->
+            <div class="bus-item-timeline">
+                <div class="time-col">
+                    <div class="departure-time">09:00</div>
+                    <div class="departure-period">AM</div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="bus-details-timeline">
+                    <div class="bus-header-timeline">
+                        <span class="bus-number">127E</span>
+                        <span class="bus-name">Comfort Plus</span>
+                        <span class="badge ac">❄️ AC</span>
+                    </div>
+                    <div class="feature-item">⏱️ 8h 30m • 💺 40 seats • ₹420</div>
+                </div>
+            </div>
+
+            <!-- Bus 6 -->
+            <div class="bus-item-timeline">
+                <div class="time-col">
+                    <div class="departure-time">10:30</div>
+                    <div class="departure-period">AM</div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="bus-details-timeline">
+                    <div class="bus-header-timeline">
+                        <span class="bus-number">128F</span>
+                        <span class="bus-name">Morning Express</span>
+                        <span class="badge express">⚡ Express</span>
+                    </div>
+                    <div class="feature-item">⏱️ 7h 45m • 💺 36 seats • ₹390</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PREMIUM VIEW (GLASSMORPHISM) -->
+    <div class="premium-view" id="premiumView">
+        <div class="premium-container">
+            <div class="bus-grid">
+                <!-- Card 1 -->
+                <div class="bus-card-premium">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-bus-number">123A</div>
+                            <div class="card-bus-name">Chennai Express</div>
+                        </div>
+                        <div class="card-badges">
+                            <span class="badge ac">❄️ AC</span>
+                            <span class="badge express">⚡ Express</span>
+                        </div>
+                    </div>
+                    
+                    <div class="journey-time">
+                        <div class="time-block">
+                            <div class="time-large">06:00</div>
+                            <div class="time-label">Departure</div>
+                        </div>
+                        <div class="duration-bar">
+                            <div class="duration-text">7h 30m</div>
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <div class="time-large">13:30</div>
+                            <div class="time-label">Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="feature-item">💺 42 seats</div>
+                        <div class="feature-item">₹450</div>
+                        <div class="feature-item">⭐ 4.5</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="action-btn primary">🎫 Book</button>
+                        <button class="action-btn secondary">🗺️ Route</button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bus-card-premium">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-bus-number">124B</div>
+                            <div class="card-bus-name">Madurai Special</div>
+                        </div>
+                    </div>
+                    
+                    <div class="journey-time">
+                        <div class="time-block">
+                            <div class="time-large">06:30</div>
+                            <div class="time-label">Departure</div>
+                        </div>
+                        <div class="duration-bar">
+                            <div class="duration-text">8h 15m</div>
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <div class="time-large">14:45</div>
+                            <div class="time-label">Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="feature-item">💺 38 seats</div>
+                        <div class="feature-item">₹320</div>
+                        <div class="feature-item">⭐ 4.2</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="action-btn primary">🎫 Book</button>
+                        <button class="action-btn secondary">🗺️ Route</button>
+                    </div>
+                </div>
+
+                <!-- Card 3 (Next Bus) -->
+                <div class="bus-card-premium" style="border: 3px solid #F59E0B; box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);">
+                    <div style="background: #FEF3C7; padding: 6px 12px; border-radius: 6px; margin-bottom: 12px; text-align: center; font-weight: 700; color: #92400E;">
+                        🚀 NEXT BUS - Departs in 15 min
+                    </div>
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-bus-number">125C</div>
+                            <div class="card-bus-name">Premium Deluxe</div>
+                        </div>
+                        <div class="card-badges">
+                            <span class="badge ac">❄️ AC</span>
+                            <span class="badge express">⚡ Express</span>
+                            <span class="badge live">🔴 Live</span>
+                        </div>
+                    </div>
+                    
+                    <div class="journey-time">
+                        <div class="time-block">
+                            <div class="time-large">07:30</div>
+                            <div class="time-label">Departure</div>
+                        </div>
+                        <div class="duration-bar">
+                            <div class="duration-text">7h 45m</div>
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: 35%"></div>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <div class="time-large">15:15</div>
+                            <div class="time-label">Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="feature-item">💺 48 seats</div>
+                        <div class="feature-item">₹480</div>
+                        <div class="feature-item">⭐ 4.7</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="action-btn primary">🎫 Book Now</button>
+                        <button class="action-btn secondary">🗺️ Route</button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bus-card-premium">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-bus-number">126D</div>
+                            <div class="card-bus-name">Fast Express</div>
+                        </div>
+                        <div class="card-badges">
+                            <span class="badge express">⚡ Express</span>
+                        </div>
+                    </div>
+                    
+                    <div class="journey-time">
+                        <div class="time-block">
+                            <div class="time-large">08:15</div>
+                            <div class="time-label">Departure</div>
+                        </div>
+                        <div class="duration-bar">
+                            <div class="duration-text">8h 00m</div>
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <div class="time-large">16:15</div>
+                            <div class="time-label">Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="feature-item">💺 35 seats</div>
+                        <div class="feature-item">₹380</div>
+                        <div class="feature-item">⭐ 4.3</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="action-btn primary">🎫 Book</button>
+                        <button class="action-btn secondary">🗺️ Route</button>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bus-card-premium">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-bus-number">127E</div>
+                            <div class="card-bus-name">Comfort Plus</div>
+                        </div>
+                        <div class="card-badges">
+                            <span class="badge ac">❄️ AC</span>
+                        </div>
+                    </div>
+                    
+                    <div class="journey-time">
+                        <div class="time-block">
+                            <div class="time-large">09:00</div>
+                            <div class="time-label">Departure</div>
+                        </div>
+                        <div class="duration-bar">
+                            <div class="duration-text">8h 30m</div>
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <div class="time-large">17:30</div>
+                            <div class="time-label">Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="feature-item">💺 40 seats</div>
+                        <div class="feature-item">₹420</div>
+                        <div class="feature-item">⭐ 4.6</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="action-btn primary">🎫 Book</button>
+                        <button class="action-btn secondary">🗺️ Route</button>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="bus-card-premium">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-bus-number">128F</div>
+                            <div class="card-bus-name">Morning Express</div>
+                        </div>
+                        <div class="card-badges">
+                            <span class="badge express">⚡ Express</span>
+                        </div>
+                    </div>
+                    
+                    <div class="journey-time">
+                        <div class="time-block">
+                            <div class="time-large">10:30</div>
+                            <div class="time-label">Departure</div>
+                        </div>
+                        <div class="duration-bar">
+                            <div class="duration-text">7h 45m</div>
+                            <div class="progress-line">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="time-block">
+                            <div class="time-large">18:15</div>
+                            <div class="time-label">Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="feature-item">💺 36 seats</div>
+                        <div class="feature-item">₹390</div>
+                        <div class="feature-item">⭐ 4.4</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="action-btn primary">🎫 Book</button>
+                        <button class="action-btn secondary">🗺️ Route</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // View switching functionality
+        function switchView(view) {
+            const timelineView = document.getElementById('timelineView');
+            const premiumView = document.getElementById('premiumView');
+            const timelineToggle = document.getElementById('timelineToggle');
+            const premiumToggle = document.getElementById('premiumToggle');
+
+            if (view === 'timeline') {
+                timelineView.classList.remove('hidden');
+                premiumView.classList.remove('active');
+                timelineToggle.classList.add('active');
+                premiumToggle.classList.remove('active');
+                document.body.style.background = '#F9FAFB';
+                
+                // Save preference
+                localStorage.setItem('preferredView', 'timeline');
+            } else {
+                timelineView.classList.add('hidden');
+                premiumView.classList.add('active');
+                timelineToggle.classList.remove('active');
+                premiumToggle.classList.add('active');
+                document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                
+                // Save preference
+                localStorage.setItem('preferredView', 'premium');
+            }
+        }
+
+        // Load saved preference
+        window.addEventListener('load', function() {
+            const savedView = localStorage.getItem('preferredView');
+            if (savedView === 'premium') {
+                switchView('premium');
+            }
+        });
+
+        // Update current time
+        function updateCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+            const displayMinutes = minutes.toString().padStart(2, '0');
+            
+            const timeElement = document.getElementById('currentTime1');
+            if (timeElement) {
+                timeElement.textContent = `${displayHours}:${displayMinutes} ${period}`;
+            }
+        }
+
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 60000);
+
+        console.log('Hybrid View Demo Loaded');
+        console.log('Toggle between Simple and Premium views to compare!');
+    </script>
+</body>
+</html>

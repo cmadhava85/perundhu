@@ -1,7 +1,7 @@
 # Copilot Instructions for Perundhu
 
 ## Project Overview
-Perundhu is a bus tracking app for Tamil Nadu deployed on GCP (project: `perundhu-prod-001`, region: `us-central1`).
+Perundhu is a community-powered bus route finder app for Tamil Nadu deployed on GCP (project: `perundhu-prod-001`, region: `us-central1`).
 Stack: Java 21 / Spring Boot backend on Cloud Run, React frontend on Cloud Run, Cloud SQL MySQL (`db-f1-micro`), Terraform IaC.
 
 ---

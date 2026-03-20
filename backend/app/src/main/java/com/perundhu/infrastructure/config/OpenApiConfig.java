@@ -57,7 +57,7 @@ public class OpenApiConfig {
                 """)
             .contact(new Contact()
                 .name("Perundhu Development Team")
-                .email("support@perundhu.com")
+                .email("perundhu@gmail.com")
                 .url("https://github.com/cmadhava85/perundhu"))
             .license(new License()
                 .name("MIT License")

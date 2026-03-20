@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perundhu - Complete UI Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0EA5E9;
+            --primary-dark: #0284C7;
+            --secondary: #10B981;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --bg: #F9FAFB;
+            --card-bg: white;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Main container */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header with logo */
+        .app-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .app-logo {
+            font-size: 64px;
+            margin-bottom: 12px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .app-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px 24px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tab-icon {
+            font-size: 20px;
+        }
+
+        /* Content container */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================= */
+        /* SEARCH TAB STYLES */
+        /* ============================================= */
+        .search-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 16px;
+            color: var(--text-primary);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+            transform: scale(1.02);
+        }
+
+        .swap-button {
+            align-self: center;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin: -10px 0;
+        }
+
+        .swap-button:hover {
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(14, 165, 233, 0.4);
+        }
+
+        .quick-filters {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .quick-filters-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-chip:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .filter-chip.chip-active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        /* ============================================= */
+        /* RESULTS TAB STYLES */
+        /* ============================================= */
+        .results-container {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .results-count {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .results-count span {
+            color: var(--primary);
+        }
+
+        .sort-filter {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .bus-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .bus-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .bus-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .bus-number {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .bus-operator {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge.ac { background: #DBEAFE; color: #1E40AF; }
+        .badge.express { background: #FEF3C7; color: #92400E; }
+
+        .journey-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .journey-point {
+            flex: 1;
+        }
+
+        .journey-time {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .journey-location {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .journey-line {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .duration {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--bg);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .line {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            position: relative;
+        }
+
+        .line::before, .line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            top: -3px;
+        }
+
+        .line::before { left: 0; }
+        .line::after { right: 0; background: var(--secondary); }
+
+        .features {
+            display: flex;
+            gap: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E7EB;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ============================================= */
+        /* CONTRIBUTION TAB STYLES */
+        /* ============================================= */
+        .contribution-container {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .points-banner {
+            background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+            padding: 20px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .points-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .points-icon {
+            font-size: 48px;
+        }
+
+        .points-text h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #78350F;
+        }
+
+        .points-text p {
+            font-size: 14px;
+            color: #92400E;
+        }
+
+        .contribution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .contribution-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .contribution-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .contribution-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .contribution-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .contribution-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .contribution-reward {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            display: none;
+        }
+
+        .form-section.show {
+            display: block;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .success-message {
+            background: #D1FAE5;
+            border: 2px solid var(--success);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tab-button {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .tab-button span:not(.tab-icon) {
+                display: none;
+            }
+
+            .search-card {
+                padding: 28px 24px;
+            }
+
+            .journey-details {
+                flex-direction: column;
+            }
+
+            .journey-line {
+                flex-direction: row;
+                width: 100%;
+            }
+
+            .line {
+                height: 60px;
+                width: 2px;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .points-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+        }
+
+        /* Live indicator */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* ============================================= */
+        /* ROUTE MODAL STYLES */
+        /* ============================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-header-info h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .modal-header-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 24px;
+            max-height: calc(90vh - 140px);
+            overflow-y: auto;
+        }
+
+        .route-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .route-stat {
+            text-align: center;
+        }
+
+        .route-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .route-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .stops-timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .stops-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 20px;
+            bottom: 20px;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .stop-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .stop-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .stop-marker {
+            position: absolute;
+            left: -40px;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            z-index: 1;
+        }
+
+        .stop-item.origin .stop-marker {
+            background: var(--primary);
+            color: white;
+            font-size: 16px;
+        }
+
+        .stop-item.destination .stop-marker {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+            font-size: 16px;
+        }
+
+        .stop-item.current .stop-marker {
+            background: var(--warning);
+            border-color: var(--warning);
+            animation: pulse 2s infinite;
+        }
+
+        .stop-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .stop-info {
+            flex: 1;
+        }
+
+        .stop-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stop-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stop-time {
+            text-align: right;
+        }
+
+        .stop-arrival {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stop-duration {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .current-location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .stop-distance {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Mobile responsive for modal */
+        @media (max-width: 768px) {
+            .modal-content {
+                max-height: 95vh;
+                margin: 0;
+                border-radius: var(--radius) var(--radius) 0 0;
+            }
+
+            .stops-timeline {
+                padding-left: 35px;
+            }
+
+            .stop-marker {
+                left: -35px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .route-summary {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .route-stat {
+                flex: 1;
+                min-width: 100px;
+            }
+        }
+
+        /* ============================================= */
+        /* DEVICE PREVIEW TOGGLE */
+        /* ============================================= */
+        .device-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            gap: 8px;
+            z-index: 999;
+        }
+
+        .device-btn {
+            padding: 10px 16px;
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .device-btn:hover {
+            background: #E5E7EB;
+        }
+
+        .device-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .device-btn span {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Device frame simulation */
+        body.mobile-view {
+            background: #1F2937;
+            padding: 40px 20px;
+        }
+
+        body.mobile-view .app-container {
+            max-width: 375px;
+            margin: 0 auto;
+            border: 16px solid #000;
+            border-top-width: 60px;
+            border-bottom-width: 60px;
+            border-radius: 36px;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #333;
+            position: relative;
+        }
+
+        body.mobile-view .app-container::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 20px;
+            background: #000;
+            border-radius: 0 0 12px 12px;
+        }
+
+        body.tablet-view {
+            background: #374151;
+            padding: 40px 20px;
+        }
+
+        body.tablet-view .app-container {
+            max-width: 768px;
+            margin: 0 auto;
+            border: 12px solid #1F2937;
+            border-radius: 24px;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #444;
+        }
+
+        /* Adjust padding inside device frames */
+        body.mobile-view .app-container > div,
+        body.tablet-view .app-container > div {
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        body.mobile-view .app-header {
+            margin-top: 0;
+        }
+
+        body.tablet-view .app-header {
+            margin-top: 0;
+        }
+
+        /* Fix mobile overflow issues */
+        body.mobile-view .app-container,
+        body.mobile-view .app-container * {
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+        }
+
+        body.mobile-view .tab-container,
+        body.mobile-view .search-card,
+        body.mobile-view .bus-card,
+        body.mobile-view .contribution-card,
+        body.mobile-view .contribution-form {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body.mobile-view .app-logo {
+            font-size: 40px;
+        }
+
+        body.mobile-view .app-title {
+            font-size: 24px;
+            line-height: 1.3;
+        }
+
+        body.mobile-view .app-subtitle {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        body.mobile-view .tab-button {
+            font-size: 12px;
+            padding: 10px 12px;
+            min-height: 44px;
+        }
+
+        body.mobile-view .tab-button span {
+            display: none;
+        }
+
+        body.mobile-view .tab-button.active span {
+            display: inline;
+            font-size: 11px;
+        }
+
+        /* Enhanced mobile optimizations */
+        @media (max-width: 480px) {
+            .app-logo {
+                font-size: 40px;
+            }
+
+            .app-title {
+                font-size: 24px;
+                line-height: 1.3;
+            }
+
+            .app-subtitle {
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
+            .tab-button {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .sort-filter {
+                width: 100%;
+            }
+
+            .filter-btn {
+                flex: 1;
+                font-size: 13px;
+                padding: 10px 16px;
+            }
+
+            .bus-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .bus-number {
+                font-size: 20px;
+            }
+
+            .bus-name {
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            .contribution-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .contribution-card {
+                padding: 16px;
+            }
+
+            .contribution-card h3 {
+                font-size: 16px;
+                margin-bottom: 6px;
+            }
+
+            .contribution-card p {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .contribution-card .points {
+                font-size: 18px;
+                padding: 6px 12px;
+            }
+
+            .points-banner {
+                padding: 16px;
+            }
+
+            .points-banner h2 {
+                font-size: 20px;
+            }
+
+            .points-score {
+                font-size: 32px;
+            }
+
+            .form-section {
+                padding: 16px;
+            }
+
+            .form-section h3 {
+                font-size: 18px;
+            }
+
+            .input,
+            .textarea {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .modal-header {
+                padding: 16px;
+            }
+
+            .modal-body {
+                padding: 16px;
+            }
+        }
+
+        /* Touch-friendly enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            .tab-button,
+            .filter-chip,
+            .btn,
+            .filter-btn,
+            .contribution-card {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .bus-card {
+                padding: 20px;
+            }
+
+            .search-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- App Header -->
+        <div class="app-header">
+            <div class="app-logo">🚌</div>
+            <h1 class="app-title">Perundhu</h1>
+            <p class="app-subtitle">Modern UI/UX Demo - Complete Experience</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-button active" onclick="switchTab('search')">
+                <span class="tab-icon">🔍</span>
+                <span>Search</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('results')">
+                <span class="tab-icon">📋</span>
+                <span>Results</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('contribution')">
+                <span class="tab-icon">🤝</span>
+                <span>Contribute</span>
+            </button>
+        </div>
+
+        <!-- SEARCH TAB -->
+        <div id="search-tab" class="tab-content active">
+            <div class="search-card">
+                <form class="search-form" onsubmit="handleSearch(event)">
+                    <div class="input-group">
+                        <label class="input-label">
+                            <span>📍</span>
+                            <span>From</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            placeholder="e.g., Chennai"
+                            id="fromLocation"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button type="button" class="swap-button" onclick="swapLocations()">
+                        ⇅
+                    </button>
+
+                    <div class="input-group">
+                        <label class="input-label">
+                            <span>📍</span>
+                            <span>To</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            placeholder="e.g., Madurai"
+                            id="toLocation"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button type="submit" class="search-button">
+                        <span>🔍</span>
+                        <span>Search Buses</span>
+                    </button>
+                </form>
+
+                <div class="quick-filters">
+                    <div class="quick-filters-title">🚀 Quick Filters</div>
+                    <div class="filter-chips">
+                        <span class="filter-chip">AC Buses</span>
+                        <span class="filter-chip">Express</span>
+                        <span class="filter-chip">Night Service</span>
+                        <span class="filter-chip chip-active">All Buses</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS TAB -->
+        <div id="results-tab" class="tab-content">
+            <div class="results-container">
+                <div class="results-header">
+                    <div class="results-count">
+                        Found <span>24 buses</span> for Chennai → Madurai
+                    </div>
+                    <div class="sort-filter">
+                        <button class="filter-btn">
+                            <span>🔽</span>
+                            <span>Sort</span>
+                        </button>
+                        <button class="filter-btn">
+                            <span>🎯</span>
+                            <span>Filter</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bus Card 1 -->
+                <div class="bus-card">
+                    <div class="bus-header">
+                        <div>
+                            <div class="bus-number">124A - Chennai Express</div>
+                            <div class="bus-operator">
+                                <span>🚌</span>
+                                <span>TNSTC</span>
+                                <span class="live-indicator">
+                                    <span class="live-dot"></span>
+                                    <span>Live</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <span class="badge ac">AC</span>
+                            <span class="badge express">Express</span>
+                        </div>
+                    </div>
+
+                    <div class="journey-details">
+                        <div class="journey-point">
+                            <div class="journey-time">06:30 AM</div>
+                            <div class="journey-location">Chennai - CMBT</div>
+                        </div>
+                        <div class="journey-line">
+                            <div class="duration">7h 30m</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="journey-point">
+                            <div class="journey-time">02:00 PM</div>
+                            <div class="journey-location">Madurai - New Stand</div>
+                        </div>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature">
+                            <span>💺</span>
+                            <span>42 seats available</span>
+                        </div>
+                        <div class="feature">
+                            <span>❄️</span>
+                            <span>AC with WiFi</span>
+                        </div>
+                        <div class="feature">
+                            <span>⭐</span>
+                            <span>4.5 rating</span>
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="showRouteModal('124A', 'Chennai Express', true)">
+                            <span>📍</span>
+                            <span>View Route</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>ℹ️</span>
+                            <span>Details</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bus Card 2 -->
+                <div class="bus-card">
+                    <div class="bus-header">
+                        <div>
+                            <div class="bus-number">256 - Madurai Fast</div>
+                            <div class="bus-operator">
+                                <span>🚌</span>
+                                <span>State Express</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="badge express">Express</span>
+                        </div>
+                    </div>
+
+                    <div class="journey-details">
+                        <div class="journey-point">
+                            <div class="journey-time">08:00 AM</div>
+                            <div class="journey-location">Chennai - Koyambedu</div>
+                        </div>
+                        <div class="journey-line">
+                            <div class="duration">8h 15m</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="journey-point">
+                            <div class="journey-time">04:15 PM</div>
+                            <div class="journey-location">Madurai - MGR Stand</div>
+                        </div>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature">
+                            <span>💺</span>
+                            <span>28 seats available</span>
+                        </div>
+                        <div class="feature">
+                            <span>🎫</span>
+                            <span>₹450 - ₹550</span>
+                        </div>
+                        <div class="feature">
+                            <span>⭐</span>
+                            <span>4.2 rating</span>
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="showRouteModal('256', 'Madurai Fast', false)">
+                            <span>📍</span>
+                            <span>View Route</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>💬</span>
+                            <span>Reviews</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTRIBUTION TAB -->
+        <div id="contribution-tab" class="tab-content">
+            <div class="contribution-container">
+                <div class="points-banner">
+                    <div class="points-info">
+                        <div class="points-icon">⭐</div>
+                        <div class="points-text">
+                            <h3>125 Points</h3>
+                            <p>Keep contributing to earn more!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contribution-grid">
+                    <div class="contribution-card" onclick="showContributionForm()">
+                        <div class="contribution-icon">🚌</div>
+                        <h3 class="contribution-title">Add Bus Route</h3>
+                        <p class="contribution-desc">Share information about a new bus route</p>
+                        <span class="contribution-reward">⭐ +25 Points</span>
+                    </div>
+
+                    <div class="contribution-card" onclick="showContributionForm()">
+                        <div class="contribution-icon">⏰</div>
+                        <h3 class="contribution-title">Update Timings</h3>
+                        <p class="contribution-desc">Help keep schedules accurate</p>
+                        <span class="contribution-reward">⭐ +15 Points</span>
+                    </div>
+
+                    <div class="contribution-card" onclick="showContributionForm()">
+                        <div class="contribution-icon">📸</div>
+                        <h3 class="contribution-title">Upload Photos</h3>
+                        <p class="contribution-desc">Add bus or terminal photos</p>
+                        <span class="contribution-reward">⭐ +10 Points</span>
+                    </div>
+                </div>
+
+                <div class="form-section" id="contributionForm">
+                    <div class="success-message" id="successMessage">
+                        <div style="font-size: 32px;">✅</div>
+                        <div>
+                            <h4>Contribution Submitted!</h4>
+                            <p>Thank you! Your contribution will be reviewed soon.</p>
+                        </div>
+                    </div>
+
+                    <h2 class="form-title">Add Bus Route Information</h2>
+                    <p class="form-subtitle">Please provide accurate details to help fellow travelers</p>
+
+                    <form onsubmit="submitContribution(event)">
+                        <div class="form-group">
+                            <label class="form-label">Bus Number *</label>
+                            <input type="text" class="form-input" placeholder="e.g., 124A" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Bus Name *</label>
+                            <input type="text" class="form-input" placeholder="e.g., Chennai Express" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">From Location *</label>
+                            <input type="text" class="form-input" placeholder="e.g., Chennai - CMBT" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">To Location *</label>
+                            <input type="text" class="form-input" placeholder="e.g., Madurai - Periyar" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea class="form-textarea" placeholder="Any other helpful information (optional)"></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; margin-top: 24px;">
+                            <button type="button" class="btn btn-secondary" onclick="hideContributionForm()" style="flex: 1;">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                <span>🚀</span>
+                                <span>Submit</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Preview Toggle -->
+    <div class="device-toggle" id="deviceToggle">
+        <button class="device-btn active" onclick="setDeviceView('desktop')" title="Desktop View (Full)">
+            🖥️
+            <span>Desktop</span>
+        </button>
+        <button class="device-btn" onclick="setDeviceView('tablet')" title="Tablet View (768px)">
+            📱
+            <span>Tablet</span>
+        </button>
+        <button class="device-btn" onclick="setDeviceView('mobile')" title="Mobile View (375px)">
+            📱
+            <span>Mobile</span>
+        </button>
+    </div>
+
+    <!-- ROUTE DETAILS MODAL -->
+    <div class="modal-overlay" id="routeModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <h2 id="modalBusNumber">124A - Chennai Express</h2>
+                    <p>Chennai CMBT → Madurai New Bus Stand</p>
+                </div>
+                <button class="modal-close" onclick="closeRouteModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="route-summary">
+                    <div class="route-stat">
+                        <div class="route-stat-value">12</div>
+                        <div class="route-stat-label">Total Stops</div>
+                    </div>
+                    <div class="route-stat">
+                        <div class="route-stat-value">7h 30m</div>
+                        <div class="route-stat-label">Duration</div>
+                    </div>
+                    <div class="route-stat">
+                        <div class="route-stat-value">485 km</div>
+                        <div class="route-stat-label">Distance</div>
+                    </div>
+                </div>
+
+                <div class="stops-timeline" id="stopsTimeline">
+                    <!-- Stops will be inserted here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Highlight active button
+            event.target.closest('.tab-button').classList.add('active');
+        }
+
+        // Search functions
+        function swapLocations() {
+            const from = document.getElementById('fromLocation');
+            const to = document.getElementById('toLocation');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+        }
+
+        function handleSearch(e) {
+            e.preventDefault();
+            // Switch to results tab
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('results-tab').classList.add('active');
+            document.querySelectorAll('.tab-button')[1].classList.add('active');
+        }
+
+        // Filter chips
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('chip-active'));
+                this.classList.add('chip-active');
+            });
+        });
+
+        // Contribution functions
+        function showContributionForm() {
+            document.getElementById('contributionForm').classList.add('show');
+            document.getElementById('contributionForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideContributionForm() {
+            document.getElementById('contributionForm').classList.remove('show');
+        }
+
+        function submitContribution(e) {
+            e.preventDefault();
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+                hideContributionForm();
+            }, 3000);
+        }
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn, .filter-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.5);
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Route modal functions
+        function showRouteModal(busNumber, busName, hasLiveTracking) {
+            const modal = document.getElementById('routeModal');
+            const modalTitle = document.getElementById('modalBusNumber');
+            const timeline = document.getElementById('stopsTimeline');
+            
+            modalTitle.textContent = `${busNumber} - ${busName}`;
+            
+            // Sample route data (in production, this would come from API)
+            const stops = hasLiveTracking ? [
+                { name: 'Chennai - CMBT', time: '06:30 AM', duration: 'Start', distance: '0 km', isOrigin: true },
+                { name: 'Tambaram', time: '07:00 AM', duration: '30 min', distance: '28 km' },
+                { name: 'Chengalpattu', time: '07:30 AM', duration: '30 min', distance: '56 km' },
+                { name: 'Tindivanam', time: '08:30 AM', duration: '1 hr', distance: '98 km' },
+                { name: 'Villupuram', time: '09:15 AM', duration: '45 min', distance: '145 km', isCurrent: true },
+                { name: 'Ulundurpet', time: '10:00 AM', duration: '45 min', distance: '185 km' },
+                { name: 'Virudhachalam', time: '10:45 AM', duration: '45 min', distance: '225 km' },
+                { name: 'Trichy', time: '12:00 PM', duration: '1 hr 15 min', distance: '315 km' },
+                { name: 'Dindigul', time: '01:00 PM', duration: '1 hr', distance: '405 km' },
+                { name: 'Palani Road', time: '01:30 PM', duration: '30 min', distance: '440 km' },
+                { name: 'Madurai - New Bus Stand', time: '02:00 PM', duration: '30 min', distance: '485 km', isDestination: true }
+            ] : [
+                { name: 'Chennai - Koyambedu', time: '08:00 AM', duration: 'Start', distance: '0 km', isOrigin: true },
+                { name: 'Poonamallee', time: '08:30 AM', duration: '30 min', distance: '18 km' },
+                { name: 'Tiruvallur', time: '09:15 AM', duration: '45 min', distance: '45 km' },
+                { name: 'Chittoor', time: '10:30 AM', duration: '1 hr 15 min', distance: '125 km' },
+                { name: 'Vellore', time: '11:30 AM', duration: '1 hr', distance: '178 km' },
+                { name: 'Tiruvannamalai', time: '12:45 PM', duration: '1 hr 15 min', distance: '245 km' },
+                { name: 'Salem', time: '02:00 PM', duration: '1 hr 15 min', distance: '330 km' },
+                { name: 'Karur', time: '03:15 PM', duration: '1 hr 15 min', distance: '395 km' },
+                { name: 'Dindigul', time: '04:00 PM', duration: '45 min', distance: '450 km' },
+                { name: 'Madurai - MGR Bus Stand', time: '04:15 PM', duration: '15 min', distance: '465 km', isDestination: true }
+            ];
+            
+            // Build timeline HTML
+            timeline.innerHTML = stops.map(stop => {
+                const classes = ['stop-item'];
+                if (stop.isOrigin) classes.push('origin');
+                if (stop.isDestination) classes.push('destination');
+                if (stop.isCurrent) classes.push('current');
+                
+                const marker = stop.isOrigin ? '🚌' : stop.isDestination ? '🏁' : stop.isCurrent ? '📍' : '';
+                
+                return `
+                    <div class="${classes.join(' ')}">
+                        <div class="stop-marker">${marker}</div>
+                        <div class="stop-content">
+                            <div class="stop-info">
+                                <div class="stop-name">${stop.name}</div>
+                                <div class="stop-details">
+                                    <span class="stop-distance">📏 ${stop.distance}</span>
+                                    ${!stop.isOrigin ? `<span>⏱️ ${stop.duration} from previous</span>` : ''}
+                                </div>
+                                ${stop.isCurrent ? '<div class="current-location-badge">🔴 Bus currently here</div>' : ''}
+                            </div>
+                            <div class="stop-time">
+                                <div class="stop-arrival">${stop.time}</div>
+                                ${stop.isCurrent ? '<div class="stop-duration">Live</div>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRouteModal() {
+            const modal = document.getElementById('routeModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                closeRouteModal();
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeRouteModal();
+            }
+        });
+
+        // Device view toggle
+        function setDeviceView(device) {
+            const body = document.body;
+            const buttons = document.querySelectorAll('.device-btn');
+            const appContainer = document.querySelector('.app-container');
+            
+            // Remove all device classes
+            body.classList.remove('mobile-view', 'tablet-view');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add selected device class and adjust styles
+            if (device === 'mobile') {
+                body.classList.add('mobile-view');
+                // Force mobile breakpoint styles
+                appContainer.style.maxWidth = '375px';
+            } else if (device === 'tablet') {
+                body.classList.add('tablet-view');
+                // Force tablet breakpoint styles
+                appContainer.style.maxWidth = '768px';
+            } else {
+                // Desktop - remove inline styles
+                appContainer.style.maxWidth = '1200px';
+            }
+            
+            // Highlight active button
+            event.target.closest('.device-btn').classList.add('active');
+            
+            // Log viewport change
+            console.log(`Device view changed to: ${device}`);
+        }
+
+        // Add viewport info on load
+        window.addEventListener('load', function() {
+            console.log('Viewport width:', window.innerWidth);
+            console.log('Viewport height:', window.innerHeight);
+            console.log('Device pixel ratio:', window.devicePixelRatio);
+            console.log('Touch support:', 'ontouchstart' in window);
+        });
+
+        // Detect orientation change
+        window.addEventListener('orientationchange', function() {
+            console.log('Orientation changed to:', screen.orientation?.type || 'unknown');
+        });
+    </script>
+</body>
+</html>

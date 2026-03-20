@@ -162,8 +162,8 @@ export const ContactUs: React.FC = () => {
         <section className="content-section">
           <h2>{t('pages.contact.emailTitle', 'Email')}</h2>
           <p>
-            <a href="mailto:support@perundhu.com" className="contact-link">
-              support@perundhu.com
+            <a href="mailto:perundhu@gmail.com" className="contact-link">
+              perundhu@gmail.com
             </a>
           </p>
         </section>
@@ -304,10 +304,12 @@ export const ContactUs: React.FC = () => {
           )}
         </section>
         
+        {/* TODO: Enable later - Report an Issue feature
         <section className="content-section">
           <h2>{t('pages.contact.reportIssueTitle', 'Report an Issue')}</h2>
           <p>{t('pages.contact.reportIssueText', 'Found incorrect bus timings or route information? Use the "Report Issue" feature on any bus route to let us know, and our team will verify and update the information.')}</p>
         </section>
+        */}
         
         <div className="back-link">
           <Link to="/">← {t('common.backToHome', 'Back to Home')}</Link>
@@ -363,7 +365,7 @@ export const PrivacyPolicy: React.FC = () => {
         
         <section className="content-section">
           <h2>{t('pages.privacy.yourRightsTitle', 'Your Rights')}</h2>
-          <p>{t('pages.privacy.yourRightsText', 'You have the right to access, correct, or delete your personal data. Contact us at support@perundhu.com for any privacy-related requests.')}</p>
+          <p>{t('pages.privacy.yourRightsText', 'You have the right to access, correct, or delete your personal data. Contact us at perundhu@gmail.com for any privacy-related requests.')}</p>
         </section>
         
         <div className="back-link">
@@ -449,7 +451,9 @@ export const FAQ: React.FC = () => {
     },
     {
       question: t('pages.faq.q3', 'How can I contribute route information?'),
-      answer: t('pages.faq.a3', 'Click on "Contribute" in the app to add new route information. You can enter details manually, upload photos of bus schedules, paste text from messages, or use voice input.')
+      answer: t('pages.faq.a3', 'Click on "Contribute" in the app to add new route information. Currently, you can enter details manually using the form.')
+      // FEATURE DISABLED: Other contribution methods (photo upload, paste text, voice input) are disabled
+      // answer: t('pages.faq.a3', 'Click on "Contribute" in the app to add new route information. You can enter details manually, upload photos of bus schedules, paste text from messages, or use voice input.')
     },
     {
       question: t('pages.faq.q4', 'How does bus tracking work?'),

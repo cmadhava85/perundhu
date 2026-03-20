@@ -2,10 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#0EA5E9" />
     <meta name="description" content="Real-time bus tracking and route search for Tamil Nadu public transport" />
+    <meta name="keywords" content="Tamil Nadu bus, bus tracker, bus route, TNSTC, MTC, bus timings, public transport, Chennai bus, Tamil Nadu transport" />
+    <meta name="author" content="Perundhu" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.perundhu.com/" />
+    <meta property="og:title" content="Perundhu - Tamil Nadu Bus Tracker" />
+    <meta property="og:description" content="Real-time bus tracking and route search for Tamil Nadu public transport. Find bus routes, timings, and live tracking across Tamil Nadu." />
+    <meta property="og:image" content="https://www.perundhu.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Perundhu" />
+    <meta property="og:locale" content="en_IN" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.perundhu.com/" />
+    <meta name="twitter:title" content="Perundhu - Tamil Nadu Bus Tracker" />
+    <meta name="twitter:description" content="Real-time bus tracking and route search for Tamil Nadu public transport" />
+    <meta name="twitter:image" content="https://www.perundhu.com/twitter-card.jpg" />
     
     <!-- SEO & Bot Protection -->
     <meta name="robots" content="index, follow, noarchive, nosnippet">
@@ -34,10 +63,26 @@
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
     
     <!-- Preconnect to APIs for faster loading -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
     <link rel="preconnect" href="https://www.google.com/recaptcha/" crossorigin />
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     
     <title>Perundhu - Bus Tracker</title>
+    
+    <!-- Google Analytics 4 -->
+    <!-- TODO: Replace G-XXXXXXXXXX with your actual GA4 Measurement ID -->
+    <!-- Get it from: https://analytics.google.com/analytics/web/ -> Admin -> Data Streams -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        'send_page_view': true,
+        'anonymize_ip': true
+      });
+    </script>
     
     <!-- Google AdSense is loaded dynamically by GoogleAdContainer when ads are enabled -->
     <!-- reCAPTCHA Enterprise API (loaded dynamically by recaptchaService when enabled) -->
