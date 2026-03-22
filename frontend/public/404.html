@@ -92,9 +92,16 @@
             border-color: rgba(255, 255, 255, 0.5);
         }
         
-        .icon {
-            font-size: 80px;
+        .logo {
+            width: 100px;
+            height: 100px;
             margin-bottom: 20px;
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.95); }
         }
         
         @media (max-width: 600px) {
@@ -118,7 +125,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="icon">🚌</div>
+        <img src="/favicon.svg" alt="Perundhu" class="logo" />
         <div class="error-code">404</div>
         <h1>Oops! This Bus Route Doesn't Exist</h1>
         <p>The page you're looking for might have been removed, had its name changed, or is temporarily unavailable.</p>

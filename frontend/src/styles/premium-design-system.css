@@ -965,6 +965,16 @@ button:disabled,
   animation: float 3s ease-in-out infinite;
 }
 
+/* Branded logo for empty states */
+.empty-state-logo {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 0 auto 1rem;
+  object-fit: contain;
+  animation: float 3s ease-in-out infinite;
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);

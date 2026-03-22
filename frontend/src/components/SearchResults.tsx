@@ -406,7 +406,7 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
           {buses.length === 0 ? (
             <div className="empty-results">
               <div className="empty-state-container">
-                <div className="empty-state-icon">🚌</div>
+                <img src="/favicon.svg" alt="Perundhu" className="empty-state-logo" />
                 <h2 className="empty-state-title">{t('searchResults.noResults', 'No buses found for this route')}</h2>
                 <p className="empty-state-description">
                   {t('searchResults.noResultsDescription', 'We couldn\'t find any buses operating on this route. You can help by contributing this route information.')}

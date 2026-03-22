@@ -8,6 +8,8 @@ export interface LoadingSpinnerProps {
   message?: string;
   /** Whether to show full screen overlay */
   fullScreen?: boolean;
+  /** Use branded Perundhu logo instead of spinner rings */
+  useLogo?: boolean;
   /** Custom class name */
   className?: string;
 }
@@ -23,15 +25,23 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   size = 'md',
   message,
   fullScreen = false,
+  useLogo = false,
   className = '',
 }) => {
-  const _sizeClasses = {
-    sm: 'w-6 h-6',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
+  const logoSizes = {
+    sm: 24,
+    md: 32,
+    lg: 48,
   };
 
-  const spinner = (
+  const spinner = useLogo ? (
+    <img 
+      src="/favicon.svg" 
+      alt="Loading" 
+      className={`loading-logo-spinner logo-pulse loading-logo-${size} ${className}`}
+      style={{ width: logoSizes[size], height: logoSizes[size] }}
+    />
+  ) : (
     <div className={`loading-spinner loading-spinner-${size} ${className}`}>
       <div className="spinner-ring" />
       <div className="spinner-ring" />
