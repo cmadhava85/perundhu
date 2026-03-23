@@ -62,7 +62,9 @@ const AdminService = {
     const response = await axios.get(`${API_URL}/admin/contributions/routes`, {
       headers: { Authorization: authHeader }
     });
-    return response.data;
+    // Backend returns paginated response: { data: [...], total, page, size }
+    // Extract the array from response.data.data
+    return response.data.data || [];
   },
 
   getPendingRouteContributions: async (): Promise<RouteContribution[]> => {
@@ -193,7 +195,9 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const response = await axios.get(`${API_URL}/admin/contributions/images`, {
       headers: { Authorization: authHeader }
     });
-    return response.data;
+    // Backend returns paginated response: { data: [...], total, page, size }
+    // Extract the array from response.data.data
+    return response.data.data || [];
   },
 
   getPendingImageContributions: async (): Promise<ImageContribution[]> => {
@@ -201,7 +205,9 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     const response = await axios.get(`${API_URL}/admin/contributions/images/pending`, {
       headers: { Authorization: authHeader }
     });
-    return response.data;
+    // Backend returns paginated response: { data: [...], total, page, size }
+    // Extract the array from response.data.data
+    return response.data.data || [];
   },
 
   getPendingImageContributionsPaged: async (page: number, size: number): Promise<PaginatedResponse<ImageContribution>> => {
