@@ -39,11 +39,9 @@ test.describe('Search and Results Flow', () => {
     await fromInput.click();
     await fromInput.fill('Chen');
     
-    // Wait a bit for suggestions to appear
-    await page.waitForTimeout(1000);
-    
-    // Check if suggestions list appears (using aria role)
+    // Wait for suggestions to load from API - increased timeout
     const suggestionsList = page.locator('[role="listbox"]').first();
+    await suggestionsList.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
     
     // Suggestions should be visible or at least exist
     const suggestionsExist = await suggestionsList.count() > 0;

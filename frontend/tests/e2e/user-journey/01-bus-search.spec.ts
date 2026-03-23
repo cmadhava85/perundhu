@@ -155,10 +155,13 @@ test.describe('Bus Search & Schedule Lookup', () => {
       
       await fromInput.click();
       await fromInput.fill('Chen');
-      await page.waitForTimeout(1000);
+      
+      // Wait for listbox to appear with suggestions
+      const listbox = page.locator('[role="listbox"]').first();
+      await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
       
       // Expected: Location appears, suggestions disappear
-      const suggestions = page.locator('.autocomplete-suggestion, [role="option"], .suggestion-item');
+      const suggestions = page.locator('[role="option"]');
       const hasSuggestions = await suggestions.first().isVisible({ timeout: 3000 }).catch(() => false);
       
       if (hasSuggestions) {
@@ -173,7 +176,7 @@ test.describe('Bus Search & Schedule Lookup', () => {
     });
 
     test('TC-U1.2.2: Autocomplete with partial text', async ({ page }) => {
-      // Steps: Type "ch" → Verify suggestions appear
+      // Steps: Type "che" → Verify suggestions appear (need at least 3 chars)
       await page.goto('/');
       await page.waitForLoadState('domcontentloaded');
       
@@ -181,11 +184,14 @@ test.describe('Bus Search & Schedule Lookup', () => {
       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
       
       await fromInput.click();
-      await fromInput.fill('ch');
-      await page.waitForTimeout(1000);
+      await fromInput.fill('che');
+      
+      // Wait for listbox to appear with suggestions
+      const listbox = page.locator('[role="listbox"]').first();
+      await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
       
       // Expected: Suggestions contain "Chennai", "Chengalpattu", etc.
-      const suggestions = page.locator('.autocomplete-suggestion, [role="option"], .suggestion-item');
+      const suggestions = page.locator('[role="option"]');
       const suggestionCount = await suggestions.count();
       
       // Validate: Case-insensitive search works
@@ -193,7 +199,7 @@ test.describe('Bus Search & Schedule Lookup', () => {
     });
 
     test('TC-U1.2.3: Autocomplete with special characters (Tamil)', async ({ page }) => {
-      // Steps: Type Tamil characters → Verify suggestions
+      // Steps: Type Tamil characters → Verify suggestions (skip if no Tamil data)
       await page.goto('/');
       await page.waitForLoadState('domcontentloaded');
       
@@ -202,10 +208,13 @@ test.describe('Bus Search & Schedule Lookup', () => {
       
       await fromInput.click();
       await fromInput.fill('சென்');
-      await page.waitForTimeout(1500);
+      
+      // Wait for listbox to appear
+      const listbox = page.locator('[role="listbox"]').first();
+      await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
       
       // Expected: Suggestions match Tamil location names
-      const suggestions = page.locator('.autocomplete-suggestion, [role="option"], .suggestion-item');
+      const suggestions = page.locator('[role="option"]');
       const suggestionCount = await suggestions.count();
       
       // Validate: Unicode/Tamil character handling works

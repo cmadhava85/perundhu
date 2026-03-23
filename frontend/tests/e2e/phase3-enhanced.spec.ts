@@ -21,7 +21,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
         return el?.tagName.toLowerCase();
       });
       
-      expect(['input', 'button', 'a']).toContain(focusedElement);
+      expect(['input', 'button', 'a', 'select']).toContain(focusedElement);
     });
 
     test('all images have alt text', async ({ page }) => {

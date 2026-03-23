@@ -481,3 +481,60 @@ vi.mock('axios', () => {
     default: mockAxios
   };
 });
+
+// ============================================================================
+// PHASE 1 OPTIMIZATION: Mock heavy map components globally
+// ============================================================================
+
+// Mock RouteMap component to reduce memory usage in tests
+vi.mock('./components/RouteMap', () => ({
+  default: () => null,
+  RouteMap: () => null
+}));
+
+// Mock CombinedMapTracker component to reduce memory usage 
+vi.mock('./components/CombinedMapTracker', () => ({
+  default: () => null,
+  CombinedMapTracker: () => null
+}));
+
+// Mock OpenStreetMap component
+vi.mock('./components/OpenStreetMapComponent', () => ({
+  default: () => null,
+  OpenStreetMapComponent: () => null
+}));
+
+// Mock react-google-maps/api heavily loaded components
+vi.mock('@react-google-maps/api', () => ({
+  GoogleMap: () => null,
+  LoadScript: ({ children }: { children: unknown }) => children,
+  Marker: () => null,
+  Polyline: () => null,
+  InfoWindow: () => null,
+  Circle: () => null,
+  useJsApiLoader: () => ({
+    isLoaded: true,
+    loadError: null
+  }),
+  useLoadScript: () => ({
+    isLoaded: true,
+    loadError: null
+  })
+}));
+
+// Mock react-leaflet (OpenStreetMap dependency)
+vi.mock('react-leaflet', () => ({
+  MapContainer: () => null,
+  TileLayer: () => null,
+  Marker: () => null,
+  Popup: () => null,
+  Polyline: () => null,
+  useMap: () => ({
+    fitBounds: vi.fn(),
+    setView: vi.fn()
+  })
+}));
+
+// ============================================================================
+// End of Phase 1 map mocking
+// ============================================================================

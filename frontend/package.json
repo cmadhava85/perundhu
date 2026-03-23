@@ -1,7 +1,7 @@
 {
   "name": "perundhu",
   "private": true,
-  "version": "1.0.27",
+  "version": "1.0.35",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,10 @@
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "preview": "vite preview",
     "test": "./run-tests-safe.sh",
-    "test:raw": "NODE_OPTIONS='--max-old-space-size=3584 --expose-gc' vitest run --no-coverage",
+    "test:raw": "NODE_OPTIONS='--max-old-space-size=4096 --expose-gc' vitest run --no-coverage",
+    "test:fast": "NODE_OPTIONS='--max-old-space-size=4096 --expose-gc' vitest run --no-coverage --exclude='**/{SearchResults,BusTracker,CombinedMap}*.test.tsx'",
+    "test:sequential": "NODE_OPTIONS='--max-old-space-size=3072 --expose-gc' vitest run --no-coverage --pool.forks.singleFork=true --pool.forks.maxForks=1 --max-concurrency=1 --exclude='**/{SearchResults,BusTracker,CombinedMap,RouteMap,RouteDetails,AdminDashboard,BusDataUpload,UserContributions,Analytics,MapView,AdminRouteDetails}*.test.tsx'",
+    "test:critical": "NODE_OPTIONS='--max-old-space-size=4096 --expose-gc' vitest run --no-coverage --pool.forks.singleFork=true --pool.forks.maxForks=1 --max-concurrency=1 src/components/{Header,Footer,ErrorBoundary,Loading}.test.tsx src/utils/*.test.ts src/hooks/*.test.ts",
     "test:batched": "./run-tests-batched.sh",
     "test:selective": "./run-tests-selective.sh",
     "test:single": "NODE_OPTIONS='--max-old-space-size=4096 --expose-gc' vitest run --no-coverage --reporter=verbose",

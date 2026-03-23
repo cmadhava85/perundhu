@@ -3,7 +3,7 @@ import './styles/transit-design-system.css';
 import './styles/transit-bus-card.css';
 import './styles/transit-realtime.css';
 import './styles/micro-interactions.css';
-import { useState, useEffect, useCallback, useRef, lazy } from 'react';
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, useNavigate, useLocation } from 'react-router-dom';
 import type { Location as BusLocation } from './types';
@@ -379,26 +379,28 @@ function AppContent() {
       />
 
       <main className="flex-grow container mx-auto px-4 py-6">
-        <AppRoutes
-          locations={locations}
-          fromLocation={fromLocation}
-          toLocation={toLocation}
-          buses={buses}
-          stops={stops}
-          stopsMap={stopsMap}
-          searchError={searchError}
-          connectingRoutes={connectingRoutes}
-          busesLoading={busesLoading || isSearchPending}
-          loadingMore={loadingMore}
-          hasNextPage={hasNextPage}
-          fetchNextPage={fetchNextPage}
-          totalCount={totalCount}
-          showAnalytics={showAnalytics}
-          userId={userId}
-          featureSettings={featureSettings}
-          onLocationChange={handleLocationChange}
-          onSearch={handleRoutesSearch}
-        />
+        <Suspense fallback={<Loading message={t('app.loading', 'Loading...')} />}>
+          <AppRoutes
+            locations={locations}
+            fromLocation={fromLocation}
+            toLocation={toLocation}
+            buses={buses}
+            stops={stops}
+            stopsMap={stopsMap}
+            searchError={searchError}
+            connectingRoutes={connectingRoutes}
+            busesLoading={busesLoading || isSearchPending}
+            loadingMore={loadingMore}
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            totalCount={totalCount}
+            showAnalytics={showAnalytics}
+            userId={userId}
+            featureSettings={featureSettings}
+            onLocationChange={handleLocationChange}
+            onSearch={handleRoutesSearch}
+          />
+        </Suspense>
       </main>
       
       <Footer />

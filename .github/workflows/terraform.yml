@@ -305,11 +305,24 @@ jobs:
       working-directory: ${{ env.TF_ENV_DIR }}
       run: terraform init -input=false -lock=false
     
-    - name: Terraform Plan & Apply
+    - name: Download Plan
+      uses: actions/download-artifact@v4
+      with:
+        name: terraform-plan-${{ github.event.inputs.environment }}
+        path: ${{ env.TF_ENV_DIR }}
+    
+    - name: Verify Plan File
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
-        terraform plan -out=tfplan -input=false -lock=false
-        terraform apply -auto-approve tfplan
+        if [ ! -f tfplan ]; then
+          echo "ERROR: tfplan file not found in ${{ env.TF_ENV_DIR }}"
+          exit 1
+        fi
+        echo "✓ Plan file verified"
+
+    - name: Terraform Apply
+      working-directory: ${{ env.TF_ENV_DIR }}
+      run: terraform apply -auto-approve tfplan
     
     - name: Terraform Output
       id: output
@@ -337,69 +350,78 @@ jobs:
         echo "Check [Cloud Console](https://console.cloud.google.com/run?project=${{ env.PROJECT_ID }}) for resources" >> $GITHUB_STEP_SUMMARY
 
   terraform-destroy:
-    name: Destroy Terraform - ${{ github.event.inputs.environment }}
+    name: Destroy Terraform - ${{ matrix.environment }}
     runs-on: ubuntu-latest
     needs: [terraform-plan, terraform-plan-production]
     if: |
-      always() &&
-      github.event_name == 'workflow_dispatch' &&
-      github.event.inputs.action == 'destroy' &&
-      (
-        (github.event.inputs.environment == 'preprod' && needs.terraform-plan.result == 'success') ||
-        (github.event.inputs.environment == 'production' && needs.terraform-plan-production.result == 'success')
+      always() && (
+        (github.event_name == 'workflow_dispatch' && 
+        github.event.inputs.action == 'destroy' &&
+        github.event.inputs.environment == 'preprod') ||
+        (github.event_name == 'workflow_dispatch' && 
+        github.event.inputs.action == 'destroy' &&
+        github.event.inputs.environment == 'production')
       )
-
+    
+    strategy:
+      matrix:
+        include:
+          - environment: preprod
+            tf_dir: infrastructure/terraform/environments/preprod
+            project_id: astute-strategy-406601
+          - environment: production
+            tf_dir: infrastructure/terraform/environments/production
+            project_id: perundhu-prod-001
+      max-parallel: 1
+    
     environment:
-      name: ${{ github.event.inputs.environment }}-infrastructure-destroy
-
+      name: ${{ matrix.environment }}-infrastructure-destroy
+    
     permissions:
       contents: read
       id-token: write
-
+    
     env:
-      TF_ENV_DIR: infrastructure/terraform/environments/${{ github.event.inputs.environment }}
-      PROJECT_ID: ${{ github.event.inputs.environment == 'preprod' && 'astute-strategy-406601' || 'perundhu-prod-001' }}
-
+      TF_ENV_DIR: ${{ matrix.tf_dir }}
+    
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Authenticate to Google Cloud (preprod)
-      if: github.event.inputs.environment == 'preprod'
+      if: matrix.environment == 'preprod'
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET_PREPROD }}
         create_credentials_file: true
         export_environment_variables: true
-
+    
     - name: Authenticate to Google Cloud (production)
-      if: github.event.inputs.environment == 'production'
+      if: matrix.environment == 'production'
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
         create_credentials_file: true
         export_environment_variables: true
-
+    
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
-
+    
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ env.TF_VERSION }}
-
+    
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
       run: terraform init -input=false
-
+    
     - name: Terraform Destroy
       working-directory: ${{ env.TF_ENV_DIR }}
       run: terraform destroy -auto-approve -lock=false
-
+    
     - name: Create Summary
       run: |
-        echo "## ⚠️ ${{ github.event.inputs.environment }} Infrastructure Destroyed" >> $GITHUB_STEP_SUMMARY
-        echo "- **Project**: ${{ env.PROJECT_ID }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Destroyed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+        echo "## ⚠️ ${{ matrix.environment }} Infrastructure Destroyed" >> $GITHUB_STEP_SUMMARY
 
 
 

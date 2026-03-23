@@ -3,10 +3,8 @@ import { render, screen } from '../../test-utils';
 import RouteMap from '../RouteMap';
 import type { Location } from '../../types/apiTypes';
 
-// Mock MapComponent
-vi.mock('../MapComponent', () => ({
-  default: vi.fn(() => <div data-testid="map-component">Map Component</div>)
-}));
+// Mock MapComponent using the __mocks__ directory
+vi.mock('../MapComponent');
 
 describe('RouteMap Component', () => {
   const mockFromLocation: Location = {

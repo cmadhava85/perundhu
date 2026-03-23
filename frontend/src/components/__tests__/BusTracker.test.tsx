@@ -8,12 +8,7 @@ import type { Bus, Stop } from '../../types';
 // Mock hooks and utilities
 vi.mock('../../hooks/useAuth');
 vi.mock('../../utils/deviceId');
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string, fallback?: string) => fallback || key,
-    i18n: { language: 'en' }
-  })
-}));
+// NOTE: react-i18next is globally mocked in setupTests.ts
 
 // Mock fetch API
 global.fetch = vi.fn();

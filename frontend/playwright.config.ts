@@ -64,12 +64,12 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npx vite preview --port 4173',
-  //   url: 'http://localhost:4173',
-  //   reuseExistingServer: !process.env.CI,
-  //   timeout: 120000,
-  // },
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:5173',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120000,
+  },
 
   /* Global setup and teardown */
   // globalSetup: require.resolve('./tests/e2e/global-setup.ts'),

@@ -7,7 +7,6 @@ import ErrorBoundary from './ErrorBoundary';
 import { SearchErrorFallback, MapErrorFallback, ContributionErrorFallback } from './ErrorFallbacks';
 import Loading from './Loading';
 import ErrorDisplay from './ErrorDisplay';
-import { LoadingSkeleton } from './LoadingSkeleton';
 import TransitSearchForm from './TransitSearchForm';
 
 // Lazy-loaded route components — these pull in Leaflet/map chunks; only fetch when navigated to
@@ -33,7 +32,7 @@ const AboutUs = React.lazy(() => import('./StaticPages').then(module => ({ defau
 const ContactUs = React.lazy(() => import('./StaticPages').then(module => ({ default: module.ContactUs })));
 const PrivacyPolicy = React.lazy(() => import('./StaticPages').then(module => ({ default: module.PrivacyPolicy })));
 const TermsOfService = React.lazy(() => import('./StaticPages').then(module => ({ default: module.TermsOfService })));
-const FAQ = React.lazy(() => import('./StaticPages').then(module => ({ default: module.FAQ })));
+const FaqPage = React.lazy(() => import('./StaticPages').then(module => ({ default: module.FAQ })));
 
 interface AppRoutesProps {
   locations: BusLocation[];
@@ -98,57 +97,45 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
     <Routes>
       <Route path="/" element={
         <ErrorBoundary fallback={SearchErrorFallback}>
-          {fromLocation && toLocation ? (
-            <TransitSearchForm 
-              locations={locations}
-              fromLocation={fromLocation}
-              toLocation={toLocation}
-              onLocationChange={onLocationChange}
-              onSearch={(from, to, _options) => onSearch(from, to)}
-            />
-          ) : (
-            <LoadingSkeleton count={1} type="text" />
-          )}
+          <TransitSearchForm 
+            locations={locations}
+            fromLocation={fromLocation}
+            toLocation={toLocation}
+            onLocationChange={onLocationChange}
+            onSearch={(from, to, _options) => onSearch(from, to)}
+          />
         </ErrorBoundary>
       } />
       
       <Route path="/search" element={
         <ErrorBoundary fallback={SearchErrorFallback}>
-          {fromLocation && toLocation ? (
-            <TransitSearchForm 
-              locations={locations}
-              fromLocation={fromLocation}
-              toLocation={toLocation}
-              onLocationChange={onLocationChange}
-              onSearch={(from, to, _options) => onSearch(from, to)}
-            />
-          ) : (
-            <LoadingSkeleton count={1} type="text" />
-          )}
+          <TransitSearchForm 
+            locations={locations}
+            fromLocation={fromLocation}
+            toLocation={toLocation}
+            onLocationChange={onLocationChange}
+            onSearch={(from, to, _options) => onSearch(from, to)}
+          />
         </ErrorBoundary>
       } />
       
       <Route path="/search-results" element={
         <ErrorBoundary fallback={SearchErrorFallback}>
           <Suspense fallback={LazyLoadingFallback}>
-            {fromLocation && toLocation ? (
-              <SearchResults 
-                buses={buses}
-                fromLocation={fromLocation}
-                toLocation={toLocation}
-                stops={stops}
-                stopsMap={stopsMap}
-                error={searchError}
-                connectingRoutes={connectingRoutes}
-                loading={busesLoading}
-                loadingMore={loadingMore}
-                hasNextPage={hasNextPage}
-                onLoadMore={fetchNextPage}
-                totalCount={totalCount}
-              />
-            ) : (
-              <LoadingSkeleton count={1} type="text" />
-            )}
+            <SearchResults 
+              buses={buses}
+              fromLocation={fromLocation}
+              toLocation={toLocation}
+              stops={stops}
+              stopsMap={stopsMap}
+              error={searchError}
+              connectingRoutes={connectingRoutes}
+              loading={busesLoading}
+              loadingMore={loadingMore}
+              hasNextPage={hasNextPage}
+              onLoadMore={fetchNextPage}
+              totalCount={totalCount}
+            />
           </Suspense>
         </ErrorBoundary>
       } />
@@ -285,7 +272,7 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
       <Route path="/faq" element={
         <ErrorBoundary>
           <Suspense fallback={LazyLoadingFallback}>
-            <FAQ />
+            <FaqPage />
           </Suspense>
         </ErrorBoundary>
       } />
