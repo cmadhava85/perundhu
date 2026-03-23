@@ -99,8 +99,8 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
         <ErrorBoundary fallback={SearchErrorFallback}>
           <TransitSearchForm 
             locations={locations}
-            fromLocation={fromLocation}
-            toLocation={toLocation}
+            fromLocation={fromLocation ?? undefined}
+            toLocation={toLocation ?? undefined}
             onLocationChange={onLocationChange}
             onSearch={(from, to, _options) => onSearch(from, to)}
           />
@@ -111,8 +111,8 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
         <ErrorBoundary fallback={SearchErrorFallback}>
           <TransitSearchForm 
             locations={locations}
-            fromLocation={fromLocation}
-            toLocation={toLocation}
+            fromLocation={fromLocation ?? undefined}
+            toLocation={toLocation ?? undefined}
             onLocationChange={onLocationChange}
             onSearch={(from, to, _options) => onSearch(from, to)}
           />
@@ -124,8 +124,8 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
           <Suspense fallback={LazyLoadingFallback}>
             <SearchResults 
               buses={buses}
-              fromLocation={fromLocation}
-              toLocation={toLocation}
+              fromLocation={fromLocation!}
+              toLocation={toLocation!}
               stops={stops}
               stopsMap={stopsMap}
               error={searchError}
