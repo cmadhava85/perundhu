@@ -111,6 +111,7 @@ const Login: React.FC = () => {
                   id="email"
                   name="email"
                   type="email"
+                  inputMode="email"
                   autoComplete="email"
                   required
                   value={formData.email}

@@ -125,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({
             
             <a href="/" className="brand-link" aria-label="Go to home page">
               <div className="logo-container">
-                <img src="/favicon.svg" alt="Perundhu Logo" className="logo-icon" />
+                <img src="/favicon.svg" alt="Perundhu - Tamil Nadu Bus Finder home" className="logo-icon" loading="eager" />
               </div>
               <div className="header-title-group">
                 <h1 className="brand-name">பேருந்து</h1>

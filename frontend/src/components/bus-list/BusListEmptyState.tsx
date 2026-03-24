@@ -15,7 +15,7 @@ const BusListEmptyState: React.FC<BusListEmptyStateProps> = ({
   return (
     <div className={`card ${className}`}>
       <div className="card-body text-center py-12">
-        <img src="/favicon.svg" alt="Perundhu" className="empty-state-logo" style={{ width: '80px', height: '80px', margin: '0 auto 1rem', display: 'block' }} />
+        <img src="/favicon.svg" alt="No buses found illustration" className="empty-state-logo" style={{ width: '80px', height: '80px', margin: '0 auto 1rem', display: 'block' }} loading="lazy" />
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
           {t('busList.noBuses', 'No buses found')}
         </h3>

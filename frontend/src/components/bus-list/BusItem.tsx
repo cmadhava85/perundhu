@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../../types';
 import { formatTime, calculateDuration } from './busUtils';
+import { triggerHaptic } from '../../utils/haptic';
 
 interface BusItemProps {
   bus: Bus;
@@ -47,7 +48,10 @@ const BusItem: React.FC<BusItemProps> = ({
         }
         active:scale-95 sm:active:scale-100
       `}
-      onClick={onSelect}
+      onClick={() => {
+        triggerHaptic('selection');
+        onSelect();
+      }}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -127,6 +131,7 @@ const BusItem: React.FC<BusItemProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                triggerHaptic('light');
                 setShowStops(!showStops);
               }}
               className="w-full sm:flex-1 flex items-center justify-between px-3 sm:px-4 py-2 
@@ -143,6 +148,7 @@ const BusItem: React.FC<BusItemProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                triggerHaptic('medium');
                 onBook();
               }}
               className="w-full sm:w-auto min-h-[48px] px-4 sm:px-6 py-2 

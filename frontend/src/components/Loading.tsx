@@ -45,7 +45,7 @@ const Loading: React.FC<LoadingProps> = ({
   if (variant === 'search') {
     return (
       <div className="loading-container search-loading">
-        <img src="/favicon.svg" alt="Perundhu" className="loading-logo logo-pulse" />
+        <img src="/favicon.svg" alt="Perundhu bus search loading indicator" className="loading-logo logo-pulse" loading="eager" />
         <div className="loading-text">
           <h3>{t('loading.searching', 'Searching for routes...')}</h3>
           <p>{t('loading.searchMessage', 'Finding the best routes for you')}</p>
@@ -97,7 +97,7 @@ const Loading: React.FC<LoadingProps> = ({
       aria-busy="true"
       aria-live="polite"
     >
-      <img src="/favicon.svg" alt="Perundhu" className="loading-logo logo-pulse" aria-hidden="true" />
+      <img src="/favicon.svg" alt="Perundhu application loading" className="loading-logo logo-pulse" aria-hidden="true" />
       <p className="loading-text">{displayMessage}</p>
     </div>
   );

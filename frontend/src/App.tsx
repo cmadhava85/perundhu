@@ -368,6 +368,11 @@ function AppContent() {
 
   return (
     <div className="transit-app app-container min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
+      {/* Skip to main content - Accessibility */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      
       {/* Network status indicator */}
       <NetworkStatusIndicator />
       
@@ -378,7 +383,7 @@ function AppContent() {
         onTabChange={handleMainTabChange}
       />
 
-      <main className="flex-grow container mx-auto px-4 py-6">
+      <main id="main-content" className="flex-grow container mx-auto px-4 py-6">
         <Suspense fallback={<Loading message={t('app.loading', 'Loading...')} />}>
           <AppRoutes
             locations={locations}

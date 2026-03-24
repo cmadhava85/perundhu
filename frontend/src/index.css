@@ -10,6 +10,29 @@ html, body {
   background: linear-gradient(-45deg, #E0F2FE, #BAE6FD, #7DD3FC, #38BDF8);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
+  /* Optimize scroll performance */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Skip to main content link - Accessibility */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 0;
+  background: #10B981;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+  z-index: 10000;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #FFF;
+  outline-offset: 2px;
 }
 
 /* Animated gradient background */
@@ -40,6 +63,8 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* Optimize scroll performance */
+  will-change: scroll-position;
 }
 
 /* Ensure containers have proper dimensions */
@@ -48,6 +73,9 @@ html, body {
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
+  /* Optimize scroll performance */
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
 }
 
 /* Custom styles that extend Tailwind */
@@ -1069,6 +1097,44 @@ html {
 /* Safe area padding for iOS */
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Mobile Touch Feedback and Performance Optimizations - Priority 2 */
+@layer utilities {
+  /* Optimize scrollable containers for smooth momentum scrolling */
+  .scrollable-container,
+  [role="list"],
+  .overflow-y-auto,
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Touch-optimized interactive elements with hardware acceleration */
+  .interactive-card {
+    will-change: transform, box-shadow;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Mobile-first performance optimizations */
+  @media (max-width: 768px) {
+    /* Active state touch feedback */
+    button:not(.no-touch-feedback):active, 
+    a:not(.no-touch-feedback):active, 
+    [role="button"]:not(.no-touch-feedback):active {
+      transform: scale(0.98);
+      opacity: 0.9;
+      transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    }
+
+    /* Hardware acceleration for animated elements */
+    .card, .modal, .sheet {
+      transform: translateZ(0);
+      will-change: transform;
+    }
+  }
 }
 
 /* Touch Device Optimizations */

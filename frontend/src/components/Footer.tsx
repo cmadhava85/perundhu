@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="footer-brand">
             <div className="footer-logo-container">
-              <img src="/favicon.svg" alt="Perundhu Logo" className="footer-logo-icon" />
+              <img src="/favicon.svg" alt="Perundhu Logo" className="footer-logo-icon" loading="lazy" />
               <div>
                 <h2 className="footer-logo">பேருந்து</h2>
                 <span className="footer-logo-sub">Perundhu</span>

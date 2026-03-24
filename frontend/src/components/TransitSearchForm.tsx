@@ -381,6 +381,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     // Immediately reset the selecting flag to prevent blur timeout from reopening dropdown
     isSelectingFromRef.current = false;
     
+    triggerHaptic('selection');
     setSelectedFromLocation(location);
     setFromQuery(getLocationDisplayName(location));
     setShowFromSuggestions(false);
@@ -395,6 +396,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     // Immediately reset the selecting flag to prevent blur timeout from reopening dropdown
     isSelectingToRef.current = false;
     
+    triggerHaptic('selection');
     setSelectedToLocation(location);
     setToQuery(getLocationDisplayName(location));
     setShowToSuggestions(false);
@@ -629,7 +631,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   };
 
   return (
-    <div className="transit-app">
+    <div className="transit-app" role="search" aria-label="Bus route search">
       <div className="transit-card elevated transit-search-form">
         {/* Header */}
         <div className="stack stack-sm transit-form-header">
@@ -776,6 +778,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                 ref={fromInputRef}
                 id="from-location-input"
                 type="text"
+                inputMode="search"
                 value={fromQuery}
                 onChange={(e) => {
                   setFromQuery(e.target.value);
@@ -1063,6 +1066,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                 ref={toInputRef}
                 id="to-location-input"
                 type="text"
+                inputMode="search"
                 value={toQuery}
                 onChange={(e) => {
                   setToQuery(e.target.value);
