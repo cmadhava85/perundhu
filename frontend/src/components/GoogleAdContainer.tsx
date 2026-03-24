@@ -62,7 +62,12 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
   const shouldShowAd = adsEnabled && (!placementKey || isAdEnabled(placementKey as 'betweenSearchResults' | 'sidebarRight' | 'footerSection' | 'aboveSearchForm'));
 
   useEffect(() => {
-    if (!shouldShowAd) return;
+    if (!shouldShowAd) {
+      console.debug('Ad not shown:', { placement, placementKey, adsEnabled, shouldShowAd });
+      return;
+    }
+
+    console.log('Loading AdSense ad:', { placement, adSlot, adFormat, client: ADSENSE_CLIENT });
 
     // Ensure AdSense script is loaded (only injected once; no-op if already present)
     loadAdSenseScript();
@@ -71,10 +76,11 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
     // even if the script hasn't finished loading yet
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
+      console.log('AdSense push successful for:', placement);
     } catch (error) {
       console.warn('AdSense not loaded or error occurred:', error);
     }
-  }, [shouldShowAd]);
+  }, [shouldShowAd, placement, adSlot, adFormat]);
 
   // Don't render if ads are disabled
   if (!shouldShowAd) {
