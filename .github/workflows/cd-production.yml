@@ -31,7 +31,7 @@ env:
   GCP_PROJECT_ID: perundhu-prod-001
   GCP_REGION: us-central1
   ARTIFACT_REGISTRY: us-central1-docker.pkg.dev
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'
   JAVA_VERSION: '21'
 
 jobs:

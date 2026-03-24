@@ -22,7 +22,7 @@ on:
         default: '10'
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'
 
 jobs:
   lighthouse-performance:
