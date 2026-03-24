@@ -72,6 +72,7 @@ const AdminSettingsPanel: React.FC = () => {
     resetToDefaults, 
     saveToBackend, 
     syncWithBackend,
+    clearCacheAndRefresh,
     syncToPreprod,
     isSyncing,
     isSyncingToPreprod, 
@@ -93,7 +94,9 @@ const AdminSettingsPanel: React.FC = () => {
     setIsSaving(true);
     try {
       await saveToBackend();
-      setSaveMessage('Settings saved to server');
+      // Clear cache to immediately reflect the changes
+      await clearCacheAndRefresh();
+      setSaveMessage('\u2705 Settings saved and refreshed!');
     } catch {
       setSaveMessage('Failed to save to server');
     } finally {
@@ -127,6 +130,16 @@ const AdminSettingsPanel: React.FC = () => {
     setShowResetConfirm(false);
     setSaveMessage('Settings reset to defaults');
     setTimeout(() => setSaveMessage(null), 2000);
+  };
+
+  const handleClearCache = async () => {
+    try {
+      await clearCacheAndRefresh();
+      setSaveMessage('✅ Cache cleared! Fresh settings loaded');
+    } catch {
+      setSaveMessage('Failed to clear cache');
+    }
+    setTimeout(() => setSaveMessage(null), 3000);
   };
 
   return (
@@ -167,9 +180,19 @@ const AdminSettingsPanel: React.FC = () => {
             className="sync-button"
             onClick={handleSync}
             disabled={isSyncing}
+            title="Sync settings from server (uses 5-minute cache)"
           >
             {isSyncing ? <Loader2 size={16} className="spin" /> : <RefreshCw size={16} />}
             {t('admin.settings.sync', 'Sync')}
+          </button>
+          <button 
+            className="sync-button cache-clear"
+            onClick={handleClearCache}
+            disabled={isSyncing}
+            title="Clear cache and force immediate refresh from server"
+          >
+            {isSyncing ? <Loader2 size={16} className="spin" /> : <Zap size={16} />}
+            Clear Cache
           </button>
           {isBackendAvailable && (
             <button 

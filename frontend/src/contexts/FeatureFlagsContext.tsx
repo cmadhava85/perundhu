@@ -58,6 +58,7 @@ interface FeatureFlagsContextType {
   resetToDefaults: () => Promise<void>;
   syncWithBackend: () => Promise<void>;
   saveToBackend: () => Promise<void>;
+  clearCacheAndRefresh: () => Promise<void>;
   syncToPreprod: () => Promise<void>;
   isLoading: boolean;
   isSyncing: boolean;
@@ -213,6 +214,42 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     }
   }, [queryClient, saveToLocalStorage, loadFromLocalStorage]);
 
+  // Clear React Query cache and force fresh fetch from backend
+  const clearCacheAndRefresh = useCallback(async () => {
+    console.log('Clearing feature flags cache and forcing refresh...');
+    setIsSyncing(true);
+    setLastSyncError(null);
+    
+    try {
+      // Invalidate the React Query cache to force a fresh fetch
+      await queryClient.invalidateQueries({ queryKey: ['public-feature-flags', 'all'] });
+      
+      // Fetch fresh data from backend (bypasses cache due to invalidation)
+      const backendFlags = await queryClient.fetchQuery<Record<string, boolean>>({
+        queryKey: ['public-feature-flags', 'all'],
+        queryFn: () => apiRequest<Record<string, boolean>>('GET', '/v1/settings/feature-flags', undefined),
+        staleTime: 5 * 60 * 1000,
+      });
+      
+      setIsBackendAvailable(true);
+      
+      // Only keep known camelCase keys
+      const knownBackendFlags = Object.fromEntries(
+        Object.entries(backendFlags).filter(([k]) => VALID_FLAG_KEYS.has(k))
+      );
+      const mergedFlags = { ...defaultFlags, ...knownBackendFlags } as FeatureFlags;
+      setFlags(mergedFlags);
+      saveToLocalStorage(mergedFlags);
+      
+      console.log('✅ Cache cleared and flags refreshed:', Object.keys(backendFlags).length, 'flags');
+    } catch (error) {
+      console.error('Failed to refresh feature flags:', error);
+      setLastSyncError('Failed to refresh. Using current settings.');
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [queryClient, saveToLocalStorage]);
+
   // Save current flags to backend
   const saveToBackend = useCallback(async () => {
     if (!isBackendAvailable) {
@@ -364,6 +401,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     updateFlags, 
     resetToDefaults, 
     syncWithBackend,
+    clearCacheAndRefresh,
     saveToBackend,
     syncToPreprod,
     isLoading, 
@@ -371,7 +409,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     isSyncingToPreprod,
     lastSyncError,
     isBackendAvailable
-  }), [flags, updateFlag, updateFlags, resetToDefaults, syncWithBackend, saveToBackend, syncToPreprod, isLoading, isSyncing, isSyncingToPreprod, lastSyncError, isBackendAvailable]);
+  }), [flags, updateFlag, updateFlags, resetToDefaults, syncWithBackend, clearCacheAndRefresh, saveToBackend, syncToPreprod, isLoading, isSyncing, isSyncingToPreprod, lastSyncError, isBackendAvailable]);
 
   return (
     <FeatureFlagsContext.Provider 
