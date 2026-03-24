@@ -158,7 +158,10 @@ export const ImageContributionAdminPanel: React.FC = () => {
             'Authorization': AdminService.getAuthHeader()
           }
         });
-        const data = await response.json();
+        const result = await response.json();
+        // Backend returns paginated response: { data: [...], total, page, size }
+        // Extract the array from result.data
+        const data = result.data || [];
         
         if (isMounted) {
           setContributions(data);
@@ -188,7 +191,10 @@ export const ImageContributionAdminPanel: React.FC = () => {
           'Authorization': AdminService.getAuthHeader()
         }
       });
-      const data = await response.json();
+      const result = await response.json();
+      // Backend returns paginated response: { data: [...], total, page, size }
+      // Extract the array from result.data
+      const data = result.data || [];
       setContributions(data);
     } catch (_error) {
       // Failed to fetch image contributions

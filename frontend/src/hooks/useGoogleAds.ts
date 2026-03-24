@@ -10,11 +10,18 @@ export const useGoogleAds = () => {
   const { flags } = useFeatureFlags();
 
   const config = useMemo(() => {
+    const adsEnabled = flags?.enableAds ?? DEFAULT_ADS_CONFIG.enabled;
+    console.log('useGoogleAds config:', { 
+      flagsEnableAds: flags?.enableAds, 
+      defaultEnabled: DEFAULT_ADS_CONFIG.enabled,
+      finalEnabled: adsEnabled,
+      allFlags: flags 
+    });
     return {
       ...DEFAULT_ADS_CONFIG,
-      enabled: flags?.enableAds ?? DEFAULT_ADS_CONFIG.enabled
+      enabled: adsEnabled
     };
-  }, [flags?.enableAds]);
+  }, [flags?.enableAds, flags]);
 
   const isAdEnabled = (placement: keyof typeof DEFAULT_ADS_CONFIG.placements): boolean => {
     if (!config.enabled) return false;
