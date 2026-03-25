@@ -236,11 +236,6 @@ export const ContactUs: React.FC = () => {
         </section>
         
         <section className="content-section">
-          <h2>{t('pages.contact.supportTitle', 'Support Hours')}</h2>
-          <p>{t('pages.contact.supportHours', 'Monday to Friday: 9:00 AM - 6:00 PM IST')}</p>
-        </section>
-        
-        <section className="content-section">
           <h2>{t('pages.contact.feedbackTitle', 'Feedback')}</h2>
           
           {!showFeedbackForm ? (
