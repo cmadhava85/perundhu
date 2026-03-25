@@ -1,7 +1,7 @@
 {
-  "name": "Perundhu - Tamil Nadu Bus Tracker",
+  "name": "Perundhu - Tamil Nadu Bus Routes & Timings",
   "short_name": "Perundhu",
-  "description": "Real-time bus tracking and route search for Tamil Nadu public transport",
+  "description": "Find Tamil Nadu bus routes, timings and schedules for TNSTC, MTC and SETC buses instantly.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -87,7 +87,7 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
     }
 
     lines.push(``);
-    lines.push(`📱 ${t('share.via', 'Shared via')} Perundhu - Tamil Nadu Bus Tracker`);
+    lines.push(`📱 ${t('share.via', 'Shared via')} Perundhu - Tamil Nadu Bus Route Finder`);
     lines.push(`🔗 https://perundhu.app`);
 
     return lines.join('\n');

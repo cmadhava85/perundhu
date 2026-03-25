@@ -469,7 +469,7 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
               }
               
               shareLines.push(``);
-              shareLines.push(`📱 Shared via Perundhu - Tamil Nadu Bus Tracker`);
+              shareLines.push(`📱 Shared via Perundhu - Tamil Nadu Bus Route Finder`);
               shareLines.push(`🔗 https://perundhu.app`);
               
               const text = shareLines.join('\n');

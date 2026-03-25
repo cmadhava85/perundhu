@@ -14,15 +14,15 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0EA5E9" />
-    <meta name="description" content="Real-time bus tracking and route search for Tamil Nadu public transport" />
-    <meta name="keywords" content="Tamil Nadu bus, bus tracker, bus route, TNSTC, MTC, bus timings, public transport, Chennai bus, Tamil Nadu transport" />
+    <meta name="description" content="Find Tamil Nadu bus routes, timings and schedules instantly. Search TNSTC, MTC, SETC buses between any two cities — Chennai, Coimbatore, Madurai, Salem and more." />
+    <meta name="keywords" content="Tamil Nadu bus timings, TNSTC bus routes, MTC Chennai bus, SETC bus schedule, bus search Tamil Nadu, பேருந்து நேரம், Tamil Nadu public transport, bus route finder" />
     <meta name="author" content="Perundhu" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.perundhu.com/" />
-    <meta property="og:title" content="Perundhu - Tamil Nadu Bus Tracker" />
-    <meta property="og:description" content="Real-time bus tracking and route search for Tamil Nadu public transport. Find bus routes, timings, and live tracking across Tamil Nadu." />
+    <meta property="og:title" content="Perundhu - Tamil Nadu Bus Routes &amp; Timings" />
+    <meta property="og:description" content="Find bus routes, timings and schedules for TNSTC, MTC, SETC buses across Tamil Nadu. Search buses between Chennai, Coimbatore, Madurai and 100+ cities instantly." />
     <meta property="og:image" content="https://www.perundhu.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -32,12 +32,12 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.perundhu.com/" />
-    <meta name="twitter:title" content="Perundhu - Tamil Nadu Bus Tracker" />
-    <meta name="twitter:description" content="Real-time bus tracking and route search for Tamil Nadu public transport" />
+    <meta name="twitter:title" content="Perundhu - Tamil Nadu Bus Routes &amp; Timings" />
+    <meta name="twitter:description" content="Find bus routes, timings and schedules for TNSTC, MTC, SETC buses across Tamil Nadu. Search buses between 100+ cities instantly." />
     <meta name="twitter:image" content="https://www.perundhu.com/twitter-card.jpg" />
     
     <!-- SEO & Bot Protection -->
-    <meta name="robots" content="index, follow, noarchive, nosnippet">
+    <meta name="robots" content="index, follow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Security Headers -->
@@ -73,7 +73,27 @@
     <link rel="preconnect" href="https://www.google.com/recaptcha/" crossorigin />
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     
-    <title>Perundhu - Bus Tracker</title>
+    <title>Perundhu - Tamil Nadu Bus Routes, Timings &amp; Schedules</title>
+
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Perundhu",
+      "url": "https://www.perundhu.com",
+      "description": "Find Tamil Nadu bus routes, timings and schedules for TNSTC, MTC and SETC buses across Tamil Nadu.",
+      "inLanguage": ["en", "ta"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.perundhu.com/?from={from}&to={to}"
+        },
+        "query-input": "required name=from required name=to"
+      }
+    }
+    </script>
     
     <!-- Google Analytics 4 -->
     <!-- TODO: Replace G-XXXXXXXXXX with your actual GA4 Measurement ID -->
