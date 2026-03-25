@@ -12,7 +12,7 @@ interface PlatformStats {
 }
 
 const Footer: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const year = new Date().getFullYear();
   const [stats, setStats] = useState<PlatformStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
@@ -89,7 +89,12 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="footer-brand">
             <div className="footer-logo-container">
-              <img src="/favicon.svg" alt="Perundhu Logo" className="footer-logo-icon" loading="lazy" />
+              <img
+                src={i18n.language === 'ta' ? '/logo-ta-192x192.png' : '/logo-en-192x192.png'}
+                alt="Perundhu Logo"
+                className="footer-logo-icon"
+                loading="lazy"
+              />
               <div>
                 <h2 className="footer-logo">பேருந்து</h2>
                 <span className="footer-logo-sub">Perundhu</span>

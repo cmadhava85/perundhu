@@ -1,0 +1,467 @@
+{
+  "total_translations": 683,
+  "priority_cities": 11,
+  "errors_detected": 34,
+  "invalid_unicode": 36,
+  "sample_accuracy": 45.0,
+  "error_details": [
+    {
+      "id": 449146,
+      "english": "CHENNAI-PT Dr.M.G.R. BS",
+      "tamil": "சென்னை பிடி டாக்டர் எம்.ஜி.ஆர். BS",
+      "issues": [
+        "⚠️  Contains Latin characters",
+        "⚠️  Contains untranslated term: BS"
+      ]
+    },
+    {
+      "id": 118209,
+      "english": "CHITHALAPAKKAM TNHB",
+      "tamil": "சித்தலப்பாக்கம் TNHB",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118210,
+      "english": "CHRIST KING GIRLS HR SPL#",
+      "tamil": "கிறிஸ்ட் கிங் கேர்ள்ஸ் HR SPL#",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449151,
+      "english": "CHROMEPET MTC BS",
+      "tamil": "குரோம்பெட் MTC BS",
+      "issues": [
+        "⚠️  Contains Latin characters",
+        "⚠️  Contains untranslated term: BS"
+      ]
+    },
+    {
+      "id": 118212,
+      "english": "COWL BAZAAR",
+      "tamil": "COWL BAZAR",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118213,
+      "english": "CRPF CO-OP SHOP",
+      "tamil": "CRPF CO-OP ஷாப்",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449167,
+      "english": "ERNAKULAM SOUTH KSRTC B.S",
+      "tamil": "எர்ணாகுளம் தெற்கு KSRTC பி.எஸ்",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449172,
+      "english": "GANDHIPURAM SETC BS",
+      "tamil": "காந்திபுரம் SETC BS",
+      "issues": [
+        "⚠️  Contains Latin characters",
+        "⚠️  Contains untranslated term: BS"
+      ]
+    },
+    {
+      "id": 118235,
+      "english": "GOVT. HR. SEC SCHOOL",
+      "tamil": "அரசு எச்.ஆர். SEC பள்ளி",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118237,
+      "english": "GOVT.GIRLS.HR.SEC. SCHOOL",
+      "tamil": "GOVT.GIRLS.HR.SEC. பள்ளி",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118255,
+      "english": "K.K.D NAGAR-I",
+      "tamil": "கே.கே.டி நகர்-I",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118256,
+      "english": "K.K.D NAGAR-II",
+      "tamil": "கே.கே.டி நகர்-II",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118259,
+      "english": "KALYANAM GIRLS. HR.SEC.",
+      "tamil": "கல்யாணம் பெண்கள். HR.SEC.",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118266,
+      "english": "KAYARAMBEDU PUO",
+      "tamil": "காயரம்பேடு PUO",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118267,
+      "english": "KCBT KILAMBAKKAM",
+      "tamil": "KCBT கிளாம்பாக்கம்",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118269,
+      "english": "KEERAPAKKAM TNUHDB",
+      "tamil": "கீரப்பாக்கம் TNUHDB",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118278,
+      "english": "LADY WELLINGTON SCH",
+      "tamil": "லேடி வெலிங்டன் SCH",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118300,
+      "english": "MANIVAKKAM W.TANK",
+      "tamil": "மணிவாக்கம் W.TANK",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118311,
+      "english": "MOGAPPAIR OFF. COLONY",
+      "tamil": "MOGAPPAIR ஆஃப். காலனி",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118322,
+      "english": "NAVALUR TNUHDB",
+      "tamil": "நாவலூர் TNUHDB",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118326,
+      "english": "OKK.THORAIPAKM SEC.COLONY",
+      "tamil": "OKK. ThORAIPAKM SEC.காலனி",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449258,
+      "english": "ORAGADAM JUNCTION (IOB)",
+      "tamil": "ஒரகடம் சந்திப்பு (IOB)",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118345,
+      "english": "PERUMPAKKAM TNUHDB",
+      "tamil": "பெரும்பாக்கம் TNUHDB",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118347,
+      "english": "PGHS SCHOOL",
+      "tamil": "PGHS பள்ளி",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449280,
+      "english": "POONMALEE BYPASS MTC DEPOT NR",
+      "tamil": "பூன்மலே பைபாஸ் MTC டிப்போ NR",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118351,
+      "english": "PRESIDENCY GIRLS. HR.SEC.",
+      "tamil": "பிரசிடென்சி கேர்ள்ஸ். HR.SEC.",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118371,
+      "english": "SEMMANCHERI TNUHDB",
+      "tamil": "செம்மஞ்சேரி TNUHDB",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449316,
+      "english": "SRP TOOLS",
+      "tamil": "SRP கருவிகள்",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118383,
+      "english": "ST. RAPHEALS GIRLS HR. SEC",
+      "tamil": "எஸ்.டி. ரபீல்ஸ் பெண்கள் எச்.ஆர். SEC",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118384,
+      "english": "ST.LOUIS COLLEGE ADY",
+      "tamil": "செயின்ட் லூயிஸ் கல்லூரி ADY",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449320,
+      "english": "TAMBARAM MEPZ BS",
+      "tamil": "தாம்பரம் MEPZ BS",
+      "issues": [
+        "⚠️  Contains Latin characters",
+        "⚠️  Contains untranslated term: BS"
+      ]
+    },
+    {
+      "id": 449356,
+      "english": "TRICHY KKBT",
+      "tamil": "திருச்சி KKBT",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 449357,
+      "english": "TRISSUR KSRTC B.S",
+      "tamil": "திருச்சூர் KSRTC பி.எஸ்",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    },
+    {
+      "id": 118424,
+      "english": "VEL TECH",
+      "tamil": "VEL டெக்",
+      "issues": [
+        "⚠️  Contains Latin characters"
+      ]
+    }
+  ],
+  "invalid_unicode_details": [
+    {
+      "id": 449146,
+      "english": "CHENNAI-PT Dr.M.G.R. BS",
+      "tamil": "சென்னை பிடி டாக்டர் எம்.ஜி.ஆர். BS"
+    },
+    {
+      "id": 118209,
+      "english": "CHITHALAPAKKAM TNHB",
+      "tamil": "சித்தலப்பாக்கம் TNHB"
+    },
+    {
+      "id": 118210,
+      "english": "CHRIST KING GIRLS HR SPL#",
+      "tamil": "கிறிஸ்ட் கிங் கேர்ள்ஸ் HR SPL#"
+    },
+    {
+      "id": 449151,
+      "english": "CHROMEPET MTC BS",
+      "tamil": "குரோம்பெட் MTC BS"
+    },
+    {
+      "id": 118212,
+      "english": "COWL BAZAAR",
+      "tamil": "COWL BAZAR"
+    },
+    {
+      "id": 118213,
+      "english": "CRPF CO-OP SHOP",
+      "tamil": "CRPF CO-OP ஷாப்"
+    },
+    {
+      "id": 449167,
+      "english": "ERNAKULAM SOUTH KSRTC B.S",
+      "tamil": "எர்ணாகுளம் தெற்கு KSRTC பி.எஸ்"
+    },
+    {
+      "id": 449172,
+      "english": "GANDHIPURAM SETC BS",
+      "tamil": "காந்திபுரம் SETC BS"
+    },
+    {
+      "id": 118235,
+      "english": "GOVT. HR. SEC SCHOOL",
+      "tamil": "அரசு எச்.ஆர். SEC பள்ளி"
+    },
+    {
+      "id": 118237,
+      "english": "GOVT.GIRLS.HR.SEC. SCHOOL",
+      "tamil": "GOVT.GIRLS.HR.SEC. பள்ளி"
+    },
+    {
+      "id": 118255,
+      "english": "K.K.D NAGAR-I",
+      "tamil": "கே.கே.டி நகர்-I"
+    },
+    {
+      "id": 118256,
+      "english": "K.K.D NAGAR-II",
+      "tamil": "கே.கே.டி நகர்-II"
+    },
+    {
+      "id": 118259,
+      "english": "KALYANAM GIRLS. HR.SEC.",
+      "tamil": "கல்யாணம் பெண்கள். HR.SEC."
+    },
+    {
+      "id": 118266,
+      "english": "KAYARAMBEDU PUO",
+      "tamil": "காயரம்பேடு PUO"
+    },
+    {
+      "id": 118267,
+      "english": "KCBT KILAMBAKKAM",
+      "tamil": "KCBT கிளாம்பாக்கம்"
+    },
+    {
+      "id": 118269,
+      "english": "KEERAPAKKAM TNUHDB",
+      "tamil": "கீரப்பாக்கம் TNUHDB"
+    },
+    {
+      "id": 118278,
+      "english": "LADY WELLINGTON SCH",
+      "tamil": "லேடி வெலிங்டன் SCH"
+    },
+    {
+      "id": 118300,
+      "english": "MANIVAKKAM W.TANK",
+      "tamil": "மணிவாக்கம் W.TANK"
+    },
+    {
+      "id": 118311,
+      "english": "MOGAPPAIR OFF. COLONY",
+      "tamil": "MOGAPPAIR ஆஃப். காலனி"
+    },
+    {
+      "id": 118322,
+      "english": "NAVALUR TNUHDB",
+      "tamil": "நாவலூர் TNUHDB"
+    },
+    {
+      "id": 449255,
+      "english": "NO 1 TOLL GATE",
+      "tamil": "எண் 1 டோல் கேட்"
+    },
+    {
+      "id": 118326,
+      "english": "OKK.THORAIPAKM SEC.COLONY",
+      "tamil": "OKK. ThORAIPAKM SEC.காலனி"
+    },
+    {
+      "id": 449258,
+      "english": "ORAGADAM JUNCTION (IOB)",
+      "tamil": "ஒரகடம் சந்திப்பு (IOB)"
+    },
+    {
+      "id": 449271,
+      "english": "PERAMBALUR 4WAY JUNCTION",
+      "tamil": "பெரம்பலூர் 4 வழி சந்திப்பு"
+    },
+    {
+      "id": 118345,
+      "english": "PERUMPAKKAM TNUHDB",
+      "tamil": "பெரும்பாக்கம் TNUHDB"
+    },
+    {
+      "id": 118347,
+      "english": "PGHS SCHOOL",
+      "tamil": "PGHS பள்ளி"
+    },
+    {
+      "id": 449280,
+      "english": "POONMALEE BYPASS MTC DEPOT NR",
+      "tamil": "பூன்மலே பைபாஸ் MTC டிப்போ NR"
+    },
+    {
+      "id": 118351,
+      "english": "PRESIDENCY GIRLS. HR.SEC.",
+      "tamil": "பிரசிடென்சி கேர்ள்ஸ். HR.SEC."
+    },
+    {
+      "id": 118371,
+      "english": "SEMMANCHERI TNUHDB",
+      "tamil": "செம்மஞ்சேரி TNUHDB"
+    },
+    {
+      "id": 449316,
+      "english": "SRP TOOLS",
+      "tamil": "SRP கருவிகள்"
+    },
+    {
+      "id": 118383,
+      "english": "ST. RAPHEALS GIRLS HR. SEC",
+      "tamil": "எஸ்.டி. ரபீல்ஸ் பெண்கள் எச்.ஆர். SEC"
+    },
+    {
+      "id": 118384,
+      "english": "ST.LOUIS COLLEGE ADY",
+      "tamil": "செயின்ட் லூயிஸ் கல்லூரி ADY"
+    },
+    {
+      "id": 449320,
+      "english": "TAMBARAM MEPZ BS",
+      "tamil": "தாம்பரம் MEPZ BS"
+    },
+    {
+      "id": 449356,
+      "english": "TRICHY KKBT",
+      "tamil": "திருச்சி KKBT"
+    },
+    {
+      "id": 449357,
+      "english": "TRISSUR KSRTC B.S",
+      "tamil": "திருச்சூர் KSRTC பி.எஸ்"
+    },
+    {
+      "id": 118424,
+      "english": "VEL TECH",
+      "tamil": "VEL டெக்"
+    }
+  ]
+}

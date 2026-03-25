@@ -125,7 +125,12 @@ const Header: React.FC<HeaderProps> = ({
             
             <a href="/" className="brand-link" aria-label="Go to home page">
               <div className="logo-container">
-                <img src="/favicon.svg" alt="Perundhu - Tamil Nadu Bus Finder home" className="logo-icon" loading="eager" />
+                <img
+                  src={i18n.language === 'ta' ? '/logo-ta-192x192.png' : '/logo-en-192x192.png'}
+                  alt="Perundhu - Tamil Nadu Bus Finder home"
+                  className="logo-icon"
+                  loading="eager"
+                />
               </div>
               <div className="header-title-group">
                 <h1 className="brand-name">பேருந்து</h1>

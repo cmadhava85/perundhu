@@ -13,6 +13,8 @@ interface LocationAutocompleteInputProps {
   name: string;
   value: string;
   onChange: (value: string, location?: LocationSuggestion) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   placeholder?: string;
   required?: boolean;
   label?: string;
@@ -27,6 +29,8 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   name,
   value,
   onChange,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
   placeholder = 'Enter location',
   required = false,
   label,
@@ -185,6 +189,8 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
     if (value.length >= 1 && suggestions.length > 0) {
       setShowSuggestions(true);
     }
+
+    onFocusProp?.();
   };
 
   const handleBlur = () => {
@@ -197,6 +203,7 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
       
       blurTimeoutRef.current = setTimeout(() => {
         setShowSuggestions(false);
+        onBlurProp?.();
       }, 150);
     }
   };

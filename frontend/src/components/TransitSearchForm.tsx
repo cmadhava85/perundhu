@@ -145,20 +145,21 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     checkGpsStatus();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Sync props to internal state when they change (for default location support)
+  // Sync props to internal state when they change (for default location support).
+  // Compare by ID so that navigating back with different locations always resets the fields.
   useEffect(() => {
-    if (fromLocation && !selectedFromLocation) {
-      setFromQuery(fromLocation.name || '');
+    if (fromLocation && fromLocation.id !== selectedFromLocation?.id) {
+      setFromQuery(getLocationDisplayName(fromLocation));
       setSelectedFromLocation(fromLocation);
     }
-  }, [fromLocation, selectedFromLocation]);
+  }, [fromLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (toLocation && !selectedToLocation) {
-      setToQuery(toLocation.name || '');
+    if (toLocation && toLocation.id !== selectedToLocation?.id) {
+      setToQuery(getLocationDisplayName(toLocation));
       setSelectedToLocation(toLocation);
     }
-  }, [toLocation, selectedToLocation]);
+  }, [toLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle "Use My Location" button click
   const handleUseMyLocation = async () => {

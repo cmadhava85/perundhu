@@ -92,6 +92,9 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
   // Honeypot field for bot detection (invisible to users)
   const [honeypot, setHoneypot] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Show bus-stand tip only when origin/destination is focused
+  const [busStandTipVisible, setBusStandTipVisible] = useState(false);
   
   // Duplicate detection state
   const [duplicateMatches, setDuplicateMatches] = useState<MatchedBusInfo[]>([]);
@@ -522,32 +525,9 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
         />
       )}
 
-      {/* Validation Error Summary */}
-      {Object.keys(validationErrors).length > 0 && (
-        <div className="validation-error-summary" style={{
-          background: 'linear-gradient(135deg, #fef2f2, #fecaca)',
-          border: '2px solid #ef4444',
-          borderRadius: '12px',
-          padding: '1rem',
-          marginBottom: '1.5rem',
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: '0.75rem'
-        }}>
-          <span style={{ fontSize: '1.5rem' }}>⚠️</span>
-          <div>
-            <h4 style={{ margin: 0, color: '#dc2626', fontSize: '1rem', fontWeight: '600' }}>
-              {t('route.fixErrors', 'Please fix the following errors:')}
-            </h4>
-            <ul style={{ margin: '0.5rem 0 0 0', paddingLeft: '1.25rem', color: '#991b1b', fontSize: '0.9rem' }}>
-              {Object.values(validationErrors).map((error, idx) => (
-                <li key={idx}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-      
+      {/* Required fields legend */}
+      <p className="required-legend"><span className="required">*</span> {t('route.requiredFields', 'Required fields')}</p>
+
       {/* Location Warnings Summary */}
       {Object.keys(locationWarnings).length > 0 && Object.keys(validationErrors).length === 0 && (
         <div className="validation-warning-summary" style={{
@@ -609,24 +589,15 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
           📍 {t('route.routeInformation', 'Route Information')}
         </h3>
         
-        {/* Bus Stand Hint */}
-        <div className="bus-stand-hint" style={{
-          background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
-          border: '1px solid #86efac',
-          borderRadius: '10px',
-          padding: '0.75rem 1rem',
-          marginBottom: '1rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          fontSize: '0.85rem',
-          color: '#166534'
-        }}>
-          <span style={{ fontSize: '1.2rem' }}>💡</span>
-          <span>
-            <strong>{t('route.busStandTip', 'Tip:')}</strong> {t('route.busStandHint', 'For cities with multiple bus stands (Madurai, Chennai, etc.), select the specific bus stand from suggestions (e.g., "Madurai - Arapalayam") for better accuracy.')}
-          </span>
-        </div>
+        {/* Bus Stand Hint — shown only when origin/destination is focused */}
+        {busStandTipVisible && (
+          <div className="bus-stand-hint">
+            <span style={{ fontSize: '1.1rem' }}>💡</span>
+            <span>
+              <strong>{t('route.busStandTip', 'Tip:')}</strong> {t('route.busStandHint', 'For cities with multiple bus stands (Madurai, Chennai, etc.), select the specific bus stand from suggestions (e.g., "Madurai - Arapalayam") for better accuracy.')}
+            </span>
+          </div>
+        )}
         
         {/* NEW: Row-based layout - From Row */}
         <div className="route-input-row">
@@ -641,6 +612,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
               name="origin"
               value={formData.origin}
               onChange={handleOriginChange}
+              onFocus={() => setBusStandTipVisible(true)}
+              onBlur={() => setBusStandTipVisible(false)}
               placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
               label=""
               required
@@ -697,6 +670,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
               name="destination"
               value={formData.destination}
               onChange={handleDestinationChange}
+              onFocus={() => setBusStandTipVisible(true)}
+              onBlur={() => setBusStandTipVisible(false)}
               placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
               label=""
               required
@@ -769,8 +744,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
                 onClick={toggleStopForm}
                 className="toggle-view-btn"
               >
-                <span className="btn-icon">{showStopForm ? '📋' : '📝'}</span>
-                {showStopForm ? t('route.simpleView', 'Simple View') : t('route.detailedView', 'Detailed View')}
+                <span className="btn-icon">{showStopForm ? '📋' : '⏰'}</span>
+                {showStopForm ? t('route.hideTimings', 'Hide timings') : t('route.addStopTimings', 'Add stop timings')}
               </button>
             )}
           </div>
@@ -778,16 +753,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
 
         {intermediateStops.length === 0 ? (
           <div className="empty-stops-state">
-            <div className="empty-icon">🚏</div>
-            <h4>{t('route.noStopsYet', 'No stops added yet')}</h4>
-            <p>{t('route.noStopsDescription', 'Add intermediate stops with specific timings for better route tracking')}</p>
             <button 
               type="button" 
               onClick={addStop}
               className="add-first-stop-btn"
             >
               <span className="btn-icon">➕</span>
-              {t('route.addFirstStop', 'Add First Stop')}
+              {t('route.addFirstStop', 'Add intermediate stops (optional)')}
             </button>
           </div>
         ) : (
@@ -944,7 +916,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
         <button type="submit" className="submit-button modern-submit-btn" disabled={isSubmitting}>
           <div className="submit-btn-content">
             <span className="submit-icon">{isSubmitting ? '⏳' : '🚌'}</span>
-            <span className="submit-text">{isSubmitting ? t('contribution.submitting', 'Submitting...') : t('contribution.submitRoute', 'Submit Route Information')}</span>
+            <span className="submit-text">{isSubmitting ? t('contribution.submitting', 'Submitting...') : t('contribution.submitRoute', 'Share this Bus Route')}</span>
             <span className="submit-arrow">{isSubmitting ? '' : '→'}</span>
           </div>
         </button>

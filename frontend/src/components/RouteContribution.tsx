@@ -69,14 +69,14 @@ export const RouteContribution: React.FC = () => {
   const preSelectedFromLocation = navigationState?.fromLocation || undefined;
   const preSelectedToLocation = navigationState?.toLocation || undefined;
   
-  // Scroll to status message when it appears
+  // Lock body scroll when modal is open
   useEffect(() => {
-    if (submissionStatus === 'success' || submissionStatus === 'error') {
-      const statusElement = document.querySelector('.premium-status');
-      if (statusElement) {
-        statusElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+    if (submissionStatus !== 'idle') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
+    return () => { document.body.style.overflow = ''; };
   }, [submissionStatus]);
 
   // If user came from bus results with Add Stops, disable switching to image/text/paste
@@ -421,53 +421,69 @@ export const RouteContribution: React.FC = () => {
           )}
         </div>
         
-        {submissionStatus === 'submitting' && (
-          <div className="premium-status submitting">
-            <div className="status-content">
-              <h3 className="status-title">{t('status.submitting.title', 'Processing Your Contribution')}</h3>
-              <p className="status-message">{t('status.submitting.message', 'Please wait...')}</p>
+      </div>
+
+      {/* ── Status Modal Overlay ── */}
+      {submissionStatus !== 'idle' && (
+        <div
+          className={`status-modal-overlay ${submissionStatus === 'submitting' ? 'non-dismissible' : ''}`}
+          onClick={submissionStatus !== 'submitting' ? handleResetForm : undefined}
+          role="dialog"
+          aria-modal="true"
+          aria-live="polite"
+        >
+          <div
+            className={`status-modal ${submissionStatus}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={`status-modal-icon ${submissionStatus}`}>
+              {submissionStatus === 'submitting' && <span className="modal-spinner" />}
+              {submissionStatus === 'success' && '✓'}
+              {submissionStatus === 'error' && (errorType === 'duplicate' ? '!' : '✕')}
             </div>
-          </div>
-        )}
-        
-        {submissionStatus === 'success' && (
-          <div className="premium-status success">
-            <div className="status-content">
-              <h3 className="status-title">{t('status.success.title', 'Contribution Successful!')}</h3>
-              <p className="status-message">{statusMessage}</p>
-              <div className="success-actions">
-                <button className="action-btn primary" onClick={handleResetForm}>
-                  <span className="btn-icon">➕</span>
+
+            <h3 className="status-modal-title">
+              {submissionStatus === 'submitting' && t('status.submitting.title', 'Processing Your Contribution')}
+              {submissionStatus === 'success' && t('status.success.title', 'Contribution Successful!')}
+              {submissionStatus === 'error' && (
+                errorType === 'duplicate'
+                  ? t('contribution.duplicateErrorTitle', 'Route Already Submitted')
+                  : t('status.error.title', 'Submission Failed')
+              )}
+            </h3>
+
+            <p className="status-modal-message">
+              {submissionStatus === 'submitting' && t('status.submitting.message', 'Please wait while we save your route...')}
+              {(submissionStatus === 'success' || submissionStatus === 'error') && statusMessage}
+            </p>
+
+            {submissionStatus === 'success' && (
+              <div className="status-modal-actions">
+                <button className="status-modal-btn primary" onClick={handleResetForm}>
+                  <span>➕</span>
                   <span>{t('actions.addAnother', 'Add Another Route')}</span>
                 </button>
               </div>
-            </div>
-          </div>
-        )}
-        
-        {submissionStatus === 'error' && (
-          <div className={`premium-status error ${errorType === 'duplicate' ? 'duplicate' : ''}`}>
-            <div className="status-content">
-              <h3 className="status-title">
-                {errorType === 'duplicate' 
-                  ? t('contribution.duplicateErrorTitle', 'Route Already Submitted')
-                  : t('status.error.title', 'Submission Failed')
-                }
-              </h3>
-              <p className="status-message">{statusMessage}</p>
-              <div className="error-actions">
-                <button className="action-btn primary" onClick={handleResetForm}>
-                  <span className="btn-icon">{errorType === 'duplicate' ? '✏️' : '🔄'}</span>
-                  <span>{errorType === 'duplicate' 
+            )}
+
+            {submissionStatus === 'error' && (
+              <div className="status-modal-actions">
+                <button className="status-modal-btn primary" onClick={handleResetForm}>
+                  <span>{errorType === 'duplicate' ? '✏️' : '🔄'}</span>
+                  <span>{errorType === 'duplicate'
                     ? t('actions.modifyDetails', 'Modify Details')
                     : t('actions.tryAgain', 'Try Again')
                   }</span>
                 </button>
               </div>
-            </div>
+            )}
+
+            {submissionStatus !== 'submitting' && (
+              <button className="status-modal-close" onClick={handleResetForm} aria-label="Close">✕</button>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
