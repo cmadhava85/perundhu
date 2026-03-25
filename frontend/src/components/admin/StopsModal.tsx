@@ -44,6 +44,7 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
   const [editingStopId, setEditingStopId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<StopInput>({
     locationName: '',
+    tamilName: '',
     arrivalTime: '',
     departureTime: '',
   });
@@ -52,6 +53,7 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newStopForm, setNewStopForm] = useState<StopInput>({
     locationName: '',
+    tamilName: '',
     arrivalTime: '',
     departureTime: '',
   });
@@ -174,7 +176,7 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
       const busData = await BusDatabaseService.getBusById(busId);
       setStops(busData.stops || []);
       setShowAddForm(false);
-      setNewStopForm({ locationName: '', arrivalTime: '', departureTime: '' });
+      setNewStopForm({ locationName: '', tamilName: '', arrivalTime: '', departureTime: '' });
       onUpdate();
     } catch (err) {
       console.error('Failed to add stop:', err);
@@ -291,6 +293,16 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
                             </div>
                           )}
                         </div>
+                        <div className="form-group">
+                          <label>{t('admin.stops.tamilName', 'Tamil Name (optional)')}</label>
+                          <input
+                            type="text"
+                            value={editForm.tamilName || ''}
+                            onChange={(e) => setEditForm({ ...editForm, tamilName: e.target.value })}
+                            placeholder={t('admin.stops.tamilPlaceholder', 'தமிழ் பெயர்')}
+                            lang="ta"
+                          />
+                        </div>
                       </div>
                       <div className="form-row timing-row">
                         <div className="form-group">
@@ -404,6 +416,16 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
                     </div>
                   )}
                 </div>
+                <div className="form-group">
+                  <label>{t('admin.stops.tamilName', 'Tamil Name (optional)')}</label>
+                  <input
+                    type="text"
+                    value={newStopForm.tamilName || ''}
+                    onChange={(e) => setNewStopForm({ ...newStopForm, tamilName: e.target.value })}
+                    placeholder={t('admin.stops.tamilPlaceholder', 'தமிழ் பெயர்')}
+                    lang="ta"
+                  />
+                </div>
               </div>
               <div className="form-row timing-row">
                 <div className="form-group">
@@ -436,7 +458,7 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
                   className="btn btn-secondary"
                   onClick={() => {
                     setShowAddForm(false);
-                    setNewStopForm({ locationName: '', arrivalTime: '', departureTime: '' });
+                    setNewStopForm({ locationName: '', tamilName: '', arrivalTime: '', departureTime: '' });
                   }}
                   disabled={saving}
                 >

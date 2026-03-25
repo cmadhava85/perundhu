@@ -949,14 +949,18 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     marginTop: 'var(--space-1, 4px)',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
                     zIndex: 9999,
-                    maxHeight: '250px',
+                    maxHeight: 'min(40vh, 400px)',
                     overflowY: 'auto',
+                    WebkitOverflowScrolling: 'touch',
+                    willChange: 'scroll-position',
+                    overscrollBehavior: 'contain',
                     listStyle: 'none',
                     padding: 0,
                     margin: 0
                   }}>
                   {fromSuggestions.map((location, index) => {
                     const isHighlighted = index === highlightedFromIndex;
+                    const isVerified = location.source === 'database';
                     return (
                     <li
                       key={location.id}
@@ -972,6 +976,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       onMouseEnter={() => setHighlightedFromIndex(index)}
                       style={{
                         width: '100%',
+                        minHeight: '44px',
                         padding: 'var(--space-3)',
                         border: 'none',
                         background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
@@ -980,12 +985,29 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                         borderBottom: '1px solid var(--transit-divider)',
                         transition: 'background-color 0.15s ease',
                         fontWeight: isHighlighted ? 600 : 400,
-                        userSelect: 'none'
+                        userSelect: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '8px'
                       }}
                     >
-                      <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit' }}>
+                      <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit', flex: 1 }}>
                         {getLocationDisplayName(location)}
                       </div>
+                      {isVerified && (
+                        <span style={{
+                          fontSize: '10px',
+                          fontWeight: 600,
+                          padding: '2px 6px',
+                          borderRadius: '4px',
+                          background: '#10B981',
+                          color: 'white',
+                          flexShrink: 0
+                        }}>
+                          ✓ DB
+                        </span>
+                      )}
                     </li>
                   );
                   })}
@@ -1235,14 +1257,18 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     marginTop: 'var(--space-1, 4px)',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
                     zIndex: 9999,
-                    maxHeight: '250px',
+                    maxHeight: 'min(40vh, 400px)',
                     overflowY: 'auto',
+                    WebkitOverflowScrolling: 'touch',
+                    willChange: 'scroll-position',
+                    overscrollBehavior: 'contain',
                     listStyle: 'none',
                     padding: 0,
                     margin: 0
                   }}>
                   {toSuggestions.map((location, index) => {
                     const isHighlighted = index === highlightedToIndex;
+                    const isVerified = location.source === 'database';
                     return (
                     <li
                       key={location.id}
@@ -1258,6 +1284,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       onMouseEnter={() => setHighlightedToIndex(index)}
                       style={{
                         width: '100%',
+                        minHeight: '44px',
                         padding: 'var(--space-3)',
                         border: 'none',
                         background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
@@ -1266,12 +1293,29 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                         borderBottom: '1px solid var(--transit-divider)',
                         transition: 'background-color 0.15s ease',
                         fontWeight: isHighlighted ? 600 : 400,
-                        userSelect: 'none'
+                        userSelect: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '8px'
                       }}
                     >
-                      <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit' }}>
+                      <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit', flex: 1 }}>
                         {getLocationDisplayName(location)}
                       </div>
+                      {isVerified && (
+                        <span style={{
+                          fontSize: '10px',
+                          fontWeight: 600,
+                          padding: '2px 6px',
+                          borderRadius: '4px',
+                          background: '#10B981',
+                          color: 'white',
+                          flexShrink: 0
+                        }}>
+                          ✓ DB
+                        </span>
+                      )}
                     </li>
                   );
                   })}
@@ -1490,21 +1534,33 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             <button 
               className="transit-button secondary" 
               style={{ fontSize: 'var(--text-sm)' }}
-              onClick={handleViewOnMap}
+              onClick={() => {
+                triggerHaptic('light');
+                handleViewOnMap();
+              }}
+              aria-label={t('searchForm.viewOnMap', 'View on Map')}
             >
               🗺️ {t('searchForm.viewOnMap', 'View on Map')}
             </button>
             <button 
               className="transit-button secondary" 
               style={{ fontSize: 'var(--text-sm)' }}
-              onClick={handleScheduleView}
+              onClick={() => {
+                triggerHaptic('light');
+                handleScheduleView();
+              }}
+              aria-label={t('searchForm.scheduleView', 'Schedule View')}
             >
               🕐 {t('searchForm.scheduleView', 'Schedule View')}
             </button>
             <button 
               className="transit-button secondary" 
               style={{ fontSize: 'var(--text-sm)' }}
-              onClick={handleSuggestions}
+              onClick={() => {
+                triggerHaptic('light');
+                handleSuggestions();
+              }}
+              aria-label={t('searchForm.suggestions', 'Suggestions')}
             >
               💡 {t('searchForm.suggestions', 'Suggestions')}
             </button>
@@ -1664,8 +1720,11 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   </div>
                 </div>
                 <button 
-                  onClick={() => setShowScheduleModal(false)}
-                  aria-label="Close"
+                  onClick={() => {
+                    triggerHaptic('light');
+                    setShowScheduleModal(false);
+                  }}
+                  aria-label={t('common.close', 'Close')}
                   style={{
                     width: '2.25rem',
                     height: '2.25rem',
@@ -1678,7 +1737,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     justifyContent: 'center',
                     fontSize: '1.25rem',
                     color: '#6b7280',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.2s',
+                    minWidth: '44px',
+                    minHeight: '44px'
                   }}
                   onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#e5e7eb'; }}
                   onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
@@ -1688,8 +1749,14 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               </div>
             </div>
             
-            {/* Body with scroll */}
-            <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'contain' }}>
+            {/* Body with scroll - Mobile Optimized */}
+            <div style={{ 
+              flex: 1, 
+              overflowY: 'auto', 
+              overscrollBehavior: 'contain',
+              WebkitOverflowScrolling: 'touch',
+              willChange: 'scroll-position'
+            }}>
               {/* Loading State */}
               {isLoadingSchedule && (
                 <div style={{ 
@@ -1797,12 +1864,28 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     const isDeluxe = bus.busType === 'Deluxe' || bus.busType === 'Super Deluxe';
                     let badgeBg = '#f3f4f6';
                     let badgeColor = '#4b5563';
+                    let statusBadge = 'Unknown';
+                    let statusColor = '#6b7280';
+                    let statusBg = '#f3f4f6';
+                    
                     if (isExpress) { badgeBg = '#d1fae5'; badgeColor = '#047857'; }
                     else if (isDeluxe) { badgeBg = '#ede9fe'; badgeColor = '#6d28d9'; }
+                    
+                    // Determine status based on bus data
+                    if (bus.status) {
+                      statusBadge = bus.status;
+                      if (bus.status === 'On Time') { statusColor = '#047857'; statusBg = '#d1fae5'; }
+                      else if (bus.status === 'Delayed') { statusColor = '#dc2626'; statusBg = '#fee2e2'; }
+                      else if (bus.status === 'Live') { statusColor = '#3b82f6'; statusBg = '#dbeafe'; }
+                    }
                     
                     return (
                       <div 
                         key={bus.id || index} 
+                        onClick={() => triggerHaptic('selection')}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Bus ${bus.busNumber || bus.routeName} departing at ${bus.departureTime}`}
                         style={{
                           position: 'relative',
                           backgroundColor: 'white',
@@ -1810,7 +1893,13 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                           border: '1px solid #e5e7eb',
                           boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                           overflow: 'hidden',
-                          transition: 'all 0.2s'
+                          transition: 'all 0.2s',
+                          cursor: 'pointer'
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            triggerHaptic('selection');
+                          }
                         }}
                       >
                         {/* Accent Bar */}
@@ -1825,8 +1914,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                         
                         <div style={{ padding: '1rem', paddingLeft: '1.25rem' }}>
                           {/* Top Row */}
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+                          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', flex: 1 }}>
                               <div style={{
                                 width: '2rem',
                                 height: '2rem',
@@ -1834,23 +1923,43 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                                 backgroundColor: '#3b82f6',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                flexShrink: 0
                               }}>
-                                <span style={{ fontSize: '0.875rem' }}>🚌</span>
+                                <span style={{ fontSize: '0.875rem' }} role="img" aria-label="bus">🚌</span>
                               </div>
-                              <span style={{ fontWeight: 700, color: '#111827', fontSize: '1.125rem' }}>
-                                {bus.busNumber || bus.routeName}
-                              </span>
+                              <div style={{ flex: 1, overflow: 'hidden' }}>
+                                <div style={{ fontWeight: 700, color: '#111827', fontSize: '1.125rem', marginBottom: '0.125rem' }}>
+                                  {bus.busNumber || bus.routeName}
+                                </div>
+                                <div style={{ display: 'flex', gap: '0.375rem', alignItems: 'center' }}>
+                                  <span style={{
+                                    padding: '0.125rem 0.5rem',
+                                    borderRadius: '9999px',
+                                    fontSize: '0.625rem',
+                                    fontWeight: 600,
+                                    backgroundColor: badgeBg,
+                                    color: badgeColor,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.025em'
+                                  }}>
+                                    {bus.busType || t('searchForm.regular', 'Regular')}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                             <span style={{
                               padding: '0.25rem 0.625rem',
                               borderRadius: '9999px',
-                              fontSize: '0.75rem',
-                              fontWeight: 500,
-                              backgroundColor: badgeBg,
-                              color: badgeColor
+                              fontSize: '0.625rem',
+                              fontWeight: 600,
+                              backgroundColor: statusBg,
+                              color: statusColor,
+                              whiteSpace: 'nowrap',
+                              flexShrink: 0,
+                              marginLeft: '0.5rem'
                             }}>
-                              {bus.busType || t('searchForm.regular', 'Regular')}
+                              {statusBadge}
                             </span>
                           </div>
                           
@@ -1982,17 +2091,45 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             }}
           >
             <div style={{
-              padding: 'var(--spacing-md)',
-              borderBottom: '1px solid var(--border)',
+              padding: '1.25rem 1.5rem',
+              borderBottom: '1px solid #f3f4f6',
+              background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <h3 style={{ margin: 0 }}>💡 {t('searchForm.suggestions', 'Suggestions')}</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '2.5rem',
+                  height: '2.5rem',
+                  borderRadius: '0.75rem',
+                  backgroundColor: '#f59e0b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(245, 158, 11, 0.4)'
+                }}>
+                  <span style={{ fontSize: '1.25rem' }} role="img" aria-label="suggestions">💡</span>
+                </div>
+                <h3 id="suggestions-modal-title" style={{ margin: 0, fontSize: '1.125rem', fontWeight: 600, color: '#111827' }}>
+                  {t('searchForm.suggestions', 'Suggestions')}
+                </h3>
+              </div>
               <button 
                 className="transit-button secondary" 
-                onClick={() => setShowSuggestionsModal(false)}
-                style={{ padding: 'var(--spacing-xs) var(--spacing-sm)' }}
+                onClick={() => {
+                  triggerHaptic('light');
+                  setShowSuggestionsModal(false);
+                }}
+                aria-label={t('common.close', 'Close')}
+                style={{ 
+                  padding: 'var(--spacing-xs) var(--spacing-sm)',
+                  minWidth: '44px',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
               >
                 ✕
               </button>
@@ -2000,30 +2137,55 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             <div style={{ 
               flex: 1, 
               overflowY: 'auto', 
-              padding: 'var(--spacing-md)' 
+              padding: 'var(--spacing-md)',
+              WebkitOverflowScrolling: 'touch',
+              willChange: 'scroll-position',
+              overscrollBehavior: 'contain'
             }}>
               {/* Popular Routes */}
               <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <h4 style={{ 
-                  margin: '0 0 var(--spacing-sm) 0',
-                  color: 'var(--text-secondary)',
-                  fontSize: 'var(--text-sm)'
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  marginBottom: 'var(--spacing-sm)',
+                  padding: '0.5rem 0.75rem',
+                  background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #fbbf24'
                 }}>
-                  🔥 {t('searchForm.popularRoutes', 'Popular Routes')}
-                </h4>
-                <div className="column column-sm">
+                  <span style={{ fontSize: '1.125rem' }} role="img" aria-label="popular">🔥</span>
+                  <h4 id="popular-routes-heading" style={{ 
+                    margin: 0,
+                    color: '#92400e',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>
+                    {t('searchForm.popularRoutes', 'Popular Routes')}
+                  </h4>
+                </div>
+                <div className="column column-sm" role="list" aria-labelledby="popular-routes-heading">
                   {POPULAR_ROUTES.map((route, index) => (
                     <button
                       key={index}
+                      role="listitem"
                       className="transit-button secondary"
                       style={{
                         width: '100%',
                         textAlign: 'left',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 'var(--spacing-sm)'
+                        gap: 'var(--spacing-sm)',
+                        minHeight: '48px',
+                        padding: '0.75rem 1rem'
                       }}
-                      onClick={() => applySuggestion(route.from, route.to)}
+                      onClick={() => {
+                        triggerHaptic('selection');
+                        applySuggestion(route.from, route.to);
+                      }}
+                      aria-label={`${i18n.language === 'ta' ? route.from.translatedName : route.from.name} to ${i18n.language === 'ta' ? route.to.translatedName : route.to.name}`}
                     >
                       <span>📍</span>
                       <span style={{ flex: 1 }}>
@@ -2039,26 +2201,48 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               {/* Recent Searches */}
               {recentSearches.length > 0 && (
                 <div>
-                  <h4 style={{ 
-                    margin: '0 0 var(--spacing-sm) 0',
-                    color: 'var(--text-secondary)',
-                    fontSize: 'var(--text-sm)'
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    marginBottom: 'var(--spacing-sm)',
+                    padding: '0.5rem 0.75rem',
+                    background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
+                    borderRadius: '0.5rem',
+                    border: '1px solid #d1d5db'
                   }}>
-                    🕐 {t('searchForm.recentSearches', 'Recent Searches')}
-                  </h4>
-                  <div className="column column-sm">
+                    <span style={{ fontSize: '1.125rem' }} role="img" aria-label="recent">🕐</span>
+                    <h4 id="recent-searches-heading" style={{ 
+                      margin: 0,
+                      color: '#374151',
+                      fontSize: '0.875rem',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}>
+                      {t('searchForm.recentSearches', 'Recent Searches')}
+                    </h4>
+                  </div>
+                  <div className="column column-sm" role="list" aria-labelledby="recent-searches-heading">
                     {recentSearches.slice(0, 5).map((search, index) => (
                       <button
                         key={index}
+                        role="listitem"
                         className="transit-button secondary"
                         style={{
                           width: '100%',
                           textAlign: 'left',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: 'var(--spacing-sm)'
+                          gap: 'var(--spacing-sm)',
+                          minHeight: '48px',
+                          padding: '0.75rem 1rem'
                         }}
-                        onClick={() => applySuggestion(search.from, search.to)}
+                        onClick={() => {
+                          triggerHaptic('selection');
+                          applySuggestion(search.from, search.to);
+                        }}
+                        aria-label={`Recent search: ${search.from.name} to ${search.to.name}`}
                       >
                         <span>🔄</span>
                         <span style={{ flex: 1 }}>

@@ -168,6 +168,7 @@ public class BusDatabaseAdminController {
 
     StopInput input = new StopInput(
         request.locationName,
+        request.tamilName,
         request.stopOrder,
         request.arrivalTime,
         request.departureTime);
@@ -197,6 +198,7 @@ public class BusDatabaseAdminController {
 
     StopInput input = new StopInput(
         request.locationName,
+        request.tamilName,
         request.stopOrder,
         request.arrivalTime,
         request.departureTime);
@@ -271,6 +273,7 @@ public class BusDatabaseAdminController {
 
   public record StopInputRequest(
       String locationName,
+      String tamilName,
       Integer stopOrder,
       String arrivalTime,
       String departureTime) {

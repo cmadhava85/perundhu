@@ -36,17 +36,17 @@ const BusItem: React.FC<BusItemProps> = ({
   return (
     <div
       className={`
-        group relative min-h-[220px] sm:min-h-[240px] md:min-h-[260px]
+        group relative min-h-[160px] sm:min-h-[180px] md:min-h-[200px]
         bg-white/80 backdrop-blur-md border border-white/20
-        rounded-2xl sm:rounded-3xl
+        rounded-xl sm:rounded-2xl
         shadow-lg hover:shadow-2xl
         transition-all duration-300 ease-out cursor-pointer
-        p-4 sm:p-5 md:p-6
+        p-3 sm:p-4 md:p-5
         ${isSelected 
           ? 'ring-2 ring-emerald-400/60 bg-white/90 backdrop-blur-xl border-emerald-400/30 shadow-emerald-400/20' 
-          : 'hover:bg-white/90 hover:border-emerald-400/40 hover:scale-105 hover:backdrop-blur-xl'
+          : 'hover:bg-white/90 hover:border-emerald-400/40 hover:scale-[1.02] hover:backdrop-blur-xl'
         }
-        active:scale-95 sm:active:scale-100
+        active:scale-[0.98] sm:active:scale-100
       `}
       onClick={() => {
         triggerHaptic('selection');
@@ -59,110 +59,112 @@ const BusItem: React.FC<BusItemProps> = ({
           onSelect();
         }
       }}
+      aria-label={`Bus ${bus.busNumber} from ${bus.from} to ${bus.to}, departs ${formatTime(bus.departureTime)}`}
     >
       <div className={`h-full flex flex-col justify-between`}>
-        {/* PREMIUM SECTION 1: Bus Route (Hero Text) */}
-        <div className="mb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-2xl sm:text-3xl">🚌</span>
-            <div className="flex-1">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900">
+        {/* SECTION 1: Bus Header - Bus Number + Status Badge (Top Priority) */}
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <span className="text-xl sm:text-2xl flex-shrink-0">🚌</span>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 truncate">
                 {bus.busName || bus.busNumber}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500">{bus.busNumber}</p>
+              <p className="text-xs text-slate-500">{bus.busNumber}</p>
             </div>
           </div>
           
-          {/* Route: From → To (Glanceable) */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-700 font-semibold">
-            <span>📍 {bus.from}</span>
-            <span className="text-slate-400">→</span>
-            <span>📍 {bus.to}</span>
-          </div>
-        </div>
-
-        {/* PREMIUM SECTION 2: Arrival Time (LARGEST TEXT - Hero Element) */}
-        <div className="mb-4 py-3 px-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-2xl border border-slate-200/50">
-          <p className="text-xs sm:text-sm text-slate-600 font-semibold mb-1 uppercase tracking-wide">
-            {t('bus.arrivalTime', 'Arrival')}
-          </p>
-          <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 leading-none">
-            {formatTime(bus.arrivalTime)}
-          </div>
-          <p className="text-xs sm:text-sm text-slate-500 mt-2">
-            Depart: {formatTime(bus.departureTime)} • Duration: {calculateDuration(bus.departureTime, bus.arrivalTime)}
-          </p>
-        </div>
-
-        {/* PREMIUM SECTION 3: Status Badge & Features Grid */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
-          {/* Status Badge - Premium Styling */}
+          {/* Status Badge - Top Right (Most Visible) */}
           <div className={`
-            px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold
+            px-2 sm:px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0
             border transition-all duration-300
             ${statusBg}
             group-hover:scale-105
           `}>
-            {isDelayed ? '⏱️ Delayed' : '✓ On Time'}
-          </div>
-
-          {/* Features - Compact Grid */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
-            <div className="flex items-center gap-1 text-slate-600 min-h-[32px] px-2 py-1">
-              <span>💺</span>
-              <span className="font-semibold">{bus.capacity || '40'}</span>
-            </div>
-            <div className="flex items-center gap-1 text-slate-600 min-h-[32px] px-2 py-1">
-              <span>❄️</span>
-              <span className="font-semibold">{bus.category || 'AC'}</span>
-            </div>
-            {stops.length > 0 && (
-              <div className="flex items-center gap-1 text-slate-600 min-h-[32px] px-2 py-1">
-                <span>🛑</span>
-                <span className="font-semibold">{stops.length}</span>
-              </div>
-            )}
+            {isDelayed ? '⏱️ Late' : '✓ On Time'}
           </div>
         </div>
 
-        {/* PREMIUM SECTION 4: Expandable Stops & Book Button */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          {stops.length > 0 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                triggerHaptic('light');
-                setShowStops(!showStops);
-              }}
-              className="w-full sm:flex-1 flex items-center justify-between px-3 sm:px-4 py-2 
-                         rounded-xl bg-slate-100/50 hover:bg-slate-200/50 
-                         border border-slate-200/50 hover:border-slate-300/50
-                         transition-all duration-200 text-xs sm:text-sm font-medium text-slate-700"
-            >
-              <span>{showStops ? '▼' : '▶'} {t('bus.stops', 'Stops')}</span>
-              <span className="text-slate-500">{stops.length}</span>
-            </button>
-          )}
+        {/* SECTION 2: Route + Departure Time (Second Priority) */}
+        <div className="mb-2">
+          {/* Route: From → To */}
+          <div className="flex items-center gap-1.5 text-xs sm:text-sm text-slate-700 font-medium mb-1.5">
+            <span className="truncate">📍 {bus.from}</span>
+            <span className="text-slate-400 flex-shrink-0">→</span>
+            <span className="truncate">📍 {bus.to}</span>
+          </div>
+          
+          {/* Departure Time (MOST IMPORTANT - Now Prominent) */}
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Departs:</span>
+              <span className="text-2xl sm:text-3xl font-bold text-emerald-600">
+                {formatTime(bus.departureTime)}
+              </span>
+            </div>
+            <span className="text-slate-400 hidden sm:inline">•</span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xs text-slate-500">Arrives:</span>
+              <span className="text-base sm:text-lg font-semibold text-slate-700">
+                {formatTime(bus.arrivalTime)}
+              </span>
+            </div>
+            <span className="text-slate-400 hidden sm:inline">•</span>
+            <span className="text-xs text-slate-500">
+              {calculateDuration(bus.departureTime, bus.arrivalTime)}
+            </span>
+          </div>
+        </div>
 
-          {onBook && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                triggerHaptic('medium');
-                onBook();
-              }}
-              className="w-full sm:w-auto min-h-[48px] px-4 sm:px-6 py-2 
-                         bg-gradient-to-r from-emerald-500 to-emerald-600 
-                         hover:from-emerald-600 hover:to-emerald-700
-                         text-white font-semibold text-sm sm:text-base
-                         rounded-xl shadow-lg hover:shadow-xl
-                         transition-all duration-300 ease-out
-                         active:scale-95 hover:scale-105 sm:active:scale-100
-                         border border-emerald-400/50"
-            >
-              {t('bus.book', 'Book Now')}
-            </button>
-          )}
+        {/* SECTION 3: Features & Actions (Compact Row) */}
+        <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
+          {/* Features - Compact */}
+          <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-1 text-slate-600">
+              <span>💺</span>
+              <span className="font-medium">{bus.capacity || '40'}</span>
+            </div>
+            <div className="flex items-center gap-1 text-slate-600">
+              <span>❄️</span>
+              <span className="font-medium">{bus.category || 'AC'}</span>
+            </div>
+            {stops.length > 0 && (
+              <div className="flex items-center gap-1 text-slate-600">
+                <span>🛑</span>
+                <span className="font-medium">{stops.length}</span>
+              </div>
+            )}
+          </div>
+          
+          {/* Actions - Compact */}
+          <div className="flex items-center gap-1.5">
+            {stops.length > 0 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  triggerHaptic('light');
+                  setShowStops(!showStops);
+                }}
+                className="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-700 transition-colors min-h-[36px]"
+                aria-label={showStops ? t('bus.hideStops', 'Hide stops') : t('bus.showStops', 'Show stops')}
+              >
+                {showStops ? '▼' : '▶'} {stops.length}
+              </button>
+            )}
+            {onBook && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  triggerHaptic('medium');
+                  onBook();
+                }}
+                className="px-3 py-1.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold text-xs rounded-lg transition-all min-h-[36px]"
+                aria-label={t('bus.book', 'Book Now')}
+              >
+                {t('bus.book', 'Book')}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Expandable Stops Section */}

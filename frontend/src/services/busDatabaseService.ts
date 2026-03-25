@@ -72,6 +72,7 @@ export interface BusFilters {
 
 export interface StopInput {
   locationName: string;
+  tamilName?: string;
   stopOrder?: number;
   arrivalTime?: string;
   departureTime?: string;

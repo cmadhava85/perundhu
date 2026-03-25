@@ -557,7 +557,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* Modal Footer */
+/* Modal Footer - Sticky for Better Mobile UX */
 .stops-modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -566,6 +566,10 @@
   border-top: 1px solid var(--border-light, #e5e7eb);
   background: var(--surface-secondary, #f9fafb);
   border-radius: 0 0 var(--radius-lg, 0.75rem) var(--radius-lg, 0.75rem);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .modal-close-btn {

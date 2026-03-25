@@ -30,6 +30,7 @@ import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.LocationId;
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.model.StopId;
+import com.perundhu.application.service.LocationTranslationService;
 import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.StopJpaEntity;
@@ -55,6 +56,7 @@ public class BusDatabaseService {
   private final BusJpaRepository busJpaRepository;
   private final StopJpaRepository stopJpaRepository;
   private final LocationJpaRepository locationJpaRepository;
+  private final LocationTranslationService locationTranslationService;
 
   /**
    * Get paginated list of buses with optional search and filters.
@@ -280,6 +282,13 @@ public class BusDatabaseService {
 
     // Find or create location
     LocationJpaEntity location = findOrCreateLocation(input.locationName());
+    
+    // Save Tamil translation if provided
+    if (input.tamilName() != null && !input.tamilName().trim().isEmpty()) {
+      Location domainLocation = toDomainLocation(location);
+      locationTranslationService.saveLocationTranslation(domainLocation, input.tamilName());
+      log.info("Saved Tamil translation for location {}: {}", input.locationName(), input.tamilName());
+    }
 
     // Get current stops to determine order
     List<StopJpaEntity> existingStops = stopJpaRepository.findByBusIdOrderByStopOrder(busId);
@@ -330,6 +339,13 @@ public class BusDatabaseService {
       LocationJpaEntity location = findOrCreateLocation(input.locationName());
       stop.setName(input.locationName());
       stop.setLocation(location);
+      
+      // Save Tamil translation if provided
+      if (input.tamilName() != null && !input.tamilName().trim().isEmpty()) {
+        Location domainLocation = toDomainLocation(location);
+        locationTranslationService.saveLocationTranslation(domainLocation, input.tamilName());
+        log.info("Saved Tamil translation for location {}: {}", input.locationName(), input.tamilName());
+      }
     }
 
     // Update timing
@@ -557,6 +573,7 @@ public class BusDatabaseService {
 
   public record StopInput(
       String locationName,
+      String tamilName,
       Integer stopOrder,
       String arrivalTime,
       String departureTime) {
@@ -619,5 +636,20 @@ public class BusDatabaseService {
 
     record Deleted() implements StopResult {
     }
+  }
+
+  /**
+   * Convert LocationJpaEntity to domain Location object
+   */
+  private Location toDomainLocation(LocationJpaEntity locationJpa) {
+    return new Location(
+        new LocationId(locationJpa.getId()),
+        locationJpa.getName(),
+        null, // nameLocalLanguage is stored separately in translations table
+        locationJpa.getLatitude(),
+        locationJpa.getLongitude(),
+        locationJpa.getDistrict(),
+        locationJpa.getNearbyCity()
+    );
   }
 }

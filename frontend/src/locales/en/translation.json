@@ -58,7 +58,7 @@
     "contact": "Contact"
   },
   "footer": {
-    "title": "Tamil Nadu Bus Scheduler",
+    "title": "Perundhu",
     "copyright": "© 2025 Perundhu",
     "allRightsReserved": "All Rights Reserved.",
     "terms": "Terms of Service",
@@ -68,7 +68,18 @@
     "contactUs": "Contact Us",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "description": "People-powered bus schedule platform for Tamil Nadu. Helping commuters find accurate bus timings.",
+    "quickLinks": "Quick Links",
+    "legal": "Legal",
+    "madeWith": "Made with",
+    "inTamilNadu": "in Tamil Nadu",
+    "stats": {
+      "routes": "Bus Routes",
+      "contributors": "Contributors",
+      "cities": "Cities Covered",
+      "dailyUsers": "Daily Users"
+    }
   },
   "common": {
     "appName": "Perundhu",

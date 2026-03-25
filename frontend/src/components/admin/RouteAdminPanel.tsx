@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import './RouteAdminPanel.css';
 import type { RouteContribution } from '../../types/contributionTypes';
@@ -37,6 +37,11 @@ const RouteAdminPanel: React.FC = () => {
   const [routeToEdit, setRouteToEdit] = useState<RouteContribution | null>(null);
   const [editedDepartureTime, setEditedDepartureTime] = useState('');
   const [editedArrivalTime, setEditedArrivalTime] = useState('');
+  
+  // Bulk action state
+  const [selectedRouteIds, setSelectedRouteIds] = useState<Set<number>>(new Set());
+  const [bulkActionLoading, setBulkActionLoading] = useState(false);
+  const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
 
   // Load routes on component mount and when filter changes
   useEffect(() => {
@@ -123,6 +128,18 @@ const RouteAdminPanel: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [searchQuery, routes]);
+
+  // Update select all checkbox indeterminate state
+  useEffect(() => {
+    if (selectAllCheckboxRef.current) {
+      const pendingRoutes = filteredRoutes.filter(r => r.status === ContributionStatus.PENDING);
+      const allSelected = selectedRouteIds.size > 0 && selectedRouteIds.size === pendingRoutes.length;
+      const someSelected = selectedRouteIds.size > 0 && selectedRouteIds.size < pendingRoutes.length;
+      
+      selectAllCheckboxRef.current.indeterminate = someSelected;
+      selectAllCheckboxRef.current.checked = allSelected;
+    }
+  }, [selectedRouteIds, filteredRoutes]);
 
   // Function to load routes based on status filter
   const loadRoutes = async () => {
@@ -315,6 +332,89 @@ const RouteAdminPanel: React.FC = () => {
     handleCloseDetailsModal();
   };
 
+  // Bulk action handlers
+  const handleToggleSelection = (id: number | undefined) => {
+    if (!id) return;
+    setSelectedRouteIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const handleSelectAll = () => {
+    const selectableIds = filteredRoutes
+      .filter(r => r.id !== undefined)
+      .map(r => r.id as number);
+    setSelectedRouteIds(new Set(selectableIds));
+  };
+
+  const handleDeselectAll = () => {
+    setSelectedRouteIds(new Set());
+  };
+
+  const handleBulkApprove = async () => {
+    if (selectedRouteIds.size === 0) return;
+    
+    const count = selectedRouteIds.size;
+    if (!confirm(`Approve ${count} route${count > 1 ? 's' : ''}? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      setBulkActionLoading(true);
+      const promises = Array.from(selectedRouteIds).map(id => 
+        AdminService.approveRouteContribution(id)
+      );
+      
+      await Promise.all(promises);
+      
+      setSelectedRouteIds(new Set());
+      await loadRoutes();
+      
+      alert(`Successfully approved ${count} route${count > 1 ? 's' : ''}`);
+    } catch (err) {
+      console.error('Bulk approve failed:', err);
+      setError('Some routes failed to approve. Please try again.');
+    } finally {
+      setBulkActionLoading(false);
+    }
+  };
+
+  const handleBulkReject = async () => {
+    if (selectedRouteIds.size === 0) return;
+    
+    const count = selectedRouteIds.size;
+    const reason = prompt(`Reject ${count} route${count > 1 ? 's' : ''}? Enter rejection reason:`);
+    
+    if (!reason || reason.trim() === '') {
+      return;
+    }
+
+    try {
+      setBulkActionLoading(true);
+      const promises = Array.from(selectedRouteIds).map(id => 
+        AdminService.rejectRouteContribution(id, reason)
+      );
+      
+      await Promise.all(promises);
+      
+      setSelectedRouteIds(new Set());
+      await loadRoutes();
+      
+      alert(`Successfully rejected ${count} route${count > 1 ? 's' : ''}`);
+    } catch (err) {
+      console.error('Bulk reject failed:', err);
+      setError('Some routes failed to reject. Please try again.');
+    } finally {
+      setBulkActionLoading(false);
+    }
+  };
+
   // Handle integration of approved routes
     const handleIntegrateApprovedRoutes = async () => {
     try {
@@ -424,7 +524,20 @@ ${result.sqlExample}`;
 
   // Render a route card for grid view
   const renderRouteCard = (route: RouteContribution) => (
-    <div key={route.id} className={`route-card ${getRowClass(route.status)}`}>
+    <div key={route.id} className={`route-card ${getRowClass(route.status)} ${selectedRouteIds.has(route.id!) ? 'selected' : ''}`}>
+      {/* Selection Checkbox */}
+      {route.status === ContributionStatus.PENDING && (
+        <div className="route-card-checkbox">
+          <input
+            type="checkbox"
+            checked={selectedRouteIds.has(route.id!)}
+            onChange={() => handleToggleSelection(route.id)}
+            onClick={(e) => e.stopPropagation()}
+            aria-label={`Select route ${route.busNumber}`}
+          />
+        </div>
+      )}
+      
       <div className="route-card-header">
         <span className="route-number">{route.busNumber}</span>
         <span className={getStatusClass(route.status)}>
@@ -753,6 +866,54 @@ ${result.sqlExample}`;
         </div>
       ) : (
         <div className="routes-content">
+          {/* Bulk Action Bar */}
+          {statusFilter === 'pending' && filteredRoutes.length > 0 && (
+            <div className="bulk-action-bar">
+              <div className="bulk-select">
+                <input
+                  ref={selectAllCheckboxRef}
+                  type="checkbox"
+                  onChange={(e) => e.target.checked ? handleSelectAll() : handleDeselectAll()}
+                  id="select-all"
+                />
+                <label htmlFor="select-all">
+                  {selectedRouteIds.size > 0 
+                    ? `${selectedRouteIds.size} selected`
+                    : 'Select All'
+                  }
+                </label>
+              </div>
+              
+              {selectedRouteIds.size > 0 && (
+                <div className="bulk-actions">
+                  <button
+                    className="bulk-action-btn approve"
+                    onClick={handleBulkApprove}
+                    disabled={bulkActionLoading}
+                  >
+                    <CheckCircle size={18} />
+                    Approve Selected ({selectedRouteIds.size})
+                  </button>
+                  <button
+                    className="bulk-action-btn reject"
+                    onClick={handleBulkReject}
+                    disabled={bulkActionLoading}
+                  >
+                    <XCircle size={18} />
+                    Reject Selected ({selectedRouteIds.size})
+                  </button>
+                  <button
+                    className="bulk-action-btn clear"
+                    onClick={handleDeselectAll}
+                    disabled={bulkActionLoading}
+                  >
+                    Clear Selection
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          
           {filteredRoutes.length > 0 ? (
             <>
               {selectedView === 'grid' ? (
