@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Perundhu",
-    "tagline": "Bus in Seconds",
+    "tagline": "Bus timings in seconds",
     "loading": "Loading...",
     "error": "No routes found for this selection. Please try different locations.",
     "close": "Close",
@@ -50,7 +50,7 @@
   },
   "header": {
     "title": "Tamil Nadu Bus Schedule",
-    "subtitle": "Find your bus in seconds",
+    "subtitle": "Bus timings in seconds",
     "home": "Home",
     "schedule": "Schedule",
     "routes": "Routes",
@@ -83,7 +83,7 @@
   },
   "common": {
     "appName": "Perundhu",
-    "tagline": "Bus in Seconds",
+    "tagline": "Bus timings in seconds",
     "loading": "Loading...",
     "error": "No routes for this selection. Try different locations.",
     "close": "Close",

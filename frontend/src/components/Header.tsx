@@ -129,7 +129,7 @@ const Header: React.FC<HeaderProps> = ({
               </div>
               <div className="header-title-group">
                 <h1 className="brand-name">பேருந்து</h1>
-                <span className="header-subtitle">{t('common.tagline', 'Bus in Seconds')}</span>
+                <span className="header-subtitle">{t('common.tagline', 'Bus timings in seconds')}</span>
               </div>
             </a>
           </div>
