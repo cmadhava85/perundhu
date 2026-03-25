@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Upload, CheckCircle, AlertCircle } from 'lucide-react';
@@ -13,6 +14,11 @@ export const AboutUs: React.FC = () => {
   
   return (
     <div className="static-page">
+      <Helmet>
+        <title>About Perundhu - Tamil Nadu Community Bus Route Finder</title>
+        <meta name="description" content="Learn about Perundhu, the people-powered bus schedule platform for Tamil Nadu. Over 10,000+ TNSTC, MTC and SETC routes across 200+ cities." />
+        <link rel="canonical" href="https://www.perundhu.com/about" />
+      </Helmet>
       <div className="static-page-container">
         <h1>{t('pages.about.title', 'About Perundhu')}</h1>
         
@@ -208,6 +214,11 @@ export const ContactUs: React.FC = () => {
 
   return (
     <div className="static-page">
+      <Helmet>
+        <title>Contact Us - Perundhu Tamil Nadu Bus Route Finder</title>
+        <meta name="description" content="Contact the Perundhu team for help with Tamil Nadu bus routes and timings. Email us at perundhu@gmail.com. We respond within 24-48 hours." />
+        <link rel="canonical" href="https://www.perundhu.com/contact" />
+      </Helmet>
       <div className="static-page-container">
         <h1>{t('pages.contact.title', 'Contact Us')}</h1>
         
@@ -408,6 +419,12 @@ export const PrivacyPolicy: React.FC = () => {
   
   return (
     <div className="static-page">
+      <Helmet>
+        <title>Privacy Policy - Perundhu Tamil Nadu Bus Routes</title>
+        <meta name="description" content="Perundhu privacy policy. We do not sell your data. Anonymous location sharing only during active bus tracking sessions." />
+        <link rel="canonical" href="https://www.perundhu.com/privacy" />
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
       <div className="static-page-container">
         <h1>{t('pages.privacy.title', 'Privacy Policy')}</h1>
         
@@ -465,6 +482,12 @@ export const TermsOfService: React.FC = () => {
   
   return (
     <div className="static-page">
+      <Helmet>
+        <title>Terms of Service - Perundhu Tamil Nadu Bus Routes</title>
+        <meta name="description" content="Terms of service for Perundhu, the free Tamil Nadu bus route and timing finder. Free to use, community powered." />
+        <link rel="canonical" href="https://www.perundhu.com/terms" />
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
       <div className="static-page-container">
         <h1>{t('pages.terms.title', 'Terms of Service')}</h1>
         
@@ -604,8 +627,27 @@ export const FAQ: React.FC = () => {
     }
   ];
   
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.slice(0, 10).map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="static-page">
+      <Helmet>
+        <title>FAQ - Tamil Nadu Bus Timings &amp; Routes | Perundhu</title>
+        <meta name="description" content="Frequently asked questions about Perundhu bus route finder. Find TNSTC, MTC and SETC bus timings across Tamil Nadu. Chennai, Coimbatore, Madurai and 200+ cities covered." />
+        <link rel="canonical" href="https://www.perundhu.com/faq" />
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      </Helmet>
       <div className="static-page-container">
         <h1>{t('pages.faq.title', 'Frequently Asked Questions')}</h1>
         

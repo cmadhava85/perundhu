@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 import './utils/browserCompat.css' // Import browser compatibility fixes
 import App from './App'
@@ -22,11 +23,13 @@ setupInstallPrompt();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ToastProvider>
-        <App />
-        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
-      </ToastProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>
+          <App />
+          {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+        </ToastProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   </StrictMode>,
 )
