@@ -159,8 +159,8 @@ public class TranslationJpaEntity {
             new Translation.TranslationId(id),
             entityType,
             entityId,
-            languageCode,
             fieldName,
+            languageCode,
             translatedValue,
             createdAt,
             updatedAt

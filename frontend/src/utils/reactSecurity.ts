@@ -184,25 +184,14 @@ export const createSecureObject = <T extends object>(obj: T): Readonly<T> => {
 
 /**
  * Protect against prototype pollution attacks
+ * NOTE: We intentionally do NOT freeze built-in prototypes (Object.prototype,
+ * String.prototype, etc.) because doing so breaks third-party scripts such as
+ * Google AdSense ("Cannot define property Symbol(replaceAll), object is not
+ * extensible"). Prototype pollution is better mitigated via CSP and server-side
+ * validation.
  */
 export const protectPrototypes = (): void => {
-  if (!isProduction()) return;
-
-  // Freeze critical prototypes
-  const prototypesToFreeze = [
-    Object.prototype,
-    Array.prototype,
-    String.prototype,
-    Function.prototype,
-  ];
-
-  prototypesToFreeze.forEach((proto) => {
-    try {
-      Object.freeze(proto);
-    } catch {
-      // Some environments don't allow freezing built-in prototypes
-    }
-  });
+  // No-op: prototype freezing disabled to avoid breaking third-party scripts.
 };
 
 /**
