@@ -395,38 +395,12 @@ export function validateJourney(journey: JourneyValidationInput): ValidationResu
   
   // Validate times if both provided
   if (journey.departureTime && journey.arrivalTime) {
-    // If we have coordinates, do distance-based validation
-    if (
-      journey.origin.latitude !== undefined &&
-      journey.origin.longitude !== undefined &&
-      journey.destination.latitude !== undefined &&
-      journey.destination.longitude !== undefined
-    ) {
-      const distance = calculateDistance(
-        journey.origin.latitude,
-        journey.origin.longitude,
-        journey.destination.latitude,
-        journey.destination.longitude
-      );
-      
-      const durationResult = validateDurationForDistance(
-        journey.departureTime,
-        journey.arrivalTime,
-        distance
-      );
-      
-      if (!durationResult.valid || durationResult.severity === 'warning') {
-        results.push(durationResult);
-      }
-    } else {
-      // No coordinates, just validate basic time logic
-      const timeResult = validateArrivalAfterDeparture(
-        journey.departureTime,
-        journey.arrivalTime
-      );
-      if (!timeResult.valid || timeResult.severity === 'warning') {
-        results.push(timeResult);
-      }
+    const timeResult = validateArrivalAfterDeparture(
+      journey.departureTime,
+      journey.arrivalTime
+    );
+    if (!timeResult.valid || timeResult.severity === 'warning') {
+      results.push(timeResult);
     }
   }
   
