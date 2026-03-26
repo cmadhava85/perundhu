@@ -4,8 +4,6 @@
  * across search, contribution, and admin pages.
  */
 
-import { calculateDistance } from '../services/geolocation';
-
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -151,30 +149,6 @@ export function validateDifferentLocations(
       messageKey: 'validation.location.sameOriginDest',
       severity: 'error',
     };
-  }
-  
-  // Also check by coordinates if available (within 0.5km)
-  if (
-    origin.latitude !== undefined &&
-    origin.longitude !== undefined &&
-    destination.latitude !== undefined &&
-    destination.longitude !== undefined
-  ) {
-    const distance = calculateDistance(
-      origin.latitude,
-      origin.longitude,
-      destination.latitude,
-      destination.longitude
-    );
-    
-    if (distance < 0.5) {
-      return {
-        valid: false,
-        message: 'Origin and destination are too close (less than 500m apart)',
-        messageKey: 'validation.location.tooClose',
-        severity: 'error',
-      };
-    }
   }
   
   return { valid: true };

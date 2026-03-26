@@ -104,6 +104,7 @@ public class BusScheduleControllerTest {
                                 new StopDTO(
                                                 1L, // id
                                                 "Stop 1", // name
+                                                null, // translatedName
                                                 1L, // locationId
                                                 LocalTime.of(8, 30), // arrivalTime
                                                 LocalTime.of(8, 35), // departureTime
@@ -115,6 +116,7 @@ public class BusScheduleControllerTest {
                                 new StopDTO(
                                                 2L, // id
                                                 "Stop 2", // name
+                                                null, // translatedName
                                                 2L, // locationId
                                                 LocalTime.of(10, 30), // arrivalTime
                                                 LocalTime.of(10, 35), // departureTime

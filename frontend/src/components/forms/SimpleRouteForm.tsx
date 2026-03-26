@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { AlertTriangle } from 'lucide-react';
 import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
@@ -147,7 +146,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
     } else {
       const resolvedOrigin = selectedOriginLocation || resolveLocationFromInput(formData.origin);
       if (!resolvedOrigin) {
-        errors.origin = t('validation.location.selectFromList', 'Please select origin from the suggestions list');
+        // Allow new locations — show a soft info warning instead of blocking
+        warnings.origin = t('validation.location.newLocationHint', 'New location "{{name}}" will be added to our database after review', { name: formData.origin.trim() });
       } else {
         setSelectedOriginLocation(resolvedOrigin);
         setLocationVerified(prev => ({ ...prev, origin: true }));
@@ -163,7 +163,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
     } else {
       const resolvedDestination = selectedDestinationLocation || resolveLocationFromInput(formData.destination);
       if (!resolvedDestination) {
-        errors.destination = t('validation.location.selectDestFromList', 'Please select destination from the suggestions list');
+        // Allow new locations — show a soft info warning instead of blocking
+        warnings.destination = t('validation.location.newLocationHint', 'New location "{{name}}" will be added to our database after review', { name: formData.destination.trim() });
       } else {
         setSelectedDestinationLocation(resolvedDestination);
         setLocationVerified(prev => ({ ...prev, destination: true }));
@@ -237,24 +238,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
       }
     }
     
+    // Stops with unrecognized names are allowed — they represent new locations
     const stopErrors: {[key: string]: string} = {};
-    if (intermediateStops.length > 0 && locations && locations.length > 0) {
-      for (const stop of intermediateStops) {
-        if (!stop.name?.trim()) {
-          continue;
-        }
-        if (stop.isVerified) {
-          continue;
-        }
-        const resolvedStop = resolveLocationFromInput(stop.name);
-        if (!resolvedStop) {
-          stopErrors[stop.id] = t('validation.location.selectFromList', 'Please select stop from the suggestions list');
-        }
-      }
-    }
-    if (Object.keys(stopErrors).length > 0) {
-      errors.stops = t('validation.location.selectFromList', 'Please select stops from the suggestions list');
-    }
     setValidationErrors(errors);
     setLocationWarnings(warnings);
     setStopValidationErrors(stopErrors);
@@ -531,8 +516,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
       {/* Location Warnings Summary */}
       {Object.keys(locationWarnings).length > 0 && Object.keys(validationErrors).length === 0 && (
         <div className="validation-warning-summary" style={{
-          background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
-          border: '2px solid #f59e0b',
+          background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+          border: '2px solid #3b82f6',
           borderRadius: '12px',
           padding: '1rem',
           marginBottom: '1.5rem',
@@ -540,13 +525,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
           alignItems: 'flex-start',
           gap: '0.75rem'
         }}>
-          <AlertTriangle size={24} style={{ color: '#d97706', flexShrink: 0 }} />
+          <span style={{ fontSize: '1.25rem', flexShrink: 0 }}>📍</span>
           <div>
-            <h4 style={{ margin: 0, color: '#b45309', fontSize: '1rem', fontWeight: '600' }}>
-              {t('route.locationWarning', 'Location Warning')}
+            <h4 style={{ margin: 0, color: '#1d4ed8', fontSize: '1rem', fontWeight: '600' }}>
+              {t('route.newLocationNotice', 'New Location')}
             </h4>
-            <p style={{ margin: '0.5rem 0 0 0', color: '#92400e', fontSize: '0.9rem' }}>
-              {t('route.locationWarningDescription', 'Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy.')}
+            <p style={{ margin: '0.5rem 0 0 0', color: '#1e40af', fontSize: '0.9rem' }}>
+              {t('route.newLocationDescription', 'This location is not yet in our database. Your contribution will help us add it! If the location already exists under a different spelling, you can still find it using the suggestions dropdown.')}
             </p>
           </div>
         </div>
@@ -625,7 +610,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
               <span className="field-error-text">{validationErrors.origin}</span>
             )}
             {locationWarnings.origin && !validationErrors.origin && (
-              <span className="field-warning-text"><AlertTriangle size={12} /> {locationWarnings.origin}</span>
+              <span className="field-warning-text">📍 {locationWarnings.origin}</span>
             )}
           </div>
           
@@ -683,7 +668,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
               <span className="field-error-text">{validationErrors.destination}</span>
             )}
             {locationWarnings.destination && !validationErrors.destination && (
-              <span className="field-warning-text"><AlertTriangle size={12} /> {locationWarnings.destination}</span>
+              <span className="field-warning-text">📍 {locationWarnings.destination}</span>
             )}
           </div>
           

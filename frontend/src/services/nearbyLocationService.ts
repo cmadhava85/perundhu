@@ -226,7 +226,7 @@ export const findNearbyLocationFromGPS = async (): Promise<{
  */
 const matchNominatimWithDatabase = async (placeName: string): Promise<AppLocation | null> => {
   try {
-    const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
+    const response = await api.get('/v1/locations/autocomplete', {
       params: { q: placeName.trim() }
     });
 

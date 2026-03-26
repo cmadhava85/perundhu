@@ -43,6 +43,7 @@ class BusScheduleIntegrationTest {
                 StopDTO stop = new StopDTO(
                                 1L,
                                 "Test Stop",
+                                null,
                                 100L,
                                 LocalTime.of(8, 30),
                                 LocalTime.of(8, 32),

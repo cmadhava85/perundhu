@@ -232,7 +232,7 @@ const PremiumBusCard: React.FC<PremiumBusCardProps> = ({
                   <div key={stop.id || index} className="stop-item">
                     <div className="stop-marker"></div>
                     <div className="stop-content">
-                      <div className="stop-name">{stop.name}</div>
+                      <div className="stop-name">{stop.translatedName || stop.name}</div>
                       {stop.arrivalTime && (
                         <div className="stop-time">
                           {stop.arrivalTime}

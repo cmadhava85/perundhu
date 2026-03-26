@@ -20,23 +20,9 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
   error
 }) => {
   const { t, i18n } = useTranslation();
-  const [isStopSelected, setIsStopSelected] = React.useState(false);
-  const [selectionError, setSelectionError] = React.useState('');
-
-  React.useEffect(() => {
-    if (!currentStop.name.trim()) {
-      setIsStopSelected(false);
-      setSelectionError('');
-    }
-  }, [currentStop.name]);
 
   // Handle stop name change from autocomplete
-  const handleStopNameChange = (value: string, location?: unknown) => {
-    const wasSelected = !!location;
-    setIsStopSelected(wasSelected);
-    if (wasSelected || !value.trim()) {
-      setSelectionError('');
-    }
+  const handleStopNameChange = (value: string) => {
     // Create a synthetic event that mimics the standard input onChange event
     const syntheticEvent = {
       target: {
@@ -49,10 +35,7 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
   };
 
   const handleAddStop = () => {
-    if (currentStop.name.trim() && !isStopSelected) {
-      setSelectionError(t('validation.location.selectFromList', 'Please select stop from the suggestions list'));
-      return;
-    }
+    // Allow new locations — unrecognized stop names are accepted as new location contributions
     onAddStop();
   };
 
@@ -75,7 +58,6 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
             debounceMs={300}
           />
           {error && <div className="field-error-text">{error}</div>}
-          {selectionError && <div className="field-error-text">{selectionError}</div>}
         </div>
         
         <div className="form-group">

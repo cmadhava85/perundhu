@@ -694,6 +694,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
     return new StopDTO(
         stop.id() != null ? stop.id().value() : null,
         stop.name(),
+        null,
         stop.location() != null && stop.location().id() != null ? stop.location().id().value() : null,
         stop.arrivalTime(),
         stop.departureTime(),

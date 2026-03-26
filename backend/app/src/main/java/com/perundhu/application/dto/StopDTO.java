@@ -11,6 +11,7 @@ import java.util.Map;
 public record StopDTO(
         Long id,
         String name,
+        String translatedName,
         Long locationId,
         LocalTime arrivalTime,
         LocalTime departureTime,

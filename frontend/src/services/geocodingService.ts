@@ -126,7 +126,7 @@ export class GeocodingService {
   private static async searchInBackground(query: string, limit: number, cacheKey: string): Promise<void> {
     try {
       // Try database search
-      const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
+      const response = await api.get('/v1/locations/autocomplete', {
         params: {
           q: query.trim(),
           language: 'en'
@@ -160,7 +160,7 @@ export class GeocodingService {
     
     try {
       // Search database
-      const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
+      const response = await api.get('/v1/locations/autocomplete', {
         params: {
           q: query.trim(),
           language: 'en'

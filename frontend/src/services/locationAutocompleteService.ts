@@ -98,7 +98,7 @@ export class LocationAutocompleteService {
       
       // Final fallback to original API (without abort since this is last resort)
       try {
-        const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
+        const response = await api.get('/v1/locations/autocomplete', {
           params: {
             q: query.trim(),
             language: language
@@ -190,7 +190,7 @@ export class LocationAutocompleteService {
       // Use passed signal if available, otherwise use timeout controller
       const requestSignal = signal || controller.signal;
       
-      const response = await api.get('/v1/bus-schedules/locations/autocomplete', {
+      const response = await api.get('/v1/locations/autocomplete', {
         params: { q: query.trim(), language: language },
         signal: requestSignal
       });

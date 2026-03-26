@@ -516,7 +516,9 @@
     "stop": "Stop",
     "fixErrors": "Please fix the following errors:",
     "locationWarning": "Location Warning",
-    "locationWarningDescription": "Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy."
+    "locationWarningDescription": "Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy.",
+    "newLocationNotice": "New Location",
+    "newLocationDescription": "This location is not yet in our database. Your contribution will help us add it! If the location already exists under a different spelling, you can still find it using the suggestions dropdown."
   },
   "contribution": {
     "peoplePowered": "People Powered",

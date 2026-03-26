@@ -460,27 +460,36 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       }
     }
     
-    // Validation 1: Check if origin is selected from list (not just typed)
-    if (!selectedFrom && fromQuery.trim().length > 0) {
+    // Validation 1: Check origin and destination are both entered
+    if (!fromQuery.trim()) {
       setValidationError({
         valid: false,
-        message: t('validation.location.selectFromList', 'Please select origin from the suggestions list'),
+        message: t('validation.location.enterOrigin', 'Please enter an origin location'),
         severity: 'error'
       });
       return;
     }
-    
-    // Validation 2: Check if destination is selected from list
-    if (!selectedTo && toQuery.trim().length > 0) {
+
+    if (!toQuery.trim()) {
       setValidationError({
         valid: false,
-        message: t('validation.location.selectDestFromList', 'Please select destination from the suggestions list'),
+        message: t('validation.location.enterDestination', 'Please enter a destination location'),
         severity: 'error'
       });
       return;
     }
-    
-    // Validation 3: Check origin and destination are different
+
+    // Validation 2: Check origin and destination are different
+    const fromName = selectedFrom?.name ?? fromQuery.trim();
+    const toName = selectedTo?.name ?? toQuery.trim();
+    if (fromName.toLowerCase() === toName.toLowerCase()) {
+      setValidationError({
+        valid: false,
+        message: t('validation.location.sameLocation', 'Origin and destination cannot be the same'),
+        severity: 'error'
+      });
+      return;
+    }
     if (selectedFrom && selectedTo) {
       const originData: LocationData = {
         name: selectedFrom.name,

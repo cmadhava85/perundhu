@@ -233,19 +233,20 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         Map<Long, String> translationMap = buildLocationTranslationMap(languageCode);
 
         return stops.stream().map(stop -> {
-            String translatedName = stop.name();
+            String translatedName = null;
 
             // Look up translation from batch-loaded map
             if (stop.location() != null && stop.location().id() != null) {
                 String translated = translationMap.get(stop.location().id().value());
-                if (translated != null && !translated.isEmpty()) {
+                if (translated != null && !translated.isEmpty() && !translated.equals(stop.name())) {
                     translatedName = translated;
                 }
             }
 
             return new StopDTO(
                     stop.id().value(), // Long id
-                    translatedName, // String name (translated)
+                    stop.name(), // String name (always English original)
+                    translatedName, // String translatedName (Tamil or null)
                     stop.location() != null ? stop.location().id().value() : null, // Long locationId
                     stop.arrivalTime(), // LocalTime arrivalTime
                     stop.departureTime(), // LocalTime departureTime
@@ -292,15 +293,16 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     }
 
     private StopDTO convertStopToDtoWithTranslation(Stop stop, Map<Long, String> translationMap) {
-        String translatedName = stop.name();
+        String translatedName = null;
         if (stop.location() != null && stop.location().id() != null) {
             String tr = translationMap.get(stop.location().id().value());
-            if (tr != null && !tr.isEmpty()) {
+            if (tr != null && !tr.isEmpty() && !tr.equals(stop.name())) {
                 translatedName = tr;
             }
         }
         return new StopDTO(
                 stop.id().value(),
+                stop.name(),
                 translatedName,
                 stop.location() != null ? stop.location().id().value() : null,
                 stop.arrivalTime(),

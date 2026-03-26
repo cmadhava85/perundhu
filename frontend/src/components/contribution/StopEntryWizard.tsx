@@ -128,10 +128,7 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
         alert(t('addStops.enterStopName', 'Please enter a stop name'));
         return;
       }
-      if (!isStopSelected) {
-        alert(t('validation.location.selectFromList', 'Please select stop from the suggestions list'));
-        return;
-      }
+      // Allow new locations — unrecognized stop names are accepted as new location contributions
     }
     if (currentStepIndex < steps.length - 1) {
       setCurrentStep(steps[currentStepIndex + 1]);

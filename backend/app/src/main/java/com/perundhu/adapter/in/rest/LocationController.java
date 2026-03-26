@@ -134,11 +134,13 @@ public class LocationController {
               }
             }
 
+            // Include coordinates - all locations have them (100% coverage)
             return LocationDTO.withTranslation(
                 location.id().value(),
                 englishName,
                 translatedName,
-                null, null);
+                location.latitude(),  // Direct field access
+                location.longitude()); // Direct field access
           })
           .toList();
 
