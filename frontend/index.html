@@ -43,9 +43,10 @@
     <!-- Security Headers -->
     <!-- CSP Note: For local dev, Vite dev server will override this to allow localhost connections -->
     <!-- For production builds, this CSP is used (nginx adds additional CSP header as backup) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://adservice.google.com https://tpc.googlesyndication.com https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https: blob:; font-src 'self'; connect-src 'self' https:; frame-src https://www.google.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <!-- Updated CSP with ALL required Google AdSense domains -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://adservice.google.com https://tpc.googlesyndication.com https://partner.googleadservices.com https://static.doubleclick.net https://cdn.ampproject.org https://fundingchoicesmessages.google.com https://securepubads.g.doubleclick.net https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://adservice.google.com; frame-src 'self' https://www.google.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://bid.g.doubleclick.net https://td.doubleclick.net; child-src https://www.google.com https://googleads.g.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     

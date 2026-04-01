@@ -87,7 +87,7 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
     return null;
   }
 
-  // Determine dimensions based on format
+  // Determine dimensions based on format (but allow responsive)
   const dimensions = {
     horizontal: { w: width || 728, h: height || 90 },
     vertical: { w: width || 300, h: height || 600 },
@@ -100,24 +100,23 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
     <div
       className={`google-ad-container google-ad-${adFormat} google-ad-placement-${placement}`}
       style={{
-        minWidth: `${dim.w}px`,
-        minHeight: `${dim.h}px`,
+        minWidth: width ? `${dim.w}px` : 'auto',
+        minHeight: height ? `${dim.h}px` : 'auto',
         width: '100%',
-        maxWidth: `${dim.w}px`,
-        margin: '0 auto'
+        maxWidth: width ? `${dim.w}px` : '100%',
+        margin: '0 auto',
+        textAlign: 'center'
       }}
     >
       <ins
         className="adsbygoogle"
         style={{
-          display: 'block',
-          width: `${dim.w}px`,
-          height: `${dim.h}px`
+          display: 'block'
         }}
         data-ad-client={ADSENSE_CLIENT}
         data-ad-slot={adSlot}
-        data-ad-format={adFormat === 'horizontal' ? 'horizontal' : 'rectangle'}
-        data-full-width-responsive="false"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
       />
     </div>
   );

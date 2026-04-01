@@ -29,25 +29,25 @@ export interface GoogleAdsConfig {
  */
 export const DEFAULT_ADS_CONFIG: GoogleAdsConfig = {
   enabled: true,
-  clientId: import.meta.env.VITE_GOOGLE_AD_CLIENT || 'ca-pub-xxxxxxxxxxxxxxxx',
+  clientId: import.meta.env.VITE_GOOGLE_AD_CLIENT || 'ca-pub-9475468169056134',
   placements: {
-    // Between search results (every 3-4 buses)
+    // Between search results (every 3-4 buses) - AUTO RESPONSIVE
     betweenSearchResults: {
       enabled: true,
-      adSlot: import.meta.env.VITE_AD_SLOT_RESULTS || 'xxxxxxxx1',
-      adFormat: 'square', // 300x250 medium rectangle
+      adSlot: import.meta.env.VITE_AD_SLOT_RESULTS || '9202659090',
+      adFormat: 'square', // Base format, but will use auto/responsive
       description: 'Between search results',
-      width: 300,
-      height: 250
+      width: undefined, // Auto width for responsive
+      height: undefined // Auto height for responsive
     },
 
-    // Right sidebar (sticky)
+    // Right sidebar (sticky) - AUTO RESPONSIVE
     sidebarRight: {
       enabled: true,
-      adSlot: import.meta.env.VITE_AD_SLOT_SIDEBAR || 'xxxxxxxx2',
-      adFormat: 'vertical', // 300x600
+      adSlot: import.meta.env.VITE_AD_SLOT_SIDEBAR || '8194827621',
+      adFormat: 'vertical', // Base format, but will use auto/responsive
       description: 'Right sidebar (sticky)',
-      width: 300,
+      width: undefined, // Auto width for responsive
       height: 600
     },
 
