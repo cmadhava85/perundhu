@@ -699,7 +699,9 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                         key={loc.id}
                         role="option"
                         tabIndex={0}
-                        onClick={() => {
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
                           setSelectedTo(loc);
                           setToQuery(getLocationDisplayName(loc));
                           setShowToSuggestions(false);
@@ -1049,10 +1051,10 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                                   key={loc.id}
                                   role="option"
                                   aria-selected={isHighlighted}
-                                  onMouseDown={() => {
+                                  onMouseDown={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
                                     isSelectingStopRef.current = true;
-                                  }}
-                                  onClick={() => {
                                     handleSelectStopLocation(index, loc);
                                   }}
                                   onMouseEnter={() => setHighlightedStopIndex(locIndex)}

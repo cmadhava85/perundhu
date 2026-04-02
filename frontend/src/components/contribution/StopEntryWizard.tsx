@@ -252,10 +252,10 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
                           key={loc.id}
                           role="option"
                           aria-selected={isHighlighted}
-                          onMouseDown={() => {
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
                             isSelectingRef.current = true;
-                          }}
-                          onClick={() => {
                             handleSelectStopLocation(loc);
                           }}
                           onMouseEnter={() => setHighlightedIndex(locIndex)}

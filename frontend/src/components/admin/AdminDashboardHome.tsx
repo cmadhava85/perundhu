@@ -52,9 +52,10 @@ const AdminDashboardHome: React.FC = () => {
       setError(null);
       
       // Fetch all data in parallel
-      const [routes, images] = await Promise.all([
+      const [routes, images, publicStats] = await Promise.all([
         AdminService.getRouteContributions(),
-        AdminService.getImageContributions()
+        AdminService.getImageContributions(),
+        fetch(`${import.meta.env.VITE_API_URL || ''}/v1/bus-schedules/public-stats`).then(res => res.json()).catch(() => ({ dailyUsers: 0 }))
       ]);
 
       // Calculate stats
@@ -71,7 +72,7 @@ const AdminDashboardHome: React.FC = () => {
         ).length,
         issuesResolvedToday: 0, // TODO: Add from issues API
         totalSearchesToday: 0, // TODO: Add from analytics API
-        activeUsers24h: 0 // TODO: Add from analytics API
+        activeUsers24h: publicStats.dailyUsers || 0
       };
 
       setStats(dashboardStats);

@@ -214,6 +214,9 @@
   color: #1e293b;
   font-size: 0.95rem;
   transition: all 0.2s ease;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .wizard-step .autocomplete-wrapper .suggestions-list li:hover {
