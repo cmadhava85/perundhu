@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location } from '../../types';
+import './LocationInput.css';
 
 interface LocationInputProps {
   id?: string;
@@ -102,7 +103,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
   const handleBlur = () => {
     // Only blur if not currently selecting
     if (!isSelecting) {
-      // Delay hiding suggestions to allow click to register
+      // Delay hiding suggestions to allow click/touch to register (increased for mobile)
       if (blurTimeoutRef.current) {
         clearTimeout(blurTimeoutRef.current);
       }
@@ -110,7 +111,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
       blurTimeoutRef.current = setTimeout(() => {
         setIsFocused(false);
         onInputBlur?.();
-      }, 150);
+      }, 300); // Increased from 150ms to 300ms for better mobile support
     }
   };
 
@@ -135,6 +136,11 @@ const LocationInput: React.FC<LocationInputProps> = ({
     
     // Reset selecting flag after a short delay
     setTimeout(() => setIsSelecting(false), 50);
+    
+    // Blur the input to close mobile keyboard
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
   };
 
   const clearInput = () => {
@@ -185,12 +191,28 @@ const LocationInput: React.FC<LocationInputProps> = ({
               // Prevent input from losing focus when clicking dropdown
               e.preventDefault();
             }}
+            onTouchStart={(e) => {
+              // Prevent input from losing focus on mobile touch
+              setIsSelecting(true);
+            }}
           >
             {suggestions.map((suggestion, index) => (
               <div 
                 key={`${suggestion.id}-${index}`}
                 className="suggestion-item"
                 onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSuggestionClick(suggestion);
+                }}
+                onTouchEnd={(e) => {
+                  // Handle mobile touch events
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSuggestionClick(suggestion);
+                }}
+                onClick={(e) => {
+                  // Fallback for any click events not handled by touch/mouse
                   e.preventDefault();
                   e.stopPropagation();
                   handleSuggestionClick(suggestion);

@@ -318,6 +318,10 @@
   align-items: center;
   gap: 12px;
   border-bottom: 1px solid #F3F4F6;
+  /* Mobile touch improvements */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .transit-suggestion-item:last-child {
@@ -327,6 +331,20 @@
 .transit-suggestion-item:hover,
 .transit-suggestion-item.highlighted {
   background: #F9FAFB;
+}
+
+/* Mobile-specific touch feedback */
+@media (max-width: 768px) {
+  .transit-suggestion-item {
+    padding: 16px;
+    min-height: 56px; /* Larger touch target for mobile */
+    -webkit-touch-callout: none;
+  }
+  
+  .transit-suggestion-item:active {
+    background: #E5E7EB;
+    transform: scale(0.98);
+  }
 }
 
 .transit-suggestion-icon {
