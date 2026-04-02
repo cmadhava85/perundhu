@@ -25,6 +25,7 @@ const AppRoutes = lazy(() => import('./components/AppRoutes'));
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
 import { useBusSearchEnhanced } from './hooks/useBusSearchEnhanced';
+import { useKeyboardDetector } from './hooks/useKeyboardDetector';
 
 // Context providers
 import { ThemeProvider } from './context/ThemeContext';
@@ -121,6 +122,9 @@ function AppContent() {
   busesRef.current = buses;
   const searchBusesRef = useRef(searchBuses);
   searchBusesRef.current = searchBuses;
+  
+  // Detect mobile keyboard to prevent bottom navigation overlap
+  useKeyboardDetector();
   
   // Sync with the hook's default locations when they're set
   useEffect(() => {

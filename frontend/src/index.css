@@ -189,6 +189,7 @@ html, body {
   @media (max-width: 768px) {
     .bottom-navigation {
       display: block !important;
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     }
     
     .bottom-nav-item {
@@ -201,6 +202,19 @@ html, body {
     
     .nav-icon {
       font-size: 18px;
+    }
+
+    /* Hide bottom navigation when keyboard is open (input focused) */
+    body.keyboard-open .bottom-navigation {
+      transform: translateY(100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    /* Alternative approach: reduce z-index when input is focused */
+    body:has(input:focus) .bottom-navigation,
+    body:has(textarea:focus) .bottom-navigation {
+      z-index: 1;
     }
   }
   
