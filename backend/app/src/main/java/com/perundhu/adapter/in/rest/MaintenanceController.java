@@ -115,7 +115,7 @@ public class MaintenanceController {
       if (inMaintenance) {
         status.put(FIELD_MESSAGE, getUserFriendlyMessage(reason));
         // Optional: Add estimated restore time from system_settings
-        String estimatedRestoreTime = settingsService.getSettingValue("maintenanceEstimatedRestoreTime");
+        String estimatedRestoreTime = settingsService.getSettingValue("maintenanceEstimatedRestoreTime", null);
         if (estimatedRestoreTime != null && !estimatedRestoreTime.isEmpty()) {
           status.put("estimatedRestoreTime", estimatedRestoreTime);
         }
