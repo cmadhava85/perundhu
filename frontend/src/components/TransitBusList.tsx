@@ -153,6 +153,10 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
 
   const getDurationInMinutes = (bus: Bus): number => {
     if (!bus.departureTime || !bus.arrivalTime) return 480; // Default 8 hours
+    // Treat "00:00" as invalid/missing time
+    if (bus.departureTime === '00:00' || bus.departureTime === '00:00:00') return 480;
+    if (bus.arrivalTime === '00:00' || bus.arrivalTime === '00:00:00') return 480;
+    
     const [depH, depM] = bus.departureTime.split(':').map(Number);
     const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
     

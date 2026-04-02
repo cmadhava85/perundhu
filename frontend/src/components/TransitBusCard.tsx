@@ -71,8 +71,10 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   // Calculate journey duration
   const getDuration = () => {
     try {
-      // Return empty if arrival time not available (MTC buses don't have estimated arrival)
+      // Return empty if arrival time not available or invalid (MTC buses don't have estimated arrival)
       if (!bus.departureTime || !bus.arrivalTime) return '';
+      if (bus.departureTime === '00:00' || bus.departureTime === '00:00:00') return '';
+      if (bus.arrivalTime === '00:00' || bus.arrivalTime === '00:00:00') return '';
       
       const [depHours, depMinutes] = bus.departureTime.split(':').map(Number);
       const [arrHours, arrMinutes] = bus.arrivalTime.split(':').map(Number);
@@ -88,6 +90,10 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
       if (durationHours < 0) {
         durationHours += 24;
       }
+      
+      // Don't show duration if it's 0 (same times)
+      if (durationHours === 0 && durationMinutes === 0) return '';
+      
       
       return `${durationHours}h ${durationMinutes}m`;
     } catch {

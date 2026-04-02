@@ -9,11 +9,19 @@ export const formatTime = (time: string) => {
 
 export const calculateDuration = (departure: string, arrival: string) => {
   try {
+    // Treat "00:00" as invalid/missing time
+    if (!departure || !arrival) return 'N/A';
+    if (departure === '00:00' || departure === '00:00:00') return 'N/A';
+    if (arrival === '00:00' || arrival === '00:00:00') return 'N/A';
+    
     const dep = new Date(`2000-01-01T${departure}`);
     const arr = new Date(`2000-01-01T${arrival}`);
     let diff = arr.getTime() - dep.getTime();
     
     if (diff < 0) diff += 24 * 60 * 60 * 1000; // Next day
+    
+    // Don't show duration if it's 0
+    if (diff === 0) return 'N/A';
     
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));

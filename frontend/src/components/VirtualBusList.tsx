@@ -128,6 +128,10 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
 function calculateDuration(departureTime: string | null | undefined, arrivalTime: string | null | undefined): string {
   try {
     if (!departureTime || !arrivalTime) return 'N/A';
+    // Treat "00:00" as invalid/missing time
+    if (departureTime === '00:00' || departureTime === '00:00:00') return 'N/A';
+    if (arrivalTime === '00:00' || arrivalTime === '00:00:00') return 'N/A';
+    
     const [depHours, depMinutes] = departureTime.split(':').map(Number);
     const [arrHours, arrMinutes] = arrivalTime.split(':').map(Number);
 
@@ -137,6 +141,9 @@ function calculateDuration(departureTime: string | null | undefined, arrivalTime
     if (totalMinutes < 0) {
       totalMinutes += 24 * 60;
     }
+    
+    // Don't show duration if it's 0
+    if (totalMinutes === 0) return 'N/A';
 
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;

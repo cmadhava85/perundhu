@@ -40,6 +40,10 @@ const PremiumBusCard: React.FC<PremiumBusCardProps> = ({
   // Calculate duration
   const duration = useMemo(() => {
     if (!bus.departureTime || !bus.arrivalTime) return '';
+    // Treat "00:00" as invalid/missing time
+    if (bus.departureTime === '00:00' || bus.departureTime === '00:00:00') return '';
+    if (bus.arrivalTime === '00:00' || bus.arrivalTime === '00:00:00') return '';
+    
     try {
       const [depH, depM] = bus.departureTime.split(':').map(Number);
       const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
@@ -52,6 +56,9 @@ const PremiumBusCard: React.FC<PremiumBusCardProps> = ({
         m += 60;
       }
       if (h < 0) h += 24;
+      
+      // Don't show duration if it's 0 (same times)
+      if (h === 0 && m === 0) return '';
       
       return `${h}h ${m}m`;
     } catch {
