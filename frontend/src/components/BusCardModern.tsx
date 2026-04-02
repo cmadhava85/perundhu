@@ -115,24 +115,45 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
 
   const segmentDepartureTime = React.useMemo(() => {
     const fromStop = stops.find(s => matchStop(s, fromLocation));
-    return fromStop?.departureTime || bus.departureTime || '';
+    const departureTime = fromStop?.departureTime || bus.departureTime || '';
+    
+    // Treat "00:00" as missing/invalid time
+    if (!departureTime || departureTime === '00:00' || departureTime === '00:00:00') {
+      return '';
+    }
+    return departureTime;
   }, [stops, fromLocation, bus.departureTime]);
 
   const segmentArrivalTime = React.useMemo(() => {
     const toStop = stops.find(s => matchStop(s, toLocation));
     // Fall back to last stop if destination not found
     const lastStopArrival = stops.length > 0 ? stops[stops.length - 1].arrivalTime : '';
-    return toStop?.arrivalTime || lastStopArrival || bus.arrivalTime || '';
+    const arrivalTime = toStop?.arrivalTime || lastStopArrival || bus.arrivalTime || '';
+    
+    // Treat "00:00" as missing/invalid time
+    if (!arrivalTime || arrivalTime === '00:00' || arrivalTime === '00:00:00') {
+      return '';
+    }
+    return arrivalTime;
   }, [stops, toLocation, bus.arrivalTime]);
 
   const getDuration = () => {
+    // Return empty if either time isCode missing, invalid, or "00:00"
     if (!segmentDepartureTime || !segmentArrivalTime) return '';
+    if (segmentDepartureTime === '00:00' || segmentDepartureTime === '00:00:00') return '';
+    if (segmentArrivalTime === '00:00' || segmentArrivalTime === '00:00:00') return '';
+    
     const [depHours, depMinutes] = segmentDepartureTime.split(':').map(Number);
     const [arrHours, arrMinutes] = segmentArrivalTime.split(':').map(Number);
+    
     let durationHours = arrHours - depHours;
     let durationMinutes = arrMinutes - depMinutes;
     if (durationMinutes < 0) { durationHours -= 1; durationMinutes += 60; }
-    if (durationHours < 0) { durationHours += 24; }
+    if (durationHours < 0) { durationHours += 24; } // Handle overnight journeys
+    
+    // Don't show duration if it's 0 (same times)
+    if (durationHours === 0 && durationMinutes === 0) return '';
+    
     return `${durationHours}h ${durationMinutes}m`;
   };
 
