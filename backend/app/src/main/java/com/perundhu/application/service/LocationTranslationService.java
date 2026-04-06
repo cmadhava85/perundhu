@@ -402,15 +402,43 @@ public class LocationTranslationService {
 
     /**
      * Creates a location with both English and Tamil names
+     * @param name Location name (English or Tamil)
+     * @param latitude Latitude coordinate
+     * @param longitude Longitude coordinate
+     * @param tamilName Pre-translated Tamil name (optional)
+     * @return Created Location
+     * @deprecated Use {@link #createLocationWithTranslation(String, Double, Double, String, Long, String)} instead
      */
+    @Deprecated(since = "v1.1", forRemoval = false)
     public Location createLocationWithTranslation(String name, Double latitude, Double longitude,
             String tamilName) {
+        return createLocationWithTranslation(name, latitude, longitude, tamilName, null, "CITY");
+    }
+
+    /**
+     * Creates a location with English and Tamil names, plus parent-child hierarchy
+     * @param name Location name (English or Tamil)
+     * @param latitude Latitude coordinate
+     * @param longitude Longitude coordinate
+     * @param tamilName Pre-translated Tamil name (optional)
+     * @param parentCityId Parent location ID (for terminals/bus stands)
+     * @param locationType Location type (CITY, TERMINAL, STATION, TOWN, VILLAGE)
+     */
+    public Location createLocationWithTranslation(String name, Double latitude, Double longitude,
+            String tamilName, Long parentCityId, String locationType) {
         // Determine English name
         String englishName = getEnglishName(name);
 
         // Create location with English name
         Location newLocation = Location.withCoordinates(null, englishName, latitude, longitude);
         Location saved = locationRepository.save(newLocation);
+
+        // Set parent-child hierarchy in persistence layer
+        if (parentCityId != null && locationType != null) {
+            locationRepository.setLocationHierarchy(saved.id().value(), parentCityId, locationType);
+            log.info("Set location hierarchy: {} (ID: {}) -> parent: {}, type: {}",
+                    englishName, saved.id().value(), parentCityId, locationType);
+        }
 
         // Determine Tamil name to save
         String tamilToSave = tamilName;
@@ -429,7 +457,8 @@ public class LocationTranslationService {
             saveLocationTranslation(saved, tamilToSave);
         }
 
-        log.info("Created location: {} (Tamil: {})", englishName, tamilToSave);
+        log.info("Created location: {} (Tamil: {}) [parent: {}, type: {}]",
+                englishName, tamilToSave, parentCityId, locationType);
         return saved;
     }
 

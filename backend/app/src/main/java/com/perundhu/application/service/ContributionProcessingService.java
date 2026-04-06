@@ -840,13 +840,119 @@ public class ContributionProcessingService {
             tamilName = translatedTamil.orElse(null);
         }
 
-        // Create location with English name and resolved coordinates
-        Location newLocation = locationTranslationService.createLocationWithTranslation(
-                normalizedName, resolvedLat, resolvedLng, tamilName);
+        // Detect parent-child hierarchy for terminals and bus stands
+        Long parentCityId = detectParentCity(normalizedName, resolvedLat, resolvedLng);
+        String locationType = inferLocationType(normalizedName);
 
-        log.info("Created new location: {} with Tamil translation: {} at ({}, {})",
-                normalizedName, tamilName, resolvedLat, resolvedLng);
+        // Create location with English name, resolved coordinates, and hierarchy
+        Location newLocation = locationTranslationService.createLocationWithTranslation(
+                normalizedName, resolvedLat, resolvedLng, tamilName, parentCityId, locationType);
+
+        log.info("Created new location: {} with Tamil translation: {} at ({}, {}) [parent: {}, type: {}]",
+                normalizedName, tamilName, resolvedLat, resolvedLng, parentCityId, locationType);
         return newLocation;
+    }
+
+    /**
+     * Detect parent city for a location (returns parent location ID if this is a terminal/bus stand)
+     * Detection strategies:
+     * 1. If name contains " - " (e.g., "Chennai - Kilambakkam"), extract city name
+     * 2. If name contains terminal/bus stand keywords, search nearby cities
+     * 3. If coordinates available, find nearby major city (within 50km)
+     */
+    private Long detectParentCity(String locationName, Double latitude, Double longitude) {
+        if (locationName == null || locationName.trim().isEmpty()) {
+            return null;
+        }
+
+        String normalized = locationName.toLowerCase().trim();
+
+        // Strategy 1: Check for "City - Terminal" pattern
+        if (normalized.contains(" - ")) {
+            String cityPart = locationName.split(" - ")[0].trim();
+            Optional<Location> parentCity = locationRepository.findByExactName(cityPart);
+            if (parentCity.isPresent()) {
+                log.debug("Found parent city '{}' from name pattern for '{}'", cityPart, locationName);
+                return parentCity.get().id().value();
+            }
+        }
+
+        // Strategy 2: Check for terminal/bus stand keywords
+        boolean isTerminal = normalized.contains("bus stand") ||
+                normalized.contains("terminal") ||
+                normalized.contains("bus station") ||
+                normalized.matches(".*(cmbt|kcbt|ombt|mbt|kpbt).*") ||
+                normalized.matches(".*(kilambakkam|koyambedu|madhavaram|poonamallee|tambaram).*") ||
+                normalized.matches(".*(gandhipuram|ukkadam|singanallur).*") ||
+                normalized.matches(".*(mattuthavani|arapalayam|periyar).*");
+
+        if (isTerminal && latitude != null && longitude != null) {
+            // Find nearby major city within 50km
+            List<Location> nearbyCities = locationRepository.findNearbyLocations(latitude, longitude, 0.5); // ~50km
+            
+            // Prefer cities with "city" or major known cities
+            for (Location nearby : nearbyCities) {
+                String nearbyName = nearby.name().toLowerCase();
+                if (isMajorCity(nearbyName)) {
+                    log.debug("Found parent city '{}' within 50km for terminal '{}'", nearby.name(), locationName);
+                    return nearby.id().value();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if a location name represents a major city
+     */
+    private boolean isMajorCity(String normalizedName) {
+        return normalizedName.matches(".*(chennai|madurai|coimbatore|trichy|tiruchirappalli|salem|" +
+                "vellore|tirunelveli|erode|tiruppur|thanjavur|dindigul|karur|" +
+                "kanchipuram|nagercoil|kumbakonam|thoothukudi|tuticorin|" +
+                "hosur|krishnagiri|dharmapuri|cuddalore|villupuram|" +
+                "bangalore|bengaluru|hyderabad|tirupati).*");
+    }
+
+    /**
+     * Infer location type from name
+     * Returns: CITY, TERMINAL, STATION, VILLAGE, TOWN
+     */
+    private String inferLocationType(String locationName) {
+        if (locationName == null || locationName.trim().isEmpty()) {
+            return "CITY"; // Default
+        }
+
+        String normalized = locationName.toLowerCase().trim();
+
+        // Check for terminal/bus stand indicators
+        if (normalized.contains("bus stand") ||
+                normalized.contains("terminal") ||
+                normalized.matches(".*(cmbt|kcbt|ombt|mbt|kpbt).*") ||
+                normalized.matches(".*(kilambakkam|koyambedu|madhavaram|poonamallee).*") ||
+                normalized.matches(".*(gandhipuram|ukkadam|singanallur).*") ||
+                normalized.matches(".*(mattuthavani|arapalayam|periyar).*")) {
+            return "TERMINAL";
+        }
+
+        // Check for station
+        if (normalized.contains("station") || normalized.contains("railway")) {
+            return "STATION";
+        }
+
+        // Check if it's a major city
+        if (isMajorCity(normalized)) {
+            return "CITY";
+        }
+
+        // Check for town indicators
+        if (normalized.endsWith("puram") || normalized.endsWith("pattinam") ||
+                normalized.endsWith("oor") || normalized.endsWith("ur")) {
+            return "TOWN";
+        }
+
+        // Default to town for unknown small locations
+        return "TOWN";
     }
 
     /**

@@ -11,9 +11,10 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
   const { t } = useTranslation();
   
   // Sort stops by time (departure time first, then arrival time)
+  // Use '99:99' as fallback so items without times sort to the end
   const sortedStops = [...stops].sort((a, b) => {
-    const timeA = a.departureTime || a.arrivalTime || '00:00';
-    const timeB = b.departureTime || b.arrivalTime || '00:00';
+    const timeA = a.departureTime || a.arrivalTime || '99:99';
+    const timeB = b.departureTime || b.arrivalTime || '99:99';
     return timeA.localeCompare(timeB);
   });
   

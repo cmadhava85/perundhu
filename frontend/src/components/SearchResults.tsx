@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, useCallback } from 'react';
+import React, { useState, useEffect, memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { FixedSizeList as List } from 'react-window';
@@ -119,6 +119,10 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
   const [reportIssueBus, setReportIssueBus] = useState<Bus | null>(null);
+  
+  // Filter and sort state
+  const [timeFilter, setTimeFilter] = useState<'all' | 'morning' | 'afternoon' | 'evening' | 'night'>('all');
+  const [sortBy, setSortBy] = useState<'earliest' | 'latest' | 'duration'>('earliest');
 
   // Inject spin animation styles on mount
   useEffect(() => {
@@ -157,6 +161,87 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
     }
     return location.name;
   };
+  
+  // Helper function to parse time and calculate duration
+  const parseTime = (timeStr: string): number => {
+    if (!timeStr) return 0;
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return (hours || 0) * 60 + (minutes || 0);
+  };
+  
+  const calculateDuration = (departure: string, arrival: string): number => {
+    const depMin = parseTime(departure);
+    const arrMin = parseTime(arrival);
+    let duration = arrMin - depMin;
+    if (duration < 0) duration += 24 * 60; // Handle overnight journeys
+    return duration;
+  };
+  
+  const getTimeCategory = (timeStr: string): 'morning' | 'afternoon' | 'evening' | 'night' => {
+    const minutes = parseTime(timeStr);
+    const hours = Math.floor(minutes / 60);
+    if (hours >= 6 && hours < 12) return 'morning';
+    if (hours >= 12 && hours < 17) return 'afternoon';
+    if (hours >= 17 && hours < 21) return 'evening';
+    return 'night';
+  };
+  
+  // Filter and sort buses
+  const filteredAndSortedBuses = useMemo(() => {
+    let result = [...buses];
+    
+    // Apply time filter
+    if (timeFilter !== 'all') {
+      result = result.filter(bus => {
+        if (!bus.departureTime) return false;
+        return getTimeCategory(bus.departureTime) === timeFilter;
+      });
+    }
+    
+    // Apply sorting
+    result.sort((a, b) => {
+      if (sortBy === 'earliest') {
+        return parseTime(a.departureTime || '00:00') - parseTime(b.departureTime || '00:00');
+      } else if (sortBy === 'latest') {
+        return parseTime(b.departureTime || '00:00') - parseTime(a.departureTime || '00:00');
+      } else if (sortBy === 'duration') {
+        const durationA = calculateDuration(a.departureTime || '00:00', a.arrivalTime || '00:00');
+        const durationB = calculateDuration(b.departureTime || '00:00', b.arrivalTime || '00:00');
+        return durationA - durationB;
+      }
+      return 0;
+    });
+    
+    return result;
+  }, [buses, timeFilter, sortBy]);
+  
+  // Calculate quick stats
+  const quickStats = useMemo(() => {
+    if (buses.length === 0) return null;
+    
+    const durations = buses
+      .filter(b => b.departureTime && b.arrivalTime)
+      .map(b => calculateDuration(b.departureTime!, b.arrivalTime!));
+    
+    const fastestDuration = durations.length > 0 ? Math.min(...durations) : 0;
+    const avgDuration = durations.length > 0 ? durations.reduce((a, b) => a + b, 0) / durations.length : 0;
+    
+    // Find next departure
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const nextBus = buses
+      .filter(b => b.departureTime)
+      .map(b => ({ bus: b, minutes: parseTime(b.departureTime!) }))
+      .filter(({ minutes }) => minutes >= currentMinutes)
+      .sort((a, b) => a.minutes - b.minutes)[0];
+    
+    return {
+      total: buses.length,
+      fastestDuration: Math.floor(fastestDuration / 60) + 'h ' + (fastestDuration % 60) + 'm',
+      avgDuration: Math.floor(avgDuration / 60) + 'h ' + (avgDuration % 60) + 'm',
+      nextDeparture: nextBus ? nextBus.bus.departureTime : null
+    };
+  }, [buses]);
   
   // Use virtual scrolling for large lists (50+ buses)
   // const useVirtualScrolling = buses.length > 50;
@@ -393,8 +478,232 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
         {/* Terminal Information Alert */}
         {terminalInfo?.needsTerminalInfo && terminalInfo.terminal && (
           <TerminalInfoAlert terminal={terminalInfo.terminal} />
+        )}        
+        {/* Results Summary and Filters */}
+        {buses.length > 0 && (
+          <>
+            {/* Quick Stats Summary */}
+            {quickStats && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                gap: '12px',
+                padding: '16px',
+                background: 'linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%)',
+                borderRadius: '12px',
+                marginBottom: '16px',
+                border: '1px solid rgba(59, 130, 246, 0.1)'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}>
+                  <div style={{ fontSize: '24px' }}>🚌</div>
+                  <div style={{ fontSize: '20px', fontWeight: 700, color: '#1F2937' }}>
+                    {quickStats.total}
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 500 }}>
+                    {t('searchResults.totalBuses', 'Total Buses')}
+                  </div>
+                </div>
+                
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}>
+                  <div style={{ fontSize: '24px' }}>⚡</div>
+                  <div style={{ fontSize: '20px', fontWeight: 700, color: '#1F2937' }}>
+                    {quickStats.fastestDuration}
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 500 }}>
+                    {t('searchResults.fastest', 'Fastest')}
+                  </div>
+                </div>
+                
+                {quickStats.nextDeparture && (
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}>
+                    <div style={{ fontSize: '24px' }}>⏰</div>
+                    <div style={{ fontSize: '20px', fontWeight: 700, color: '#1F2937' }}>
+                      {quickStats.nextDeparture}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 500 }}>
+                      {t('searchResults.nextDeparture', 'Next Departure')}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {/* Filter and Sort Controls */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              padding: '16px',
+              background: '#FFFFFF',
+              borderRadius: '12px',
+              marginBottom: '16px',
+              border: '1px solid rgba(0, 0, 0, 0.08)',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)'
+            }}>
+              {/* Time Filters */}
+              <div>
+                <div style={{
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#6B7280',
+                  marginBottom: '8px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>
+                  {t('searchResults.filterByTime', 'Filter by Time')}
+                </div>
+                <div style={{
+                  display: 'flex',
+                  gap: '8px',
+                  flexWrap: 'wrap'
+                }}>
+                  {[
+                    { value: 'all', label: t('searchResults.allTimes', 'All Times'), icon: '🔵' },
+                    { value: 'morning', label: t('searchResults.morning', 'Morning (6AM-12PM)'), icon: '🌅' },
+                    { value: 'afternoon', label: t('searchResults.afternoon', 'Afternoon (12PM-5PM)'), icon: '☀️' },
+                    { value: 'evening', label: t('searchResults.evening', 'Evening (5PM-9PM)'), icon: '🌆' },
+                    { value: 'night', label: t('searchResults.night', 'Night (9PM-6AM)'), icon: '🌙' }
+                  ].map((filter) => (
+                    <button
+                      key={filter.value}
+                      onClick={() => setTimeFilter(filter.value as typeof timeFilter)}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '8px 14px',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        borderRadius: '8px',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        background: timeFilter === filter.value
+                          ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)'
+                          : '#F3F4F6',
+                        color: timeFilter === filter.value ? '#FFFFFF' : '#4B5563',
+                        boxShadow: timeFilter === filter.value
+                          ? '0 2px 8px rgba(59, 130, 246, 0.3)'
+                          : 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (timeFilter !== filter.value) {
+                          e.currentTarget.style.background = '#E5E7EB';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (timeFilter !== filter.value) {
+                          e.currentTarget.style.background = '#F3F4F6';
+                        }
+                      }}
+                    >
+                      <span>{filter.icon}</span>
+                      <span className="hidden sm:inline">{filter.label}</span>
+                      <span className="sm:hidden">
+                        {filter.value === 'all' ? filter.label : filter.label.split(' ')[0]}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Sort Controls */}
+              <div>
+                <div style={{
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#6B7280',
+                  marginBottom: '8px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>
+                  {t('searchResults.sortBy', 'Sort By')}
+                </div>
+                <div style={{
+                  display: 'flex',
+                  gap: '8px',
+                  flexWrap: 'wrap'
+                }}>
+                  {[
+                    { value: 'earliest', label: t('searchResults.earliestFirst', 'Earliest Departure'), icon: '🔼' },
+                    { value: 'latest', label: t('searchResults.latestFirst', 'Latest Departure'), icon: '🔽' },
+                    { value: 'duration', label: t('searchResults.shortestDuration', 'Shortest Duration'), icon: '⚡' }
+                  ].map((sort) => (
+                    <button
+                      key={sort.value}
+                      onClick={() => setSortBy(sort.value as typeof sortBy)}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '8px 14px',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        borderRadius: '8px',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        background: sortBy === sort.value
+                          ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
+                          : '#F3F4F6',
+                        color: sortBy === sort.value ? '#FFFFFF' : '#4B5563',
+                        boxShadow: sortBy === sort.value
+                          ? '0 2px 8px rgba(16, 185, 129, 0.3)'
+                          : 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (sortBy !== sort.value) {
+                          e.currentTarget.style.background = '#E5E7EB';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (sortBy !== sort.value) {
+                          e.currentTarget.style.background = '#F3F4F6';
+                        }
+                      }}
+                    >
+                      <span>{sort.icon}</span>
+                      <span>{sort.label}</span>
+                    </button>
+                  ))}
+                </div>
+                
+                {/* Results count after filtering */}
+                {filteredAndSortedBuses.length !== buses.length && (
+                  <div style={{
+                    marginTop: '8px',
+                    padding: '8px 12px',
+                    background: '#FEF3C7',
+                    borderRadius: '6px',
+                    fontSize: '13px',
+                    color: '#92400E',
+                    fontWeight: 500
+                  }}>
+                    {t('searchResults.showingFiltered', { 
+                      filtered: filteredAndSortedBuses.length, 
+                      total: buses.length 
+                    }) || `Showing ${filteredAndSortedBuses.length} of ${buses.length} buses`}
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
         )}
-
         {/* Show Connecting Routes FIRST when no direct buses */}
         {buses.length === 0 && connectingRoutes && connectingRoutes.length > 0 && (
           <div className="connecting-routes-section" style={{ marginBottom: '16px' }}>
@@ -433,14 +742,14 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
             <>
               <div className="modern-bus-cards">
                 {/* Use virtual scrolling for performance with large lists (50+) */}
-                {buses.length > 50 ? (
+                {filteredAndSortedBuses.length > 50 ? (
                   <List
                     height={600}
-                    itemCount={buses.length}
+                    itemCount={filteredAndSortedBuses.length}
                     itemSize={420}
                     width="100%"
                     itemData={{
-                      buses,
+                      buses: filteredAndSortedBuses,
                       selectedBusId,
                       handleSelectBus,
                       handleAddStops,
@@ -457,7 +766,7 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
                   </List>
                 ) : (
                   // Non-virtualized rendering for small lists (< 50 buses)
-                  buses.map((bus, index) => (
+                  filteredAndSortedBuses.map((bus, index) => (
                     <React.Fragment key={bus.id}>
                       <BusCardModern
                         bus={bus}

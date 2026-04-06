@@ -47,6 +47,53 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional
+    public void setLocationHierarchy(Long locationId, Long parentCityId, String locationType) {
+        jpaRepository.findById(locationId).ifPresent(location -> {
+            // Set parent city
+            if (parentCityId != null) {
+                jpaRepository.findById(parentCityId).ifPresent(parent -> {
+                    location.setParent(parent);
+                });
+            }
+            
+            // Set location type
+            if (locationType != null) {
+                try {
+                    com.perundhu.infrastructure.persistence.entity.LocationType type = 
+                        com.perundhu.infrastructure.persistence.entity.LocationType.valueOf(locationType);
+                    location.setLocationType(type);
+                } catch (IllegalArgumentException e) {
+                    // Default to CITY if invalid type provided
+                    location.setLocationType(
+                        com.perundhu.infrastructure.persistence.entity.LocationType.CITY);
+                }
+            }
+            
+            jpaRepository.save(location);
+        });
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Location> findNearbyLocations(Double latitude, Double longitude, double radiusDegrees) {
+        if (latitude == null || longitude == null) {
+            return List.of();
+        }
+        
+        // Calculate bounding box
+        double minLat = latitude - radiusDegrees;
+        double maxLat = latitude + radiusDegrees;
+        double minLng = longitude - radiusDegrees;
+        double maxLng = longitude + radiusDegrees;
+        
+        return jpaRepository.findByLatitudeBetweenAndLongitudeBetween(minLat, maxLat, minLng, maxLng)
+                .stream()
+                .map(LocationJpaEntity::toDomainModel)
+                .toList();
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Location> findAll() {
         return jpaRepository.findAll().stream()

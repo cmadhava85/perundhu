@@ -180,8 +180,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   };
 
   const sortByDeparture = (a: Bus, b: Bus): number => {
-    const timeA = a.departureTime || '00:00';
-    const timeB = b.departureTime || '00:00';
+    const timeA = a.departureTime || '99:99';
+    const timeB = b.departureTime || '99:99';
     
     const minutesA = getTimeInMinutes(timeA);
     const minutesB = getTimeInMinutes(timeB);

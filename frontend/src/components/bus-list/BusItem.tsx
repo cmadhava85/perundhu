@@ -176,8 +176,8 @@ const BusItem: React.FC<BusItemProps> = ({
             <div className="max-h-64 overflow-y-auto space-y-2">
               {[...stops]
                 .sort((a, b) => {
-                  const timeA = a.departureTime || a.arrivalTime || '00:00';
-                  const timeB = b.departureTime || b.arrivalTime || '00:00';
+                  const timeA = a.departureTime || a.arrivalTime || '99:99';
+                  const timeB = b.departureTime || b.arrivalTime || '99:99';
                   return timeA.localeCompare(timeB);
                 })
                 .map((stop, index) => (

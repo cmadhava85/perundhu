@@ -126,4 +126,26 @@ public interface LocationRepository {
      * @return List of location IDs matching the name/alias (including hierarchical children)
      */
     List<Long> findLocationIdsByNameOrAlias(String locationName);
+
+    /**
+     * Set location hierarchy (parent-child relationship) and location type
+     * 
+     * This is used when creating new locations from contributions to automatically
+     * assign terminals/bus stands to their parent cities.
+     * 
+     * @param locationId The location ID to update
+     * @param parentCityId The parent city ID (null if this is a parent city)
+     * @param locationType Location type (CITY, TERMINAL, STATION, TOWN, VILLAGE)
+     */
+    void setLocationHierarchy(Long locationId, Long parentCityId, String locationType);
+
+    /**
+     * Find nearby locations within the specified radius
+     * 
+     * @param latitude      The latitude coordinate
+     * @param longitude     The longitude coordinate
+     * @param radiusDegrees The search radius in degrees (approximately)
+     * @return List of nearby locations within the radius
+     */
+    List<Location> findNearbyLocations(Double latitude, Double longitude, double radiusDegrees);
 }
