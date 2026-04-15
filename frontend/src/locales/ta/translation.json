@@ -116,6 +116,7 @@
     "newSearch": "புதிய தேடல்",
     "new": "புதிய",
     "showingResults": "{{total}} இல் {{count}} முடிவுகளைக் காட்டுதல்",
+    "showingFiltered": "{{total}} இல் {{filtered}} பேருந்துகள் காட்டப்படுகின்றன",
     "loadMore": "மேலும் பேருந்துகளை ஏற்றுக",
     "loadingMore": "ஏற்றுகிறது...",
     "error": {

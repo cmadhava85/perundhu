@@ -151,6 +151,7 @@
     "newSearch": "New Search",
     "new": "New",
     "showingResults": "Showing {{count}} of {{total}} results",
+    "showingFiltered": "Showing {{filtered}} of {{total}} buses",
     "loadMore": "Load More Buses",
     "loadingMore": "Loading...",
     "error": {

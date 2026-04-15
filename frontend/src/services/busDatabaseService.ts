@@ -14,6 +14,8 @@ export interface BusListItem {
   category: string | null;
   stopCount: number;
   active: boolean;
+  originTa: string | null;
+  destinationTa: string | null;
 }
 
 export interface StopDetail {

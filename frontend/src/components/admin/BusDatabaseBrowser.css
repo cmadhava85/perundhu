@@ -291,6 +291,19 @@
 .bus-database-browser .location-cell {
   max-width: 150px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bus-database-browser .location-cell:has(.tamil-name) {
+  white-space: normal;
+}
+
+.bus-database-browser .location-cell .tamil-name {
+  font-size: 0.72rem;
+  color: var(--text-muted, #6b7280);
+  margin-top: 1px;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

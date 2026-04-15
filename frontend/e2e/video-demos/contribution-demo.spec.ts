@@ -3,112 +3,96 @@ import { test } from '@playwright/test';
 /**
  * Video Demo 3: Contribution Feature
  * Duration: ~25-30 seconds
- * Shows: Search → Bus Details → Contribute Form → Submit
+ * Shows: Navigate to Contribute page → Fill form → Submit → Confirmation modal
+ *
+ * Form uses SimpleRouteForm with IDs:
+ *   #busNumber, #origin, #departureTime, #destination, #arrivalTime
+ *   submit button: "Share this Bus Route"
  */
 
 test.describe('Video Demo: Contribution', () => {
   test('record contribution flow', async ({ page }) => {
-    // Set mobile viewport
-    await page.setViewportSize({ width: 720, height: 1280 });
+    // Viewport comes from playwright.config.video.ts (390x844 — true iPhone 13 Pro)
 
-    // Step 1: Navigate to home and search for buses (0-10s)
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
-
-    // Search from KCBT to Madurai
-    await page.getByRole('textbox', { name: 'From' }).click();
-    await page.getByRole('textbox', { name: 'From' }).press('ControlOrMeta+a');
-    await page.getByRole('textbox', { name: 'From' }).fill('KCBT');
-    await page.waitForTimeout(1000);
-    await page.getByText('KCBT KILAMBAKKAM').click();
-    await page.waitForTimeout(1000);
-
-    await page.getByRole('textbox', { name: 'To' }).click();
-    await page.getByRole('textbox', { name: 'To' }).press('ControlOrMeta+a');
-    await page.getByRole('textbox', { name: 'To' }).fill('Madurai - ');
-    await page.waitForTimeout(1000);
-    await page.getByText('Madurai - Mattuthavani').click();
-    await page.waitForTimeout(1000);
-
-    await page.getByRole('button', { name: '🔍 Search Buses' }).click();
-    await page.waitForTimeout(3000);
-
-    // Step 2: Click "Show all stops" for first bus (10-12s)
-    await page.getByRole('button', { name: 'Show all stops for SETC (9' }).first().click();
-    await page.waitForTimeout(3000);
-    
-    // Wait for the contribution form to appear
-    await page.waitForSelector('input[name="busNumber"], [placeholder*="Bus Number"]', { timeout: 10000 }).catch(() => {
-      console.log('Contribution form not visible yet, scrolling...');
+    // Mock reCAPTCHA enterprise so the form submits without real CAPTCHA verification
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'grecaptcha', {
+        writable: true,
+        configurable: true,
+        value: {
+          enterprise: {
+            ready: (cb: () => void) => cb(),
+            execute: (_key: string, _opts: object) => Promise.resolve('demo-token'),
+          },
+        },
+      });
     });
-    
-    // Scroll down to see the contribution form
-    await page.evaluate(() => window.scrollBy(0, 400));
+
+    // Mock the contributions API so the demo always shows a success modal
+    await page.route('**/v1/contributions/routes', async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ id: 'demo-' + Date.now(), status: 'accepted' }),
+      });
+    });
+
+    // Go directly to Contribute page — skip homepage to avoid layout flash on first load
+    await page.goto('/contribute');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1800);   // let page fully settle in mobile layout
+
+    // Step 1: Fill Bus Number
+    await page.locator('#busNumber').waitFor({ state: 'visible', timeout: 15000 });
+    await page.locator('#busNumber').click();
+    await page.waitForTimeout(400);
+    await page.locator('#busNumber').fill('TN 71');
+    await page.waitForTimeout(1200);   // pause — let viewer read
+
+    // Step 2: Fill FROM / Origin location
+    const fromInput = page.locator('#origin');
+    await fromInput.waitFor({ state: 'visible', timeout: 10000 });
+    await fromInput.click();
+    await page.waitForTimeout(400);
+    await fromInput.fill('KCBT');
+    await page.locator('ul li button').filter({ hasText: /KCBT/i }).first()
+      .waitFor({ state: 'visible', timeout: 10000 });
+    await page.waitForTimeout(600);
+    await page.locator('ul li button').filter({ hasText: /KCBT/i }).first().click();
     await page.waitForTimeout(1000);
 
-    // Step 3: Fill contribution form - Bus Number (12-14s)
-    await page.getByRole('textbox', { name: '🚌 Bus Number' }).waitFor({ state: 'visible', timeout: 10000 });
-    await page.getByRole('textbox', { name: '🚌 Bus Number' }).click();
-    await page.waitForTimeout(500);
-    await page.getByRole('textbox', { name: '🚌 Bus Number' }).fill('1234');
+    // Step 3: Fill Departure Time
+    await page.locator('#departureTime').fill('06:30');
     await page.waitForTimeout(1000);
 
-    // Step 4: Fill FROM location (14-17s)
-    await page.getByRole('textbox', { name: '🟢 From *' }).click();
-    await page.waitForTimeout(500);
-    await page.getByRole('textbox', { name: '🟢 From *' }).fill('KCBT');
-    await page.waitForTimeout(1000);
-    await page.getByRole('button', { name: '🚍 KCBT KILAMBAKKAM' }).click();
-    await page.waitForTimeout(1000);
-
-    // Step 5: Fill Departure Time (17-19s)
-    await page.getByRole('textbox', { name: '🕐 Departure Time *' }).click();
-    await page.waitForTimeout(500);
-    await page.getByRole('textbox', { name: '🕐 Departure Time *' }).fill('00:05');
+    // Step 4: Fill TO / Destination location
+    const toInput = page.locator('#destination');
+    await toInput.waitFor({ state: 'visible', timeout: 10000 });
+    await toInput.click();
+    await page.waitForTimeout(400);
+    await toInput.fill('Madurai');
+    await page.locator('ul li button').filter({ hasText: /Mattuthavani/i }).first()
+      .waitFor({ state: 'visible', timeout: 10000 });
+    await page.waitForTimeout(600);
+    await page.locator('ul li button').filter({ hasText: /Mattuthavani/i }).first().click();
     await page.waitForTimeout(1000);
 
-    // Step 6: Fill TO location (19-22s)
-    await page.getByRole('textbox', { name: '🔴 To *' }).click();
-    await page.waitForTimeout(500);
-    await page.getByRole('textbox', { name: '🔴 To *' }).fill('Madurai - Mat');
-    await page.waitForTimeout(1000);
-    await page.getByRole('button', { name: '🚏 Madurai - MattuthavaniBus' }).click();
+    // Step 5: Fill Arrival Time
+    await page.locator('#arrivalTime').fill('11:30');
     await page.waitForTimeout(1000);
 
-    // Step 7: Fill Arrival Time (22-24s)
-    await page.getByRole('textbox', { name: '🕐 Arrival Time (optional)' }).click();
-    await page.waitForTimeout(500);
-    await page.getByRole('textbox', { name: '🕐 Arrival Time (optional)' }).fill('07:30');
-    await page.waitForTimeout(1000);
+    // Step 6: Scroll to submit button and click
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(800);
+    const submitBtn = page.getByRole('button', { name: /Share this Bus Route/i });
+    await submitBtn.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(600);
+    await submitBtn.click();
 
-    // Step 8: Submit the form (24-26s)
-    await page.getByRole('button', { name: '🚌 Submit Route Information →' }).click();
-    await page.waitForTimeout(2000);
-
-    // Step 9: Wait for and show confirmation message (26-30s)
-    const confirmationSelectors = [
-      'text=Thank you',
-      'text=Success',
-      'text=submitted',
-      'text=received',
-      '[class*="success"]',
-      '[class*="confirmation"]',
-      '[role="alert"]'
-    ];
-    
-    // Wait for any confirmation message to appear
-    for (const selector of confirmationSelectors) {
-      const confirmation = await page.locator(selector).first().isVisible({ timeout: 2000 }).catch(() => false);
-      if (confirmation) {
-        console.log(`✅ Confirmation message found: ${selector}`);
-        await page.waitForTimeout(3000);
-        break;
-      }
-    }
-
-    // Final pause to show success state
-    await page.waitForTimeout(2000);
+    // Step 7: Wait for success modal, then hold so viewer can read it
+    await page.locator('.status-modal.success').waitFor({ state: 'visible', timeout: 10000 });
+    await page.waitForTimeout(5000);   // hold on confirmation — end recording here
   });
 });
+
 

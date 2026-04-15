@@ -485,220 +485,180 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
             {/* Quick Stats Summary */}
             {quickStats && (
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-                gap: '12px',
-                padding: '16px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '0',
+                padding: '8px 12px',
                 background: 'linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%)',
-                borderRadius: '12px',
-                marginBottom: '16px',
+                borderRadius: '10px',
+                marginBottom: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.1)'
               }}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}>
-                  <div style={{ fontSize: '24px' }}>🚌</div>
-                  <div style={{ fontSize: '20px', fontWeight: 700, color: '#1F2937' }}>
-                    {quickStats.total}
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 500 }}>
-                    {t('searchResults.totalBuses', 'Total Buses')}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <div style={{ fontSize: '16px', lineHeight: 1 }}>🚌</div>
+                  <div>
+                    <div style={{ fontSize: '16px', fontWeight: 700, color: '#1F2937', lineHeight: 1.2 }}>
+                      {quickStats.total}
+                    </div>
+                    <div style={{ fontSize: '10px', color: '#6B7280', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                      {t('searchResults.totalBuses', 'Total Buses')}
+                    </div>
                   </div>
                 </div>
-                
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}>
-                  <div style={{ fontSize: '24px' }}>⚡</div>
-                  <div style={{ fontSize: '20px', fontWeight: 700, color: '#1F2937' }}>
-                    {quickStats.fastestDuration}
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 500 }}>
-                    {t('searchResults.fastest', 'Fastest')}
+
+                <div style={{ width: '1px', height: '32px', background: 'rgba(59,130,246,0.15)', flexShrink: 0 }} />
+
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <div style={{ fontSize: '16px', lineHeight: 1 }}>⚡</div>
+                  <div>
+                    <div style={{ fontSize: '16px', fontWeight: 700, color: '#1F2937', lineHeight: 1.2 }}>
+                      {quickStats.fastestDuration}
+                    </div>
+                    <div style={{ fontSize: '10px', color: '#6B7280', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                      {t('searchResults.fastest', 'Fastest')}
+                    </div>
                   </div>
                 </div>
-                
+
                 {quickStats.nextDeparture && (
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}>
-                    <div style={{ fontSize: '24px' }}>⏰</div>
-                    <div style={{ fontSize: '20px', fontWeight: 700, color: '#1F2937' }}>
-                      {quickStats.nextDeparture}
+                  <>
+                    <div style={{ width: '1px', height: '32px', background: 'rgba(59,130,246,0.15)', flexShrink: 0 }} />
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                      <div style={{ fontSize: '16px', lineHeight: 1 }}>⏰</div>
+                      <div>
+                        <div style={{ fontSize: '16px', fontWeight: 700, color: '#1F2937', lineHeight: 1.2 }}>
+                          {quickStats.nextDeparture}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#6B7280', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                          {t('searchResults.nextDeparture', 'Next Departure')}
+                        </div>
+                      </div>
                     </div>
-                    <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: 500 }}>
-                      {t('searchResults.nextDeparture', 'Next Departure')}
-                    </div>
-                  </div>
+                  </>
                 )}
               </div>
             )}
             
-            {/* Filter and Sort Controls */}
+            {/* Compact Filter & Sort Bar */}
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px',
-              padding: '16px',
+              gap: '6px',
+              padding: '8px 10px',
               background: '#FFFFFF',
-              borderRadius: '12px',
-              marginBottom: '16px',
+              borderRadius: '10px',
+              marginBottom: '12px',
               border: '1px solid rgba(0, 0, 0, 0.08)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)'
             }}>
-              {/* Time Filters */}
-              <div>
-                <div style={{
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: '#6B7280',
-                  marginBottom: '8px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
-                }}>
-                  {t('searchResults.filterByTime', 'Filter by Time')}
-                </div>
-                <div style={{
-                  display: 'flex',
-                  gap: '8px',
-                  flexWrap: 'wrap'
-                }}>
-                  {[
-                    { value: 'all', label: t('searchResults.allTimes', 'All Times'), icon: '🔵' },
-                    { value: 'morning', label: t('searchResults.morning', 'Morning (6AM-12PM)'), icon: '🌅' },
-                    { value: 'afternoon', label: t('searchResults.afternoon', 'Afternoon (12PM-5PM)'), icon: '☀️' },
-                    { value: 'evening', label: t('searchResults.evening', 'Evening (5PM-9PM)'), icon: '🌆' },
-                    { value: 'night', label: t('searchResults.night', 'Night (9PM-6AM)'), icon: '🌙' }
-                  ].map((filter) => (
-                    <button
-                      key={filter.value}
-                      onClick={() => setTimeFilter(filter.value as typeof timeFilter)}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '8px 14px',
-                        fontSize: '13px',
-                        fontWeight: 600,
-                        borderRadius: '8px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                        background: timeFilter === filter.value
-                          ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)'
-                          : '#F3F4F6',
-                        color: timeFilter === filter.value ? '#FFFFFF' : '#4B5563',
-                        boxShadow: timeFilter === filter.value
-                          ? '0 2px 8px rgba(59, 130, 246, 0.3)'
-                          : 'none'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (timeFilter !== filter.value) {
-                          e.currentTarget.style.background = '#E5E7EB';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (timeFilter !== filter.value) {
-                          e.currentTarget.style.background = '#F3F4F6';
-                        }
-                      }}
-                    >
-                      <span>{filter.icon}</span>
-                      <span className="hidden sm:inline">{filter.label}</span>
-                      <span className="sm:hidden">
-                        {filter.value === 'all' ? filter.label : filter.label.split(' ')[0]}
-                      </span>
-                    </button>
-                  ))}
-                </div>
+              {/* Time filter chips — horizontal scroll, no wrap */}
+              <div style={{
+                display: 'flex',
+                gap: '6px',
+                overflowX: 'auto',
+                flexWrap: 'nowrap',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              } as React.CSSProperties}>
+                {[
+                  { value: 'all', label: t('searchResults.allTimes', 'All'), icon: '🕐' },
+                  { value: 'morning', label: t('searchResults.morningShort', 'Morning'), icon: '🌅' },
+                  { value: 'afternoon', label: t('searchResults.afternoonShort', 'Afternoon'), icon: '☀️' },
+                  { value: 'evening', label: t('searchResults.eveningShort', 'Evening'), icon: '🌆' },
+                  { value: 'night', label: t('searchResults.nightShort', 'Night'), icon: '🌙' },
+                ].map((filter) => (
+                  <button
+                    key={filter.value}
+                    onClick={() => setTimeFilter(filter.value as typeof timeFilter)}
+                    style={{
+                      flexShrink: 0,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '5px 10px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      borderRadius: '20px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      whiteSpace: 'nowrap',
+                      background: timeFilter === filter.value
+                        ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)'
+                        : '#F3F4F6',
+                      color: timeFilter === filter.value ? '#FFFFFF' : '#4B5563',
+                      boxShadow: timeFilter === filter.value
+                        ? '0 2px 6px rgba(59, 130, 246, 0.3)'
+                        : 'none',
+                    }}
+                  >
+                    <span>{filter.icon}</span>
+                    <span>{filter.label}</span>
+                  </button>
+                ))}
               </div>
-              
-              {/* Sort Controls */}
-              <div>
-                <div style={{
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: '#6B7280',
-                  marginBottom: '8px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
-                }}>
-                  {t('searchResults.sortBy', 'Sort By')}
-                </div>
-                <div style={{
-                  display: 'flex',
-                  gap: '8px',
-                  flexWrap: 'wrap'
-                }}>
-                  {[
-                    { value: 'earliest', label: t('searchResults.earliestFirst', 'Earliest Departure'), icon: '🔼' },
-                    { value: 'latest', label: t('searchResults.latestFirst', 'Latest Departure'), icon: '🔽' },
-                    { value: 'duration', label: t('searchResults.shortestDuration', 'Shortest Duration'), icon: '⚡' }
-                  ].map((sort) => (
-                    <button
-                      key={sort.value}
-                      onClick={() => setSortBy(sort.value as typeof sortBy)}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '8px 14px',
-                        fontSize: '13px',
-                        fontWeight: 600,
-                        borderRadius: '8px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                        background: sortBy === sort.value
-                          ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
-                          : '#F3F4F6',
-                        color: sortBy === sort.value ? '#FFFFFF' : '#4B5563',
-                        boxShadow: sortBy === sort.value
-                          ? '0 2px 8px rgba(16, 185, 129, 0.3)'
-                          : 'none'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (sortBy !== sort.value) {
-                          e.currentTarget.style.background = '#E5E7EB';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (sortBy !== sort.value) {
-                          e.currentTarget.style.background = '#F3F4F6';
-                        }
-                      }}
-                    >
-                      <span>{sort.icon}</span>
-                      <span>{sort.label}</span>
-                    </button>
-                  ))}
-                </div>
-                
-                {/* Results count after filtering */}
+
+              {/* Divider */}
+              <div style={{ height: '1px', background: '#F3F4F6' }} />
+
+              {/* Sort chips — horizontal scroll, no wrap */}
+              <div style={{
+                display: 'flex',
+                gap: '6px',
+                overflowX: 'auto',
+                flexWrap: 'nowrap',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              } as React.CSSProperties}>
+                {[
+                  { value: 'earliest', label: t('searchResults.earliestShort', 'Earliest'), icon: '🔼' },
+                  { value: 'latest', label: t('searchResults.latestShort', 'Latest'), icon: '🔽' },
+                  { value: 'duration', label: t('searchResults.fastestShort', 'Fastest'), icon: '⚡' },
+                ].map((sort) => (
+                  <button
+                    key={sort.value}
+                    onClick={() => setSortBy(sort.value as typeof sortBy)}
+                    style={{
+                      flexShrink: 0,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '5px 10px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      borderRadius: '20px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      whiteSpace: 'nowrap',
+                      background: sortBy === sort.value
+                        ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
+                        : '#F3F4F6',
+                      color: sortBy === sort.value ? '#FFFFFF' : '#4B5563',
+                      boxShadow: sortBy === sort.value
+                        ? '0 2px 6px rgba(16, 185, 129, 0.3)'
+                        : 'none',
+                    }}
+                  >
+                    <span>{sort.icon}</span>
+                    <span>{sort.label}</span>
+                  </button>
+                ))}
                 {filteredAndSortedBuses.length !== buses.length && (
-                  <div style={{
-                    marginTop: '8px',
-                    padding: '8px 12px',
+                  <span style={{
+                    flexShrink: 0,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '5px 10px',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    borderRadius: '20px',
                     background: '#FEF3C7',
-                    borderRadius: '6px',
-                    fontSize: '13px',
                     color: '#92400E',
-                    fontWeight: 500
+                    whiteSpace: 'nowrap',
                   }}>
-                    {t('searchResults.showingFiltered', { 
-                      filtered: filteredAndSortedBuses.length, 
-                      total: buses.length 
-                    }) || `Showing ${filteredAndSortedBuses.length} of ${buses.length} buses`}
-                  </div>
+                    {filteredAndSortedBuses.length}/{buses.length}
+                  </span>
                 )}
               </div>
             </div>

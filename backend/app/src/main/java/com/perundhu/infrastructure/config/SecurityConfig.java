@@ -156,7 +156,8 @@ public class SecurityConfig {
                 "/v1/route-issues", // Public route issue submission (includes CSRF via reCAPTCHA)
                 "/v1/route-issues/**", // Route issue endpoints with wildcard
                 "/admin/auth/**", // Admin auth endpoints (login/logout with built-in security)
-                "/api/admin/auth/**" // Admin auth endpoints with /api prefix
+                "/api/admin/auth/**", // Admin auth endpoints with /api prefix
+                "/v1/user-tracking-sessions" // Anonymous visit ping for daily-users stats (no auth, stateless)
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

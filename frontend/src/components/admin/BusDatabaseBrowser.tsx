@@ -336,8 +336,14 @@ const BusDatabaseBrowser: React.FC = () => {
                   <tr key={bus.id} className={bus.active ? '' : 'inactive-row'}>
                     <td className="bus-number-cell">{bus.busNumber}</td>
                     <td className="name-cell">{bus.name}</td>
-                    <td className="location-cell">{bus.origin || '-'}</td>
-                    <td className="location-cell">{bus.destination || '-'}</td>
+                    <td className="location-cell">
+                      {bus.origin || '-'}
+                      {bus.originTa && <div className="tamil-name">{bus.originTa}</div>}
+                    </td>
+                    <td className="location-cell">
+                      {bus.destination || '-'}
+                      {bus.destinationTa && <div className="tamil-name">{bus.destinationTa}</div>}
+                    </td>
                     <td className="time-cell">
                       {bus.departureTime ? bus.departureTime.split(':').slice(0, 2).join(':') : (
                         <span className="missing-time">⚠️ Missing</span>

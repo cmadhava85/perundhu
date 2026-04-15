@@ -13,7 +13,7 @@ vi.mock('../../contexts/FeatureFlagsContext', async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    useIsFeatureEnabled: (flag: string) => flag === 'enableMap'
+    useIsFeatureEnabled: (flag: string) => flag === 'enableMap' || flag === 'enableTracking'
   };
 });
 

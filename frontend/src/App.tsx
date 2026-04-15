@@ -150,6 +150,26 @@ function AppContent() {
         // Log but don't fail - CSRF is optional for GET requests
         console.warn('Could not initialize CSRF token:', error);
       });
+
+    // Record a lightweight visit session once per browser session
+    // Used by the footer to display real daily user counts
+    const SESSION_PING_KEY = 'perundhu_session_pinged';
+    if (!sessionStorage.getItem(SESSION_PING_KEY)) {
+      sessionStorage.setItem(SESSION_PING_KEY, '1');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+      const ping = (csrf?: { token: string; headerName: string }) => {
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (csrf) headers[csrf.headerName] = csrf.token;
+        fetch(`${apiUrl}/v1/user-tracking-sessions`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            deviceInfo: navigator.userAgent.substring(0, 100),
+          }),
+        }).catch(() => { /* fire-and-forget, ignore errors */ });
+      };
+      csrfTokenManager.getToken().then(ping).catch(() => ping());
+    }
   }, []);
 
   // Get destinations when from location changes

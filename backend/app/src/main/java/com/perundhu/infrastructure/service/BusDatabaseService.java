@@ -489,17 +489,27 @@ public class BusDatabaseService {
   }
 
   private BusListItem toBusListItem(BusJpaEntity bus, int stopCount) {
+    String originName = bus.getFromLocation() != null ? bus.getFromLocation().getName() : null;
+    String destinationName = bus.getToLocation() != null ? bus.getToLocation().getName() : null;
+    String originTa = originName != null
+        ? locationTranslationService.translateToTamil(originName).orElse(null)
+        : null;
+    String destinationTa = destinationName != null
+        ? locationTranslationService.translateToTamil(destinationName).orElse(null)
+        : null;
     return new BusListItem(
         bus.getId(),
         bus.getBusNumber(),
         bus.getName(),
-        bus.getFromLocation() != null ? bus.getFromLocation().getName() : null,
-        bus.getToLocation() != null ? bus.getToLocation().getName() : null,
+        originName,
+        destinationName,
         bus.getDepartureTime() != null ? bus.getDepartureTime().format(TIME_FORMATTER) : null,
         bus.getArrivalTime() != null ? bus.getArrivalTime().format(TIME_FORMATTER) : null,
         bus.getCategory(),
         stopCount,
-        bus.getActive() != null ? bus.getActive() : true);
+        bus.getActive() != null ? bus.getActive() : true,
+        originTa,
+        destinationTa);
   }
 
   private BusDetail toBusDetail(BusJpaEntity bus, List<StopJpaEntity> stops) {
@@ -542,7 +552,9 @@ public class BusDatabaseService {
       String arrivalTime,
       String category,
       int stopCount,
-      boolean active) {
+      boolean active,
+      String originTa,
+      String destinationTa) {
   }
 
   public record BusDetail(

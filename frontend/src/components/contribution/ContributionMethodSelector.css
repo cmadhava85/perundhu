@@ -9,14 +9,17 @@
 }
 
 .method-chips {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-lg);
   margin-top: var(--spacing-md);
   width: 100%;
 }
 
 .method-chip {
+  flex: 1 1 140px;
+  max-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -136,8 +139,12 @@
 /* Responsive - tablets and larger */
 @media (min-width: 768px) {
   .method-chips {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 20px;
+  }
+
+  .method-chip {
+    flex: 1 1 160px;
+    max-width: 220px;
   }
   
   .method-chip {
@@ -153,8 +160,12 @@
 /* Responsive - small screens */
 @media (max-width: 640px) {
   .method-chips {
-    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+  }
+
+  .method-chip {
+    flex: 1 1 calc(33.33% - 8px);
+    max-width: calc(33.33% - 8px);
   }
   
   .method-chip {
@@ -182,8 +193,12 @@
 /* Extra small screens */
 @media (max-width: 400px) {
   .method-chips {
-    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+
+  .method-chip {
+    flex: 1 1 calc(50% - 5px);
+    max-width: calc(50% - 5px);
   }
   
   .method-chip {

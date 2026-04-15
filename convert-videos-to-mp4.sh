@@ -31,8 +31,8 @@ if ! command -v ffmpeg &> /dev/null; then
     exit 1
 fi
 
-VIDEO_DIR="demo-videos"
-OUTPUT_DIR="demo-videos/mp4"
+VIDEO_DIR="scripts/video-generation/output"
+OUTPUT_DIR="scripts/video-generation/output/mp4"
 
 # Create output directory
 mkdir -p "$OUTPUT_DIR"
@@ -40,7 +40,7 @@ mkdir -p "$OUTPUT_DIR"
 # Check if input directory exists
 if [ ! -d "$VIDEO_DIR" ]; then
     echo -e "${RED}❌ Video directory not found: $VIDEO_DIR${NC}"
-    echo "Run ./record-demo-videos.sh first to record videos"
+    echo "Run ./record-demo-videos.sh first to record videos (outputs to scripts/video-generation/output/)"
     exit 1
 fi
 

@@ -38,7 +38,7 @@ if [ ! -d "node_modules/.cache/ms-playwright" ]; then
 fi
 
 # Create output directory for videos
-VIDEO_OUTPUT_DIR="../demo-videos"
+VIDEO_OUTPUT_DIR="../scripts/video-generation/output"
 mkdir -p "$VIDEO_OUTPUT_DIR"
 
 echo ""
@@ -110,7 +110,7 @@ echo ""
 echo -e "${GREEN}🎉 Done! Videos are ready for social media!${NC}"
 echo ""
 echo -e "${YELLOW}📝 Next Steps:${NC}"
-echo "1. Review MP4 videos in: demo-videos/mp4/"
+echo "1. Review MP4 videos in: scripts/video-generation/output/mp4/"
 echo "2. (Optional) Edit with CapCut/InShot for text overlays"
 echo "3. Upload to Instagram Reels & Facebook Reels"
 echo "4. Use captions from VIDEO_RECORDING_SCRIPT.md"

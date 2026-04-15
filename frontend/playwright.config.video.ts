@@ -19,16 +19,16 @@ export default defineConfig({
   retries: 0,
   
   // Use a simple reporter
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [['list']],
   
   use: {
     // Base URL for the app
-    baseURL: 'http://localhost:5173',
+    baseURL: 'https://perundhu.com',
     
     // VIDEO RECORDING SETTINGS
     video: {
       mode: 'on', // Always record
-      size: { width: 720, height: 1280 } // Vertical HD for Instagram/Facebook
+      size: { width: 390, height: 844 } // True iPhone 13 Pro CSS viewport (triggers mobile layout)
     },
     
     // Screenshot on failure
@@ -47,9 +47,8 @@ export default defineConfig({
       name: 'mobile-chrome',
       use: {
         ...devices['iPhone 13 Pro'],
-        // Override viewport for better video quality (HD portrait)
-        viewport: { width: 720, height: 1280 },
-        // Ensure videos are in portrait mode
+        // Use native iPhone 13 Pro viewport (390x844) — triggers mobile CSS breakpoints
+        viewport: { width: 390, height: 844 },
         deviceScaleFactor: 1,
         isMobile: true,
         hasTouch: true,

@@ -19,6 +19,7 @@ export interface FeatureFlags {
   // UI features
   enableShareRoute: boolean;
   enableMap: boolean;
+  enableTracking: boolean;
   
   // System features
   enableAutoApproval: boolean;
@@ -75,7 +76,7 @@ const FEATURE_FLAGS_STORAGE_KEY = 'admin_feature_flags';
 const VALID_FLAG_KEYS = new Set<string>([
   'enableManualContribution', 'enableImageContribution', 'enableVoiceContribution',
   'enablePasteContribution', 'enableRouteVerification', 'enableAddStops',
-  'enableReportIssue', 'enableShareRoute', 'enableMap', 'enableAutoApproval',
+  'enableReportIssue', 'enableShareRoute', 'enableMap', 'enableTracking', 'enableAutoApproval',
   'enableGeminiAI', 'enableCache', 'enableMaintenanceMode', 'enableRateLimiting',
   'maxRequestsPerMinute', 'requireEmailVerification', 'enableSocialMedia',
   'enableCommunityRewards', 'enableBusinessPartners', 'enableOsmIntegration',
@@ -98,6 +99,7 @@ const defaultFlags: FeatureFlags = {
   // UI features
   enableShareRoute: true,
   enableMap: false,
+  enableTracking: false,
   
   // System features
   enableAutoApproval: false,

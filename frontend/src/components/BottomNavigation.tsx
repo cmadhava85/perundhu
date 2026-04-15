@@ -17,6 +17,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
 }) => {
   const { t } = useTranslation();
   const mapEnabled = useIsFeatureEnabled('enableMap');
+  const trackingEnabled = useIsFeatureEnabled('enableTracking');
 
   const tabs = [
     {
@@ -39,13 +40,13 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       badge: null,
       disabled: !hasResults
     }] : []),
-    {
+    ...(trackingEnabled ? [{
       id: 'tracking',
       icon: <LocationIcon size={22} />,
       label: t('nav.tracking', 'Track'),
       badge: null,
       disabled: !hasResults
-    },
+    }] : []),
     {
       id: 'contribute',
       icon: <PlusIcon size={22} />,
