@@ -270,7 +270,6 @@ jobs:
           --concurrency 200 \
           --timeout 60s \
           --cpu-throttling \
-          --execution-environment gen2 \
           --labels="version=${VERSION_LABEL},env=production"
     
     - name: Get service URLs
