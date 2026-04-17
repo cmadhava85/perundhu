@@ -1,0 +1,24 @@
+# Video generation artifacts
+output/
+assets/*.jpg
+assets/*.png
+*.mp3
+*.mp4
+*.avi
+*.mov
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Credentials
+*.json
+!requirements.txt

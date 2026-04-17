@@ -97,8 +97,18 @@ images_bucket_versioning_enabled = false
 images_bucket_force_destroy      = false
 images_bucket_cors_enabled       = true
 
-# Lifecycle: Delete images after 1 year to save costs
+# Lifecycle: Tier to cheaper storage classes before deletion
 images_bucket_lifecycle_rules = [
+  {
+    age_days      = 30
+    action        = "SetStorageClass"
+    storage_class = "NEARLINE"
+  },
+  {
+    age_days      = 90
+    action        = "SetStorageClass"
+    storage_class = "COLDLINE"
+  },
   {
     age_days      = 365
     action        = "Delete"

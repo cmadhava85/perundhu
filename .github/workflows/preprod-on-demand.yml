@@ -175,11 +175,11 @@ jobs:
             --region=${{ env.REGION }} \
             --platform=managed \
             --min-instances=0 \
-            --max-instances=3 \
+            --max-instances=2 \
             --cpu=1 \
             --memory=512Mi \
             --timeout=300 \
-            --concurrency=80 \
+            --concurrency=200 \
             --cpu-throttling \
             --execution-environment=gen2 \
             --add-cloudsql-instances=${{ env.SQL_CONNECTION_NAME }} \
@@ -278,11 +278,11 @@ jobs:
             --region=${{ env.REGION }} \
             --platform=managed \
             --min-instances=0 \
-            --max-instances=3 \
+            --max-instances=2 \
             --cpu=1 \
-            --memory=512Mi \
+            --memory=256Mi \
             --timeout=60 \
-            --concurrency=80 \
+            --concurrency=200 \
             --cpu-throttling \
             --execution-environment=gen2 \
             --allow-unauthenticated \

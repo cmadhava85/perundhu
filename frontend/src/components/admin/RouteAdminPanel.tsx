@@ -921,6 +921,7 @@ ${result.sqlExample}`;
                   {filteredRoutes.map(route => renderRouteCard(route))}
                 </div>
               ) : (
+                <div className="routes-table-container">
                 <table className="routes-table">
               <thead>
                 <tr>
@@ -1060,6 +1061,7 @@ ${result.sqlExample}`;
                 ))}
               </tbody>
             </table>
+                </div>
           )}
         </>
       ) : (

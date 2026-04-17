@@ -63,7 +63,7 @@ export function useNetworkStatusAdvanced() {
       const timeoutId = setTimeout(() => controller.abort(), 10_000);
       try {
         // Try to fetch a lightweight endpoint using configured API URL
-        const response = await fetch(`${API_URL}/v1/health`, { 
+        const response = await fetch(`${API_URL}/actuator/health`, { 
           method: 'HEAD',
           cache: 'no-store',
           signal: controller.signal,

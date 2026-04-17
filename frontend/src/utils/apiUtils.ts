@@ -39,7 +39,7 @@ export async function apiRequest<T>(
 export async function isOnline(): Promise<boolean> {
   try {
     // Make a lightweight request to check connectivity
-    await apiClient.head('/health/status');
+    await apiClient.head('/actuator/health');
     return true;
   } catch {
     return false;

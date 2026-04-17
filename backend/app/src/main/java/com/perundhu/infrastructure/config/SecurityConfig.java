@@ -108,6 +108,12 @@ public class SecurityConfig {
                 "/v1/admin/**", // Admin v1 endpoints
                 "/v1/route-issues/admin/**")) // Route issue admin endpoints
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .headers(headers -> headers
+            .contentTypeOptions(contentTypeOptions -> {})
+            .frameOptions(frameOptions -> frameOptions.deny())
+            .xssProtection(xss -> xss.disable())
+            .referrerPolicy(referrer -> referrer
+                .policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // Disable anonymous authentication - admin endpoints require explicit auth
         .anonymous(anonymous -> anonymous.disable())
@@ -160,6 +166,19 @@ public class SecurityConfig {
                 "/v1/user-tracking-sessions" // Anonymous visit ping for daily-users stats (no auth, stateless)
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .headers(headers -> headers
+            .contentTypeOptions(contentTypeOptions -> {}) // X-Content-Type-Options: nosniff
+            .frameOptions(frameOptions -> frameOptions.deny()) // X-Frame-Options: DENY
+            .xssProtection(xss -> xss.disable()) // Disable legacy X-XSS-Protection; rely on CSP instead
+            .contentSecurityPolicy(csp -> csp.policyDirectives(
+                "default-src 'self'; " +
+                "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com; " +
+                "style-src 'self' 'unsafe-inline'; " +
+                "img-src 'self' data: https:; " +
+                "connect-src 'self' https://pagead2.googlesyndication.com; " +
+                "frame-ancestors 'none'"))
+            .referrerPolicy(referrer -> referrer
+                .policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // Add security filters before authentication
         .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
@@ -168,28 +187,35 @@ public class SecurityConfig {
         // Add admin basic auth filter after API key validation
         .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
-            // Public endpoints
-            .requestMatchers("/v1/csrf/**").permitAll() // CSRF endpoint (must be public)
+            // Public endpoints — explicitly whitelisted; default is authenticated()
+            .requestMatchers("/v1/csrf/**").permitAll()
             .requestMatchers("/v1/bus-schedules/**").permitAll()
             .requestMatchers("/v1/analytics/**").permitAll()
-            .requestMatchers("/v1/contributions/analyze-image").permitAll()
-            .requestMatchers("/v1/contributions/routes").permitAll() // Allow anonymous route contributions
-            .requestMatchers("/v1/contributions/routes/stops").permitAll() // Allow anonymous stop contributions to
-                                                                           // existing routes
-            .requestMatchers("/v1/contributions/buses/**").permitAll() // Allow anonymous bus contributions
-            .requestMatchers("/v1/contributions/stops/**").permitAll() // Allow anonymous stop contributions
             .requestMatchers("/v1/buses/**").permitAll()
             .requestMatchers("/v1/stops/**").permitAll()
             .requestMatchers("/v1/locations/**").permitAll()
-            .requestMatchers("/images/**").permitAll() // Allow public access to images
+            .requestMatchers("/v1/terminals/**").permitAll()
+            .requestMatchers("/v1/settings/**").permitAll()
+            .requestMatchers("/v1/duplicates/**").permitAll()
+            .requestMatchers("/v1/route-issues").permitAll()
+            .requestMatchers("/v1/route-issues/**").permitAll()
+            .requestMatchers("/v1/user-tracking-sessions").permitAll()
+            .requestMatchers("/v1/contributions/analyze-image").permitAll()
+            .requestMatchers("/v1/contributions/paste/validate").permitAll()
+            .requestMatchers("/v1/contributions/paste").permitAll()
+            .requestMatchers("/v1/contributions/images").permitAll()
+            .requestMatchers("/v1/contributions/voice/transcribe").permitAll()
+            .requestMatchers("/v1/contributions/routes").permitAll()
+            .requestMatchers("/v1/contributions/routes/stops").permitAll()
+            .requestMatchers("/v1/contributions/buses/**").permitAll()
+            .requestMatchers("/v1/contributions/stops/**").permitAll()
+            .requestMatchers("/v1/contributions/timing-images").permitAll()
+            .requestMatchers("/images/**").permitAll()
             .requestMatchers("/actuator/health").permitAll()
-            // Protected endpoints - user management
+            // Protected endpoints
             .requestMatchers("/v1/contributions/manage/**").authenticated()
-            // Route issues endpoints - public for reporting, admin handled by separate
-            // filter chain
-            .requestMatchers("/v1/route-issues/report").permitAll()
-            // Allow all other requests for development
-            .anyRequest().permitAll());
+            // Default: deny access to any endpoint not explicitly listed above
+            .anyRequest().authenticated());
 
     // Configure OAuth2 Resource Server with JWT for API endpoints (admin endpoints
     // handled separately)

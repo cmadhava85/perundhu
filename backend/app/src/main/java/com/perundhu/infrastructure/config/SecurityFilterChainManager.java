@@ -2,6 +2,7 @@ package com.perundhu.infrastructure.config;
 
 import com.perundhu.infrastructure.security.AdminBasicAuthFilter;
 import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
+import com.perundhu.infrastructure.security.JwtAuthenticationFilter;
 import com.perundhu.infrastructure.security.OriginValidationFilter;
 import com.perundhu.infrastructure.security.RateLimitingFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -135,6 +136,22 @@ public class SecurityFilterChainManager {
     registration.addUrlPatterns("/api/admin/*", "/api/v1/admin/*");
     registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 4); // Order 5
     registration.setName("adminBasicAuthFilter");
+    return registration;
+  }
+
+  /**
+   * Prevent JwtAuthenticationFilter from being auto-registered by Spring Boot as
+   * a standalone Servlet filter. JWT authentication is handled exclusively by
+   * Spring Security's oauth2ResourceServer inside the security filter chain.
+   * Without this, the filter would run twice — once outside and once inside the
+   * Spring Security chain — with potentially different validation behaviour.
+   */
+  @Bean
+  public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilterRegistration(
+      JwtAuthenticationFilter jwtAuthenticationFilter) {
+    FilterRegistrationBean<JwtAuthenticationFilter> registration = new FilterRegistrationBean<>();
+    registration.setFilter(jwtAuthenticationFilter);
+    registration.setEnabled(false);
     return registration;
   }
 

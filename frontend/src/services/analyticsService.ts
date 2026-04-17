@@ -17,7 +17,7 @@ interface OfflineCachedData {
 const offlineService = {
   isOnline: async (): Promise<boolean> => {
     try {
-      await api.head('/v1/health/status');
+      await api.head('/actuator/health');
       return true;
     } catch {
       return false;

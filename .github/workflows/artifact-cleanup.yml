@@ -21,15 +21,13 @@ on:
         type: boolean
         default: true
   schedule:
-    # Run twice daily at 2 AM EST (7:00 AM UTC)
+    # Run once daily at 7:00 AM UTC — images are pushed per deployment (a few times/week at most)
     - cron: '0 7 * * *'
-    # Run twice daily at 2 PM EST (7:00 PM UTC)
-    - cron: '0 19 * * *'
 
 env:
   PREPROD_PROJECT: astute-strategy-406601
   PROD_PROJECT: perundhu-prod-001
-  REGIONS: us-central1,asia-south1  # Check both regions (before/after migration)
+  REGIONS: us-central1  # Migrated from asia-south1 to us-central1 (Feb 2026); old region fully emptied
   REPO_NAME: perundhu
 
 jobs:

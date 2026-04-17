@@ -2,12 +2,12 @@ import { test } from '@playwright/test';
 
 /**
  * Video Demo 3: Contribution Feature
- * Duration: ~25-30 seconds
- * Shows: Navigate to Contribute page → Fill form → Submit → Confirmation modal
+ * Duration: ~30-35 seconds
+ * Shows: Homepage → bottom-nav to Contribute → scroll to form → fill → submit → confirmation modal
  *
  * Form uses SimpleRouteForm with IDs:
  *   #busNumber, #origin, #departureTime, #destination, #arrivalTime
- *   submit button: "Share this Bus Route"
+ *   submit button: CSS class .submit-button (i18n key: contribution.submitRoute = "Submit Route Information")
  */
 
 test.describe('Video Demo: Contribution', () => {
@@ -37,19 +37,32 @@ test.describe('Video Demo: Contribution', () => {
       });
     });
 
-    // Go directly to Contribute page — skip homepage to avoid layout flash on first load
-    await page.goto('/contribute');
+    // Step 0: Start from homepage — shows bottom nav accessibility
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1800);   // let page fully settle in mobile layout
+    await page.waitForTimeout(1500);   // let homepage fully settle
 
-    // Step 1: Fill Bus Number
+    // Step 1: Navigate to Contribute via bottom navigation (demonstrates UI accessibility)
+    const contributeNavBtn = page.locator('[data-testid="bottom-nav-contribute"]');
+    await contributeNavBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await contributeNavBtn.click();
+    await page.waitForURL('**/contribute', { timeout: 10000 });
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1500);   // let contribution page fully settle
+
+    // Step 2: Scroll down to the form — shows the form section
+    await page.locator('.premium-contribution-card').waitFor({ state: 'visible', timeout: 10000 });
+    await page.locator('.premium-contribution-card').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(800);
+
+    // Step 3: Fill Bus Number
     await page.locator('#busNumber').waitFor({ state: 'visible', timeout: 15000 });
     await page.locator('#busNumber').click();
     await page.waitForTimeout(400);
     await page.locator('#busNumber').fill('TN 71');
     await page.waitForTimeout(1200);   // pause — let viewer read
 
-    // Step 2: Fill FROM / Origin location
+    // Step 4: Fill FROM / Origin location
     const fromInput = page.locator('#origin');
     await fromInput.waitFor({ state: 'visible', timeout: 10000 });
     await fromInput.click();
@@ -61,11 +74,11 @@ test.describe('Video Demo: Contribution', () => {
     await page.locator('ul li button').filter({ hasText: /KCBT/i }).first().click();
     await page.waitForTimeout(1000);
 
-    // Step 3: Fill Departure Time
+    // Step 5: Fill Departure Time
     await page.locator('#departureTime').fill('06:30');
     await page.waitForTimeout(1000);
 
-    // Step 4: Fill TO / Destination location
+    // Step 6: Fill TO / Destination location
     const toInput = page.locator('#destination');
     await toInput.waitFor({ state: 'visible', timeout: 10000 });
     await toInput.click();
@@ -77,20 +90,18 @@ test.describe('Video Demo: Contribution', () => {
     await page.locator('ul li button').filter({ hasText: /Mattuthavani/i }).first().click();
     await page.waitForTimeout(1000);
 
-    // Step 5: Fill Arrival Time
+    // Step 7: Fill Arrival Time
     await page.locator('#arrivalTime').fill('11:30');
     await page.waitForTimeout(1000);
 
-    // Step 6: Scroll to submit button and click
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(800);
-    const submitBtn = page.getByRole('button', { name: /Share this Bus Route/i });
+    // Step 8: Scroll to submit button and click
+    const submitBtn = page.locator('.submit-button').first();
     await submitBtn.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(600);
+    await page.waitForTimeout(800);
     await submitBtn.click();
 
-    // Step 7: Wait for success modal, then hold so viewer can read it
-    await page.locator('.status-modal.success').waitFor({ state: 'visible', timeout: 10000 });
+    // Step 9: Wait for success modal, then hold so viewer can read confirmation
+    await page.locator('.status-modal.success').waitFor({ state: 'visible', timeout: 15000 });
     await page.waitForTimeout(5000);   // hold on confirmation — end recording here
   });
 });

@@ -263,11 +263,11 @@ jobs:
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
           --port 8080 \
-          --memory 512Mi \
+          --memory 256Mi \
           --cpu 1 \
           --min-instances 0 \
-          --max-instances 5 \
-          --concurrency 80 \
+          --max-instances 2 \
+          --concurrency 200 \
           --timeout 60s \
           --cpu-throttling \
           --execution-environment gen2 \
