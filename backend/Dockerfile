@@ -25,7 +25,6 @@ FROM eclipse-temurin:21-jre-jammy
 # Install necessary packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Create app user
