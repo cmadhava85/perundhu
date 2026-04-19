@@ -344,8 +344,10 @@ jobs:
         # Use /actuator/health/liveness — checks JVM liveness only, no DB dependency.
         # DB warm-up on startup temporarily starves the pool and makes /actuator/health
         # return 503; liveness is always UP once the app is running.
+        # Cloud Run requires an identity token even for health checks.
+        TOKEN=$(gcloud auth print-identity-token)
         for i in {1..10}; do
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/actuator/health/liveness || echo "000")
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer $TOKEN" ${{ env.BACKEND_URL }}/actuator/health/liveness || echo "000")
           if [[ "$HTTP_CODE" == "200" ]]; then
             echo "Backend is healthy (HTTP $HTTP_CODE)"
             break
@@ -355,17 +357,21 @@ jobs:
             exit 1
           fi
           echo "Attempt $i failed with HTTP $HTTP_CODE, retrying in 15s..."
+          # Refresh token each retry in case it expires during long waits
+          TOKEN=$(gcloud auth print-identity-token)
           sleep 15
         done
     
     - name: Test Frontend
       run: |
-        curl -f ${{ env.FRONTEND_URL }} || exit 1
+        TOKEN=$(gcloud auth print-identity-token)
+        curl -f -H "Authorization: Bearer $TOKEN" ${{ env.FRONTEND_URL }} || exit 1
     
     - name: Test API endpoints
       run: |
         # Test a sample API endpoint
-        curl -f ${{ env.BACKEND_URL }}/api/locations || echo "Locations endpoint test"
+        TOKEN=$(gcloud auth print-identity-token)
+        curl -f -H "Authorization: Bearer $TOKEN" ${{ env.BACKEND_URL }}/api/locations || echo "Locations endpoint test"
 
   create-deployment-summary:
     name: Create Deployment Summary
