@@ -216,7 +216,7 @@ export const ContactUs: React.FC = () => {
     <div className="static-page">
       <Helmet>
         <title>Contact Us - Perundhu Tamil Nadu Bus Route Finder</title>
-        <meta name="description" content="Contact the Perundhu team for help with Tamil Nadu bus routes and timings. Email us at perundhu@gmail.com. We respond within 24-48 hours." />
+        <meta name="description" content="Contact the Perundhu team for help with Tamil Nadu bus routes and timings. Email us at perundhutn@gmail.com. We respond within 24-48 hours." />
         <link rel="canonical" href="https://www.perundhu.com/contact" />
       </Helmet>
       <div className="static-page-container">
@@ -229,8 +229,8 @@ export const ContactUs: React.FC = () => {
         <section className="content-section">
           <h2>{t('pages.contact.emailTitle', 'Email')}</h2>
           <p>
-            <a href="mailto:perundhu@gmail.com" className="contact-link">
-              perundhu@gmail.com
+            <a href="mailto:perundhutn@gmail.com" className="contact-link">
+              perundhutn@gmail.com
             </a>
           </p>
         </section>
@@ -458,7 +458,7 @@ export const PrivacyPolicy: React.FC = () => {
         
         <section className="content-section">
           <h2>{t('pages.privacy.yourRightsTitle', 'Your Rights')}</h2>
-          <p>{t('pages.privacy.yourRightsText', 'You have the right to access, correct, or delete your personal data. Contact us at perundhu@gmail.com for any privacy-related requests.')}</p>
+          <p>{t('pages.privacy.yourRightsText', 'You have the right to access, correct, or delete your personal data. Contact us at perundhutn@gmail.com for any privacy-related requests.')}</p>
         </section>
         
         <div className="back-link">
@@ -610,7 +610,7 @@ export const FAQ: React.FC = () => {
     },
     {
       question: t('pages.faq.q18', 'How do I contact customer support?'),
-      answer: t('pages.faq.a18', 'Visit the Contact Us page or email us at perundhu@gmail.com. We respond to all queries within 24-48 hours during business hours (Mon-Fri, 9 AM - 6 PM IST).')
+      answer: t('pages.faq.a18', 'Visit the Contact Us page or email us at perundhutn@gmail.com. We respond to all queries within 24-48 hours during business hours (Mon-Fri, 9 AM - 6 PM IST).')
     },
     {
       question: t('pages.faq.q19', 'Is my location data private?'),

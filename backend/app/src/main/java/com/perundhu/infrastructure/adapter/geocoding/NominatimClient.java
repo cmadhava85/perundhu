@@ -175,7 +175,7 @@ public class NominatimClient implements GeocodingPort {
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
-                    .header("User-Agent", "Perundhu-BusSchedule/1.0 (perundhu@gmail.com)")
+                    .header("User-Agent", "Perundhu-BusSchedule/1.0 (perundhutn@gmail.com)")
                     .timeout(REQUEST_TIMEOUT)
                     .GET()
                     .build();

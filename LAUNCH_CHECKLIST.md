@@ -17,7 +17,7 @@
 - [x] Favicon references added to index.html
 - [x] Google Analytics 4 code integrated (needs ID)
 - [x] Comprehensive setup guide created (PRODUCTION_ASSETS_MONITORING_SETUP.md)
-- [x] Email updated to perundhu@gmail.com across all files
+- [x] Email updated to perundhutn@gmail.com across all files
 - [x] Report Issue section commented out in Contact page
 - [x] All existing infrastructure cost-optimized ($25-30/month)
 - [x] **PWA Icons & Favicons generated and deployed**
@@ -171,7 +171,7 @@
 
 4. Add alert contact:
    - Settings > Alert Contacts
-   - Add email: `perundhu@gmail.com`
+   - Add email: `perundhutn@gmail.com`
 
 ---
 

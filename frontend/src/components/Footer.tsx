@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
               <a href="https://instagram.com/perundhu" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
                 <span className="social-icon"><InstagramIcon size={20} /></span>
               </a>
-              <a href="mailto:perundhu@gmail.com" className="social-link" aria-label="Email">
+              <a href="mailto:perundhutn@gmail.com" className="social-link" aria-label="Email">
                 <span className="social-icon"><MailIcon size={20} /></span>
               </a>
             </div>
