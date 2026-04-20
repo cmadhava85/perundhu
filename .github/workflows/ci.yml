@@ -58,6 +58,17 @@ jobs:
       env:
         CI: true
 
+    - name: i18n key coverage check
+      working-directory: ./frontend
+      run: |
+        node -e '
+          const en = Object.keys(require("./src/locales/en/translation.json"));
+          const ta = Object.keys(require("./src/locales/ta/translation.json"));
+          const missing = en.filter(k => !ta.includes(k));
+          if (missing.length) { console.error("Missing Tamil keys:", missing); process.exit(1); }
+          console.log("i18n OK: all", en.length, "keys present in Tamil locale");
+        '
+
   frontend-build:
     name: Frontend Build
     runs-on: ubuntu-latest

@@ -163,7 +163,8 @@ public class SecurityConfig {
                 "/v1/route-issues/**", // Route issue endpoints with wildcard
                 "/admin/auth/**", // Admin auth endpoints (login/logout with built-in security)
                 "/api/admin/auth/**", // Admin auth endpoints with /api prefix
-                "/v1/user-tracking-sessions" // Anonymous visit ping for daily-users stats (no auth, stateless)
+                "/v1/user-tracking-sessions", // Anonymous visit ping for daily-users stats (no auth, stateless)
+                "/v1/client-errors" // Frontend error reports — stateless, no CSRF needed
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .headers(headers -> headers
@@ -212,6 +213,7 @@ public class SecurityConfig {
             .requestMatchers("/v1/contributions/timing-images").permitAll()
             .requestMatchers("/images/**").permitAll()
             .requestMatchers("/actuator/health").permitAll()
+            .requestMatchers("/v1/client-errors").permitAll()
             // Protected endpoints
             .requestMatchers("/v1/contributions/manage/**").authenticated()
             // Default: deny access to any endpoint not explicitly listed above
