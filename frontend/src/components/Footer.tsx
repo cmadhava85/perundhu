@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
     if (num >= 1000) {
       return `${Math.floor(num / 1000)}K+`;
     }
-    return num > 0 ? `${num}+` : '0';
+    return num.toString();
   };
   
   return (
