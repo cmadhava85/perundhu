@@ -1,6 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
-import com.perundhu.infrastructure.security.RecaptchaValidationService;
+import com.perundhu.domain.port.RecaptchaPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class AdminAuthController {
   private AuthenticationManager authenticationManager;
 
   @Autowired(required = false)
-  private RecaptchaValidationService recaptchaValidationService;
+  private RecaptchaPort recaptchaValidationService;
 
   /**
    * Admin login endpoint with reCAPTCHA protection.

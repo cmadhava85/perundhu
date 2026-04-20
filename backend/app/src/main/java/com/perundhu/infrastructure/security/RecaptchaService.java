@@ -19,12 +19,14 @@ import io.github.resilience4j.retry.annotation.Retry;
 
 import java.util.List;
 
+import com.perundhu.domain.port.RecaptchaPort;
+
 /**
- * Google reCAPTCHA v3 verification service
- * Provides invisible bot detection with score-based validation
+ * Google reCAPTCHA v3 verification service.
+ * Implements {@link RecaptchaPort} so controllers depend on the interface, not this class.
  */
 @Service
-public class RecaptchaService {
+public class RecaptchaService implements RecaptchaPort {
 
   private static final Logger log = LoggerFactory.getLogger(RecaptchaService.class);
   private static final String VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
@@ -157,8 +159,18 @@ public class RecaptchaService {
   /**
    * Check if reCAPTCHA is enabled
    */
+  @Override
   public boolean isEnabled() {
     return recaptchaEnabled && secretKey != null && !secretKey.isEmpty();
+  }
+
+  /**
+   * Validate a token — implements {@link RecaptchaPort#validateToken}.
+   * Delegates to {@link #verifyToken} for backward compatibility.
+   */
+  @Override
+  public boolean validateToken(String token, String action) {
+    return verifyToken(token, action);
   }
 
   /**

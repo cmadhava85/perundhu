@@ -1,6 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
-import com.perundhu.infrastructure.security.RecaptchaValidationService;
+import com.perundhu.domain.port.RecaptchaPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ import java.util.Map;
 public class ContributionSecurityController {
 
   @Autowired
-  private RecaptchaValidationService recaptchaValidationService;
+  private RecaptchaPort recaptchaValidationService;
 
   // Inject your actual contribution service here
   // @Autowired

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.perundhu.adapter.out.cache.InMemoryImageHashRepository;
-import com.perundhu.infrastructure.security.RecaptchaService;
+import com.perundhu.domain.port.RecaptchaPort;
 import com.perundhu.application.service.AuthenticationService;
 import com.perundhu.application.service.ImageContributionProcessingService;
 import com.perundhu.application.service.PasteContributionValidator;
@@ -71,7 +71,7 @@ public class ContributionController {
   private final PasteContributionValidator pasteValidator;
   private final TextFormatNormalizer textNormalizer;
   private final InMemoryImageHashRepository imageHashRepository;
-  private final RecaptchaService recaptchaService;
+  private final RecaptchaPort recaptchaService;
   private final GeminiVisionService geminiVisionService;
 
   /**
@@ -125,7 +125,7 @@ public class ContributionController {
         // contributionInputPort.getApprovedContributionCount(userId);
         // if (userContributionCount < 5 && !recaptchaService.verifyToken(captchaToken,
         // "manual_contribution")) {
-        if (captchaToken != null && !recaptchaService.verifyToken(captchaToken, "manual_contribution")) {
+        if (captchaToken != null && !recaptchaService.validateToken(captchaToken, "manual_contribution")) {
           log.warn("CAPTCHA verification failed for user: {}", userId);
           return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
         }
@@ -458,7 +458,7 @@ public class ContributionController {
       // CAPTCHA verification for anonymous/new users
       String captchaToken = extractCaptchaToken(request, metadata.get("captchaToken"));
       if (recaptchaService.isEnabled() && captchaToken != null) {
-        if (!recaptchaService.verifyToken(captchaToken, "image_upload")) {
+        if (!recaptchaService.validateToken(captchaToken, "image_upload")) {
           log.warn("CAPTCHA verification failed for image upload from user: {}", userId);
           return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
         }
@@ -682,7 +682,7 @@ public class ContributionController {
       // CAPTCHA verification for new users
       String voiceCaptchaToken = extractCaptchaToken(request, request.getParameter("captchaToken"));
       if (recaptchaService.isEnabled() && voiceCaptchaToken != null) {
-        if (!recaptchaService.verifyToken(voiceCaptchaToken, "voice_upload")) {
+        if (!recaptchaService.validateToken(voiceCaptchaToken, "voice_upload")) {
           log.warn("CAPTCHA verification failed for voice upload from user: {}", userId);
           return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
         }
@@ -850,7 +850,7 @@ public class ContributionController {
       // CAPTCHA verification for paste contributions
       String captchaToken = extractCaptchaToken(request, (String) requestData.get("captchaToken"));
       if (recaptchaService.isEnabled() && captchaToken != null) {
-        if (!recaptchaService.verifyToken(captchaToken, "paste_contribution")) {
+        if (!recaptchaService.validateToken(captchaToken, "paste_contribution")) {
           log.warn("CAPTCHA verification failed for paste contribution from user: {}", userId);
           return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
         }
