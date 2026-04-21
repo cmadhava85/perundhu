@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location as AppLocation, Bus } from '../types';
-import { locationAutocompleteService, type LocationSuggestion } from '../services/locationAutocompleteService';
-import { findNearbyLocationFromGPS, checkLocationPermission } from '../services/nearbyLocationService';
-import { getGeolocationSupport } from '../services/geolocation';
+import type { LocationSuggestion } from '../services/locationAutocompleteService';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
+import { useRecentSearches, type RecentSearch } from '../hooks/useRecentSearches';
+import { useGPSLocation } from '../hooks/useGPSLocation';
+import { useLocationAutocomplete } from '../hooks/queries/useLocationAutocomplete';
 import { searchBuses } from '../services/api';
 import MapComponent from './MapComponent';
 import { Skeleton } from '../design-system';
@@ -28,16 +30,6 @@ const POPULAR_ROUTES = [
   { from: { id: 3, name: 'Madurai', translatedName: 'மதுரை' }, to: { id: 5, name: 'Rameshwaram', translatedName: 'ராமேஸ்வரம்' } },
   { from: { id: 1, name: 'Chennai', translatedName: 'சென்னை' }, to: { id: 6, name: 'Bangalore', translatedName: 'பெங்களூர்' } },
 ];
-
-// Recent search interface
-interface RecentSearch {
-  from: { id: number; name: string; translatedName?: string };
-  to: { id: number; name: string; translatedName?: string };
-  timestamp: number;
-}
-
-const RECENT_SEARCHES_KEY = 'perundhu_recent_searches';
-const MAX_RECENT_SEARCHES = 5;
 
 interface TransitSearchFormProps {
   fromLocation?: AppLocation;
@@ -72,21 +64,19 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   const [highlightedToIndex, setHighlightedToIndex] = useState(-1);
   const [selectedFromLocation, setSelectedFromLocation] = useState<AppLocation | null>(fromLocation || null);
   const [selectedToLocation, setSelectedToLocation] = useState<AppLocation | null>(toLocation || null);
-  const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
+  const { recentSearches, saveRecentSearch, clearRecentSearches, getRecentSearchDisplayName, getRelativeTime } = useRecentSearches();
   const [isSearching, setIsSearching] = useState(false);
   
-  // Dynamic suggestions from autocomplete service (DB + OpenStreetMap)
-  const [dynamicFromSuggestions, setDynamicFromSuggestions] = useState<LocationSuggestion[]>([]);
-  const [dynamicToSuggestions, setDynamicToSuggestions] = useState<LocationSuggestion[]>([]);
-  const [isLoadingFrom, setIsLoadingFrom] = useState(false);
-  const [isLoadingTo, setIsLoadingTo] = useState(false);
-  
-  // GPS location detection state
-  const [isGettingLocation, setIsGettingLocation] = useState(false);
-  const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt' | 'unknown'>('unknown');
-  const [locationError, setLocationError] = useState<string | null>(null);
-  const [gpsSupported, setGpsSupported] = useState(true);
-  const [isFromGPS, setIsFromGPS] = useState(false); // Track if origin was set via GPS
+  // Dynamic suggestions via React Query (debounce + caching handled by hook)
+  const { suggestions: dynamicFromSuggestions, isLoading: isLoadingFrom } = useLocationAutocomplete(
+    showFromSuggestions ? fromQuery : ''
+  );
+  const { suggestions: dynamicToSuggestions, isLoading: isLoadingTo } = useLocationAutocomplete(
+    showToSuggestions ? toQuery : ''
+  );
+
+  // Network status for offline banner
+  const isOnline = useNetworkStatus();
   
   // Validation state
   const [validationError, setValidationError] = useState<ValidationResult | null>(null);
@@ -99,51 +89,30 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   const [isLoadingSchedule, setIsLoadingSchedule] = useState(false);
   const [scheduleError, setScheduleError] = useState<string | null>(null);
   
-  // Debounce timers for autocomplete
-  const fromDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const toDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Load recent searches from localStorage
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(RECENT_SEARCHES_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored) as RecentSearch[];
-        setRecentSearches(parsed);
-      }
-    } catch {
-      // Ignore localStorage errors
-    }
-    
-    // Cleanup debounce timers on unmount.
-    // Timer refs must be read at cleanup time (not mount) so the latest timer ID is cleared.
-    return () => {
-      const fromTimer = fromDebounceTimerRef.current; // eslint-disable-line react-hooks/exhaustive-deps
-      const toTimer = toDebounceTimerRef.current; // eslint-disable-line react-hooks/exhaustive-deps
-      if (fromTimer) clearTimeout(fromTimer);
-      if (toTimer) clearTimeout(toTimer);
-    };
-  }, []);
 
-  // Check GPS support and permission status on mount
-  useEffect(() => {
-    const checkGpsStatus = async () => {
-      const supported = getGeolocationSupport();
-      setGpsSupported(supported);
-      
-      if (supported) {
-        const permission = await checkLocationPermission();
-        setLocationPermission(permission);
-        
-        // Auto-detect location if permission is already granted and no origin set
-        if (permission === 'granted' && !fromQuery && !selectedFromLocation) {
-          handleUseMyLocation();
-        }
-      }
-    };
-    
-    checkGpsStatus();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // GPS location detection via hook (handles permission check, auto-detect, and error state)
+  const {
+    isGettingLocation,
+    locationPermission,
+    locationError,
+    gpsSupported,
+    isFromGPS,
+    setIsFromGPS,
+    clearLocationError,
+    handleUseMyLocation,
+  } = useGPSLocation({
+    onLocationDetected: ({ location }) => {
+      const displayName =
+        i18n.language === 'ta' && location.translatedName
+          ? location.translatedName
+          : location.name;
+      setFromQuery(displayName);
+      setSelectedFromLocation(location);
+    },
+    autoDetectIfGranted: true,
+    hasExistingLocation: !!(fromQuery || selectedFromLocation),
+  });
 
   // Sync props to internal state when they change (for default location support).
   // Compare by ID so that navigating back with different locations always resets the fields.
@@ -161,80 +130,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     }
   }, [toLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Handle "Use My Location" button click
-  const handleUseMyLocation = async () => {
-    setIsGettingLocation(true);
-    setLocationError(null);
-    
-    try {
-      const result = await findNearbyLocationFromGPS();
-      
-      if (result.success && result.location) {
-        // Set the location as the "from" location
-        setFromQuery(getLocationDisplayName(result.location));
-        setSelectedFromLocation(result.location);
-        setLocationPermission('granted');
-        setIsFromGPS(true); // Mark as GPS-detected
-        
-        // Show distance info if available
-        if (result.distance && result.distance > 0) {
-          console.log(`Set origin to: ${result.location.name} (${result.distance.toFixed(1)}km away)`);
-        }
-      } else {
-        setLocationError(result.error || t('location.error', 'Could not detect your location'));
-        // Clear error after 5 seconds
-        setTimeout(() => setLocationError(null), 5000);
-      }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      setLocationError(errorMessage);
-      setTimeout(() => setLocationError(null), 5000);
-    } finally {
-      setIsGettingLocation(false);
-    }
-  };
-
-  // Save recent search to localStorage
-  const saveRecentSearch = useCallback((from: AppLocation, to: AppLocation) => {
-    if (from.id === -1 || to.id === -1) return; // Don't save invalid searches
-    
-    const newSearch: RecentSearch = {
-      from: { id: from.id, name: from.name, translatedName: from.translatedName },
-      to: { id: to.id, name: to.name, translatedName: to.translatedName },
-      timestamp: Date.now()
-    };
-    
-    setRecentSearches(prev => {
-      // Remove duplicates
-      const filtered = prev.filter(
-        s => !(s.from.id === from.id && s.to.id === to.id)
-      );
-      const updated = [newSearch, ...filtered].slice(0, MAX_RECENT_SEARCHES);
-      
-      try {
-        localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-      } catch {
-        // Ignore localStorage errors
-      }
-      
-      return updated;
-    });
-  }, []);
-
-  // Format relative time
-  const getRelativeTime = (timestamp: number): string => {
-    const now = Date.now();
-    const diff = now - timestamp;
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-    
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days === 1) return 'Yesterday';
-    return `${days}d ago`;
-  };
 
   // Handle recent search click
   const handleRecentSearchClick = (search: RecentSearch) => {
@@ -270,14 +165,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     return location.name;
   };
 
-  // Helper function to get display name for recent search location
-  const getRecentSearchDisplayName = (loc: { name: string; translatedName?: string }) => {
-    if (i18n.language === 'ta' && loc.translatedName) {
-      return loc.translatedName;
-    }
-    return loc.name;
-  };
-
   // Update query fields when language or locations change
   useEffect(() => {
     if (selectedFromLocation) {
@@ -298,43 +185,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
              englishName.toLowerCase().includes(query.toLowerCase());
     });
   }, [locations]);
-
-  // Fetch dynamic suggestions when query changes (DB-first, OpenStreetMap fallback)
-  // Now with proper debouncing at the component level to prevent multiple simultaneous calls
-  const fetchDynamicSuggestions = useCallback((query: string, isFromField: boolean) => {
-    // Clear existing timer for this field
-    const timerRef = isFromField ? fromDebounceTimerRef : toDebounceTimerRef;
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    
-    if (query.trim().length < 3) {
-      if (isFromField) setDynamicFromSuggestions([]);
-      else setDynamicToSuggestions([]);
-      return;
-    }
-    
-    // Set loading immediately for better UX
-    if (isFromField) setIsLoadingFrom(true);
-    else setIsLoadingTo(true);
-    
-    // Debounce API calls to prevent multiple simultaneous requests
-    timerRef.current = setTimeout(() => {
-      locationAutocompleteService.getDebouncedSuggestions(
-        query,
-        (suggestions) => {
-          if (isFromField) {
-            setDynamicFromSuggestions(suggestions);
-            setIsLoadingFrom(false);
-          } else {
-            setDynamicToSuggestions(suggestions);
-            setIsLoadingTo(false);
-          }
-        },
-        i18n.language
-      );
-    }, 300); // 300ms debounce delay
-  }, [i18n.language]);
 
   // Convert LocationSuggestion to AppLocation
   const suggestionToLocation = useCallback((suggestion: LocationSuggestion): AppLocation => ({
@@ -642,6 +492,23 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
   return (
     <div className="transit-app" role="search" aria-label="Bus route search">
+      {!isOnline && (
+        <div role="status" aria-live="polite" style={{
+          background: '#FEF3C7',
+          borderLeft: '4px solid #F59E0B',
+          color: '#92400E',
+          padding: '8px 16px',
+          fontSize: '13px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          marginBottom: '8px',
+          borderRadius: '4px',
+        }}>
+          <span>📵</span>
+          <span>{t('network.offline', 'You are offline. Some features may be unavailable.')}</span>
+        </div>
+      )}
       <div className="transit-card elevated transit-search-form">
         {/* Header */}
         <div className="stack stack-sm transit-form-header">
@@ -765,7 +632,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   <span>⚠️</span>
                   <span>{locationError}</span>
                   <button
-                    onClick={() => setLocationError(null)}
+                    onClick={() => clearLocationError()}
                     style={{
                       marginLeft: 'auto',
                       background: 'none',
@@ -796,8 +663,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   setShowFromSuggestions(true);
                   setHighlightedFromIndex(-1);
                   setIsFromGPS(false); // Reset GPS flag when user types manually
-                  // Trigger dynamic autocomplete (DB + OpenStreetMap)
-                  fetchDynamicSuggestions(e.target.value, true);
                 }}
                 onFocus={() => setShowFromSuggestions(true)}
                 onBlur={() => {
@@ -1105,8 +970,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   setSelectedToLocation(null);
                   setShowToSuggestions(true);
                   setHighlightedToIndex(-1);
-                  // Trigger dynamic autocomplete (DB + OpenStreetMap)
-                  fetchDynamicSuggestions(e.target.value, false);
                 }}
                 onFocus={() => setShowToSuggestions(true)}
                 onBlur={() => {
@@ -1430,10 +1293,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   🕐 {t('search.recentSearches', 'Recent Searches')}
                 </span>
                 <button
-                  onClick={() => {
-                    setRecentSearches([]);
-                    localStorage.removeItem(RECENT_SEARCHES_KEY);
-                  }}
+                  onClick={() => clearRecentSearches()}
                   style={{
                     background: 'none',
                     border: 'none',
