@@ -94,4 +94,8 @@ export const queryKeys = {
   // Live tracking
   liveTracking: ['live-tracking'] as const,
   liveLocation: (busId: number) => ['live-tracking', busId] as const,
+
+  // Location autocomplete
+  locationAutocomplete: (query: string, lang: string) =>
+    ['locationAutocomplete', query, lang] as const,
 } as const;

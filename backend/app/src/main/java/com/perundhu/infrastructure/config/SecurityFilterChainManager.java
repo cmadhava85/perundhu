@@ -5,6 +5,8 @@ import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
 import com.perundhu.infrastructure.security.JwtAuthenticationFilter;
 import com.perundhu.infrastructure.security.OriginValidationFilter;
 import com.perundhu.infrastructure.security.RateLimitingFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -207,6 +209,8 @@ public class SecurityFilterChainManager {
    */
   public static class SecurityHealthCheck {
 
+    private static final Logger log = LoggerFactory.getLogger(SecurityHealthCheck.class);
+
     public static boolean validateFilterOrder(
         FilterRegistrationBean<?> filter1,
         FilterRegistrationBean<?> filter2) {
@@ -214,13 +218,13 @@ public class SecurityFilterChainManager {
     }
 
     public static void logSecurityConfiguration() {
-      System.out.println("🔒 Security Filter Chain Configuration:");
-      System.out.println("   ✓ Rate Limiting: ACTIVE (Order 1)");
-      System.out.println("   ✓ Origin Validation: ACTIVE (Order 2)");
-      System.out.println("   ✓ API Key Validation: ACTIVE (Order 3)");
-      System.out.println("   ✓ Admin Basic Auth: ACTIVE (Order 4)");
-      System.out.println("   ✓ JWT Authentication: ACTIVE (Spring Security)");
-      System.out.println("🔒 Security layers initialized successfully");
+      log.info("Security Filter Chain Configuration:");
+      log.info("  Rate Limiting: ACTIVE (Order 1)");
+      log.info("  Origin Validation: ACTIVE (Order 2)");
+      log.info("  API Key Validation: ACTIVE (Order 3)");
+      log.info("  Admin Basic Auth: ACTIVE (Order 4)");
+      log.info("  JWT Authentication: ACTIVE (Spring Security)");
+      log.info("Security layers initialized successfully");
     }
   }
 }

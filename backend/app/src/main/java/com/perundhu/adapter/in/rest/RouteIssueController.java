@@ -219,7 +219,7 @@ public class RouteIssueController {
       @RequestParam(defaultValue = "100") int size) {
     try {
       IssueStatus issueStatus = IssueStatus.valueOf(status.toUpperCase());
-      PagedResult<RouteIssue> issues = routeIssueService.getIssuesByStatus(issueStatus, page, size);
+      PagedResult<RouteIssue> issues = routeIssueService.getIssuesByStatus(issueStatus, page, Math.min(size, 100));
 
       return ResponseEntity.ok(Map.of(
           "issues", issues.content().stream().map(this::toResponse).toList(),

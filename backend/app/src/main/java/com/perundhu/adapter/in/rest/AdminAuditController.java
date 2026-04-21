@@ -39,7 +39,8 @@ public class AdminAuditController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         log.info("Request to get audit logs - page: {}, size: {}", page, size);
-        return ResponseEntity.ok(auditService.getAuditLogs(page, size));
+        int effectiveSize = Math.min(size, 100);
+        return ResponseEntity.ok(auditService.getAuditLogs(page, effectiveSize));
     }
 
     /**
@@ -51,7 +52,8 @@ public class AdminAuditController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         log.info("Request to get audit logs for admin: {}", username);
-        return ResponseEntity.ok(auditService.getAuditLogsByAdmin(username, page, size));
+        int effectiveSize = Math.min(size, 100);
+        return ResponseEntity.ok(auditService.getAuditLogsByAdmin(username, page, effectiveSize));
     }
 
     /**
@@ -63,7 +65,8 @@ public class AdminAuditController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         log.info("Request to get audit logs for action type: {}", actionType);
-        return ResponseEntity.ok(auditService.getAuditLogsByActionType(actionType, page, size));
+        int effectiveSize = Math.min(size, 100);
+        return ResponseEntity.ok(auditService.getAuditLogsByActionType(actionType, page, effectiveSize));
     }
 
     /**
@@ -76,7 +79,8 @@ public class AdminAuditController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         log.info("Request to get audit logs for resource: {} - {}", resourceType, resourceId);
-        return ResponseEntity.ok(auditService.getAuditLogsByResource(resourceType, resourceId, page, size));
+        int effectiveSize = Math.min(size, 100);
+        return ResponseEntity.ok(auditService.getAuditLogsByResource(resourceType, resourceId, page, effectiveSize));
     }
 
     /**
@@ -89,7 +93,8 @@ public class AdminAuditController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         log.info("Request to get audit logs from {} to {}", start, end);
-        return ResponseEntity.ok(auditService.getAuditLogsByDateRange(start, end, page, size));
+        int effectiveSize = Math.min(size, 100);
+        return ResponseEntity.ok(auditService.getAuditLogsByDateRange(start, end, page, effectiveSize));
     }
 
     /**
@@ -112,6 +117,7 @@ public class AdminAuditController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         log.info("Request to get my recent admin actions");
-        return ResponseEntity.ok(auditService.getMyRecentActions(page, size));
+        int effectiveSize = Math.min(size, 50);
+        return ResponseEntity.ok(auditService.getMyRecentActions(page, effectiveSize));
     }
 }

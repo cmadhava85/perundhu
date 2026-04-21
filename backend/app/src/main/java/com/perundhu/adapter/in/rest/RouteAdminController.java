@@ -46,14 +46,15 @@ public class RouteAdminController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
         log.info("Request to get all route contributions - page: {}, size: {}", page, size);
-        List<RouteContribution> contributions = adminUseCase.getAllRouteContributionsPaged(page, size);
+        int effectiveSize = Math.min(size, 100);
+        List<RouteContribution> contributions = adminUseCase.getAllRouteContributionsPaged(page, effectiveSize);
         long total = adminUseCase.countAllRouteContributions();
         Map<String, Object> response = new HashMap<>();
         response.put("data", contributions);
         response.put("total", total);
         response.put("page", page);
-        response.put("size", size);
-        response.put("totalPages", (int) Math.ceil((double) total / size));
+        response.put("size", effectiveSize);
+        response.put("totalPages", (int) Math.ceil((double) total / effectiveSize));
         return ResponseEntity.ok(response);
     }
 

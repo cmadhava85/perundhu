@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { logInfo, logWarn, logError } from '../utils/logger';
 import AdminService from '../services/adminService';
 import { apiRequest } from '../services/api';
 
@@ -152,7 +153,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     try {
       localStorage.setItem(FEATURE_FLAGS_STORAGE_KEY, JSON.stringify(newFlags));
     } catch (error) {
-      console.error('Failed to save feature flags to localStorage:', error);
+      logError('Failed to save feature flags to localStorage:', error);
     }
   }, []);
 
@@ -164,7 +165,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
         return { ...defaultFlags, ...JSON.parse(saved) };
       }
     } catch (error) {
-      console.error('Failed to load feature flags from localStorage:', error);
+      logError('Failed to load feature flags from localStorage:', error);
     }
     return null;
   }, []);
@@ -196,9 +197,9 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       setFlags(mergedFlags);
       saveToLocalStorage(mergedFlags);
       
-      console.log('Feature flags synced from bulk endpoint:', Object.keys(backendFlags).length, 'flags');
+      logInfo(`Feature flags synced from bulk endpoint: ${Object.keys(backendFlags).length} flags`);
     } catch (error) {
-      console.warn('Public feature flags not available, using local settings:', error);
+      logWarn('Public feature flags not available, using local settings:', { errorDetails: String(error) });
       setIsBackendAvailable(false);
       
       // Try to load from localStorage
@@ -218,7 +219,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
 
   // Clear React Query cache and force fresh fetch from backend
   const clearCacheAndRefresh = useCallback(async () => {
-    console.log('Clearing feature flags cache and forcing refresh...');
+    logInfo('Clearing feature flags cache and forcing refresh...');
     setIsSyncing(true);
     setLastSyncError(null);
     
@@ -243,9 +244,9 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       setFlags(mergedFlags);
       saveToLocalStorage(mergedFlags);
       
-      console.log('✅ Cache cleared and flags refreshed:', Object.keys(backendFlags).length, 'flags');
+      logInfo(`Cache cleared and flags refreshed: ${Object.keys(backendFlags).length} flags`);
     } catch (error) {
-      console.error('Failed to refresh feature flags:', error);
+      logError('Failed to refresh feature flags:', error);
       setLastSyncError('Failed to refresh. Using current settings.');
     } finally {
       setIsSyncing(false);
@@ -255,7 +256,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
   // Save current flags to backend
   const saveToBackend = useCallback(async () => {
     if (!isBackendAvailable) {
-      console.warn('Backend not available, saving to localStorage only');
+      logWarn('Backend not available, saving to localStorage only');
       return;
     }
     
@@ -275,7 +276,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       });
       
       const result = await AdminService.updateFeatureFlags(flagsRecord);
-      console.log('Feature flags saved to backend:', result);
+      logInfo('Feature flags saved to backend');
       
       // Update local state with what backend returned
       if (result.flags) {
@@ -287,7 +288,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
         queryClient.setQueryData(['public-feature-flags', 'all'], result.flags);
       }
     } catch (error) {
-      console.error('Failed to save feature flags to backend:', error);
+      logError('Failed to save feature flags to backend:', error);
       setLastSyncError('Failed to save settings to server.');
     } finally {
       setIsSyncing(false);
@@ -312,9 +313,9 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       });
       
       const result = await AdminService.syncFeatureFlagsToPreprod(flagsRecord);
-      console.log('Feature flags synced to preprod:', result);
+      logInfo('Feature flags synced to preprod');
     } catch (error) {
-      console.error('Failed to sync feature flags to preprod:', error);
+      logError('Failed to sync feature flags to preprod:', error);
       if (error instanceof Error) {
         if (error.message.includes('401') || error.message.includes('403')) {
           setLastSyncError('Authentication failed for preprod. Please check your credentials.');
@@ -392,7 +393,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
           saveToLocalStorage(backendDefaults);
         }
       } catch (error) {
-        console.error('Failed to reset flags on backend:', error);
+        logError('Failed to reset flags on backend:', error);
       }
     }
   }, [saveToLocalStorage, isBackendAvailable]);
