@@ -177,7 +177,7 @@ public class SecurityConfig {
             .xssProtection(xss -> xss.disable()) // Disable legacy X-XSS-Protection; rely on CSP instead
             .contentSecurityPolicy(csp -> csp.policyDirectives(
                 "default-src 'self'; " +
-                "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com; " +
+                "script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com; " +
                 "style-src 'self' 'unsafe-inline'; " +
                 "img-src 'self' data: https:; " +
                 "connect-src 'self' https://pagead2.googlesyndication.com; " +

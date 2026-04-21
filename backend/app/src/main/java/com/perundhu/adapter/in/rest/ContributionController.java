@@ -41,6 +41,9 @@ import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.InputValidationPort;
 import com.perundhu.domain.port.SecurityMonitoringPort;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -1724,7 +1727,7 @@ public class ContributionController {
       ImageContribution contribution = optContribution.get();
 
       // Check if user owns this contribution (or is admin)
-      if (!contribution.getUserId().equals(userId) && !isAdminUser(userId)) {
+      if (!contribution.getUserId().equals(userId) && !isAdminUser()) {
         return ResponseEntity.status(403)
             .body(createErrorResponse("Access denied"));
       }
@@ -1787,6 +1790,7 @@ public class ContributionController {
   /**
    * Get image processing statistics for admin
    */
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/images/admin/stats")
   public ResponseEntity<Map<String, Object>> getImageProcessingStatistics(
       HttpServletRequest request) {
@@ -1846,6 +1850,7 @@ public class ContributionController {
   /**
    * Get all contributions for admin
    */
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/admin/all")
   public ResponseEntity<List<Map<String, Object>>> getAllContributions(
       HttpServletRequest request) {
@@ -1873,6 +1878,7 @@ public class ContributionController {
   /**
    * Approve a contribution
    */
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{contributionId}/approve")
   public ResponseEntity<Map<String, Object>> approveContribution(
       @PathVariable String contributionId,
@@ -1914,6 +1920,7 @@ public class ContributionController {
   /**
    * Reject a contribution
    */
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{contributionId}/reject")
   public ResponseEntity<Map<String, Object>> rejectContribution(
       @PathVariable String contributionId,
@@ -2249,20 +2256,29 @@ public class ContributionController {
     return detailedInfo;
   }
 
-  private boolean isAdminUser(String userId) {
-    // Placeholder for admin user check logic
-    return "admin".equals(userId);
+  private boolean isAdminUser() {
+    var auth = SecurityContextHolder.getContext().getAuthentication();
+    return auth != null && auth.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
   }
 
   /**
-   * Generate hash for contribution duplicate detection
+   * Generate hash for contribution duplicate detection using SHA-256.
+   * String.hashCode() is a 32-bit value with high collision probability;
+   * SHA-256 gives 256-bit collision resistance.
    */
   private String generateContributionHash(String busNumber, String fromLocation, String toLocation, String time) {
-    String combined = (busNumber != null ? busNumber : "") +
-        (fromLocation != null ? fromLocation : "") +
-        (toLocation != null ? toLocation : "") +
-        (time != null ? time : "");
-    return String.valueOf(combined.hashCode());
+    String combined = (busNumber != null ? busNumber : "") + "|"
+        + (fromLocation != null ? fromLocation : "") + "|"
+        + (toLocation != null ? toLocation : "") + "|"
+        + (time != null ? time : "");
+    try {
+      java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+      byte[] hashBytes = md.digest(combined.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+      return java.util.Base64.getEncoder().encodeToString(hashBytes);
+    } catch (java.security.NoSuchAlgorithmException e) {
+      throw new IllegalStateException("SHA-256 not available", e);
+    }
   }
 
   /**

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 
 /**
  * Security Filter Chain Manager
@@ -53,9 +52,9 @@ public class SecurityFilterChainManager {
       RateLimitingFilter rateLimitingFilter) {
     FilterRegistrationBean<RateLimitingFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(rateLimitingFilter);
-    registration.addUrlPatterns("/api/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE); // Order 1 (highest priority)
-    registration.setName("rateLimitingFilter");
+    // Registered inside the Spring Security filter chain (SecurityConfig.addFilterBefore).
+    // Disabling standalone servlet registration prevents the filter from running twice.
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -73,9 +72,7 @@ public class SecurityFilterChainManager {
       OriginValidationFilter originValidationFilter) {
     FilterRegistrationBean<OriginValidationFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(originValidationFilter);
-    registration.addUrlPatterns("/api/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Order 2
-    registration.setName("originValidationFilter");
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -93,9 +90,7 @@ public class SecurityFilterChainManager {
       ApiKeyValidationFilter apiKeyValidationFilter) {
     FilterRegistrationBean<ApiKeyValidationFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(apiKeyValidationFilter);
-    registration.addUrlPatterns("/api/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 2); // Order 3
-    registration.setName("apiKeyValidationFilter");
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -135,9 +130,7 @@ public class SecurityFilterChainManager {
       AdminBasicAuthFilter adminBasicAuthFilter) {
     FilterRegistrationBean<AdminBasicAuthFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(adminBasicAuthFilter);
-    registration.addUrlPatterns("/api/admin/*", "/api/v1/admin/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 4); // Order 5
-    registration.setName("adminBasicAuthFilter");
+    registration.setEnabled(false);
     return registration;
   }
 

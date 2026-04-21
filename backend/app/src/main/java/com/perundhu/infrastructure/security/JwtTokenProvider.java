@@ -112,7 +112,7 @@ public class JwtTokenProvider {
       Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
       return true;
     } catch (Exception ex) {
-      log.error("Invalid JWT token", ex);
+      log.debug("JWT token validation failed: {}", ex.getMessage());
       return false;
     }
   }
