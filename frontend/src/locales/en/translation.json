@@ -114,6 +114,11 @@
     "searching": "Searching...",
     "recentSearches": "Recent Searches",
     "clearAll": "Clear all",
+    "justNow": "Just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "yesterday": "Yesterday",
+    "daysAgo": "{{count}}d ago",
     "error": {
       "title": "Search Error",
       "retry": "Try Again",

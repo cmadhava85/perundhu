@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { findNearbyLocationFromGPS, checkLocationPermission } from '../services/nearbyLocationService';
 import { getGeolocationSupport } from '../services/geolocation';
@@ -69,6 +69,15 @@ export function useGPSLocation({
     }
   }, [onLocationDetected, t]);
 
+  // Refs capture mount-time values for the one-shot GPS check on mount.
+  // Using refs means the effect has stable dependencies and needs no lint suppression.
+  const autoDetectRef = useRef(autoDetectIfGranted);
+  const hasExistingLocationRef = useRef(hasExistingLocation);
+  const handleUseMyLocationRef = useRef(handleUseMyLocation);
+  useEffect(() => {
+    handleUseMyLocationRef.current = handleUseMyLocation;
+  });
+
   // Check GPS support and permission on mount, auto-detect if already granted
   useEffect(() => {
     const checkGpsStatus = async () => {
@@ -79,14 +88,14 @@ export function useGPSLocation({
         const permission = await checkLocationPermission();
         setLocationPermission(permission);
 
-        if (autoDetectIfGranted && permission === 'granted' && !hasExistingLocation) {
-          handleUseMyLocation();
+        if (autoDetectRef.current && permission === 'granted' && !hasExistingLocationRef.current) {
+          handleUseMyLocationRef.current();
         }
       }
     };
 
     checkGpsStatus();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // mount-only: refs give stable access to initial prop values
 
   const clearLocationError = useCallback(() => setLocationError(null), []);
 

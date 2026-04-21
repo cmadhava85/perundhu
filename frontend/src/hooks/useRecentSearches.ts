@@ -20,7 +20,7 @@ export interface UseRecentSearchesReturn {
 }
 
 export function useRecentSearches(): UseRecentSearchesReturn {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
 
   useEffect(() => {
@@ -74,12 +74,12 @@ export function useRecentSearches(): UseRecentSearchesReturn {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days === 1) return 'Yesterday';
-    return `${days}d ago`;
-  }, []);
+    if (minutes < 1) return t('search.justNow');
+    if (minutes < 60) return t('search.minutesAgo', { count: minutes });
+    if (hours < 24) return t('search.hoursAgo', { count: hours });
+    if (days === 1) return t('search.yesterday');
+    return t('search.daysAgo', { count: days });
+  }, [t]);
 
   const clearRecentSearches = useCallback(() => {
     try {

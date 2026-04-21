@@ -55,12 +55,14 @@ public class JwtTokenProvider {
     Date now = new Date();
     Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
+    List<String> authorities = roles.stream().map(r -> "ROLE_" + r).toList();
+
     return Jwts.builder()
         .subject(username)
-        .claim("roles", roles)
+        .claim("authorities", authorities)
         .issuedAt(now)
         .expiration(expiryDate)
-        .signWith(getSigningKey(), Jwts.SIG.HS512)
+        .signWith(getSigningKey(), Jwts.SIG.HS256)
         .compact();
   }
 
@@ -94,10 +96,10 @@ public class JwtTokenProvider {
         .parseSignedClaims(token)
         .getPayload();
 
-    List<String> roles = (List<String>) claims.get("roles");
+    List<String> authorities = (List<String>) claims.get("authorities");
 
-    return roles.stream()
-        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+    return authorities.stream()
+        .map(SimpleGrantedAuthority::new)
         .toList();
   }
 

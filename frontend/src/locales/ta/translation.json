@@ -79,6 +79,11 @@
     "searching": "தேடுகிறது...",
     "recentSearches": "சமீபத்திய தேடல்கள்",
     "clearAll": "அனைத்தையும் அழி",
+    "justNow": "இப்போதே",
+    "minutesAgo": "{{count}} நிமிடம் முன்",
+    "hoursAgo": "{{count}} மணி முன்",
+    "yesterday": "நேற்று",
+    "daysAgo": "{{count}} நாள் முன்",
     "error": {
       "title": "தேடல் பிழை",
       "retry": "மீண்டும் முயற்சிக்கவும்",

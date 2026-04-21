@@ -189,8 +189,6 @@ public class SecurityConfig {
         .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
         .addFilterAfter(originValidationFilter, RateLimitingFilter.class)
         .addFilterAfter(apiKeyValidationFilter, OriginValidationFilter.class)
-        // Add admin basic auth filter after API key validation
-        .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
             // Public endpoints — explicitly whitelisted; default is authenticated()
             .requestMatchers("/v1/csrf/**").permitAll()
