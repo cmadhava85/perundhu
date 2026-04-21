@@ -48,9 +48,9 @@ public class RateLimitingFilter extends OncePerRequestFilter {
   // Maximum entries to prevent memory exhaustion under attack
   private static final int MAX_RATE_LIMIT_ENTRIES = 50000;
 
-  // Cleanup interval (5 minutes)
+  // Cleanup interval (5 minutes) — AtomicLong for thread-safe CAS update
   private static final long CLEANUP_INTERVAL_MS = 300_000;
-  private long lastCleanupTime = System.currentTimeMillis();
+  private final AtomicLong lastCleanupTime = new AtomicLong(System.currentTimeMillis());
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -64,17 +64,9 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     String clientIp = getClientIp(request);
     String path = request.getRequestURI();
     String method = request.getMethod();
-    String authHeader = request.getHeader("Authorization");
 
     // Skip rate limiting for health checks
     if (path.contains("/actuator/health")) {
-      filterChain.doFilter(request, response);
-      return;
-    }
-
-    // Skip rate limiting for authenticated admin requests (Basic or Bearer auth)
-    if (authHeader != null && (authHeader.startsWith("Basic ") || authHeader.startsWith("Bearer "))) {
-      log.debug("Skipping rate limiting for authenticated request to: {}", path);
       filterChain.doFilter(request, response);
       return;
     }
@@ -127,10 +119,12 @@ public class RateLimitingFilter extends OncePerRequestFilter {
 
   private String getClientIp(HttpServletRequest request) {
     // Check for forwarded IP (behind proxy/load balancer)
+    // Cloud Run appends the real client IP at the END of X-Forwarded-For.
+    // Use the last value to prevent IP spoofing via a forged first value.
     String xForwardedFor = request.getHeader("X-Forwarded-For");
     if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
-      // Take the first IP in the chain (original client)
-      return xForwardedFor.split(",")[0].trim();
+      String[] parts = xForwardedFor.split(",");
+      return parts[parts.length - 1].trim();
     }
 
     String xRealIp = request.getHeader("X-Real-IP");
@@ -170,8 +164,12 @@ public class RateLimitingFilter extends OncePerRequestFilter {
 
   private void cleanupOldEntries() {
     long now = System.currentTimeMillis();
-    if (now - lastCleanupTime > CLEANUP_INTERVAL_MS) {
-      lastCleanupTime = now;
+    long last = lastCleanupTime.get();
+    if (now - last > CLEANUP_INTERVAL_MS) {
+      // Only one thread performs cleanup per interval
+      if (!lastCleanupTime.compareAndSet(last, now)) {
+        return;
+      }
       long cutoffTime = now - 60_000; // Remove entries older than 1 minute
 
       // Force cleanup if too many entries (under attack scenario)

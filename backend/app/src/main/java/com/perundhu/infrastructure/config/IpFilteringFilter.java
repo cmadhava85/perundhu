@@ -238,30 +238,23 @@ public class IpFilteringFilter extends OncePerRequestFilter {
   }
 
   private String getClientIpAddress(HttpServletRequest request) {
-    // Check various headers for real IP (in order of preference)
-    String[] headers = {
-        "CF-Connecting-IP", // Cloudflare
-        "X-Original-Forwarded-For",
-        "X-Forwarded-For",
-        "X-Real-IP",
-        "X-Client-IP",
-        "X-Forwarded",
-        "X-Cluster-Client-IP",
-        "Forwarded-For",
-        "Forwarded"
-    };
-
-    for (String header : headers) {
-      String ip = request.getHeader(header);
-      if (ip != null && !ip.isEmpty() && !"unknown".equalsIgnoreCase(ip)) {
-        // Take the first IP if multiple are present
-        if (ip.contains(",")) {
-          ip = ip.split(",")[0].trim();
-        }
-        if (isValidIp(ip)) {
-          return ip;
-        }
+    // Cloud Run appends the real client IP at the END of X-Forwarded-For.
+    // Use the last value to prevent IP spoofing via a forged first value.
+    // Only check X-Forwarded-For and X-Real-IP; the other headers in the original
+    // list (CF-Connecting-IP, X-Cluster-Client-IP, etc.) are not set by Cloud Run
+    // and can be spoofed by clients.
+    String xForwardedFor = request.getHeader("X-Forwarded-For");
+    if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
+      String[] parts = xForwardedFor.split(",");
+      String ip = parts[parts.length - 1].trim();
+      if (isValidIp(ip)) {
+        return ip;
       }
+    }
+
+    String xRealIp = request.getHeader("X-Real-IP");
+    if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp) && isValidIp(xRealIp)) {
+      return xRealIp;
     }
 
     return request.getRemoteAddr();

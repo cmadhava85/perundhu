@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -24,8 +26,20 @@ public class JwtTokenProvider {
 
   private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-  @Value("${app.jwtSecret:defaultSecretKeyForDevelopmentPleaseChangeInProduction}")
+  @Value("${app.jwtSecret}")
   private String jwtSecret;
+
+  @PostConstruct
+  public void validateConfig() {
+    if (jwtSecret == null || jwtSecret.isBlank()) {
+      throw new IllegalStateException("app.jwtSecret must be configured (set JWT_SECRET env var)");
+    }
+    try {
+      Decoders.BASE64.decode(jwtSecret);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("app.jwtSecret is not valid Base64 — token operations will fail", e);
+    }
+  }
 
   @Value("${app.jwtExpirationInMs:86400000}")
   private int jwtExpirationInMs;

@@ -2,12 +2,13 @@ package com.perundhu.infrastructure.config;
 
 import java.util.List;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -39,18 +40,18 @@ import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
 import com.perundhu.infrastructure.security.OriginValidationFilter;
 import com.perundhu.infrastructure.security.RateLimitingFilter;
 
+import io.jsonwebtoken.io.Decoders;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Security configuration with proper JWT handling for both development and
- * production. Includes rate limiting, origin validation, and API key
- * protection.
+ * Security configuration. Active in all environments.
+ * JWT verification uses symmetric HMAC-SHA256 (app.jwtSecret) by default;
+ * switches to JWK-set-URI asymmetric verification when JWT_JWK_SET_URI is set.
  */
 @Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-@Profile("!prod") // Only active in non-production environments (dev, test, preprod)
 public class SecurityConfig {
 
   @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri:}")
@@ -58,6 +59,9 @@ public class SecurityConfig {
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:}")
   private String issuerUri;
+
+  @Value("${app.jwtSecret:}")
+  private String jwtSecret;
 
   @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:4173}")
   private String allowedOrigins;
@@ -252,17 +256,29 @@ public class SecurityConfig {
 
   @Bean
   public JwtDecoder jwtDecoder() {
-    if (hasJwtConfiguration()) {
+    if (hasJwkSetUriConfiguration()) {
+      log.info("Configuring JWT decoder with JWK Set URI (asymmetric)");
       return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
-    } else {
-      // For development and test: create a mock JWT decoder
-      return new MockJwtDecoder();
+    }
+    // Fall back to symmetric HMAC-SHA256 using the application JWT secret
+    if (jwtSecret == null || jwtSecret.isBlank()) {
+      throw new IllegalStateException(
+          "JWT is not configured: set either JWT_JWK_SET_URI + JWT_ISSUER_URI (asymmetric) " +
+          "or app.jwtSecret / JWT_SECRET (symmetric HMAC-SHA256)");
+    }
+    try {
+      byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+      SecretKey key = new SecretKeySpec(keyBytes, "HmacSHA256");
+      log.info("Configuring JWT decoder with symmetric HMAC-SHA256 key");
+      return NimbusJwtDecoder.withSecretKey(key).build();
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException(
+          "app.jwtSecret is not valid Base64 — cannot configure JWT decoder", e);
     }
   }
 
-  private boolean hasJwtConfiguration() {
-    return jwkSetUri != null && !jwkSetUri.trim().isEmpty() &&
-        issuerUri != null && !issuerUri.trim().isEmpty();
+  private boolean hasJwkSetUriConfiguration() {
+    return jwkSetUri != null && !jwkSetUri.trim().isEmpty();
   }
 
   @Bean

@@ -2193,9 +2193,12 @@ public class ContributionController {
   }
 
   private String getClientIpAddress(HttpServletRequest request) {
+    // Cloud Run appends the real client IP at the END of X-Forwarded-For.
+    // Use the last value to prevent IP spoofing via a forged first value.
     String xForwardedFor = request.getHeader("X-Forwarded-For");
     if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
-      return xForwardedFor.split(",")[0].trim();
+      String[] parts = xForwardedFor.split(",");
+      return parts[parts.length - 1].trim();
     }
 
     String xRealIp = request.getHeader("X-Real-IP");
