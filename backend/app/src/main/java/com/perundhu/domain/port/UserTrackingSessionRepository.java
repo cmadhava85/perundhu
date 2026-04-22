@@ -22,4 +22,12 @@ public interface UserTrackingSessionRepository {
      * @return count of distinct sessions
      */
     long countDistinctSessionsAfter(java.time.LocalDateTime since);
+
+    /**
+     * Count all sessions ever recorded.
+     * Used for all-time total visit count on the public stats endpoint.
+     *
+     * @return total session count from the beginning
+     */
+    long countAllSessions();
 }

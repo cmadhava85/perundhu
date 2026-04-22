@@ -78,7 +78,6 @@ class ImageContributionProcessingServiceTest {
         routeContributionOutputPort,
         locationResolutionService,
         geminiVisionService,
-        imageProcessor,
         contributionProcessingService);
   }
 
@@ -91,8 +90,6 @@ class ImageContributionProcessingServiceTest {
     void shouldExtractOcrDataUsingGeminiVision() {
       // Given
       ImageContribution contribution = createTestContribution();
-      byte[] imageBytes = "test image content".getBytes();
-      contribution.setImageData(imageBytes);
       contribution.setImageContentType("image/jpeg");
 
       Map<String, Object> geminiResult = new HashMap<>();
@@ -105,6 +102,8 @@ class ImageContributionProcessingServiceTest {
               "departureTimes", List.of("06:00", "08:00"))));
 
       when(geminiVisionService.isAvailable()).thenReturn(true);
+      when(fileStorageService.getImageBytes(anyString())).thenReturn(new byte[]{1, 2, 3});
+      when(fileStorageService.getImageContentType(anyString())).thenReturn("image/jpeg");
       // Mock the base64 extraction method
       when(geminiVisionService.extractBusScheduleFromBase64(anyString(), anyString()))
           .thenReturn(geminiResult);
@@ -140,14 +139,14 @@ class ImageContributionProcessingServiceTest {
     void shouldHandleGeminiExtractionError() {
       // Given
       ImageContribution contribution = createTestContribution();
-      byte[] imageBytes = "test image content".getBytes();
-      contribution.setImageData(imageBytes);
       contribution.setImageContentType("image/jpeg");
 
       Map<String, Object> errorResult = new HashMap<>();
       errorResult.put("error", "API rate limit exceeded");
 
       when(geminiVisionService.isAvailable()).thenReturn(true);
+      when(fileStorageService.getImageBytes(anyString())).thenReturn(new byte[]{1, 2, 3});
+      when(fileStorageService.getImageContentType(anyString())).thenReturn("image/jpeg");
       // Mock the base64 extraction method to return error
       when(geminiVisionService.extractBusScheduleFromBase64(anyString(), anyString()))
           .thenReturn(errorResult);
@@ -443,11 +442,6 @@ class ImageContributionProcessingServiceTest {
       metadata.put("description", "Bus timing board");
       metadata.put("location", "Sivakasi Bus Stand");
 
-      // Mock thumbnail generation
-      byte[] thumbnailBytes = "thumbnail".getBytes();
-      when(imageProcessor.generateStandardThumbnail(any(byte[].class)))
-          .thenReturn(thumbnailBytes);
-
       when(fileStorageService.storeImageFile(any(), anyString()))
           .thenReturn("https://storage.example.com/images/bus-schedule.jpg");
       when(imageContributionOutputPort.save(any(ImageContribution.class)))
@@ -477,11 +471,6 @@ class ImageContributionProcessingServiceTest {
           "fake image content".getBytes());
 
       Map<String, String> metadata = new HashMap<>();
-
-      // Mock thumbnail generation (succeeds before storage fails)
-      byte[] thumbnailBytes = "thumbnail".getBytes();
-      when(imageProcessor.generateStandardThumbnail(any(byte[].class)))
-          .thenReturn(thumbnailBytes);
 
       when(fileStorageService.storeImageFile(any(), anyString()))
           .thenThrow(new RuntimeException("Storage unavailable"));

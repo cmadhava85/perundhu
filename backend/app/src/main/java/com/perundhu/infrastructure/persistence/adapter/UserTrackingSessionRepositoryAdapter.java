@@ -74,4 +74,10 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
     public long countDistinctSessionsAfter(java.time.LocalDateTime since) {
         return repository.countSessionsAfter(since);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countAllSessions() {
+        return repository.count();
+    }
 }

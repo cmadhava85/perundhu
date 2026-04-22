@@ -28,8 +28,5 @@ public class ImageContribution {
     private String additionalNotes;
     private LocalDateTime submissionDate;
     private LocalDateTime processedDate;
-    
-    // Binary image data for persistent storage (database BLOB)
-    private byte[] imageData;
     private String imageContentType;
 }

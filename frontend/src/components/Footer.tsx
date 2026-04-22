@@ -9,6 +9,7 @@ interface PlatformStats {
   contributorCount: number;
   cityCount: number;
   dailyUsers?: number;
+  totalVisits?: number;
 }
 
 const Footer: React.FC = () => {
@@ -44,7 +45,7 @@ const Footer: React.FC = () => {
     if (num >= 1000) {
       return `${Math.floor(num / 1000)}K+`;
     }
-    return num.toString();
+    return num > 0 ? `${num}+` : '0';
   };
   
   return (
@@ -82,6 +83,15 @@ const Footer: React.FC = () => {
               <span className="stat-label">{t('footer.stats.dailyUsers', 'Daily Users')}</span>
             </div>
           )}
+          {stats?.totalVisits !== undefined && stats.totalVisits > 0 && (
+            <div className="stat-item">
+              <span className="stat-icon">🌐</span>
+              <span className="stat-number">
+                {statsLoading ? '...' : formatNumber(stats?.totalVisits ?? 0)}
+              </span>
+              <span className="stat-label">{t('footer.stats.totalVisits', 'Total Visits')}</span>
+            </div>
+          )}
         </div>
 
         {/* Main Footer Content - Multi Column Layout */}
@@ -115,7 +125,7 @@ const Footer: React.FC = () => {
               <a href="https://instagram.com/perundhu" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
                 <span className="social-icon"><InstagramIcon size={20} /></span>
               </a>
-              <a href="mailto:perundhutn@gmail.com" className="social-link" aria-label="Email">
+              <a href="mailto:perundhu@gmail.com" className="social-link" aria-label="Email">
                 <span className="social-icon"><MailIcon size={20} /></span>
               </a>
             </div>

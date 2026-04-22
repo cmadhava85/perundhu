@@ -1055,6 +1055,7 @@ public class BusScheduleController {
             defaultStats.put("contributorCount", 0);
             defaultStats.put("cityCount", 0);
             defaultStats.put("dailyUsers", 0);
+            defaultStats.put("totalVisits", 0);
             return ResponseEntity.ok(defaultStats);
         }
     }

@@ -10,6 +10,7 @@ interface PlatformStatistics {
   routesCovered: number;
   dailyUsers: number;
   contributorCount: number;
+  totalVisits: number;
 }
 
 const StatisticsSection: React.FC = () => {
@@ -18,7 +19,8 @@ const StatisticsSection: React.FC = () => {
     totalBuses: 1247,
     routesCovered: 156,
     dailyUsers: 45000,
-    contributorCount: 125
+    contributorCount: 125,
+    totalVisits: 0
   });
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +34,8 @@ const StatisticsSection: React.FC = () => {
             totalBuses: data.totalBuses || 1247,
             routesCovered: data.routesCovered || 156,
             dailyUsers: data.dailyUsers || 45000,
-            contributorCount: data.contributorCount || 125
+            contributorCount: data.contributorCount || 125,
+            totalVisits: data.totalVisits || 0
           });
         }
       } catch (error) {
@@ -116,6 +119,23 @@ const StatisticsSection: React.FC = () => {
               {t('statistics.contributors', 'Contributors')}
             </p>
           </div>
+
+          {/* Total Visits */}
+          {stats.totalVisits > 0 && (
+            <div className="stat-card">
+              <div className="stat-card-content">
+                <div className="stat-number users-stat">
+                  {loading ? '...' : formatNumber(stats.totalVisits)}
+                </div>
+                <div className="stat-icon-container users-icon">
+                  <UsersIcon size={32} />
+                </div>
+              </div>
+              <p className="stat-label">
+                {t('statistics.totalVisits', 'Total Visits')}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>

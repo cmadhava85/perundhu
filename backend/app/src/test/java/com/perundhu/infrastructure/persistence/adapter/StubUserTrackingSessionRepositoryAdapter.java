@@ -79,6 +79,11 @@ public class StubUserTrackingSessionRepositoryAdapter implements UserTrackingSes
         .count();
   }
 
+  @Override
+  public long countAllSessions() {
+    return sessions.size();
+  }
+
   /**
    * Clear all sessions - useful for test cleanup
    */

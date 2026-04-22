@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -279,40 +280,32 @@ public class ImageAdminController {
     }
 
     /**
-     * Serve image data for contributions
+     * Serve image data for contributions — redirects to GCS URL
      */
     @GetMapping("/{id}/data")
-    public ResponseEntity<byte[]> getImageData(@PathVariable String id) {
+    public ResponseEntity<Void> getImageData(@PathVariable String id) {
         try {
             log.debug("Request to fetch image data for contribution: {}", id);
-            
+
             Optional<ImageContribution> optionalContribution = imageContributionOutputPort.findById(id);
-            
+
             if (optionalContribution.isEmpty()) {
                 log.warn("Image contribution not found: {}", id);
                 return ResponseEntity.notFound().build();
             }
-            
+
             ImageContribution contribution = optionalContribution.get();
-            byte[] imageData = contribution.getImageData();
-            
-            if (imageData == null || imageData.length == 0) {
-                log.warn("Image data not found for contribution: {}", id);
+            String imageUrl = contribution.getImageUrl();
+
+            if (imageUrl == null || imageUrl.isBlank()) {
+                log.warn("Image URL not found for contribution: {}", id);
                 return ResponseEntity.notFound().build();
             }
-            
-            String contentType = contribution.getImageContentType();
-            if (contentType == null || contentType.isBlank()) {
-                contentType = "image/jpeg";
-            }
-            
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_TYPE, contentType)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, 
-                            "inline; filename=\"" + id + ".jpg\"")
-                    .header(HttpHeaders.CACHE_CONTROL, "public, max-age=3600")
-                    .body(imageData);
-                    
+
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header(HttpHeaders.LOCATION, imageUrl)
+                    .build();
+
         } catch (Exception e) {
             log.error("Error retrieving image data for contribution {}: {}", id, e.getMessage(), e);
             return ResponseEntity.internalServerError().build();

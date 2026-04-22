@@ -51,7 +51,6 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     private final RouteContributionOutputPort routeContributionOutputPort;
     private final LocationResolutionService locationResolutionService;
     private final GeminiVisionService geminiVisionService;
-    private final ImageProcessor imageProcessor;
     @Lazy
     private final ContributionProcessingService contributionProcessingService;
 
@@ -73,22 +72,15 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 userId, imageFile.getSize());
 
         try {
-            // 1. Generate thumbnail from original image bytes (PHASE 1 optimization)
-            byte[] originalBytes = imageFile.getBytes();
-            byte[] thumbnail = imageProcessor.generateStandardThumbnail(originalBytes);
-            logger.info("Thumbnail generated: {} bytes → {} bytes (reduction: {}%)",
-                    originalBytes.length, thumbnail.length,
-                    (100 * (originalBytes.length - thumbnail.length) / originalBytes.length));
-
-            // 2. Validate and store the image file
+            // 1. Validate and store the image file (compression handled by GcsFileStorageServiceImpl)
             FileUpload fileUpload = convertToFileUpload(imageFile);
             String imageUrl = fileStorageService.storeImageFile(fileUpload, userId);
 
-            // 3. Create initial image contribution record with thumbnail (optimized for database storage)
-            ImageContribution contribution = createInitialContribution(imageFile, metadata, userId, imageUrl, thumbnail);
+            // 2. Create initial image contribution record
+            ImageContribution contribution = createInitialContribution(imageFile, metadata, userId, imageUrl);
             ImageContribution saved = imageContributionOutputPort.save(contribution);
 
-            // 4. Process asynchronously to avoid blocking the user
+            // 3. Process asynchronously to avoid blocking the user
             processImageAsync(saved, imageFile);
 
             logger.info("Image contribution created with ID: {}", saved.getId());
@@ -159,16 +151,19 @@ public class ImageContributionProcessingService implements ImageContributionInpu
      */
     private void processWithGeminiVision(ImageContribution contribution, MultipartFile imageFile) {
         try {
-            // Use stored image data from contribution (MultipartFile may be invalid after
-            // async)
-            byte[] imageBytes = contribution.getImageData();
+            // Fetch compressed image bytes from GCS for Gemini OCR
+            byte[] imageBytes = null;
+            String gcsUrl = contribution.getImageUrl();
+            if (gcsUrl != null && !gcsUrl.startsWith("failed")) {
+                imageBytes = fileStorageService.getImageBytes(gcsUrl);
+            }
 
-            // Fallback to MultipartFile only if imageData is not stored
+            // Fallback to MultipartFile if GCS fetch fails (e.g. async race on first upload)
             if (imageBytes == null || imageBytes.length == 0) {
                 try {
                     imageBytes = imageFile.getBytes();
                 } catch (Exception e) {
-                    logger.error("Failed to read image bytes from MultipartFile: {}", e.getMessage());
+                    logger.error("Failed to read image bytes: {}", e.getMessage());
                     markProcessingFailed(contribution, "Image data unavailable for processing");
                     return;
                 }
@@ -176,11 +171,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
-            // Use stored MIME type from contribution
-            String mimeType = contribution.getImageContentType();
-            if (mimeType == null || mimeType.isEmpty()) {
-                mimeType = "image/jpeg"; // Default
-            }
+            // Images are compressed to JPEG by GcsFileStorageServiceImpl
+            String mimeType = "image/jpeg";
 
             // Extract structured data using Gemini Vision
             Map<String, Object> extractedData = geminiVisionService.extractBusScheduleFromBase64(base64Image, mimeType);
@@ -630,15 +622,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             MultipartFile imageFile,
             Map<String, String> metadata,
             String userId,
-            String imageUrl,
-            byte[] thumbnailData) {
-
-        // Store THUMBNAIL in database instead of original (90% space savings)
-        byte[] imageData = thumbnailData;
-        String contentType = "image/jpeg"; // Thumbnails are always JPEG
-        
-        logger.info("Storing thumbnail in database: {} bytes (thumbnail optimization applied)", 
-                imageData != null ? imageData.length : 0);
+            String imageUrl) {
 
         return ImageContribution.builder()
                 .id(UUID.randomUUID().toString())
@@ -649,10 +633,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .routeName(metadata.getOrDefault("routeName", ""))
                 .status("PROCESSING")
                 .submissionDate(LocalDateTime.now())
-                .additionalNotes(String.format("Original filename: %s, Size: %d bytes (thumbnail stored for DB optimization)",
+                .imageContentType("image/jpeg")
+                .additionalNotes(String.format("Original filename: %s, Size: %d bytes",
                         imageFile.getOriginalFilename(), imageFile.getSize()))
-                .imageData(imageData)
-                .imageContentType(contentType)
                 .build();
     }
 
@@ -790,17 +773,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             if (geminiVisionService.isAvailable()) {
                 logger.info("Using Gemini Vision AI for OCR extraction");
 
-                // First try to read image bytes from database (persistent storage for Cloud
-                // Run)
-                byte[] imageBytes = contribution.getImageData();
-                String mimeType = contribution.getImageContentType();
-
-                // If not in database, try filesystem (for backward compatibility)
-                if (imageBytes == null || imageBytes.length == 0) {
-                    logger.info("Image data not in database, trying filesystem...");
-                    imageBytes = fileStorageService.getImageBytes(contribution.getImageUrl());
-                    mimeType = fileStorageService.getImageContentType(contribution.getImageUrl());
-                }
+                // Fetch image bytes from GCS
+                byte[] imageBytes = fileStorageService.getImageBytes(contribution.getImageUrl());
+                String mimeType = fileStorageService.getImageContentType(contribution.getImageUrl());
 
                 if (imageBytes != null && imageBytes.length > 0) {
                     String base64Image = Base64.getEncoder().encodeToString(imageBytes);

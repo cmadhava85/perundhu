@@ -1141,8 +1141,12 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             long dailyUsers = userTrackingSessionRepository.countDistinctSessionsAfter(since);
             stats.put("dailyUsers", dailyUsers);
 
-            log.info("Public stats: totalBuses={}, cities={}, contributors={}, dailyUsers={}",
-                    totalBuses, cityCount, contributorCount, dailyUsers);
+            // All-time total visit count (every session ping since the beginning)
+            long totalVisits = userTrackingSessionRepository.countAllSessions();
+            stats.put("totalVisits", totalVisits);
+
+            log.info("Public stats: totalBuses={}, cities={}, contributors={}, dailyUsers={}, totalVisits={}",
+                    totalBuses, cityCount, contributorCount, dailyUsers, totalVisits);
 
         } catch (Exception e) {
             log.error("Error computing public stats", e);
@@ -1153,6 +1157,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             stats.put("cityCount", 0L);
             stats.put("contributorCount", 0L);
             stats.put("dailyUsers", 0L);
+            stats.put("totalVisits", 0L);
         }
 
         return stats;
