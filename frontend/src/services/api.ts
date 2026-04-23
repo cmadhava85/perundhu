@@ -9,11 +9,13 @@ import { traceContext, TRACE_HEADERS } from '../utils/traceId';
 
 // Error types and utilities now live in ./http/apiError — re-exported here for backward compatibility.
 export type { RequestData, PaginationParams, PaginatedResponse, ApiErrorResponse } from './http/apiError';
+import type { RequestData, PaginationParams, PaginatedResponse } from './http/apiError';
 import { ApiError, handleApiError } from './http/apiError';
 export { ApiError, handleApiError }; // re-export for backward compatibility
 
 // Bus search / stop / connecting-route functions now live in ./busService — re-exported here for backward compatibility.
 export { searchBuses, searchBusesViaStops, getStops, getConnectingRoutes } from './busService';
+import { searchBuses, getStops } from './busService';
 
 /**
  * Generic request function to be used by other services
