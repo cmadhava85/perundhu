@@ -94,14 +94,16 @@ jobs:
             --format="value(state)" 2>/dev/null || echo "STOPPED")
           
           if [[ "$STATUS" == "STOPPED" ]] || [[ "$STATUS" == "RUNNABLE" ]]; then
-            echo "⏳ Starting Cloud SQL instance..."
+            # Use || true: gcloud exits non-zero when the operation takes longer than
+            # its own client timeout (~10 min), even though the instance eventually
+            # becomes RUNNABLE. The polling loop below handles the actual readiness check.
             gcloud sql instances patch ${{ env.SQL_INSTANCE }} \
               --project=${{ env.PROJECT_ID }} \
               --activation-policy=ALWAYS \
-              --quiet
+              --quiet || true
             
-            echo "⏱️ Waiting for instance to be ready (max 3 minutes)..."
-            for i in {1..36}; do
+            echo "⏱️ Waiting for instance to be ready (max 5 minutes)..."
+            for i in {1..60}; do
               STATUS=$(gcloud sql instances describe ${{ env.SQL_INSTANCE }} \
                 --project=${{ env.PROJECT_ID }} \
                 --format="value(state)")
@@ -111,6 +113,12 @@ jobs:
                 break
               fi
               
+              if [[ $i -eq 60 ]]; then
+                echo "❌ Cloud SQL did not reach RUNNABLE after 5 minutes (last status: $STATUS)"
+                exit 1
+              fi
+              
+              echo "Current status: $STATUS (attempt $i/60
               echo "Current status: $STATUS (attempt $i/36)"
               sleep 5
             done
@@ -280,7 +288,7 @@ jobs:
             --platform=managed \
             --min-instances=0 \
             --max-instances=2 \
-            --cpu=1 \
+            --cpu=1 \512
             --memory=256Mi \
             --timeout=60 \
             --concurrency=200 \
