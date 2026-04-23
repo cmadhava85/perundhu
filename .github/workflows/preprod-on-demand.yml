@@ -32,6 +32,7 @@ concurrency:
   cancel-in-progress: true  # Cancel old deploys to save cost
 
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   PROJECT_ID: astute-strategy-406601  # Preprod GCP project
   REGION: us-central1
   REGISTRY: us-central1-docker.pkg.dev

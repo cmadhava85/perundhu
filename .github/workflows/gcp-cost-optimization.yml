@@ -20,6 +20,7 @@ on:
           - status
 
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   GCP_PROJECT_ID: astute-strategy-406601
   REGION: us-central1
   BACKEND_SERVICE: perundhu-backend-preprod
