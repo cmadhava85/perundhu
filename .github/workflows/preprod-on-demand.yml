@@ -118,8 +118,7 @@ jobs:
                 exit 1
               fi
               
-              echo "Current status: $STATUS (attempt $i/60
-              echo "Current status: $STATUS (attempt $i/36)"
+              echo "Current status: $STATUS (attempt $i/60)"
               sleep 5
             done
           else
