@@ -919,8 +919,8 @@ public class ContributionController {
           // Extract departure times
           List<String> departureTimes = new ArrayList<>();
           Object depTimes = geminiExtraction.get("departureTimes");
-          if (depTimes instanceof List<?>) {
-            departureTimes = ((List<?>) depTimes).stream()
+          if (depTimes instanceof List<?> depList) {
+            departureTimes = depList.stream()
                 .filter(t -> t instanceof String)
                 .map(t -> (String) t)
                 .toList();
@@ -929,8 +929,8 @@ public class ContributionController {
           // Extract arrival times
           List<String> arrivalTimes = new ArrayList<>();
           Object arrTimes = geminiExtraction.get("arrivalTimes");
-          if (arrTimes instanceof List<?>) {
-            arrivalTimes = ((List<?>) arrTimes).stream()
+          if (arrTimes instanceof List<?> arrList) {
+            arrivalTimes = arrList.stream()
                 .filter(t -> t instanceof String)
                 .map(t -> (String) t)
                 .toList();
@@ -952,22 +952,22 @@ public class ContributionController {
           timings = combinedTimings.isEmpty() ? departureTimes : combinedTimings;
 
           Object stopsObj = geminiExtraction.get("stops");
-          if (stopsObj instanceof List<?>) {
-            stops = ((List<?>) stopsObj).stream()
+          if (stopsObj instanceof List<?> stopsList) {
+            stops = stopsList.stream()
                 .filter(s -> s instanceof String)
                 .map(s -> (String) s)
                 .toList();
           }
 
           Object confObj = geminiExtraction.get("confidence");
-          if (confObj instanceof Number) {
-            adjustedConfidence = ((Number) confObj).doubleValue();
+          if (confObj instanceof Number n) {
+            adjustedConfidence = n.doubleValue();
           }
 
           // Extract bidirectional route data
           Object bidirectionalObj = geminiExtraction.get("isBidirectional");
-          if (bidirectionalObj instanceof Boolean) {
-            isBidirectional = (Boolean) bidirectionalObj;
+          if (bidirectionalObj instanceof Boolean b) {
+            isBidirectional = b;
           }
 
           if (isBidirectional) {
@@ -996,13 +996,14 @@ public class ContributionController {
               if (retStops instanceof List<?> stopList) {
                 List<String> returnStops = new ArrayList<>();
                 for (Object stop : stopList) {
-                  if (stop instanceof String) {
-                    returnStops.add((String) stop);
-                  } else if (stop instanceof Map<?, ?> stopMap) {
-                    Object name = stopMap.get("name");
-                    if (name instanceof String) {
-                      returnStops.add((String) name);
+                  switch (stop) {
+                    case String s -> returnStops.add(s);
+                    case Map<?, ?> stopMap -> {
+                      if (stopMap.get("name") instanceof String name) {
+                        returnStops.add(name);
+                      }
                     }
+                    default -> {}
                   }
                 }
                 returnRouteData.put("stops", returnStops);
@@ -1042,8 +1043,8 @@ public class ContributionController {
 
                   // Extract stops
                   Object routeStopsObj = route.get("stops");
-                  if (routeStopsObj instanceof List<?>) {
-                    routeData.put("stops", ((List<?>) routeStopsObj).stream()
+                  if (routeStopsObj instanceof List<?> routeStopsList) {
+                    routeData.put("stops", routeStopsList.stream()
                         .filter(s -> s instanceof String)
                         .map(s -> (String) s)
                         .toList());
