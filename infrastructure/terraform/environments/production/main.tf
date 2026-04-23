@@ -123,7 +123,7 @@ module "database" {
   db_binary_log_enabled             = var.db_binary_log_enabled
   db_slow_query_log_enabled         = var.db_slow_query_log_enabled
   db_general_log_enabled            = var.db_general_log_enabled
-  
+
   # Read replica for 100k users scale
   create_read_replica = var.create_read_replica
   read_replica_tier   = var.read_replica_tier

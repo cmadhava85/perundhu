@@ -69,21 +69,21 @@ read_replica_zone   = "us-central1-b"
 # ============================================
 # Cloud Run Configuration (Optimized for < $10/month)
 # ============================================
-cloud_run_min_instances  = 0       # Scale to zero for cost savings
-cloud_run_max_instances  = 2       # Reduced from 3 for cost savings
-cloud_run_cpu_limit      = "1000m" # 1 CPU
-cloud_run_memory_limit   = "512Mi" # Min required for Gen2 (256Mi not supported)
-cloud_run_concurrency    = 80      # Max concurrent requests per instance
-cloud_run_timeout        = 60      # Request timeout in seconds
-backend_service_name     = "perundhu-backend-preprod"  # Match existing GCP service name
+cloud_run_min_instances = 0                          # Scale to zero for cost savings
+cloud_run_max_instances = 2                          # Reduced from 3 for cost savings
+cloud_run_cpu_limit     = "1000m"                    # 1 CPU
+cloud_run_memory_limit  = "512Mi"                    # Min required for Gen2 (256Mi not supported)
+cloud_run_concurrency   = 80                         # Max concurrent requests per instance
+cloud_run_timeout       = 60                         # Request timeout in seconds
+backend_service_name    = "perundhu-backend-preprod" # Match existing GCP service name
 
 # ============================================
 # VPC Configuration (Cost Optimized - VPC Connector DISABLED)
 # ============================================
-vpc_cidr                    = "10.0.0.0/16"
-public_subnet_cidr          = "10.0.1.0/24"
-private_subnet_cidr         = "10.0.2.0/24"
-vpc_connector_cidr          = "10.8.0.0/28"
+vpc_cidr            = "10.0.0.0/16"
+public_subnet_cidr  = "10.0.1.0/24"
+private_subnet_cidr = "10.0.2.0/24"
+vpc_connector_cidr  = "10.8.0.0/28"
 # VPC Connector DISABLED for cost savings (saves $14/month)
 # Cloud Run uses public IP to connect to Cloud SQL
 vpc_connector_min_instances = 2
@@ -215,12 +215,12 @@ enable_custom_role = false
 # Cloud Function automatically stops idle Cloud SQL instances to reduce costs
 # Saves ~$28/month when SQL is idle
 
-sql_autostop_idle_minutes                = 30                        # Stop after 30 min of inactivity
-sql_autostop_dry_run_mode                = false                     # Set to true to test without stopping
-sql_autostop_cron_schedule               = "*/30 * * * *"            # Run every 30 minutes
-sql_autostop_schedule_interval_minutes   = 30                        # For documentation
-sql_autostop_time_zone                   = "Asia/Kolkata"            # IST timezone
-sql_autostop_function_source_path        = "/tmp/sql-autostop.zip"   # Update with actual path before apply
+sql_autostop_idle_minutes              = 30                      # Stop after 30 min of inactivity
+sql_autostop_dry_run_mode              = false                   # Set to true to test without stopping
+sql_autostop_cron_schedule             = "*/30 * * * *"          # Run every 30 minutes
+sql_autostop_schedule_interval_minutes = 30                      # For documentation
+sql_autostop_time_zone                 = "Asia/Kolkata"          # IST timezone
+sql_autostop_function_source_path      = "/tmp/sql-autostop.zip" # Update with actual path before apply
 
 # ============================================
 # Notifications Configuration

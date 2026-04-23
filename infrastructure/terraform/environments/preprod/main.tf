@@ -198,10 +198,10 @@ module "cloud_run" {
 
   # Preprod uses simpler secret configuration (no admin panel, no recaptcha, no encryption)
   # Secrets are not environment-specific, but shared across preprod/prod
-  db_url_secret_name              = ""  # Preprod uses MYSQL_* variables instead
-  data_encryption_key_secret_name = ""  # Not needed in preprod
-  jwt_secret_name                 = ""  # Not needed in preprod
-  
+  db_url_secret_name              = "" # Preprod uses MYSQL_* variables instead
+  data_encryption_key_secret_name = "" # Not needed in preprod
+  jwt_secret_name                 = "" # Not needed in preprod
+
   # Admin and reCAPTCHA secrets not needed in preprod
   # gemini_api_key_secret_name defaults to "gemini-api-key" (shared)
 

@@ -8,9 +8,9 @@ resource "google_cloud_run_service" "backend" {
     metadata {
       annotations = merge(
         {
-          "autoscaling.knative.dev/maxScale"         = tostring(var.max_instances)
-          "autoscaling.knative.dev/minScale"         = tostring(var.min_instances)
-          "run.googleapis.com/cloudsql-instances"    = var.db_connection_name
+          "autoscaling.knative.dev/maxScale"      = tostring(var.max_instances)
+          "autoscaling.knative.dev/minScale"      = tostring(var.min_instances)
+          "run.googleapis.com/cloudsql-instances" = var.db_connection_name
           # Cost optimization: CPU throttling and Gen2
           "run.googleapis.com/cpu-throttling"        = "true"
           "run.googleapis.com/startup-cpu-boost"     = "true"
@@ -28,7 +28,7 @@ resource "google_cloud_run_service" "backend" {
       service_account_name  = var.service_account_email
       container_concurrency = var.container_concurrency
       # Lower timeout reduces cost from hung/long requests billed against Cloud Run.
-      timeout_seconds       = var.timeout_seconds
+      timeout_seconds = var.timeout_seconds
 
       containers {
         image = var.container_image

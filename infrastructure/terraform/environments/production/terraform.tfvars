@@ -41,12 +41,12 @@ database_user = "perundhu_user"
 
 # Database Storage (match actual deployment)
 db_disk_type             = "PD_HDD"
-db_disk_size             = 10       # Matches actual (was planning 20)
-db_disk_autoresize_limit = 100      # Reset to GCP default
+db_disk_size             = 10  # Matches actual (was planning 20)
+db_disk_autoresize_limit = 100 # Reset to GCP default
 
 # Database Availability (match actual instance)
 db_availability_type   = "ZONAL"
-db_deletion_protection = false    # Matches actual deployed instance
+db_deletion_protection = false # Matches actual deployed instance
 
 # Database Activation Policy
 # ALWAYS: DB stays running — required for prod to serve live traffic.
@@ -80,15 +80,15 @@ cloud_run_timeout       = 60      # Request timeout in seconds
 # ============================================
 # VPC Configuration (Cost Optimized - VPC Connector DISABLED)
 # ============================================
-vpc_cidr                    = "10.0.0.0/16"
-public_subnet_cidr          = "10.0.1.0/24"
-private_subnet_cidr         = "10.0.2.0/24"
-vpc_connector_cidr          = "10.8.0.0/28"
+vpc_cidr            = "10.0.0.0/16"
+public_subnet_cidr  = "10.0.1.0/24"
+private_subnet_cidr = "10.0.2.0/24"
+vpc_connector_cidr  = "10.8.0.0/28"
 # VPC Connector DISABLED for cost savings (saves $14/month)
 # Cloud Run will use public IP to connect to Cloud SQL
 # Note: Database must allow public connections for this to work
-vpc_connector_min_instances = 2 # Kept for reference only (connector disabled)
-vpc_connector_max_instances = 3 # Kept for reference only (connector disabled)
+vpc_connector_min_instances = 2          # Kept for reference only (connector disabled)
+vpc_connector_max_instances = 3          # Kept for reference only (connector disabled)
 vpc_connector_machine_type  = "e2-micro" # Kept for reference only (connector disabled)
 
 # ============================================

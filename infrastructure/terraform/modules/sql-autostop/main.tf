@@ -27,9 +27,9 @@ resource "google_project_iam_member" "sql_autostop_monitoring_viewer" {
 
 # Cloud Function (Gen 2)
 resource "google_cloudfunctions2_function" "sql_autostop" {
-  name            = "sql-auto-stop"
-  location        = var.region
-  description     = "Auto-stop idle Cloud SQL instances"
+  name        = "sql-auto-stop"
+  location    = var.region
+  description = "Auto-stop idle Cloud SQL instances"
   build_config {
     runtime           = "python311"
     entry_point       = "auto_stop_idle_sql"
@@ -51,10 +51,10 @@ resource "google_cloudfunctions2_function" "sql_autostop" {
     ingress_settings               = "ALLOW_PUBLIC"
 
     environment_variables = {
-      PROJECT_ID         = var.project_id
-      SQL_INSTANCE_NAME  = var.sql_instance_name
-      IDLE_MINUTES       = var.idle_minutes_threshold
-      DRY_RUN            = var.dry_run_mode ? "true" : "false"
+      PROJECT_ID        = var.project_id
+      SQL_INSTANCE_NAME = var.sql_instance_name
+      IDLE_MINUTES      = var.idle_minutes_threshold
+      DRY_RUN           = var.dry_run_mode ? "true" : "false"
     }
   }
 
@@ -102,7 +102,7 @@ resource "google_cloud_scheduler_job" "sql_autostop_scheduler" {
 
   http_target {
     http_method = "GET"
-    uri         = "${trimprefix(google_cloudfunctions2_function.sql_autostop.service_config[0].uri, "https://")}"
+    uri         = trimprefix(google_cloudfunctions2_function.sql_autostop.service_config[0].uri, "https://")
 
     oidc_token {
       service_account_email = google_service_account.sql_autostop_sa.email

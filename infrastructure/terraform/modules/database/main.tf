@@ -18,11 +18,11 @@ resource "google_sql_database_instance" "mysql_instance" {
   deletion_protection = false # Set to true for production
 
   settings {
-    tier              = var.db_instance_tier
-    activation_policy = var.db_activation_policy # ALWAYS or NEVER
-    disk_type         = var.db_disk_type
-    disk_size         = var.db_disk_size
-    disk_autoresize   = true
+    tier                  = var.db_instance_tier
+    activation_policy     = var.db_activation_policy # ALWAYS or NEVER
+    disk_type             = var.db_disk_type
+    disk_size             = var.db_disk_size
+    disk_autoresize       = true
     disk_autoresize_limit = var.db_disk_autoresize_limit
 
     availability_type = var.db_availability_type
@@ -104,7 +104,7 @@ resource "google_sql_user" "users" {
   name     = var.database_user
   instance = google_sql_database_instance.mysql_instance.name
   password = random_password.db_password.result
-  host     = "%"  # REQUIRED: Prevents creation of malformed user entries
+  host     = "%" # REQUIRED: Prevents creation of malformed user entries
   type     = "BUILT_IN"
 
   # Ignore changes to password since we manage it via Secret Manager and sync script
@@ -121,7 +121,7 @@ resource "google_sql_user" "readonly_user" {
   name     = "${var.database_user}_readonly"
   instance = google_sql_database_instance.mysql_instance.name
   password = random_password.db_password.result
-  host     = "%"  # REQUIRED: Prevents creation of malformed user entries
+  host     = "%" # REQUIRED: Prevents creation of malformed user entries
 
   lifecycle {
     ignore_changes = [password, host]
@@ -164,7 +164,7 @@ resource "google_sql_database_instance" "read_replica" {
 
     # Replicas inherit most settings from primary
     # Only specify settings that should be different
-    
+
     ip_configuration {
       ipv4_enabled                                  = true
       private_network                               = var.use_public_ip ? null : var.vpc_network
