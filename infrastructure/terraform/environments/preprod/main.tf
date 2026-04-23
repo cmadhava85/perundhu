@@ -41,7 +41,9 @@ provider "google-beta" {
 # This sources the actual infrastructure modules and resources
 # Values are passed from terraform.tfvars and ../shared/variables.tf
 
-# Data sources (commented out - not needed for this operation)
+# Discover the SA running this terraform apply (GitHub Actions deployer)
+# Used to grant it iam.serviceAccountUser on the backend SA
+data "google_client_openid_userinfo" "deployer" {}
 # data "google_project" "project" {
 #   project_id = var.project_id
 # }
@@ -171,6 +173,7 @@ module "iam" {
   cloudbuild_roles        = var.cloudbuild_roles
   custom_role_permissions = var.custom_role_permissions
   enable_custom_role      = var.enable_custom_role
+  deployer_sa_email       = data.google_client_openid_userinfo.deployer.email
 
   depends_on = [google_project_service.required_apis]
 }

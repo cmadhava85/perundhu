@@ -95,3 +95,13 @@ variable "enable_custom_role" {
   type        = bool
   default     = true
 }
+
+# ============================================
+# Deployer Service Account (GitHub Actions / Terraform runner)
+# ============================================
+
+variable "deployer_sa_email" {
+  description = "Email of the SA used to run terraform apply (e.g. GitHub Actions SA). Granted roles/iam.serviceAccountUser on the backend SA so it can deploy Cloud Run revisions using that identity."
+  type        = string
+  default     = ""
+}

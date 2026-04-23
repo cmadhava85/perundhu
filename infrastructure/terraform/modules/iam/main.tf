@@ -76,3 +76,17 @@ resource "google_project_iam_member" "backend_custom_role" {
   role    = google_project_iam_custom_role.app_role[0].name
   member  = "serviceAccount:${google_service_account.backend_service_account.email}"
 }
+
+# ============================================
+# Deployer actAs grant
+# The SA that runs terraform apply (GitHub Actions) must have
+# iam.serviceaccounts.actAs on the backend SA to set it as Cloud Run's identity.
+# Scoped to the SA resource only — not a project-wide grant.
+# ============================================
+
+resource "google_service_account_iam_member" "deployer_actas_backend" {
+  count              = var.deployer_sa_email != "" ? 1 : 0
+  service_account_id = google_service_account.backend_service_account.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${var.deployer_sa_email}"
+}

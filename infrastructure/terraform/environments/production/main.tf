@@ -51,6 +51,10 @@ provider "google-beta" {
 #   project_id = var.project_id
 # }
 
+# Discover the SA running this terraform apply (GitHub Actions deployer)
+# Used to grant it iam.serviceAccountUser on the backend SA
+data "google_client_openid_userinfo" "deployer" {}
+
 # Enable required APIs (simplified - only essential services)
 resource "google_project_service" "required_apis" {
   for_each = toset([
@@ -207,6 +211,7 @@ module "iam" {
   cloudbuild_roles        = var.cloudbuild_roles
   custom_role_permissions = var.custom_role_permissions
   enable_custom_role      = var.enable_custom_role
+  deployer_sa_email       = data.google_client_openid_userinfo.deployer.email
 
   depends_on = [google_project_service.required_apis]
 }
