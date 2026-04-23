@@ -42,7 +42,7 @@ database_user = "perundhu_user"
 # Database Storage (match actual deployment)
 db_disk_type             = "PD_HDD"
 db_disk_size             = 10       # Matches actual (was planning 20)
-db_disk_autoresize_limit = 25       # Hard cap at 2.5× current size (10 GB); prevents accidental runaway autoresize billing ($0.048/GB/month on PD_HDD)
+db_disk_autoresize_limit = 100      # Reset to GCP default
 
 # Database Availability (match actual instance)
 db_availability_type   = "ZONAL"
@@ -57,7 +57,7 @@ db_activation_policy = "ALWAYS" # Production DB must be running to serve request
 # Prevents data loss during Cloud SQL maintenance or failures
 # COST OPTIMIZED (Feb 2026): Reduced retention from 7 to 3 days, disabled binary logs
 db_backup_enabled                 = true    # ENABLED for production stability
-db_backup_start_time              = "20:00" # 20:00 UTC = 1:30 AM IST — true off-peak; was 02:00 UTC = 7:30 AM IST (peak Tamil Nadu commute hours)
+db_backup_start_time              = "02:00" # 2 AM IST for off-peak backup
 db_retained_backups_count         = 3       # Reduced from 7 to 3 for cost optimization
 db_transaction_log_retention_days = 3       # Reduced from 7 to 3 for cost optimization
 db_binary_log_enabled             = false   # Disabled - no read replica (saves $0.20-0.50/month)
@@ -99,21 +99,8 @@ images_bucket_force_destroy      = false # Prevent accidental bucket deletion
 
 images_bucket_cors_enabled = true
 
-# Lifecycle: Tiered storage class transitions then delete after 2 years
-# NEARLINE ($0.010/GB/month) after 30d, COLDLINE ($0.004/GB/month) after 90d
-# NOTE: NEARLINE has $0.01/GB retrieval fee, COLDLINE $0.02/GB — only cost-effective
-# if images are not regularly re-downloaded after review (current workflow: review once)
+# Lifecycle: Delete images after 2 years (longer retention for archives)
 images_bucket_lifecycle_rules = [
-  {
-    age_days      = 30
-    action        = "SetStorageClass"
-    storage_class = "NEARLINE"
-  },
-  {
-    age_days      = 90
-    action        = "SetStorageClass"
-    storage_class = "COLDLINE"
-  },
   {
     age_days      = 730 # 2 years
     action        = "Delete"
@@ -185,7 +172,7 @@ notification_email = "ops@perundhu.com"
 backend_roles = [
   "roles/cloudsql.client",
   "roles/secretmanager.secretAccessor",
-  "roles/storage.objectViewer"
+  "roles/storage.objectCreator"
 ]
 
 backend_optional_roles = {

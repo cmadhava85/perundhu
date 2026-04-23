@@ -180,7 +180,7 @@ firewall_rules = {
 backend_roles = [
   "roles/cloudsql.client",
   "roles/secretmanager.secretAccessor",
-  "roles/storage.objectViewer"
+  "roles/storage.objectCreator"
 ]
 
 backend_optional_roles = {
