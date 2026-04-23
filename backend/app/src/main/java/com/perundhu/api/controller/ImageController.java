@@ -40,9 +40,7 @@ public class ImageController {
       @PathVariable String filename) {
 
     String imageUrl = "/api/images/" + userId + "/" + filename;
-    String fullImageUrl = fileStorageService.getBaseUrl().replace(
-        "https://storage.googleapis.com", "https://storage.googleapis.com")
-        + "/contributions/" + userId + "/" + filename;
+    String fullImageUrl = fileStorageService.getBaseUrl() + "/contributions/" + userId + "/" + filename;
 
     Optional<ImageContribution> contribution = imageContributionOutputPort.findByImageUrl(fullImageUrl);
     if (contribution.isEmpty()) {

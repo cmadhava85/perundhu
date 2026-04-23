@@ -47,6 +47,13 @@ resource "google_storage_bucket" "images_bucket" {
   }
 }
 
+# Allow unauthenticated reads so 302 redirects from Cloud Run reach the images
+resource "google_storage_bucket_iam_member" "public_read" {
+  bucket = google_storage_bucket.images_bucket.name
+  role   = "roles/storage.objectViewer"
+  member = "allUsers"
+}
+
 # NOTE: Backup, logs, and static assets buckets removed
 # - Backups: Use Cloud SQL automated backups instead
 # - Logs: Use default Cloud Logging (30-day free retention)
