@@ -220,10 +220,11 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
             onKeyDown={(e) => e.key === 'Escape' && setShowReviewList(false)}
             role="dialog"
             aria-modal="true"
+            aria-labelledby="bus-review-modal-title"
           >
             {/* Modal Header */}
             <div className="flex justify-between items-center p-4 border-b dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
-              <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
+              <h3 id="bus-review-modal-title" className="font-semibold text-gray-900 dark:text-white text-lg">
                 {busName}
               </h3>
               <button

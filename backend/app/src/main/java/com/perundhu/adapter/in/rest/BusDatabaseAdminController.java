@@ -73,11 +73,12 @@ public class BusDatabaseAdminController {
 
     log.info("Admin fetching buses - page: {}, size: {}, search: {}", page, size, search);
 
+    int effectiveSize = Math.min(size, 200);
     Sort sort = sortDir.equalsIgnoreCase("desc")
         ? Sort.by(sortBy).descending()
         : Sort.by(sortBy).ascending();
 
-    Pageable pageable = PageRequest.of(page, size, sort);
+    Pageable pageable = PageRequest.of(page, effectiveSize, sort);
 
     Page<BusListItem> result = busDatabaseService.getBuses(
         search, origin, destination, activeOnly, pageable);

@@ -40,11 +40,27 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       component: 'ErrorBoundary',
       componentStack: errorInfo.componentStack
     });
-    
+
     this.setState({
       error,
       errorInfo
     });
+
+    // Report to backend in production so errors appear in GCP Cloud Logging
+    if (import.meta.env.PROD) {
+      try {
+        const payload = JSON.stringify({
+          message: error.message?.slice(0, 500) ?? 'Unknown error',
+          component: errorInfo.componentStack?.slice(0, 200) ?? '',
+          stack: error.stack?.slice(0, 4000) ?? '',
+          url: window.location.pathname.slice(0, 500),
+          appVersion: import.meta.env.VITE_APP_VERSION ?? 'unknown',
+        });
+        navigator.sendBeacon('/api/v1/client-errors', new Blob([payload], { type: 'application/json' }));
+      } catch {
+        // sendBeacon failure is non-critical — swallow silently
+      }
+    }
 
     // Call optional error handler
     if (this.props.onError) {

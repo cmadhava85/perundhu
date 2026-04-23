@@ -27,12 +27,12 @@ const UserAnalyticsDashboard = React.lazy(() => import('./UserAnalyticsDashboard
 const AdminDashboard = React.lazy(() => import('./admin/AdminDashboard'));
 const FeatureSettings = React.lazy(() => import('./FeatureSettings'));
 
-// Static pages - lazy loaded
-const AboutUs = React.lazy(() => import('./StaticPages').then(module => ({ default: module.AboutUs })));
-const ContactUs = React.lazy(() => import('./StaticPages').then(module => ({ default: module.ContactUs })));
-const PrivacyPolicy = React.lazy(() => import('./StaticPages').then(module => ({ default: module.PrivacyPolicy })));
-const TermsOfService = React.lazy(() => import('./StaticPages').then(module => ({ default: module.TermsOfService })));
-const FaqPage = React.lazy(() => import('./StaticPages').then(module => ({ default: module.FAQ })));
+// Static pages - each in its own file for easier maintenance
+const AboutUs = React.lazy(() => import('./static/AboutPage'));
+const ContactUs = React.lazy(() => import('./static/ContactPage'));
+const PrivacyPolicy = React.lazy(() => import('./static/PrivacyPage'));
+const TermsOfService = React.lazy(() => import('./static/TermsPage'));
+const FaqPage = React.lazy(() => import('./static/FaqPage'));
 
 interface AppRoutesProps {
   locations: BusLocation[];

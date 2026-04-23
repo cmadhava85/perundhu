@@ -6,8 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.google.cloud.storage.Storage;
 import com.perundhu.domain.port.PromptService;
 
 /**
@@ -22,6 +24,10 @@ import com.perundhu.domain.port.PromptService;
 @ActiveProfiles("test")
 @DisplayName("FileBasedPromptService Integration Tests")
 class FileBasedPromptServiceTest {
+
+  // Mock the GCS Storage client so the context starts without GCP credentials in CI
+  @MockBean
+  Storage gcsStorage;
 
   @Autowired
   private PromptService promptService;

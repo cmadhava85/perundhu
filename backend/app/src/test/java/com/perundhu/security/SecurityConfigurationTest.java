@@ -3,7 +3,7 @@ package com.perundhu.security;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.perundhu.infrastructure.security.RecaptchaValidationService;
+import com.perundhu.domain.port.RecaptchaPort;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class SecurityConfigurationTest {
 
   // Mock dependencies required by admin auth controller
   @MockitoBean
-  private RecaptchaValidationService recaptchaValidationService;
+  private RecaptchaPort recaptchaValidationService;
 
   @MockitoBean
   private AuthenticationManager authenticationManager;

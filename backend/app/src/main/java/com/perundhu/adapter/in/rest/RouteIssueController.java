@@ -13,14 +13,13 @@ import com.perundhu.domain.model.RouteIssue.IssuePriority;
 import com.perundhu.domain.model.RouteIssue.IssueStatus;
 import com.perundhu.domain.model.RouteIssue.IssueType;
 import com.perundhu.domain.port.RouteIssuePort.PagedResult;
-import com.perundhu.infrastructure.security.RecaptchaService;
+import com.perundhu.domain.port.RecaptchaPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -41,7 +40,7 @@ public class RouteIssueController {
 
   private final RouteIssueService routeIssueService;
   private final AuthenticationService authenticationService;
-  private final RecaptchaService recaptchaService;
+  private final RecaptchaPort recaptchaService;
 
   /**
    * Submit a new route issue report
@@ -49,19 +48,14 @@ public class RouteIssueController {
   @PostMapping
   public ResponseEntity<?> submitIssue(
       @RequestBody IssueSubmitRequest request,
-      @RequestHeader(name = "X-reCAPTCHA-Token", required = false) String recaptchaToken,
-      HttpServletRequest httpRequest) {
+      @RequestHeader(name = "X-reCAPTCHA-Token", required = false) String recaptchaToken) {
     log.info("Received route issue report: type={}, busId={}, from={}, to={}",
         request.issueType, request.busId, request.fromLocation, request.toLocation);
 
     // Validate reCAPTCHA token if provided and enabled
     if (recaptchaService.isEnabled() && recaptchaToken != null) {
-      String clientIp = getClientIpAddress(httpRequest);
-      RecaptchaService.VerificationResult verificationResult = recaptchaService.verify(
-          recaptchaToken, "report_issue", clientIp);
-
-      if (!verificationResult.isSuccess()) {
-        log.warn("reCAPTCHA verification failed for route issue report: {}", verificationResult.getErrorMessage());
+      if (!recaptchaService.validateToken(recaptchaToken, "report_issue")) {
+        log.warn("reCAPTCHA verification failed for route issue report");
         return ResponseEntity.status(403).body(Map.of(
             "success", false,
             "error", "Security verification failed. Please try again."));
@@ -225,7 +219,7 @@ public class RouteIssueController {
       @RequestParam(defaultValue = "100") int size) {
     try {
       IssueStatus issueStatus = IssueStatus.valueOf(status.toUpperCase());
-      PagedResult<RouteIssue> issues = routeIssueService.getIssuesByStatus(issueStatus, page, size);
+      PagedResult<RouteIssue> issues = routeIssueService.getIssuesByStatus(issueStatus, page, Math.min(size, 100));
 
       return ResponseEntity.ok(Map.of(
           "issues", issues.content().stream().map(this::toResponse).toList(),
@@ -376,24 +370,6 @@ public class RouteIssueController {
     response.put("updatedAt", issue.getUpdatedAt());
     response.put("resolvedAt", issue.getResolvedAt());
     return response;
-  }
-
-  /**
-   * Extract client IP address from request, handling proxy headers
-   */
-  private String getClientIpAddress(HttpServletRequest request) {
-    String xForwardedFor = request.getHeader("X-Forwarded-For");
-    if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
-      // X-Forwarded-For can contain multiple IPs, get the first one
-      return xForwardedFor.split(",")[0].trim();
-    }
-
-    String xRealIp = request.getHeader("X-Real-IP");
-    if (xRealIp != null && !xRealIp.isEmpty()) {
-      return xRealIp;
-    }
-
-    return request.getRemoteAddr();
   }
 
   private Map<String, Object> toPublicResponse(RouteIssue issue) {

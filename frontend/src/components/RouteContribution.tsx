@@ -431,6 +431,7 @@ export const RouteContribution: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-live="polite"
+          aria-labelledby="contribution-status-title"
         >
           <div
             className={`status-modal ${submissionStatus}`}
@@ -442,7 +443,7 @@ export const RouteContribution: React.FC = () => {
               {submissionStatus === 'error' && (errorType === 'duplicate' ? '!' : '✕')}
             </div>
 
-            <h3 className="status-modal-title">
+            <h3 className="status-modal-title" id="contribution-status-title">
               {submissionStatus === 'submitting' && t('status.submitting.title', 'Processing Your Contribution')}
               {submissionStatus === 'success' && t('status.success.title', 'Contribution Successful!')}
               {submissionStatus === 'error' && (

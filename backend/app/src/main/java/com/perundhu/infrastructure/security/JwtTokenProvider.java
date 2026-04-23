@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -24,8 +26,20 @@ public class JwtTokenProvider {
 
   private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-  @Value("${app.jwtSecret:defaultSecretKeyForDevelopmentPleaseChangeInProduction}")
+  @Value("${app.jwtSecret}")
   private String jwtSecret;
+
+  @PostConstruct
+  public void validateConfig() {
+    if (jwtSecret == null || jwtSecret.isBlank()) {
+      throw new IllegalStateException("app.jwtSecret must be configured (set JWT_SECRET env var)");
+    }
+    try {
+      Decoders.BASE64.decode(jwtSecret);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("app.jwtSecret is not valid Base64 — token operations will fail", e);
+    }
+  }
 
   @Value("${app.jwtExpirationInMs:86400000}")
   private int jwtExpirationInMs;
@@ -41,12 +55,14 @@ public class JwtTokenProvider {
     Date now = new Date();
     Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
+    List<String> authorities = roles.stream().map(r -> "ROLE_" + r).toList();
+
     return Jwts.builder()
         .subject(username)
-        .claim("roles", roles)
+        .claim("authorities", authorities)
         .issuedAt(now)
         .expiration(expiryDate)
-        .signWith(getSigningKey(), Jwts.SIG.HS512)
+        .signWith(getSigningKey(), Jwts.SIG.HS256)
         .compact();
   }
 
@@ -80,10 +96,10 @@ public class JwtTokenProvider {
         .parseSignedClaims(token)
         .getPayload();
 
-    List<String> roles = (List<String>) claims.get("roles");
+    List<String> authorities = (List<String>) claims.get("authorities");
 
-    return roles.stream()
-        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+    return authorities.stream()
+        .map(SimpleGrantedAuthority::new)
         .toList();
   }
 
@@ -98,7 +114,7 @@ public class JwtTokenProvider {
       Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
       return true;
     } catch (Exception ex) {
-      log.error("Invalid JWT token", ex);
+      log.debug("JWT token validation failed: {}", ex.getMessage());
       return false;
     }
   }

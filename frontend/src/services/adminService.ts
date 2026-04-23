@@ -38,22 +38,28 @@ export interface IntegrationResult {
  * Service to handle admin operations with HTTP Basic authentication
  */
 const AdminService = {
-  // Helper method to get admin authorization header
+  // Helper method to get admin authorization header.
+  // Returns null when no credentials are available so callers can handle auth failure.
   getAuthHeader: (): string => {
-    // First, check for Basic Auth credentials in session storage
     const basicAuthCredentials = sessionStorage.getItem(ADMIN_AUTH_KEY);
     if (basicAuthCredentials) {
       return `Basic ${basicAuthCredentials}`;
     }
-    
-    // Fallback to JWT token for backward compatibility
+
     const existingToken = AuthService.getToken();
     if (existingToken) {
       return `Bearer ${existingToken}`;
     }
-    
-    // Return development admin token as last resort
-    return 'Bearer dev-admin-token';
+
+    // No credentials available — clear stale state and redirect to login
+    AdminService.handleUnauthorized();
+    throw new Error('Admin session expired');
+  },
+
+  // Redirect to admin login (used on 401 from the backend)
+  handleUnauthorized: (): void => {
+    sessionStorage.removeItem(ADMIN_AUTH_KEY);
+    window.location.href = '/admin/login';
   },
 
   // Route contribution methods
@@ -497,5 +503,21 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     return PREPROD_API_URL;
   }
 };
+
+// Intercept 401 responses on admin API calls and redirect to login.
+// This handles server-side session rejection (e.g. credentials changed, server restart).
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (
+      axios.isAxiosError(error) &&
+      error.response?.status === 401 &&
+      (error.config?.url?.includes('/admin/') ?? false)
+    ) {
+      AdminService.handleUnauthorized();
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default AdminService;

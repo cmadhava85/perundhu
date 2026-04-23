@@ -1178,7 +1178,7 @@ public class ContributionProcessingService {
      * Convert Map data to RouteContribution object
      */
     private RouteContribution convertMapToRouteContribution(Map<String, Object> data) {
-        log.debug("DEBUG Backend: Converting map data to RouteContribution: {}", data);
+        log.debug("Converting map data to RouteContribution");
 
         var contribution = new RouteContribution();
         contribution.setBusNumber((String) data.get("busNumber"));
@@ -1199,18 +1199,18 @@ public class ContributionProcessingService {
         // Final fallback to prevent null constraint violations
         if (fromLocationName == null || fromLocationName.trim().isEmpty()) {
             fromLocationName = "Unknown Origin";
-            log.warn("DEBUG Backend: Using fallback for null/empty fromLocationName");
+            log.debug("Using fallback for null/empty fromLocationName");
         }
         if (toLocationName == null || toLocationName.trim().isEmpty()) {
             toLocationName = "Unknown Destination";
-            log.warn("DEBUG Backend: Using fallback for null/empty toLocationName");
+            log.debug("Using fallback for null/empty toLocationName");
         }
 
         // Set location names (no more legacy fields)
         contribution.setFromLocationName(fromLocationName.trim());
         contribution.setToLocationName(toLocationName.trim());
 
-        log.debug("DEBUG Backend: Final location names - from: '{}', to: '{}'",
+        log.debug("Final location names - from: '{}', to: '{}'",
                 contribution.getFromLocationName(), contribution.getToLocationName());
 
         // Enhanced coordinate handling with proper type conversion and logging
@@ -1218,36 +1218,36 @@ public class ContributionProcessingService {
             Object fromLatObj = data.get("fromLatitude");
             Double fromLatitude = convertToDouble(fromLatObj, "fromLatitude");
             contribution.setFromLatitude(fromLatitude);
-            log.debug("DEBUG Backend: Set fromLatitude = {}", fromLatitude);
+            log.debug("Set fromLatitude = {}", fromLatitude);
         } else {
-            log.warn("DEBUG Backend: fromLatitude is null in request data");
+            log.debug("fromLatitude is null in request data");
         }
 
         if (data.get("fromLongitude") != null) {
             Object fromLonObj = data.get("fromLongitude");
             Double fromLongitude = convertToDouble(fromLonObj, "fromLongitude");
             contribution.setFromLongitude(fromLongitude);
-            log.debug("DEBUG Backend: Set fromLongitude = {}", fromLongitude);
+            log.debug("Set fromLongitude = {}", fromLongitude);
         } else {
-            log.warn("DEBUG Backend: fromLongitude is null in request data");
+            log.debug("fromLongitude is null in request data");
         }
 
         if (data.get("toLatitude") != null) {
             Object toLatObj = data.get("toLatitude");
             Double toLatitude = convertToDouble(toLatObj, "toLatitude");
             contribution.setToLatitude(toLatitude);
-            log.debug("DEBUG Backend: Set toLatitude = {}", toLatitude);
+            log.debug("Set toLatitude = {}", toLatitude);
         } else {
-            log.warn("DEBUG Backend: toLatitude is null in request data");
+            log.debug("toLatitude is null in request data");
         }
 
         if (data.get("toLongitude") != null) {
             Object toLonObj = data.get("toLongitude");
             Double toLongitude = convertToDouble(toLonObj, "toLongitude");
             contribution.setToLongitude(toLongitude);
-            log.debug("DEBUG Backend: Set toLongitude = {}", toLongitude);
+            log.debug("Set toLongitude = {}", toLongitude);
         } else {
-            log.warn("DEBUG Backend: toLongitude is null in request data");
+            log.debug("toLongitude is null in request data");
         }
 
         contribution.setDepartureTime((String) data.get("departureTime"));
@@ -1293,14 +1293,14 @@ public class ContributionProcessingService {
                 }
 
                 contribution.setStops(stops);
-                log.info("DEBUG Backend: Parsed {} stops from contribution data", stops.size());
+                log.debug("Parsed {} stops from contribution data", stops.size());
             } catch (Exception e) {
-                log.warn("DEBUG Backend: Failed to parse stops data: {}", e.getMessage());
+                log.warn("Failed to parse stops data: {}", e.getMessage());
             }
         }
 
         // Log final coordinate values for debugging
-        log.info("DEBUG Backend: Final RouteContribution coordinates - from: ({}, {}), to: ({}, {})",
+        log.debug("Final RouteContribution coordinates - from: ({}, {}), to: ({}, {})",
                 contribution.getFromLatitude(), contribution.getFromLongitude(),
                 contribution.getToLatitude(), contribution.getToLongitude());
 

@@ -2,6 +2,8 @@ package com.perundhu.adapter.out.cache;
 
 import org.springframework.stereotype.Repository;
 
+import jakarta.annotation.PostConstruct;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +23,19 @@ public class InMemoryImageHashRepository {
 
   // Thread-safe map storing hash -> HashEntry
   private final Map<String, HashEntry> hashStore = new ConcurrentHashMap<>();
+
+  /**
+   * Warns at startup that this cache is not persistent.
+   * On pod restart (e.g. Cloud Run scale-to-zero) all stored hashes are lost,
+   * so duplicate image detection cannot span across restarts.
+   * TODO: Back this with Cloud SQL for cross-pod, cross-restart deduplication.
+   */
+  @PostConstruct
+  void warnEphemeralState() {
+    org.slf4j.LoggerFactory.getLogger(InMemoryImageHashRepository.class)
+        .warn("InMemoryImageHashRepository is not persistent — image duplicate detection "
+            + "resets on every pod restart. Cross-restart duplicates will not be caught.");
+  }
 
   /**
    * Check if an image hash exists in cache (indicating duplicate).

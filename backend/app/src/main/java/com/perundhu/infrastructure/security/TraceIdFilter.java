@@ -111,25 +111,24 @@ public class TraceIdFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Extract client IP, handling proxy headers
+   * Extract client IP, handling proxy headers.
+   * Cloud Run appends the real client IP at the END of X-Forwarded-For;
+   * use the last value to prevent IP spoofing via a forged first value.
    */
   private String getClientIp(HttpServletRequest request) {
     String ip = request.getHeader("X-Forwarded-For");
-    if (ip == null || ip.isBlank() || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("X-Real-IP");
+    if (ip != null && !ip.isBlank() && !"unknown".equalsIgnoreCase(ip)) {
+      // Use the last (proxy-appended) IP, not the first (client-controlled)
+      if (ip.contains(",")) {
+        String[] parts = ip.split(",");
+        ip = parts[parts.length - 1].trim();
+      }
+      return ip;
     }
-    if (ip == null || ip.isBlank() || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("Proxy-Client-IP");
+    ip = request.getHeader("X-Real-IP");
+    if (ip != null && !ip.isBlank() && !"unknown".equalsIgnoreCase(ip)) {
+      return ip;
     }
-    if (ip == null || ip.isBlank() || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getRemoteAddr();
-    }
-
-    // Handle multiple IPs (take the first one)
-    if (ip != null && ip.contains(",")) {
-      ip = ip.split(",")[0].trim();
-    }
-
-    return ip != null ? ip : "unknown";
+    return request.getRemoteAddr();
   }
 }

@@ -7,83 +7,33 @@ import { csrfTokenManager } from '../utils/csrfTokenManager';
 import { logger } from '../utils/logger';
 import { traceContext, TRACE_HEADERS } from '../utils/traceId';
 
-/**
- * Type for request data and parameters
- */
-export interface RequestData {
-  [key: string]: unknown;
-}
+// Error types and utilities now live in ./http/apiError — re-exported here for backward compatibility.
+export type { RequestData, PaginationParams, PaginatedResponse, ApiErrorResponse } from './http/apiError';
+import type { RequestData, PaginationParams, PaginatedResponse } from './http/apiError';
+import { ApiError, handleApiError } from './http/apiError';
+export { ApiError, handleApiError }; // re-export for backward compatibility
+
+// Bus search / stop / connecting-route functions now live in ./busService — re-exported here for backward compatibility.
+export { searchBuses, searchBusesViaStops, getStops, getConnectingRoutes } from './busService';
+import { searchBuses, getStops } from './busService';
 
 /**
  * Generic request function to be used by other services
- * @param method HTTP method
- * @param url API endpoint
- * @param data Optional request body data
- * @param params Optional query parameters
- * @returns Promise with the response
  */
 export const apiRequest = async <T>(
-  method: Method, 
-  url: string, 
-  data?: RequestData, 
+  method: Method,
+  url: string,
+  data?: RequestData,
   params?: RequestData
 ): Promise<T> => {
   try {
-    const response: AxiosResponse<T> = await api.request({
-      method,
-      url,
-      data,
-      params
-    });
+    const response: AxiosResponse<T> = await api.request({ method, url, data, params });
     return response.data;
   } catch (error) {
     logger.error(`API Request Error (${method} ${url}):`, error);
     throw new ApiError(`Failed to ${method.toLowerCase()} ${url}. Please try again.`);
   }
 };
-
-/**
- * Custom error class for API errors with additional properties
- */
-export class ApiError extends Error {
-  status?: number;
-  code?: string;
-  errorCode?: string;
-  userMessage?: string;
-  
-  constructor(message: string, status?: number, code?: string, userMessage?: string) {
-    super(message);
-    this.name = 'ApiError';
-    this.status = status;
-    this.code = code;
-    this.errorCode = code; // Set errorCode as alias for code
-    this.userMessage = userMessage; // User-friendly message from backend
-    
-    // This is needed for instanceof to work correctly in TypeScript
-    Object.setPrototypeOf(this, ApiError.prototype);
-  }
-}
-
-/**
- * Interface for pagination parameters
- */
-export interface PaginationParams {
-  page: number;
-  size: number;
-}
-
-/**
- * Interface for paginated response
- */
-export interface PaginatedResponse<T> {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-  hasNext: boolean;
-  hasPrevious: boolean;
-}
 
 // Helper function to safely get environment variables in both Jest and Vite environments
 const getEnv = (key: string, defaultValue: string): string => {
@@ -332,7 +282,9 @@ export const getLocations = async (language?: string): Promise<Location[]> => {
   }
 };
 
-// Backend DTO interface to match the actual API response
+// BusDTO and transformBusDTOToBus are kept here for searchBusesMultiStand — other bus
+// search functions have moved to ./busService and are re-exported above.
+
 interface BusDTO {
   id: number;
   number: string;
@@ -351,57 +303,27 @@ interface BusDTO {
   toLocationNameTranslated?: string;
 }
 
-// Fallback departure times when backend doesn't provide timing
 const FALLBACK_DEPARTURE_TIMES = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
 
-// Calculate arrival time from departure time and travel hours
-const _calculateArrivalTime = (departureTime: string, travelHours: number): string => {
-  const [depHour, depMinute] = departureTime.split(':').map(Number);
-  const arrHour = (depHour + travelHours) % 24;
-  return `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
-};
-
-// Transform backend BusDTO to frontend Bus object
 const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation: Location): Bus => {
-  // Use actual departure/arrival times from backend if available
   let departureTime = busDTO.departureTime;
   const arrivalTime = busDTO.arrivalTime;
-  
-  // Fallback to sample times only if backend doesn't provide them
   if (!departureTime) {
     departureTime = FALLBACK_DEPARTURE_TIMES[busDTO.id % FALLBACK_DEPARTURE_TIMES.length];
-    logger.debug(`Bus ${busDTO.id}: No departureTime from backend, using fallback: ${departureTime}`);
   }
-  
-  // Do NOT calculate arrival time if not provided by backend
-  // Calculating it leads to inaccurate data, especially for MTC buses
-  // Only use actual arrival times from the source data
-  if (!arrivalTime) {
-    logger.debug(`Bus ${busDTO.id}: No arrivalTime from backend, leaving blank (avoid inaccurate calculation)`);
-  }
-  
-  // Calculate duration from actual times if both are available
   let duration = '';
   if (departureTime && arrivalTime) {
     const [depH, depM] = departureTime.split(':').map(Number);
     const [arrH, arrM] = arrivalTime.split(':').map(Number);
     let hours = arrH - depH;
     let minutes = arrM - depM;
-    if (hours < 0) hours += 24; // Handle overnight travel
-    if (minutes < 0) {
-      hours -= 1;
-      minutes += 60;
-    }
+    if (hours < 0) hours += 24;
+    if (minutes < 0) { hours -= 1; minutes += 60; }
     duration = `${hours}h ${minutes}m`;
   }
-  
-  // Use translated location names from backend if available
   const fromName = busDTO.fromLocationNameTranslated || busDTO.fromLocationName || fromLocation.name;
   const toName = busDTO.toLocationNameTranslated || busDTO.toLocationName || toLocation.name;
-  
-  // Detect corporation/operator label (e.g., TNSTC/SETC) from operator or type
   const corporation = (busDTO.operator || '').trim() || (busDTO.type || '').trim();
-
   return {
     id: busDTO.id,
     busName: busDTO.name || corporation || 'Unknown Bus',
@@ -423,250 +345,9 @@ const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation
     routeName: `${fromName} - ${toName}`,
     isLive: false,
     availability: 'available' as const,
-    capacity: 40 + (busDTO.id % 20), // Sample capacity data
-    rating: busDTO.rating
+    capacity: 40 + (busDTO.id % 20),
+    rating: busDTO.rating,
   };
-};
-
-/**
- * Search for buses between two locations
- */
-export const searchBuses = async (
-  fromLocation: Location, 
-  toLocation: Location,
-  includeContinuing: boolean = false,
-  languageCode: string = 'en'
-): Promise<Bus[]> => {
-  try {
-    console.log('🔍 API searchBuses called with:');
-    console.log('  From:', fromLocation.name, '(ID:', fromLocation.id, ')');
-    console.log('  To:', toLocation.name, '(ID:', toLocation.id, ')');
-    console.log('  Include Continuing:', includeContinuing);
-    
-    // Check if locations are from OpenStreetMap (negative IDs)
-    const isFromOSM = fromLocation.id < 0;
-    const isToOSM = toLocation.id < 0;
-    
-    // If either location is from OpenStreetMap, we need to find nearby locations in the database
-    if (isFromOSM || isToOSM) {
-      logger.debug('🌍 OpenStreetMap location detected, searching by coordinates');
-      
-      // For now, return empty array with a helpful message
-      // TODO: Implement coordinate-based search or find nearest database locations
-      logger.warn('⚠️ OpenStreetMap locations not yet supported for bus search');
-      logger.warn(`From: ${fromLocation.name} (${fromLocation.latitude}, ${fromLocation.longitude})`);
-      logger.warn(`To: ${toLocation.name} (${toLocation.latitude}, ${toLocation.longitude})`);
-      
-      throw new ApiError(
-        `Currently, we can only search between locations in our database. "${isFromOSM ? fromLocation.name : toLocation.name}" is not in our system yet. Please try selecting a nearby city that appears with a 🚍 icon.`,
-        400,
-        'OSM_LOCATION_NOT_SUPPORTED'
-      );
-    }
-    
-    const response = await api.get('/v1/bus-schedules/search', {
-      params: {
-        fromLocationId: fromLocation.id,
-        toLocationId: toLocation.id,
-        includeContinuing,
-        lang: languageCode
-      }
-    });
-    
-    // Transform backend BusDTO objects to frontend Bus objects
-    // Backend returns PaginatedResponse with 'items' array
-    const busDTOs: BusDTO[] = response.data.items || response.data || [];
-    const buses: Bus[] = busDTOs.map(busDTO => 
-      transformBusDTOToBus(busDTO, fromLocation, toLocation)
-    );
-    
-    // Helper to compute duration between two HH:MM times (handles overnight)
-    const computeDuration = (dep: string, arr: string): string => {
-      if (!dep || !arr) return '';
-      const [depH, depM] = dep.split(':').map(Number);
-      const [arrH, arrM] = arr.split(':').map(Number);
-      let hours = arrH - depH;
-      let minutes = arrM - depM;
-      if (hours < 0) hours += 24; // Overnight handling
-      if (minutes < 0) {
-        hours -= 1;
-        minutes += 60;
-      }
-      return `${hours}h ${minutes}m`;
-    };
-
-    // Fetch real stops data for each bus
-    for (const bus of buses) {
-      try {
-        const stops = await getStops(bus.id, languageCode);
-        if (stops.length > 0) {
-          // Prefer segment times that match the user's search (from -> to)
-          const stopMatches = (s: Stop, loc: Location): boolean => {
-            if (s.locationId && s.locationId === loc.id) return true;
-            // Fallback to flexible name match if locationId missing
-            const sName = (s.name || '').toLowerCase();
-            const sTranslated = (s.translatedName || '').toLowerCase();
-            const locName = (loc.name || '').toLowerCase();
-            return sName === locName || sName.includes(locName) || sTranslated.includes(locName);
-          };
-
-          const fromStop = stops.find(s => stopMatches(s, fromLocation));
-          const toStop = stops.find(s => stopMatches(s, toLocation));
-
-          // Update bus timing using matched segment when available
-          const newDeparture = fromStop?.departureTime || stops[0].departureTime || bus.departureTime;
-          const newArrival = toStop?.arrivalTime || stops[stops.length - 1].arrivalTime || bus.arrivalTime;
-          bus.departureTime = newDeparture || bus.departureTime;
-          bus.arrivalTime = newArrival || bus.arrivalTime;
-
-          // Recalculate duration based on chosen segment
-          bus.duration = computeDuration(bus.departureTime, bus.arrivalTime);
-        }
-      } catch (error) {
-        logger.warn(`Failed to fetch stops for bus ${bus.id}: ${error instanceof Error ? error.message : String(error)}`);
-        // Continue without stops for this bus
-      }
-    }
-    
-    logger.debug(`Transformed buses with real stops: ${buses.length} buses`);
-    return buses;
-  } catch (error) {
-    logger.error('Error searching buses:', error);
-    
-    // If it's our custom OSM error, throw it as-is
-    if (error instanceof ApiError && error.errorCode === 'OSM_LOCATION_NOT_SUPPORTED') {
-      throw error;
-    }
-    
-    throw new ApiError('Failed to search for buses. Please try again.');
-  }
-};
-
-/**
- * Search for buses that pass through specific locations (even as intermediate stops)
- * This finds buses that have both locations as stops in their route, in the correct order
- */
-export const searchBusesViaStops = async (
-  fromLocation: Location | number, 
-  toLocation: Location | number
-): Promise<Bus[]> => {
-  try {
-    // Extract location IDs and objects based on what was passed
-    const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
-    const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
-    
-    // Get full location objects if needed
-    const fromLoc = typeof fromLocation === 'object' ? fromLocation : { id: fromId, name: 'Unknown' } as Location;
-    const toLoc = typeof toLocation === 'object' ? toLocation : { id: toId, name: 'Unknown' } as Location;
-    
-    const response = await api.get('/v1/bus-schedules/search-via-stops', {
-      params: {
-        fromLocationId: fromId,
-        toLocationId: toId
-      }
-    });
-    
-    // Transform backend BusDTO objects to frontend Bus objects
-    // Handle both raw array and paginated response formats
-    const busDTOs: BusDTO[] = Array.isArray(response.data) 
-      ? response.data 
-      : (response.data.items || response.data || []);
-    const buses: Bus[] = busDTOs.map(busDTO => 
-      transformBusDTOToBus(busDTO, fromLoc, toLoc)
-    );
-    
-    return buses;
-  } catch (error) {
-    logger.error('Error searching buses via stops:', error);
-    throw new ApiError('Failed to search for buses via stops. Please try again.');
-  }
-};
-
-/**
- * Transform backend StopDTO to frontend Stop object
- */
-interface StopDTO {
-  id: number;
-  name: string;
-  translatedName?: string;
-  arrivalTime?: string;
-  departureTime?: string;
-  sequence?: number;
-  platform?: string;
-  latitude?: number;
-  longitude?: number;
-  status?: string;
-  locationId?: number;
-}
-
-const transformStopDTOToStop = (stopDTO: StopDTO, busId: number): Stop => {
-  return {
-    id: stopDTO.id,
-    name: stopDTO.name,
-    translatedName: stopDTO.translatedName || stopDTO.name,
-    arrivalTime: stopDTO.arrivalTime || '',
-    departureTime: stopDTO.departureTime || '',
-    order: stopDTO.sequence || 0,
-    stopOrder: stopDTO.sequence || 0,
-    busId: busId,
-    platform: stopDTO.platform,
-    status: stopDTO.status,
-    locationId: stopDTO.locationId,
-    latitude: stopDTO.latitude,
-    longitude: stopDTO.longitude
-  };
-};
-
-/**
- * Get stops for a specific bus
- */
-export const getStops = async (busId: number, languageCode: string = 'en'): Promise<Stop[]> => {
-  try {
-    logger.debug(`Fetching stops for bus ${busId} with language ${languageCode}`);
-    const response = await api.get(`/v1/bus-schedules/buses/${busId}/stops/basic`, {
-      params: { lang: languageCode }
-    });
-    logger.debug('Stops API response:', response.data);
-    
-    // Transform the backend response to frontend Stop objects
-    const stopDTOs: StopDTO[] = response.data;
-    const stops: Stop[] = stopDTOs.map(stopDTO => 
-      transformStopDTOToStop(stopDTO, busId)
-    );
-    
-    logger.debug(`Transformed stops: ${stops.length} stops`);
-    return stops;
-  } catch (error) {
-    logger.error(`Error fetching stops for bus ${busId}:`, error);
-    throw new ApiError(`Failed to fetch bus stops for bus ID ${busId}. Please try again.`);
-  }
-};
-
-/**
- * Get connecting routes between two locations
- * @param fromLocation Location object or location ID
- * @param toLocation Location object or location ID
- */
-export const getConnectingRoutes = async (
-  fromLocation: Location | number, 
-  toLocation: Location | number
-): Promise<ConnectingRoute[]> => {
-  try {
-    // Extract location IDs based on what was passed
-    const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
-    const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
-    
-    const response = await api.get('/v1/bus-schedules/connecting-routes', {
-      params: {
-        fromLocationId: fromId,
-        toLocationId: toId
-      }
-    });
-    return response.data;
-  } catch (error) {
-    logger.error('Error fetching connecting routes:', error);
-    throw new ApiError('Failed to fetch connecting routes. Please try again.');
-  }
 };
 
 /**
@@ -744,47 +425,6 @@ export const getUserRewardPoints = async (userId: string): Promise<RewardPoints>
     }
     throw new ApiError('Failed to fetch reward points. Please try again.');
   }
-};
-
-/**
- * Interface for API error response structure
- */
-export interface ApiErrorResponse {
-  status?: number;
-  data?: {
-    message?: string;
-    errorCode?: string;
-    userMessage?: string;
-    error?: string;
-    details?: string;
-    retryAfter?: number;
-    [key: string]: unknown;
-  };
-  [key: string]: unknown;
-}
-
-// Error handler utility for consistent error responses
-export const handleApiError = (error: unknown): never => {
-  logger.error('API error:', error);
-  
-  // Check if it's an axios error with response property
-  const axiosError = error as { response?: ApiErrorResponse };
-  
-  if (axiosError.response) {
-    const data = axiosError.response.data;
-    // Prefer userMessage (user-friendly) over message (technical)
-    const displayMessage = data?.userMessage || data?.message || 'An error occurred with the API request';
-    
-    throw new ApiError(
-      displayMessage,
-      axiosError.response.status,
-      data?.errorCode,
-      data?.userMessage
-    );
-  }
-  
-  // For network errors or other types of errors
-  throw new ApiError('Failed to connect to the server. Please check your internet connection.');
 };
 
 /**

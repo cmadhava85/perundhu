@@ -5,10 +5,11 @@ import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
 import com.perundhu.infrastructure.security.JwtAuthenticationFilter;
 import com.perundhu.infrastructure.security.OriginValidationFilter;
 import com.perundhu.infrastructure.security.RateLimitingFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 
 /**
  * Security Filter Chain Manager
@@ -51,9 +52,9 @@ public class SecurityFilterChainManager {
       RateLimitingFilter rateLimitingFilter) {
     FilterRegistrationBean<RateLimitingFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(rateLimitingFilter);
-    registration.addUrlPatterns("/api/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE); // Order 1 (highest priority)
-    registration.setName("rateLimitingFilter");
+    // Registered inside the Spring Security filter chain (SecurityConfig.addFilterBefore).
+    // Disabling standalone servlet registration prevents the filter from running twice.
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -71,9 +72,7 @@ public class SecurityFilterChainManager {
       OriginValidationFilter originValidationFilter) {
     FilterRegistrationBean<OriginValidationFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(originValidationFilter);
-    registration.addUrlPatterns("/api/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Order 2
-    registration.setName("originValidationFilter");
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -91,9 +90,7 @@ public class SecurityFilterChainManager {
       ApiKeyValidationFilter apiKeyValidationFilter) {
     FilterRegistrationBean<ApiKeyValidationFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(apiKeyValidationFilter);
-    registration.addUrlPatterns("/api/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 2); // Order 3
-    registration.setName("apiKeyValidationFilter");
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -133,9 +130,7 @@ public class SecurityFilterChainManager {
       AdminBasicAuthFilter adminBasicAuthFilter) {
     FilterRegistrationBean<AdminBasicAuthFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(adminBasicAuthFilter);
-    registration.addUrlPatterns("/api/admin/*", "/api/v1/admin/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 4); // Order 5
-    registration.setName("adminBasicAuthFilter");
+    registration.setEnabled(false);
     return registration;
   }
 
@@ -207,6 +202,8 @@ public class SecurityFilterChainManager {
    */
   public static class SecurityHealthCheck {
 
+    private static final Logger log = LoggerFactory.getLogger(SecurityHealthCheck.class);
+
     public static boolean validateFilterOrder(
         FilterRegistrationBean<?> filter1,
         FilterRegistrationBean<?> filter2) {
@@ -214,13 +211,13 @@ public class SecurityFilterChainManager {
     }
 
     public static void logSecurityConfiguration() {
-      System.out.println("🔒 Security Filter Chain Configuration:");
-      System.out.println("   ✓ Rate Limiting: ACTIVE (Order 1)");
-      System.out.println("   ✓ Origin Validation: ACTIVE (Order 2)");
-      System.out.println("   ✓ API Key Validation: ACTIVE (Order 3)");
-      System.out.println("   ✓ Admin Basic Auth: ACTIVE (Order 4)");
-      System.out.println("   ✓ JWT Authentication: ACTIVE (Spring Security)");
-      System.out.println("🔒 Security layers initialized successfully");
+      log.info("Security Filter Chain Configuration:");
+      log.info("  Rate Limiting: ACTIVE (Order 1)");
+      log.info("  Origin Validation: ACTIVE (Order 2)");
+      log.info("  API Key Validation: ACTIVE (Order 3)");
+      log.info("  Admin Basic Auth: ACTIVE (Order 4)");
+      log.info("  JWT Authentication: ACTIVE (Spring Security)");
+      log.info("Security layers initialized successfully");
     }
   }
 }
