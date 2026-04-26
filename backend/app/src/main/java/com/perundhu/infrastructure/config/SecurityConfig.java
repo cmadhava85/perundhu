@@ -215,6 +215,7 @@ public class SecurityConfig {
             .requestMatchers("/v1/contributions/timing-images").permitAll()
             .requestMatchers("/images/**").permitAll()
             .requestMatchers("/actuator/health").permitAll()
+            .requestMatchers("/actuator/health/**").permitAll()
             .requestMatchers("/v1/client-errors").permitAll()
             // Protected endpoints
             .requestMatchers("/v1/contributions/manage/**").authenticated()
