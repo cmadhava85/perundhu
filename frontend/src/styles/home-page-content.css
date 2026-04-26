@@ -1,0 +1,268 @@
+/* HomePageContent — static rich content section below the search form */
+
+.home-page-content {
+  max-width: 900px;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+  font-family: inherit;
+  color: #374151;
+}
+
+/* Section */
+.hpc-section {
+  margin-bottom: 3rem;
+  padding: 1.75rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.hpc-section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 0.5rem;
+}
+
+.hpc-intro-text {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.hpc-section p {
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+  color: #4b5563;
+}
+
+/* Steps */
+.hpc-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.hpc-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.hpc-step-number {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: #4f46e5;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.hpc-step h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.3rem;
+}
+
+.hpc-step p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Popular Routes Grid */
+.hpc-routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.hpc-route-card {
+  padding: 0.9rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.hpc-route-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+.hpc-route-arrow {
+  color: #667eea;
+}
+
+.hpc-route-desc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Cities Grid */
+.hpc-cities-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.hpc-city-tag {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Bus Types */
+.hpc-bus-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.hpc-bus-type-card {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.hpc-bus-type-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.2rem;
+}
+
+.hpc-bus-operator {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.hpc-bus-type-card p {
+  font-size: 0.88rem;
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.55;
+}
+
+/* FAQ List */
+.hpc-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hpc-faq-item {
+  padding: 1rem;
+  border-left: 3px solid #667eea;
+  background: #f9fafb;
+  border-radius: 0 8px 8px 0;
+}
+
+.hpc-faq-q {
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.4rem;
+}
+
+.hpc-faq-a {
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* CTA Links */
+.hpc-cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.hpc-link {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.hpc-link:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .home-page-content {
+    color: #d1d5db;
+  }
+  .hpc-section {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  .hpc-section-title {
+    color: #f9fafb;
+  }
+  .hpc-section p,
+  .hpc-intro-text {
+    color: #9ca3af;
+  }
+  .hpc-route-card,
+  .hpc-bus-type-card,
+  .hpc-faq-item {
+    background: #111827;
+    border-color: #374151;
+  }
+  .hpc-route-header,
+  .hpc-bus-type-name,
+  .hpc-step h3,
+  .hpc-faq-q {
+    color: #f3f4f6;
+  }
+  .hpc-city-tag {
+    background: #1e3a5f;
+    color: #93c5fd;
+    border-color: #1d4ed8;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hpc-section {
+    padding: 1.25rem;
+  }
+  .hpc-section-title {
+    font-size: 1.15rem;
+  }
+  .hpc-routes-grid,
+  .hpc-bus-types {
+    grid-template-columns: 1fr;
+  }
+}

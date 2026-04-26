@@ -8,6 +8,7 @@ import { SearchErrorFallback, MapErrorFallback, ContributionErrorFallback } from
 import Loading from './Loading';
 import ErrorDisplay from './ErrorDisplay';
 import TransitSearchForm from './TransitSearchForm';
+import HomePageContent from './HomePageContent';
 
 // Lazy-loaded route components — these pull in Leaflet/map chunks; only fetch when navigated to
 const SearchResults = React.lazy(() => import('./SearchResults'));
@@ -104,6 +105,7 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
             onLocationChange={onLocationChange}
             onSearch={(from, to, _options) => onSearch(from, to)}
           />
+          <HomePageContent />
         </ErrorBoundary>
       } />
       
