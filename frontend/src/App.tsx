@@ -18,6 +18,7 @@ import Loading from './components/Loading';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import NetworkStatusIndicator from './components/NetworkStatusIndicator';
 import ToastProvider from './components/ToastProvider';
+import CookieConsent from './components/CookieConsent';
 
 // PHASE 2 OPTIMIZATION: Lazy load AppRoutes for code splitting
 const AppRoutes = lazy(() => import('./components/AppRoutes'));
@@ -441,6 +442,9 @@ function AppContent() {
       
       {/* Phase 2: Global Keyboard Shortcuts */}
       <KeyboardShortcuts shortcuts={keyboardShortcuts} />
+
+      {/* Cookie consent banner — required for AdSense EU consent policy */}
+      <CookieConsent />
     </div>
   );
 }
