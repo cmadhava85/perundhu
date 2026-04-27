@@ -74,7 +74,7 @@ public class WebClientConfig {
     return builder
         .baseUrl("https://nominatim.openstreetmap.org")
         .clientConnector(new ReactorClientHttpConnector(httpClient))
-        .defaultHeader("User-Agent", "Perundhu/1.0 (https://perundhu.app; perundhutn@gmail.com)")
+        .defaultHeader("User-Agent", "Perundhu/1.0 (https://perundhu.app; perundhu@gmail.com)")
         .defaultHeader("Accept", "application/json")
         .filter(logRequest())
         .filter(handleErrors())

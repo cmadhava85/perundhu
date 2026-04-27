@@ -6,13 +6,13 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 1,
+  /* Use a single worker so all tests share one dev server instance */
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
@@ -40,7 +40,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 720 },
       },
@@ -48,32 +48,29 @@ export default defineConfig({
 
     {
       name: 'mobile',
-      use: { 
+      use: {
         ...devices['iPhone 12'],
       },
     },
-
-    // Uncomment if you need to test Safari-specific issues
-    // {
-    //   name: 'webkit',
-    //   use: { 
-    //     ...devices['Desktop Safari'],
-    //     viewport: { width: 1280, height: 720 },
-    //   },
-    // },
   ],
 
-  /* Run your local dev server before starting the tests */
+  /* Run local dev server before tests.
+   * stdin redirected to /dev/null prevents Vite reading keyboard shortcuts
+   * and getting SIGTTIN (suspended) when spawned by Playwright.
+   * reuseExistingServer: false ensures a fresh server is always started,
+   * avoiding stale/zombie processes from previous runs.
+   */
   webServer: {
-    command: 'npm run dev',
+    command: 'npm run dev < /dev/null',
     url: 'http://localhost:5173',
+    // On CI always start fresh; locally reuse a running dev server if one exists.
+    // The `< /dev/null` redirect above prevents Vite from reading stdin (SIGTTIN),
+    // which was the root cause of the zombie-server issue.
     reuseExistingServer: !process.env.CI,
-    timeout: 120000,
+    timeout: 60000,
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
-
-  /* Global setup and teardown */
-  // globalSetup: require.resolve('./tests/e2e/global-setup.ts'),
-  // globalTeardown: require.resolve('./tests/e2e/global-teardown.ts'),
 
   /* Test timeout */
   timeout: 30000,

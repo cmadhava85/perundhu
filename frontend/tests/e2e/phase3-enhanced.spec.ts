@@ -9,7 +9,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
   test.describe('Accessibility Compliance', () => {
     test('keyboard navigation works throughout app', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       // Tab through elements
       await page.keyboard.press('Tab');
@@ -26,7 +26,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
 
     test('all images have alt text', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       const imagesWithoutAlt = await page.$$eval('img:not([alt])', imgs => imgs.length);
       expect(imagesWithoutAlt).toBe(0);
@@ -34,7 +34,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
 
     test('buttons have accessible labels', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       const unlabeledButtons = await page.$$eval('button', buttons => {
         return buttons.filter(btn => {
@@ -50,7 +50,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
 
     test('proper heading hierarchy', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       const h1Count = await page.locator('h1').count();
       expect(h1Count).toBeGreaterThanOrEqual(1);
@@ -72,13 +72,13 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
 
     test('lazy loading works for routes', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       const initialScripts = await page.$$eval('script[src]', scripts => scripts.length);
       
       // Navigate to lazy-loaded route
       await page.goto('/settings');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       const afterScripts = await page.$$eval('script[src]', scripts => scripts.length);
       
@@ -90,7 +90,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
   test.describe('Error Boundaries', () => {
     test('app remains functional after component error', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       // Even if error occurs, app should still render
       const bodyText = await page.textContent('body');
@@ -103,7 +103,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
 
     test('touch targets are at least 44x44 pixels', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       const buttons = await page.$$('button');
       
@@ -131,7 +131,7 @@ test.describe('Phase 3: Enhanced User Journeys', () => {
   test.describe('Network Resilience', () => {
     test('handles offline mode gracefully', async ({ page, context }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       
       // Go offline
       await context.setOffline(true);

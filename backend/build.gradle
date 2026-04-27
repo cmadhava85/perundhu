@@ -188,8 +188,9 @@ dependencies {
     // Updated MySQL Connector to the latest version
     runtimeOnly 'com.mysql:mysql-connector-j:9.1.0'
     
-    // Add H2 as a implementation dependency to access its API
-    implementation 'com.h2database:h2:2.3.232'
+    // Add H2 as a test-only dependency (in-memory DB for tests; production uses MySQL)
+    // CVE: h2:2.3.232 had a MEDIUM CVE — moved to testImplementation so it is excluded from the production JAR
+    testImplementation 'com.h2database:h2:2.4.240'
     
     // Add Flyway for database migrations with Spring Boot compatible versions
     implementation 'org.flywaydb:flyway-core:11.20.3'
@@ -284,8 +285,8 @@ dependencies {
     // Virtual thread support is built-in to Java 21
     // These dependencies add monitoring and metrics capabilities
     
-    // Micrometer for metrics and monitoring
-    implementation 'io.micrometer:micrometer-registry-prometheus:1.12.0'
+    // Micrometer for metrics and monitoring — version managed by Spring Boot BOM (3.4.5 → 1.14.x)
+    implementation 'io.micrometer:micrometer-registry-prometheus'
     
     // ============================================
     // ANTI-SCRAPING SECURITY

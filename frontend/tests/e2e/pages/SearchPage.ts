@@ -38,7 +38,7 @@ export class SearchPage {
 
   async goto() {
     await this.page.goto('/');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async searchBuses(from: string, to: string) {
@@ -70,7 +70,7 @@ export class SearchPage {
 
     // Click search button
     await this.findBusesButton.click();
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async verifySearchFormElements() {

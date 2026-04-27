@@ -40,7 +40,7 @@ export class HomePage {
 
   async goto() {
     await this.page.goto('/');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async verifyPageLoad() {
@@ -51,7 +51,7 @@ export class HomePage {
     await expect(this.findBusesButton).toBeVisible();
     
     // Verify the page has loaded completely
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async verifyResponsiveLayout(isMobile: boolean) {
@@ -120,7 +120,7 @@ export class HomePage {
 
     // Click search button
     await this.findBusesButton.click();
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async verifyAccessibility() {

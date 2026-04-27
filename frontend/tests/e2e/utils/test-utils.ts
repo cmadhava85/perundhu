@@ -7,7 +7,7 @@ import { Page, expect } from '@playwright/test';
 
 export class TestUtils {
   static async waitForPageLoad(page: Page) {
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(500); // Additional buffer for animations
   }
 

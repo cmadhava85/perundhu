@@ -344,7 +344,7 @@ Create 3 monitors:
 ### Step 3: Configure Alert Contacts
 
 1. Go to **My Settings** > **Alert Contacts**
-2. Add your email: `perundhutn@gmail.com`
+2. Add your email: `perundhu@gmail.com`
 3. Enable SMS alerts (optional, limited in free tier)
 4. Add Slack webhook (optional)
 

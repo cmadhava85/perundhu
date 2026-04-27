@@ -48,7 +48,7 @@ export class BusListPage {
 
   async verifyBusListPageElements() {
     // Wait for page to load
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     
     // Verify main container is visible
     await expect(this.busListContainer).toBeVisible();
@@ -270,7 +270,7 @@ export class BusListPage {
 
   async waitForBusListToLoad() {
     // Wait for loading to complete
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     
     // Wait for bus items to appear or no-buses message
     await Promise.race([

@@ -91,9 +91,9 @@ const defaultFlags: FeatureFlags = {
   // Contribution methods - some enabled by default
   enableManualContribution: true,
   enableImageContribution: true,
-  enableVoiceContribution: false,
-  enablePasteContribution: false,
-  enableRouteVerification: false,
+  enableVoiceContribution: import.meta.env.VITE_ENABLE_VOICE_CONTRIBUTION === 'true',
+  enablePasteContribution: import.meta.env.VITE_ENABLE_PASTE_CONTRIBUTION === 'true',
+  enableRouteVerification: import.meta.env.VITE_ENABLE_ROUTE_VERIFICATION === 'true',
   enableAddStops: true,
   enableReportIssue: true,
   
