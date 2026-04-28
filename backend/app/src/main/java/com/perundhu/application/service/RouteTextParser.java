@@ -16,6 +16,62 @@ import java.util.regex.Pattern;
 @Slf4j
 public class RouteTextParser {
 
+  // --- Static compiled patterns (compile once, reuse on every call) ---
+
+  // Bus number patterns
+  private static final Pattern BUS_EXPLICIT = Pattern.compile(
+      "(?i)(?:bus|route|service|no\\.?|number|பஸ்|வண்டி|எண்)\\s*[:#.-]?\\s*([A-Z0-9]{1,4}[A-Z]?|[A-Z]{1,3}[0-9]{1,4}[A-Z]?)",
+      Pattern.CASE_INSENSITIVE);
+  private static final Pattern BUS_PREFIX = Pattern.compile(
+      "(?i)(TNSTC|MTC|SETC|KSRTC|TSRTC|APSRTC|BMTC)\\s*[-:]?\\s*([A-Z0-9]{1,5})");
+  private static final Pattern BUS_START = Pattern.compile(
+      "^\\s*([A-Z]?\\d{1,4}[A-Z]?)\\b");
+  private static final Pattern BUS_STANDALONE = Pattern.compile(
+      "\\b([A-Z]{0,2}\\d{1,4}[A-Z]?)\\b");
+  private static final Pattern VALID_BUS_FORMAT1 = Pattern.compile("[A-Z]{0,3}[-]?\\d{1,4}[A-Z]?");
+  private static final Pattern VALID_BUS_FORMAT2 = Pattern.compile("[A-Z]\\d{1,4}");
+  private static final Pattern NOT_BUS_YEAR = Pattern.compile("20[2-3]\\d");
+  private static final Pattern NOT_BUS_THREE_DIGIT = Pattern.compile("\\d{3}");
+  private static final Pattern NOT_BUS_VALID_THREE = Pattern.compile("[1-9]\\d{2}");
+  private static final Pattern NOT_BUS_LEADING_ZERO = Pattern.compile("0\\d{3}");
+
+  // Location patterns
+  private static final Pattern LOC_ARROW = Pattern.compile(
+      "([a-zA-Z][a-zA-Z\\s]{2,35})\\s*(?:→|->|➡️|➡|→|–|—|=>|>)\\s*([a-zA-Z][a-zA-Z\\s]{2,35})",
+      Pattern.CASE_INSENSITIVE);
+  private static final Pattern LOC_DASH = Pattern.compile(
+      "([A-Z][a-zA-Z]{2,20})\\s+-\\s+([A-Z][a-zA-Z]{2,20})");
+  private static final Pattern LOC_ENGLISH = Pattern.compile(
+      "(?i)(?:from\\s+)?([a-zA-Z][a-zA-Z\\s]{2,35})\\s+(?:to|towards|via)\\s+([a-zA-Z][a-zA-Z\\s]{2,35})");
+  private static final Pattern LOC_DEPART_ARRIVE = Pattern.compile(
+      "(?i)(?:departure|depart|start|origin)\\s*[:-]?\\s*([a-zA-Z][a-zA-Z\\s]{2,30})" +
+          ".*?(?:arrival|arrive|end|destination)\\s*[:-]?\\s*([a-zA-Z][a-zA-Z\\s]{2,30})",
+      Pattern.DOTALL);
+  private static final Pattern LOC_ROUTE_HEADER = Pattern.compile(
+      "([A-Z][a-zA-Z]{2,20})\\s*[-–]?\\s*([A-Z][a-zA-Z]{2,20})\\s*(?:Route|Express|Bus|Service)",
+      Pattern.CASE_INSENSITIVE);
+  private static final Pattern LOC_TAMIL = Pattern.compile(
+      "(?:புறப்பாடு|இருந்து)\\s*[:-]?\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})" +
+          "\\s+(?:வரவு|வரை)\\s*[:-]?\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})");
+  private static final Pattern LOC_TAMIL_SUFFIX = Pattern.compile(
+      "([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})\\s*லிருந்து\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})\\s*க்கு");
+  private static final Pattern LOC_COLON = Pattern.compile(
+      "(?i)from\\s*[:-]\\s*([a-zA-Z][a-zA-Z\\s]{2,30}).*?to\\s*[:-]\\s*([a-zA-Z][a-zA-Z\\s]{2,30})",
+      Pattern.DOTALL);
+
+  // Timing patterns
+  private static final Pattern TIME_ENGLISH = Pattern.compile(
+      "\\b(\\d{1,2})(?::(\\d{2}))?\\s*(AM|PM|am|pm)?\\b");
+  private static final Pattern TIME_TAMIL = Pattern.compile(
+      "(காலை|மாலை|இரவு|நண்பகல்)\\s*(\\d{1,2})\\s*மணி");
+  private static final Pattern TIME_FULL_FORMAT = Pattern.compile("\\d{1,2}:\\d{2}\\s*[AP]M");
+  private static final Pattern TIME_SHORT_FORMAT = Pattern.compile("\\d{1,2}\\s*[AP]M");
+  private static final Pattern TIME_24H_FORMAT = Pattern.compile("\\d{1,2}:\\d{2}");
+
+  // Stop patterns
+  private static final Pattern STOPS_LIST = Pattern.compile(
+      "(?i)(?:stops?|via|வழி|நிலையங்கள்)\\s*[:-]?\\s*([^\n.!?]+)");
+
   /**
    * Extract route information from transcribed text
    * 
@@ -57,26 +113,8 @@ public class RouteTextParser {
    * Extract bus number from text
    */
   private void extractBusNumber(String text, RouteData data) {
-    // Multiple patterns for different bus number formats
     // Priority 1: Explicit "Bus/Route X" format
-    Pattern explicitPattern = Pattern.compile(
-        "(?i)(?:bus|route|service|no\\.?|number|பஸ்|வண்டி|எண்)\\s*[:#.-]?\\s*([A-Z0-9]{1,4}[A-Z]?|[A-Z]{1,3}[0-9]{1,4}[A-Z]?)",
-        Pattern.CASE_INSENSITIVE);
-
-    // Priority 2: TNSTC/MTC format: TNSTC-123, MTC 45G, etc.
-    Pattern prefixPattern = Pattern.compile(
-        "(?i)(TNSTC|MTC|SETC|KSRTC|TSRTC|APSRTC|BMTC)\\s*[-:]?\\s*([A-Z0-9]{1,5})");
-
-    // Priority 3: Alphanumeric at start of text: "27D Chennai to Madurai"
-    Pattern startPattern = Pattern.compile(
-        "^\\s*([A-Z]?\\d{1,4}[A-Z]?)\\b");
-
-    // Priority 4: Standalone bus numbers: 27D, 570, 123A
-    Pattern standalonePattern = Pattern.compile(
-        "\\b([A-Z]{0,2}\\d{1,4}[A-Z]?)\\b");
-
-    // Try explicit pattern first
-    Matcher explicitMatcher = explicitPattern.matcher(text);
+    Matcher explicitMatcher = BUS_EXPLICIT.matcher(text);
     if (explicitMatcher.find()) {
       String busNumber = explicitMatcher.group(1).toUpperCase();
       if (isValidBusNumber(busNumber)) {
@@ -86,8 +124,8 @@ public class RouteTextParser {
       }
     }
 
-    // Try prefix pattern (TNSTC, MTC, etc.)
-    Matcher prefixMatcher = prefixPattern.matcher(text);
+    // Priority 2: TNSTC/MTC format: TNSTC-123, MTC 45G, etc.
+    Matcher prefixMatcher = BUS_PREFIX.matcher(text);
     if (prefixMatcher.find()) {
       String prefix = prefixMatcher.group(1).toUpperCase();
       String number = prefixMatcher.group(2).toUpperCase();
@@ -97,8 +135,8 @@ public class RouteTextParser {
       return;
     }
 
-    // Try start pattern
-    Matcher startMatcher = startPattern.matcher(text);
+    // Priority 3: Alphanumeric at start of text: "27D Chennai to Madurai"
+    Matcher startMatcher = BUS_START.matcher(text);
     if (startMatcher.find()) {
       String busNumber = startMatcher.group(1).toUpperCase();
       if (isValidBusNumber(busNumber)) {
@@ -108,11 +146,10 @@ public class RouteTextParser {
       }
     }
 
-    // Try standalone pattern (last resort, might have false positives)
-    Matcher standaloneMatcher = standalonePattern.matcher(text);
+    // Priority 4: Standalone bus numbers: 27D, 570, 123A
+    Matcher standaloneMatcher = BUS_STANDALONE.matcher(text);
     while (standaloneMatcher.find()) {
       String busNumber = standaloneMatcher.group(1).toUpperCase();
-      // Skip common false positives like years (2024), times (630)
       if (isValidBusNumber(busNumber) && !isLikelyNotBusNumber(busNumber)) {
         data.setBusNumber(busNumber);
         log.debug("Matched standalone bus pattern: {}", busNumber);
@@ -127,9 +164,8 @@ public class RouteTextParser {
   private boolean isValidBusNumber(String busNumber) {
     if (busNumber == null || busNumber.isEmpty())
       return false;
-    // Valid: 27D, 570, A1, 123A, MTC-45
-    return busNumber.matches("[A-Z]{0,3}[-]?\\d{1,4}[A-Z]?") ||
-        busNumber.matches("[A-Z]\\d{1,4}");
+    return VALID_BUS_FORMAT1.matcher(busNumber).matches() ||
+        VALID_BUS_FORMAT2.matcher(busNumber).matches();
   }
 
   /**
@@ -138,66 +174,19 @@ public class RouteTextParser {
   private boolean isLikelyNotBusNumber(String number) {
     if (number == null)
       return true;
-    // Skip years (2020-2030)
-    if (number.matches("20[2-3]\\d"))
+    if (NOT_BUS_YEAR.matcher(number).matches())
       return true;
-    // Skip pure 3-digit numbers that could be times
-    if (number.matches("\\d{3}") && !number.matches("[1-9]\\d{2}"))
+    if (NOT_BUS_THREE_DIGIT.matcher(number).matches() && !NOT_BUS_VALID_THREE.matcher(number).matches())
       return true;
-    // Skip 4-digit numbers without letters (likely times like 0630)
-    if (number.matches("0\\d{3}"))
-      return true;
-    return false;
+    return NOT_BUS_LEADING_ZERO.matcher(number).matches();
   }
 
   /**
    * Extract from and to locations
    */
   private void extractLocations(String text, RouteData data) {
-    // Pattern 1: Arrow format with various arrow types: "Coimbatore → Salem",
-    // "Chennai -> Madurai", "A - B"
-    Pattern arrowPattern = Pattern.compile(
-        "([a-zA-Z][a-zA-Z\\s]{2,35})\\s*(?:→|->|➡️|➡|→|–|—|=>|>)\\s*([a-zA-Z][a-zA-Z\\s]{2,35})",
-        Pattern.CASE_INSENSITIVE);
-
-    // Pattern 2: Dash/hyphen format with space: "Chennai - Madurai", "Coimbatore -
-    // Salem Route"
-    Pattern dashPattern = Pattern.compile(
-        "([A-Z][a-zA-Z]{2,20})\\s+-\\s+([A-Z][a-zA-Z]{2,20})");
-
-    // Pattern 3: English patterns: "from X to Y", "X to Y", "departs from X arrives
-    // at Y"
-    Pattern englishPattern = Pattern.compile(
-        "(?i)(?:from\\s+)?([a-zA-Z][a-zA-Z\\s]{2,35})\\s+(?:to|towards|via)\\s+([a-zA-Z][a-zA-Z\\s]{2,35})");
-
-    // Pattern 4: Departure/Arrival pattern: "Departure: Chennai Arrival: Madurai"
-    Pattern departArrivePattern = Pattern.compile(
-        "(?i)(?:departure|depart|start|origin)\\s*[:-]?\\s*([a-zA-Z][a-zA-Z\\s]{2,30})" +
-            ".*?(?:arrival|arrive|end|destination)\\s*[:-]?\\s*([a-zA-Z][a-zA-Z\\s]{2,30})",
-        Pattern.DOTALL);
-
-    // Pattern 5: Route header format: "Chennai Madurai Route" or "Chennai-Madurai
-    // Express"
-    Pattern routeHeaderPattern = Pattern.compile(
-        "([A-Z][a-zA-Z]{2,20})\\s*[-–]?\\s*([A-Z][a-zA-Z]{2,20})\\s*(?:Route|Express|Bus|Service)",
-        Pattern.CASE_INSENSITIVE);
-
-    // Pattern 6: Tamil patterns: "புறப்பாடு X வரவு Y", "X லிருந்து Y க்கு"
-    Pattern tamilPattern = Pattern.compile(
-        "(?:புறப்பாடு|இருந்து)\\s*[:-]?\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})" +
-            "\\s+(?:வரவு|வரை)\\s*[:-]?\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})");
-
-    // Pattern 7: Tamil suffix pattern: "X லிருந்து Y க்கு"
-    Pattern tamilSuffixPattern = Pattern.compile(
-        "([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})\\s*லிருந்து\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})\\s*க்கு");
-
-    // Pattern 8: Colon separated: "From: Chennai To: Madurai"
-    Pattern colonPattern = Pattern.compile(
-        "(?i)from\\s*[:-]\\s*([a-zA-Z][a-zA-Z\\s]{2,30}).*?to\\s*[:-]\\s*([a-zA-Z][a-zA-Z\\s]{2,30})",
-        Pattern.DOTALL);
-
-    // Try arrow pattern first (most common in pastes)
-    Matcher arrowMatcher = arrowPattern.matcher(text);
+    // Pattern 1: Arrow format — most common in pastes
+    Matcher arrowMatcher = LOC_ARROW.matcher(text);
     if (arrowMatcher.find()) {
       data.setFromLocation(cleanLocationName(arrowMatcher.group(1)));
       data.setToLocation(cleanLocationName(arrowMatcher.group(2)));
@@ -205,8 +194,8 @@ public class RouteTextParser {
       return;
     }
 
-    // Try dash pattern
-    Matcher dashMatcher = dashPattern.matcher(text);
+    // Pattern 2: Dash/hyphen format with space
+    Matcher dashMatcher = LOC_DASH.matcher(text);
     if (dashMatcher.find()) {
       data.setFromLocation(cleanLocationName(dashMatcher.group(1)));
       data.setToLocation(cleanLocationName(dashMatcher.group(2)));
@@ -214,8 +203,8 @@ public class RouteTextParser {
       return;
     }
 
-    // Try departure/arrival pattern
-    Matcher departMatcher = departArrivePattern.matcher(text);
+    // Pattern 3: Departure/Arrival keyword pattern
+    Matcher departMatcher = LOC_DEPART_ARRIVE.matcher(text);
     if (departMatcher.find()) {
       data.setFromLocation(cleanLocationName(departMatcher.group(1)));
       data.setToLocation(cleanLocationName(departMatcher.group(2)));
@@ -223,8 +212,8 @@ public class RouteTextParser {
       return;
     }
 
-    // Try colon pattern
-    Matcher colonMatcher = colonPattern.matcher(text);
+    // Pattern 4: Colon-separated: "From: Chennai To: Madurai"
+    Matcher colonMatcher = LOC_COLON.matcher(text);
     if (colonMatcher.find()) {
       data.setFromLocation(cleanLocationName(colonMatcher.group(1)));
       data.setToLocation(cleanLocationName(colonMatcher.group(2)));
@@ -232,8 +221,8 @@ public class RouteTextParser {
       return;
     }
 
-    // Try route header pattern
-    Matcher routeHeaderMatcher = routeHeaderPattern.matcher(text);
+    // Pattern 5: Route header format: "Chennai Madurai Route"
+    Matcher routeHeaderMatcher = LOC_ROUTE_HEADER.matcher(text);
     if (routeHeaderMatcher.find()) {
       data.setFromLocation(cleanLocationName(routeHeaderMatcher.group(1)));
       data.setToLocation(cleanLocationName(routeHeaderMatcher.group(2)));
@@ -241,7 +230,8 @@ public class RouteTextParser {
       return;
     }
 
-    Matcher englishMatcher = englishPattern.matcher(text);
+    // Pattern 6: English "from X to Y"
+    Matcher englishMatcher = LOC_ENGLISH.matcher(text);
     if (englishMatcher.find()) {
       data.setFromLocation(cleanLocationName(englishMatcher.group(1)));
       data.setToLocation(cleanLocationName(englishMatcher.group(2)));
@@ -249,7 +239,8 @@ public class RouteTextParser {
       return;
     }
 
-    Matcher tamilMatcher = tamilPattern.matcher(text);
+    // Pattern 7: Tamil keywords
+    Matcher tamilMatcher = LOC_TAMIL.matcher(text);
     if (tamilMatcher.find()) {
       data.setFromLocation(cleanLocationName(tamilMatcher.group(1)));
       data.setToLocation(cleanLocationName(tamilMatcher.group(2)));
@@ -257,7 +248,8 @@ public class RouteTextParser {
       return;
     }
 
-    Matcher tamilSuffixMatcher = tamilSuffixPattern.matcher(text);
+    // Pattern 8: Tamil suffix "X லிருந்து Y க்கு"
+    Matcher tamilSuffixMatcher = LOC_TAMIL_SUFFIX.matcher(text);
     if (tamilSuffixMatcher.find()) {
       data.setFromLocation(cleanLocationName(tamilSuffixMatcher.group(1)));
       data.setToLocation(cleanLocationName(tamilSuffixMatcher.group(2)));
@@ -271,16 +263,8 @@ public class RouteTextParser {
   private List<String> extractTimings(String text) {
     List<String> timings = new ArrayList<>();
 
-    // English time patterns: 6:00 AM, 6 AM, 18:00
-    Pattern timePattern = Pattern.compile(
-        "\\b(\\d{1,2})(?::(\\d{2}))?\\s*(AM|PM|am|pm)?\\b");
-
-    // Tamil time patterns: காலை 6 மணி, மாலை 5 மணி
-    Pattern tamilTimePattern = Pattern.compile(
-        "(காலை|மாலை|இரவு|நண்பகல்)\\s*(\\d{1,2})\\s*மணி");
-
     // Extract English times
-    Matcher matcher = timePattern.matcher(text);
+    Matcher matcher = TIME_ENGLISH.matcher(text);
     while (matcher.find()) {
       String time = normalizeTime(matcher.group(0));
       if (time != null && !timings.contains(time)) {
@@ -288,8 +272,8 @@ public class RouteTextParser {
       }
     }
 
-    // Extract Tamil times
-    Matcher tamilMatcher = tamilTimePattern.matcher(text);
+    // Extract Tamil times: காலை 6 மணி, மாலை 5 மணி
+    Matcher tamilMatcher = TIME_TAMIL.matcher(text);
     while (tamilMatcher.find()) {
       String time = normalizeTamilTime(tamilMatcher.group(1), tamilMatcher.group(2));
       if (time != null && !timings.contains(time)) {
@@ -306,12 +290,7 @@ public class RouteTextParser {
   private List<String> extractStops(String text) {
     List<String> stops = new ArrayList<>();
 
-    // Pattern: "stops:", "வழி:", followed by list
-    Pattern stopsPattern = Pattern.compile(
-        "(?i)(?:stops?|via|வழி|நிலையங்கள்)\\s*[:-]?\\s*([^\n.!?]+)",
-        Pattern.CASE_INSENSITIVE);
-
-    Matcher matcher = stopsPattern.matcher(text);
+    Matcher matcher = STOPS_LIST.matcher(text);
     if (matcher.find()) {
       String stopsText = matcher.group(1);
       // Split by comma, semicolon, "and", "மற்றும்"
@@ -385,17 +364,17 @@ public class RouteTextParser {
     time = time.trim().toUpperCase();
 
     // Already in good format
-    if (time.matches("\\d{1,2}:\\d{2}\\s*[AP]M")) {
+    if (TIME_FULL_FORMAT.matcher(time).matches()) {
       return time;
     }
 
     // Add minutes if missing
-    if (time.matches("\\d{1,2}\\s*[AP]M")) {
+    if (TIME_SHORT_FORMAT.matcher(time).matches()) {
       return time.replaceAll("(\\d{1,2})\\s*([AP]M)", "$1:00 $2");
     }
 
     // Convert 24-hour to 12-hour
-    if (time.matches("\\d{1,2}:\\d{2}") && !time.contains("AM") && !time.contains("PM")) {
+    if (TIME_24H_FORMAT.matcher(time).matches() && !time.contains("AM") && !time.contains("PM")) {
       String[] parts = time.split(":");
       int hour = Integer.parseInt(parts[0]);
       String minutes = parts[1];
