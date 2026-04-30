@@ -22,13 +22,14 @@ RUN gradle clean build -x test -x spotbugsMain -x spotbugsTest --no-daemon
 # Runtime stage - Use standard JRE (not alpine) for glibc compatibility with native libraries
 FROM eclipse-temurin:21-jre-jammy
 
-# Install necessary packages
+# Install necessary packages and create app user in a single layer
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create app user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+    tesseract-ocr \
+    tesseract-ocr-eng \
+    tesseract-ocr-tam \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd -r appuser && useradd -r -g appuser appuser
 
 # Set working directory
 WORKDIR /app
@@ -38,10 +39,8 @@ COPY --from=builder /app/build/libs/perundhu-backend.jar app.jar
 
 # Copy health check script
 COPY --from=builder /app/health-check.sh health-check.sh
-RUN chmod +x health-check.sh
-
-# Change ownership
-RUN chown -R appuser:appuser /app
+RUN chmod +x health-check.sh \
+    && chown -R appuser:appuser /app
 
 # Switch to non-root user
 USER appuser
