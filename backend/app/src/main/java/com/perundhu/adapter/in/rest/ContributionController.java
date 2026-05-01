@@ -41,6 +41,7 @@ import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.InputValidationPort;
 import com.perundhu.domain.port.SecurityMonitoringPort;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -76,6 +77,11 @@ public class ContributionController {
   private final InMemoryImageHashRepository imageHashRepository;
   private final RecaptchaPort recaptchaService;
   private final GeminiVisionService geminiVisionService;
+
+  // Parent directory of tessdata/ on Ubuntu Jammy (tesseract-ocr package).
+  // Overridable via app.tesseract.datapath property; defaults to the standard Ubuntu path.
+  @Value("${app.tesseract.datapath:/usr/share/tesseract-ocr/4.00}")
+  private String tesseractDataPath;
 
   /**
    * Submit a route contribution with comprehensive security validation
@@ -517,20 +523,24 @@ public class ContributionController {
                 "Image content validation failed. Please ensure the image is a valid bus schedule."));
       }
 
-      // Optional: Tesseract validation for image quality analysis (non-blocking)
-      // This is informational only and won't reject uploads
-      log.info("Analyzing image content with Tesseract OCR (userId: {})", userId);
+      // Tesseract validation: block junk images (selfies, receipts, etc.) before storing to GCS
+      // and triggering Gemini AI processing. Fail-safe: any OCR error allows the upload.
+      log.info("Validating image content with Tesseract OCR (userId: {})", userId);
       try {
         TesseractValidationResult tesseractResult = validateImageWithTesseract(imageFile);
         if (!tesseractResult.isValid) {
-          log.info("Image may not contain typical bus schedule content (userId: {}, indicators: {}/5)",
+          log.warn("Image rejected by Tesseract validation (userId: {}, indicators: {}/5)",
               userId, tesseractResult.indicatorsFound);
-        } else {
-          log.info("Image appears to contain bus schedule content (userId: {}, indicators: {}/5)",
-              userId, tesseractResult.indicatorsFound);
+          return ResponseEntity.badRequest()
+              .body(createErrorResponse(
+                  "This image does not appear to contain bus schedule information. " +
+                  "Please upload a clear photo of a bus timing board, route timetable, or stop display."));
         }
+        log.info("Image passed Tesseract validation (userId: {}, indicators: {}/5)",
+            userId, tesseractResult.indicatorsFound);
       } catch (Exception e) {
-        log.debug("Tesseract analysis skipped: {}", e.getMessage());
+        // OCR failure: allow upload as fail-safe — do not penalise users for OCR errors
+        log.warn("Tesseract validation skipped (error: {}) — allowing upload", e.getMessage());
       }
 
       // Process image contribution with enhanced AI/OCR processing
@@ -2153,6 +2163,13 @@ public class ContributionController {
       return true;
     }
 
+    // HEIC/HEIF: ISO Base Media File Format — ftyp box at bytes 4-7
+    // iPhone photos (image/heic, image/heif) use this container format.
+    if (content.length >= 12 &&
+        content[4] == 0x66 && content[5] == 0x74 && content[6] == 0x79 && content[7] == 0x70) { // "ftyp"
+      return true;
+    }
+
     return false;
   }
 
@@ -2375,6 +2392,9 @@ public class ContributionController {
 
       // Extract text using Tesseract (local OCR, no API cost)
       ITesseract tesseract = new Tesseract();
+      // Set datapath to parent of tessdata/ dir installed by tesseract-ocr-eng/tesseract-ocr-tam
+      tesseract.setDatapath(tesseractDataPath);
+      tesseract.setLanguage("eng+tam");
       String extractedText = tesseract.doOCR(image);
 
       if (extractedText == null || extractedText.trim().isEmpty()) {

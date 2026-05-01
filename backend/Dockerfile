@@ -59,9 +59,11 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
 # - CodeCache: 40Mi (reduced from 64m, still sufficient for tiered compilation)
 # - Native/threads/OS: ~92Mi remaining
 # TieredStopAtLevel=1: Faster startup (C1 compiler only), lower memory, acceptable for scale-to-zero
+# TESSDATA_PREFIX: points to tessdata installed by tesseract-ocr-eng / tesseract-ocr-tam packages
 ENV JAVA_OPTS="-XX:MaxRAMPercentage=35.0 -XX:InitialRAMPercentage=20.0 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MetaspaceSize=200m -XX:MaxMetaspaceSize=200m -XX:ReservedCodeCacheSize=40m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
     SPRING_PROFILES_ACTIVE=production \
-    SERVER_PORT=8080
+    SERVER_PORT=8080 \
+    TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
 
 # Run application (using shell form for variable expansion)
 CMD ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
